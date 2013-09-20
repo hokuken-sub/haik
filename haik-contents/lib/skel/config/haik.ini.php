@@ -3,6 +3,7 @@ $config = array (
   'style_name' => 'kumo',
   'style_color' => '',
   'style_texture' => '',
+  'style_custom_bg' => array(),
   'logo_title' => 'haik',
   'logo_image' => '',
   'display_login' => 1,
