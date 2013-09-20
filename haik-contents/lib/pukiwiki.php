@@ -92,7 +92,6 @@ $qt->enable_cache = $enable_cache;
 if (!$qt->set_page) {
 	$qt->set_page(isset($vars['page'])  ? $vars['page']  : '');
 }
-$_SESSION['usr'] = $username;
 //フラッシュメッセージをQHM Template にセット
 if (isset($_SESSION['notices']) && is_array($_SESSION['notices']))
 {
