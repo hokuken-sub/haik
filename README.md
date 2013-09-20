@@ -32,6 +32,9 @@ Some Handy Links
 - See [Hokuken.Inc Official](http://www.hokuken.com/)
 - See [Hokuken.Inc Support](https://ensmall.net/club/)
 
+- [haik on GitHub](https://github.com/toiee/haik)
+- [haik skin Repos](https://github.com/toiee) haik-skin-SKINNAME
+
 
 License
 -------
