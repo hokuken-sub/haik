@@ -8,7 +8,7 @@ $meta = array (
       0 => 
       array (
         'title' => 'Haik',
-        'content' => 'Haik is an Inspiration Kit',
+        'content' => 'Spread your ideas',
         'image' => '',
       ),
     ),
