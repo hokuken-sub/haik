@@ -13,6 +13,8 @@ haik-contents/upload/thumbnail/*
 
 haik-contents/skin/*/
 !haik-contents/skin/setting/
+haik-contents/lib/skel/skin/*/
+!haik-contents/lib/skel/skin/.gitkeep
 
 haik-contents/meta/*.php
 
