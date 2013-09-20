@@ -1,0 +1,177 @@
+/*
+ * Skin for jPlayer Plugin (jQuery JavaScript Library)
+ * http://www.happyworm.com/jquery/jplayer
+ *
+ * Skin Name: Blue Monday
+ *
+ * Copyright (c) 2010 Happyworm Ltd
+ * Dual licensed under the MIT and GPL licenses.
+ *  - http://www.opensource.org/licenses/mit-license.php
+ *  - http://www.gnu.org/copyleft/gpl.html
+ *
+ * Author: Silvia Benvenuti
+ * Skin Version: 2.0
+ * Date: 29th April 2010
+ */
+
+.jp-interface.panel {
+	margin:0 0 20px;
+ 	padding:10px;
+	min-height: 45px;
+	width: 235px;
+	box-sizing: border-box;
+}
+
+.jp-interface.panel.jp-type-single {
+	height: 40px;	
+}
+
+.jp-interface.panel-default a {
+	color: #333;
+}
+
+.jp-interface a:hover {
+	text-decoration: none;
+	color: #777;
+}
+
+.jp-interface.panel .panel-heading {
+	padding:0;
+	margin: -10px -10px 0;
+}
+
+.jp-interface.panel.jp-type-single .panel-heading {
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-style: none; 
+}
+
+
+.jp-interface.panel.panel-default .panel-heading {
+	background-color: #fff;
+	background-image: none;
+	border-style: none;
+	filter: none;
+}
+
+.jp-interface.panel .jp-panel {
+	float: left;
+	width auto;
+	padding:0;
+}
+
+.jp-play,
+.jp-pause,
+.jp-volume-control {
+	display: block;
+	width:40px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.jp-progress {
+	position: relative;
+	width:150px;
+}
+
+.jp-progress .progress {
+	margin: 15px 0 0 0;
+	height: 10px;
+}
+
+.jp-play-bar.progress-bar,
+.jp-volume-bar .progress-bar {
+	background-color: #333;
+}
+
+.jp-current-time,
+.jp-duration {
+	position: absolute;
+	top: 11px;
+	left: 0;
+	font-size: 10px;
+	line-height: 1em;
+	color: #333;
+}
+
+.jp-duration {
+	left:auto;
+	right: 0;
+}
+
+a.jp-volume-max:hover {
+	background-position-y: 0;
+}
+
+div.jp-volume-bar {
+	position: relative;
+	overflow:hidden;
+	background-color: #ddd;
+	width:10px;
+	height:70px;
+	cursor: pointer;
+	margin: 15px auto;
+}
+
+.jp-volume-max,
+.jp-mute {
+	line-height: 1em;
+	display: block;
+	position: absolute;
+	top: 5px;
+	left: 15px;
+}
+.jp-mute {
+	top:auto;
+	bottom:5px;
+}
+
+div.jp-volume-bar.progress .progress-bar {
+	position: absolute;
+	bottom: 0;
+	width:10px;
+}
+
+.jplayer-volume-dropdown {
+	position: relative;
+}
+
+.jplayer-volume-dropdown-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 40px;
+	margin: -5px 0 0;
+	padding: 10px 0;
+	border: 1px solid #ddd;
+}
+
+li.jp-playlist-current a {
+	font-weight: bold;	
+}
+
+.jp-playlist .nav {
+	margin-top: 10px;
+}
+
+.jp-playlist .nav > li > div {
+	width: 100%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+/*
+.jp-interface.panel .panel-footer {
+	margin: 0 0;
+	background-color: #fff;
+}
+
+.jp-type-single .panel-footer {
+	display: none;
+}
+*/

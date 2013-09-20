@@ -1,0 +1,118 @@
+.sample-style-name-taki [class*=sample-style-color] {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0);
+}
+.sample-style-name-taki .sample-style-color {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent)), -webkit-gradient(linear, left bottom, right top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent));
+  background-image: -moz-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -moz-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: -o-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -o-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: linear-gradient(45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), linear-gradient(-45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+}
+.sample-style-name-taki .sample-style-color-amethyst {
+  background-color: #a59aca;
+}
+.sample-style-name-taki .sample-style-color-black {
+  background-color: #222222;
+}
+.sample-style-name-taki .sample-style-color-brown {
+  background-color: #554236;
+}
+.sample-style-name-taki .sample-style-color-green {
+  background-color: #316745;
+}
+.sample-style-name-taki .sample-style-color-lapis {
+  background-color: #0b346e;
+}
+.sample-style-name-taki .sample-style-color-ruby {
+  background-color: #e73562;
+}
+.sample-style-name-taki .sample-style-color-turquoise {
+  background-color: #25b7c0;
+}
+.sample-style-name-taki .sample-style-color-mosgreen {
+  background-color: #82ae46;
+}
+.sample-style-name-taki .sample-style-color-orange {
+  background-color: #f39800;
+}
+.sample-style-name-taki [class*=sample-style-texture] {
+  background-image: transparent;
+  color: rgba(0, 0, 0, 0);
+}
+.sample-style-name-taki .sample-style-texture {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent)), -webkit-gradient(linear, left bottom, right top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent));
+  background-image: -moz-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -moz-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: -o-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -o-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: linear-gradient(45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), linear-gradient(-45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+}
+.sample-style-name-taki .sample-style-texture-hemp {
+  background-image: url("../img/hemp-cloth-05.jpg");
+}
+.sample-style-name-taki .sample-style-texture-grass {
+  background-image: url("../img/grass_bg.jpg");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-arches {
+  background-image: url("../img/arches.png");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-wood {
+  background-image: url("../img/tileable_wood_texture.png");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-wood2 {
+  background-image: url("../img/wood_pattern.png");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-cloth {
+  background-image: url("../img/cloth.png");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-tree {
+  background-image: url("../img/tree_bg.jpg");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-sea {
+  background-image: url("../img/sea_bg.jpg");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-shattered {
+  background-image: url("../img/shattered.png");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-paper {
+  background-image: url("../img/paper.png");
+  background-size: cover;
+}
+.sample-style-name-taki .sample-style-texture-custom {
+  background-size: cover;
+  position: relative;
+  color: #fff;
+  font-size: 20px;
+}
+.sample-style-name-taki .sample-style-texture-custom.undefined {
+  font-size: 60px;
+  color: #999;
+  overflow: hidden;
+  text-indent: 0;
+}
+.sample-style-name-taki .sample-style-texture-custom i {
+  position: absolute;
+  bottom: -5px;
+  right: -10px;
+  text-shadow: 1px 1px 2px #333;
+}
+.sample-style-name-taki .sample-style-texture-custom.undefined i {
+  position: relative;
+  text-shadow: none;
+}
+@media (max-width: 767px) {
+  .sample-style-name-taki .sample-style-texture-custom.undefined {
+    font-size: 30px;
+    color: #999;
+    overflow: hidden;
+    text-indent: 0;
+  }
+}

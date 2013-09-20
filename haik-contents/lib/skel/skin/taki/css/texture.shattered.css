@@ -1,0 +1,15 @@
+body {
+  background-image: url("../img/shattered.png");
+}
+#orgm_container {
+  background-color: rgba(255, 255, 255, 0.9);
+  -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 767px) {
+  #orgm_container {
+    padding: 0 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}

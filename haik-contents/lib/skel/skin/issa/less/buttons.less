@@ -1,0 +1,47 @@
+//
+// Buttons
+// --------------------------------------------------
+
+
+// Base styles
+// --------------------------------------------------
+
+// Info appears as blue-green
+
+.btn-theme.active {
+  color: rgba(255,255,255,.75);
+}
+
+.btn-theme {
+/*   .btn-pseudo-states(@btn-theme-color, @btn-theme-bg, @btn-theme-border); */
+
+  color: @btn-theme-color;
+  background-color: @btn-theme-bg;
+  border-color: @btn-theme-border;
+  #gradient > .vertical(@btn-theme-bg, darken(@btn-theme-bg, 5%));
+  
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: @btn-theme-color;
+    border-color: darken(@btn-theme-border, 3%);
+    #gradient > .vertical(lighten(@btn-theme-bg, 3%), @btn-theme-bg);
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @btn-theme-bg;
+      border-color: @btn-theme-border
+    }
+  }
+  
+  
+}

@@ -1,0 +1,126 @@
+	<div class="page-header"><?php echo h($title) ?></div>
+
+
+<!--
+
+<section>
+
+	<div class="page-header"><?php echo h($title) ?></div>
+	
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#orgm-blog-home" data-toggle="tab"><?php echo _e('全般') ?></a></li>
+		<li><a href="#orgm-blog-category" data-toggle="tab"><?php echo _e('カテゴリ') ?></a></li>
+		<li><a href="#orgm-blog-external" data-toggle="tab"><?php echo _e('外部連携') ?></a></li>
+		<li><a href="#orgm-blog-misc" data-toggle="tab"><?php echo _e('その他') ?></a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="orgm-blog-home">
+			<section>
+				<h3><?php _e('ブログタイトル') ?></h3>
+				<p>
+					<?php _e('ブログの名前を設定できます') ?>
+				</p>
+				<?php echo $helper->form('horizontal', array('method'=>'post', 'action'=>$script.'?cmd=app_config_blog'))?>
+				<?php echo $helper->hidden('phase', array('value'=>'save'))?>
+				<?php echo $helper->input('blog_title', array('label'=>__('ブログタイトル')))?>
+				<?php echo $helper->form_end(__('保存'))?>
+			</section>
+	
+			<section>
+				<?php $blog_comment_label = $qblog_enable_comment ? '表示' : '非表示' ?>
+				<?php $blog_comment_btn_label = $qblog_enable_comment ? '非表示にする' : '表示する' ?>
+				<?php $blog_comment_value = $qblog_enable_comment ? 0 : 1 ?>
+	
+				<h3><?php _e('コメントの表示・非表示') ?></h3>
+				<p>
+					<?php _e('ブログ記事のコメント欄の表示、非表示を設定します') ?><br />
+					<?php _e('現在ブログ記事のコメント欄は、「<strong>'.$blog_comment_label.'</strong>」に設定しています') ?>
+				</p>
+				<?php echo $helper->form('horizontal', array('method'=>'post', 'action'=>$script.'?cmd=app_config_blog'))?>
+				<?php echo $helper->hidden('phase', array('value'=>'save'))?>
+				<?php echo $helper->input('qblog_enable_comment', array('type'=>'hidden', 'value'=>$blog_comment_value))?>
+				<?php echo $helper->form_end(__($blog_comment_btn_label))?>
+			</section>
+	
+			<section>
+				<?php $blog_comment_notice_label = $qblog_comment_notice ? '通知する' : '通知しない' ?>
+				<?php $blog_comment_notice_btn_label = $qblog_comment_notice ? '通知しない' : '通知する' ?>
+				<?php $blog_comment_notice_value = $qblog_comment_notice ? 0 : 1 ?>
+	
+				<h3><?php _e('コメントの通知') ?></h3>
+				<p>
+					<?php _e('ブログ記事にコメントがあった場合、メールで通知します') ?><br />
+					<?php _e('現在、コメントの通知設定は、「<strong>'.$blog_comment_notice_label.'</strong>」に設定しています') ?>
+				</p>
+				<?php echo $helper->form('horizontal', array('method'=>'post', 'action'=>$script.'?cmd=app_config_blog'))?>
+				<?php echo $helper->hidden('phase', array('value'=>'save'))?>
+				<?php echo $helper->input('qblog_comment_notice', array('type'=>'hidden', 'value'=>$blog_comment_notice_value))?>
+				<?php echo $helper->form_end(__($blog_comment_notice_btn_label))?>
+			</section>
+	
+			<section>
+				<?php
+					$blog_social_widget_values = array(
+						array('value'=>'default', 'label'=>'標準：Twitter, Facebook, Google+ のボタンを表示する。'),
+						array('value'=>'html', 'label'=>'任意のHTMLを使う'),
+						array('value'=>'none', 'label'=>'なし')
+					);
+					foreach ($blog_social_widget_values as $row)
+					{
+						if ($row['value'] == $qblog_social_widget)
+						{
+							$blog_social_widget_label = $row['label'];
+						}
+					}
+				?>
+				<h3><?php _e('ソーシャルプラグインの表示') ?></h3>
+				<p>
+					<?php _e('ブログ記事のコメント欄の上にソーシャルプラグインを表示できます') ?><br />
+					<?php _e('外部サービスのHTMLコードも挿入可能です') ?><br />
+				</p>
+				<p>
+					<?php _e('現在ソーシャルプラグインの表示は、「<strong>'.$blog_social_widget_label.'</strong>」に設定されています') ?>
+				</p>
+				<?php echo $helper->form('horizontal', array('method'=>'post', 'action'=>$script.'?cmd=app_config_blog'))?>
+				<?php echo $helper->hidden('phase', array('value'=>'save'))?>
+				<?php echo $helper->radio('qblog_social_widget', $blog_social_widget_values)?>
+	
+				<?php echo $helper->textarea('qblog_social_html')?>
+	
+	
+				<?php echo $helper->form_end(__($blog_comment_notice_btn_label))?>
+			</section>
+	
+		</div>
+		
+		<div class="tab-pane" id="orgm-blog-category">
+			<section>
+				<h3><?php _e('カテゴリ管理') ?></h3>
+				<p>
+					<?php _e('カテゴリの名前の変更、削除を行います') ?>
+				</p>
+				<?php echo $helper->form('horizontal', array('method'=>'post', 'action'=>$script.'?cmd=app_config_blog'))?>
+				<?php echo $helper->hidden('phase', array('value'=>'save'))?>
+				<?php echo $helper->input('blog_title', array('label'=>__('ブログタイトル')))?>
+				<?php echo $helper->form_end(__('保存'))?>
+			</section>
+		</div>
+	
+	
+		<div class="tab-pane" id="orgm-blog-external">
+			<section>
+			</section>
+		</div>
+	
+	
+		<div class="tab-pane" id="orgm-blog-misc">
+			<section>
+			</section>
+		</div>
+
+	</div>
+
+</section>
+
+-->

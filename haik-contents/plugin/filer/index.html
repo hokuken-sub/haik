@@ -1,0 +1,369 @@
+<?php if ( ! $iframe_mode):?>
+<div class="row">
+	<div class="col-sm-12">
+		<?php include(PLUGIN_DIR . 'filer/nav.html')?>
+	</div>
+</div>
+<?php endif;?>
+
+
+<div class="row">
+	<div class="col-sm-12 filer-list-wrapper">
+		<a id="fileupload_trigger" class="thumbnail cut"><?php _e('ファイルを追加') ?></a>
+		<input id="fileupload" type="file" name="files[]" multiple style="display:none;">
+		<ul id="orgm_filer_list" class="thumbnails list-unstyled filer-grid-list"></ul>
+		
+		<button class="btn btn-default" id="load_more"><?php echo sprintf(__('次の%s件を読み込む'), $size)?></button>
+	<div>
+</div>
+
+<div id="orgm_filer_modal" class="modal fade"></div>
+
+
+<script id="tmpl_filelist" type="text/x-jquery-tmpl">
+		{{if yearmonth != ''}}
+		<li class="date-title col-sm-11" data-date-title="${yearmonth}">
+			${yearmonth}
+		</li>
+		{{/if}}
+
+		<li data-id="${id}" class="filer-grid-item">
+			<a href="#" class="thumbnail cut filer-grid" data-filer="${$item.json()}">
+			{{if type == 'doc'}}
+				<i class="orgm-icon orgm-icon-file-3"></i>
+			{{else type == 'image'}}
+				<img class="cut_image" src="${thumbnail}" />
+			{{else type == 'audio'}}
+				<i class="orgm-icon orgm-icon-music"></i>
+			{{else type == 'video'}}
+				<i class="orgm-icon orgm-icon-camera"></i>
+			{{else type == 'other'}}
+				<i class="orgm-icon orgm-icon-file-4"></i>
+			{{/if}}
+
+				<span class="filetitle caption">${title}</span>
+				<span class="check triangle-btn triangle-right-top"><i class="orgm-icon orgm-icon-checkmark"></i></span>
+				<span class="delete triangle-btn triangle-right-top red"><i class="orgm-icon orgm-icon-close"></i></span>
+				<span class="star {{if star == 1}}active{{/if}}  triangle-btn triangle-left-top"><i class="orgm-icon orgm-icon-star{{if star == 1}}-2{{/if}}"></i></span>
+			</a>
+		</li>
+</script>
+
+
+<script id="tmpl_filer_modal" type="text/x-jquery-tmpl">
+	<div class="filer-grid-expander-inner">
+				<div class="row">
+
+					<button type="button" class="close" data-dismiss="filer-grid" aria-hidden="true">&times;</button>
+		
+					<div id="orgm_filer_carousel" class="col-sm-8 file-preview" data-id="${id}">
+					
+						<div>
+						<div>
+						{{if type == 'doc'}}
+							<i class="orgm-icon orgm-icon-file-3"></i>
+						{{else type == 'image'}}
+							<img src="${previewpath}" class="preview">
+						{{else type == 'audio'}}
+							<audio src="${previewpath}" controls><p><?php _e('音声を再生するには、audioタグをサポートしたブラウザが必要です。') ?></p></audio>
+						{{else type == 'video'}}
+							<video src="${previewpath}" controls><p><?php _e('動画を再生するには、videoタグをサポートしたブラウザが必要です。') ?></p></video>
+						{{else type == 'other'}}
+							<i class="orgm-icon orgm-icon-file-4"></i>
+						{{/if}}
+						</div>
+						</div>
+		
+					</div>
+		
+					<div class="col-sm-4 file-detail">
+						<div class="row">
+							<div class="col-sm-12">
+<!-- 								<button type="button" class="close" data-dismiss="filer-grid" aria-hidden="true">&times;</button> -->
+							</div>
+						</div>
+						
+						<div class=""><div class="panel-body">
+						
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#info" data-toggle="tab"><?php _e('情報') ?></a></li>
+						<?php if ($filer->imageEditable):?>
+							{{if type == 'image'}}
+							<li><a href="#edit" data-toggle="tab"><?php _e('画像の編集') ?></a></li>
+							{{/if}}
+						<?php endif;?>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="info">
+								<div class="row field-editable">
+									<span class="col-sm-4"><?php _e('タイトル') ?> :</span>
+									<span class="col-sm-8">
+										<span data-field="title">${title}</span>
+										<button type="button" class="btn btn-default btn-sm pull-right" data-target="#orgm_filer_title_edit" data-toggle="edit-pane"><?php _e('編集')?></button>
+									</span>
+								</div>
+								<div id="orgm_filer_title_edit" class="well well-sm field-edit-pane">
+									<div class="row">
+										<div class="col-sm-12">
+											<button type="button" class="close" data-dismiss="field-edit-pane">&times;</button>
+											<h5><?php _e('タイトルの編集') ?></h5>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<?php echo $helper->form('')?>
+											<?php echo $helper->hidden('cmd', array('value'=>'filer'))?>
+											<?php echo $helper->hidden('id', array('value'=>'${id}'))?>
+											<?php echo $helper->hidden('mode', array('value'=>'update'))?>
+											<?php echo $helper->hidden('overwrite', array('value'=>'1'))?>
+											<?php echo $helper->hidden('filename', array('value'=>'${filename}'))?>
+											<?php echo $helper->input('title', array('label' => FALSE, 'value' => '${title}', 'data-field'=>'title', 'data-revert'=>'${title}', 'class'=>'form-control input-sm')) ?>
+											<button type="submit" class="btn btn-default btn-sm pull-right"><?php _e('更新')?></button>
+											<?php echo $helper->form_end()?>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row" id="orgm_filer_filename">
+									<span class="col-sm-4"><?php _e('ファイル名') ?> :</span>
+									<span class="col-sm-8" data-field="filename" title="${filename}">${filename}</span>
+								</div>
+				
+								<div class="row">
+									<span class="col-sm-4"><?php _e('サイズ') ?> :</span>
+									<span class="col-sm-8" data-field="filesize">${filesize}</span>
+								</div>
+		
+								{{if type == 'image'}}
+								<div class="row">
+									<span class="col-sm-4"><?php _e('横 x 縦') ?> :</span>
+									<span class="col-sm-8" data-field="imagesize">${imagesize}</span>
+								</div>
+								{{/if}}
+					
+								<div class="row">
+									<span class="col-sm-4"><?php _e('URL') ?> :</span>
+									<span class="col-sm-8"><input type="text" class="form-control input-sm col-sm-12 copyfield" value="${url}" data-field="url" /></span>
+								</div>
+								<div class="row">
+									<span class="col-sm-4"><?php _e('パス') ?> :</span>
+									<span class="col-sm-8"><input type="text" class="form-control input-sm col-sm-12 copyfield" value="${filepath}" data-field="filepath" /></span>
+								</div>
+		
+								<div class="row">
+									<span class="col-sm-4"><?php _e('日付') ?> :</span>
+									<span class="col-sm-8" >${created}</span>
+								</div>
+								
+								<hr>
+								
+								<div class="clearfix orgm-filer-controls">
+									<ul class="nav nav-pills pull-right">
+										<li>
+											<span class=""><a href="#" data-download class=""><i class="orgm-icon orgm-icon-download"></i> <?php _e('ダウンロード') ?></a></span>
+										</li>
+										<li>
+											<?php echo $helper->form('', array('class'=>'hide'))?>
+											<?php echo $helper->hidden('cmd', array('value'=>'filer'))?>
+											<?php echo $helper->hidden('mode', array('value'=>'update'))?>
+											<?php echo $helper->hidden('id', array('value'=>'${id}'))?>
+											<?php echo $helper->hidden('overwrite', array('value'=>'0'))?>
+											<?php echo $helper->form_end()?>
+											<span class=""><a href="#" data-copy class="pull-right"><i class="orgm-icon orgm-icon-copy"></i> <?php _e('複製') ?></a></span>
+										</li>
+										
+									</ul>
+								</div>
+
+
+				
+								{{if tag.length > 0}}
+								<div class="row">
+									<ul class="nav nav-pilles">
+									{{each tag}}
+										<li class="label label-info">${$value}</li>
+									{{/each}}
+									</ul>
+								</div>
+								{{/if}}
+				
+							</div>
+			
+		
+						<?php if ($filer->imageEditable):?>
+							<div class="tab-pane" id="edit">
+		
+								{{if type == 'image'}}
+								<div id="imagesize">
+									<div class="row">
+										<div class="col-sm-12">
+											<h5><?php _e('サイズ変更')?></h5>
+										</div>
+									</div>
+									<div class="field-editable row">
+										<div class="col-sm-4"><?php _e('横 x 縦 :')?></div>
+										<div class="col-sm-8">
+											<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="edit-pane"><?php _e('変更')?></button>
+											<span data-field="imagesize">${imagesize}</span>
+										</div>
+									</div>
+									<div class="field-edit-pane well well-sm">
+		
+										<div class="row">
+											<div class="col-sm-12">
+												<button type="button" class="close" data-dismiss="field-edit-pane">&times</button>
+												<h5><?php _e('横 x 縦の変更')?></h5>
+											</div>
+										</div>
+		
+										<div class="row">
+											<div class="col-sm-12">
+											<?php echo $helper->form('')?>
+											<?php echo $helper->hidden('cmd', array('value'=>'filer'))?>
+											<?php echo $helper->hidden('id', array('value'=>'${id}'))?>
+											<?php echo $helper->hidden('mode', array('value'=>'update'))?>
+		
+											<div class="control-group" style="position:relative">
+												<div class="input-group">
+													<span class="input-group-addon input-sm"><?php _e('横')?></span>
+													<?php echo $helper->input('width', array('label' => FALSE, 'div'=>FALSE, 'value' => '${width}', 'data-field'=>'width', 'class'=>'form-control input-sm imagesize', 'data-revert'=>'${width}')) ?>
+												</div><br>
+												<div class="input-group">
+													<span class="input-group-addon input-sm"><?php _e('縦')?></span>
+													<?php echo $helper->input('height', array('label' => FALSE, 'div'=>FALSE, 'value' => '${height}', 'data-field'=>'height', 'class'=>'form-control input-sm imagesize', 'data-revert'=>'${height}')) ?>
+												</div>
+												<div class="keep-ratio lock"><i class="orgm-icon orgm-icon-lock"></i></div>	
+											
+												<div class="checkbox">
+													<label class="pull-left">
+														<input type="checkbox" id="keep_ratio" value="1" checked> <?php _e('縦横比を固定')?>
+													</label>
+												</div>
+											</div>
+											
+											<hr style="margin:10px 0;">
+											
+											<div class="control-group">
+												<div class="controls">
+													<div class="checkbox">
+														<label class="">
+															<input type="hidden" name="overwrite" value="1">
+															<input type="checkbox" name="overwrite" value="0" checked> <?php _e('別ファイルで保存')?>
+														</label>
+													</div>
+													<button type="submit" class="btn btn-default btn-sm pull-left"><?php _e('保存')?></button>
+												</div>
+											</div>
+											<?php echo $helper->form_end()?>
+											</div>
+										</div>
+		
+									</div>
+									
+								</div>
+								
+								<hr>
+								
+								<div id="imagecrop" class="">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<h5><?php _e('切り抜き')?></h5>
+											<p>
+												画像をドラッグすると切り抜きができます。
+											</p>
+										</div>
+									</div>
+									
+									<div class="row crop-pane">
+										
+										<div class="col-sm-12">
+										
+										<div data-toggle="buttons">
+											<label class="btn btn-default btn-sm active"><input type="radio" name="ratio" value="0" checked> フリー</label>
+											<label class="btn btn-default btn-sm"><input type="radio" name="ratio" value="1"> 正方形</label>
+											<label class="btn btn-default btn-sm"><input type="radio" name="ratio" value="1.5"> 3 x 2</label>
+											<label class="btn btn-default btn-sm"><input type="radio" name="ratio" value="1.6"> 8 x 5</label>
+											<label class="btn btn-default btn-sm"><input type="radio" name="ratio" value="1.77777"> 16 x 9</label>
+											<label class="btn btn-default btn-sm"><input type="radio" name="ratio" value="7.8"> 39 x 5</label>
+										</div>
+										
+										<?php echo $helper->form('', array('class'=>'hide'))?>
+										<div class="btn-toolbar">
+											<?php echo $helper->hidden('cmd', array('value'=>'filer'))?>
+											<?php echo $helper->hidden('id', array('value'=>'${id}'))?>
+											<?php echo $helper->hidden('mode', array('value'=>'update'))?>
+											<?php echo $helper->hidden('crop[x]', array('value'=>''))?>
+											<?php echo $helper->hidden('crop[y]', array('value'=>''))?>
+											<?php echo $helper->hidden('crop[w]', array('value'=>''))?>
+											<?php echo $helper->hidden('crop[h]', array('value'=>''))?>
+										</div>
+		
+										<div class="control-group well">
+											<span><?php _e('横 x 縦 : ') ?><span class="cropsize"></span></span>
+											
+										</div>
+		
+										<div class="control-group">
+											<div class="controls">
+												<div class="checkbox">
+													<input type="hidden" name="overwrite" value="1">
+													<label>
+														<input type="checkbox" name="overwrite" value="0" checked> 別ファイルで保存
+													</label>
+												</div>
+												<button type="submit" class="btn btn-default btn-sm"><?php _e('切り抜き')?></button>
+											</div>
+										</div>
+										<?php echo $helper->form_end()?>
+										
+										</div>
+									</div>
+									
+								</div>
+								<hr />
+								<div id="imagerotate" class="row">
+									<div class="col-sm-12">
+										<h5>回転</h5>
+										<?php echo $helper->form('')?>
+										<?php echo $helper->hidden('cmd', array('value'=>'filer'))?>
+										<?php echo $helper->hidden('id', array('value'=>'${id}'))?>
+										<?php echo $helper->hidden('mode', array('value'=>'update'))?>
+										<?php echo $helper->hidden('rotate', array('value'=>'90'))?>
+										<?php echo $helper->hidden('overwrite', array('value'=>'1'))?>
+										
+										<div class="btn-toolbar">
+											<button type="submit" class="btn btn-default" data-rotate="90" title="<?php h(_e('左に90度'))?>"><i class="orgm-icon orgm-icon-undo"></i></button>
+											<button type="submit" class="btn btn-default" data-rotate="-90" title="<?php h(_e('右に90°'))?>"><i class="orgm-icon orgm-icon-redo"></i></button>
+										</div>
+										<?php echo $helper->form_end()?>
+									</div>
+								</div>
+								{{/if}}
+							</div>
+						<?php endif;?>
+						</div>
+						
+						</div></div>
+					</div>
+				</div>
+			<a class="carousel-control left" href="#" data-slide="prev" style="z-index:500">&lsaquo;</a>
+			<a class="carousel-control right" href="#" data-slide="next" style="z-index:500">&rsaquo;</a>
+	</div>
+
+</script>
+
+
+<script type="text/x-jquery-tmpl" id="tmpl_filer_popover">
+
+	<strong>${filename}</strong><br>
+	
+	<div class="control-group"></div>
+	<div class="control-group">
+	{{if type == 'image'}}
+		<?php _e('横 x 縦') ?>：${width} x ${height}<br>
+	{{/if}}
+	<?php _e('サイズ') ?>：${filesize}
+	</div>
+
+</script>

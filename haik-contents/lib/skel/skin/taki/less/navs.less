@@ -1,0 +1,71 @@
+//
+// Navs
+// --------------------------------------------------
+
+#orgm_nav {
+
+	.navbar-nav > li > a {
+		color: @gray;	
+	}
+	.nav > li > a:hover,
+	.nav > li > a:focus {
+		color: @linkColor;
+		text-decoration: none;
+	}
+	
+	// Nav headers (for dropdowns and lists)
+	.nav-header {
+	  color: @grayLight;
+	  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+	}
+	
+	// PILLS
+	// -----
+	// Active state
+	.nav > .active > a,
+	.nav > .active > a:hover,
+	.nav > .active > a:focus {
+		color: @linkColor;
+		background-color: transparent;
+	}
+	
+	// Default dropdown links
+	// -------------------------
+	// Make carets use linkColor to start
+	.nav .dropdown-toggle .caret {
+	  border-top-color: @grayDark;
+	  border-bottom-color: @grayDark;
+	}
+	.nav .dropdown-toggle:hover .caret,
+	.nav .dropdown-toggle:focus .caret {
+	  border-top-color: @linkColorHover;
+	  border-bottom-color: @linkColorHover;
+	}
+	
+	// Active dropdown links
+	// -------------------------
+	.nav .active .dropdown-toggle .caret {
+	  border-top-color: @linkColor;
+	  border-bottom-color: @linkColor;
+	}
+	.nav-tabs .active .dropdown-toggle .caret {
+	  border-top-color: @gray;
+	  border-bottom-color: @gray;
+	}
+	
+	// Open dropdowns
+	// -------------------------
+	.nav > .open .dropdown-toggle,
+	.nav > li.dropdown.open.active > a:hover,
+	.nav > li.dropdown.open.active > a:focus {
+		color: @linkColor;
+		background-color: transparent;
+	}
+	.nav li.dropdown.open .caret,
+	.nav li.dropdown.open.active .caret,
+	.nav li.dropdown.open a:hover .caret,
+	.nav li.dropdown.open a:focus .caret {
+	  border-top-color: @linkColor;
+	  border-bottom-color: @linkColor;
+	}
+}

@@ -1,0 +1,31 @@
+li.orgm-template-item:nth-child(3n + 4) {
+	margin-left: 0;
+}
+
+ul.thumbnails li.active .thumbnail {
+	box-shadow: 0 0 10px #91bd09;
+	-webkit-box-shadow: 0 0 10px #91bd09;
+}
+
+.config-general-style-name .sample-cut a {
+	height: 50px; /*正方形にしたいサイズ*/
+	width: 50px; /*正方形にしたいサイズ*/
+	display: block; /*SPANなのでブロック要素に*/
+	padding: 0;
+	line-height: 50px;
+	text-align: center;
+}
+
+.config-general-style-name .sample-cut{
+	border-radius: 4px;
+}
+
+@media (max-width: 767px) {
+
+	.config-general-style-name .sample-cut a {
+		height: 30px; /*正方形にしたいサイズ*/
+		width:  30px; /*正方形にしたいサイズ*/
+	}
+		
+	
+}

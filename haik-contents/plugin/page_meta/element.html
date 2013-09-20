@@ -1,0 +1,163 @@
+<?php
+/**
+ *   View of Page Meta Plugin Widget
+ *   -------------------------------------------
+ *   /haik-contents/plugin/page_meta/element.html
+ *   
+ *   Copyright (c) 2013 hokuken
+ *   http://hokuken.com/
+ *   
+ *   created  : 
+ *   modified : 2013/09/05
+ *   
+ */
+?>
+<div id="orgm_meta_customizer" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<div class="row">
+					<div class="col-sm-6">
+						<h4><?php _e('ページ情報の設定')?></h4>
+					</div>
+					<!-- Shortened URL -->
+					<div class="col-sm-4 pull-right" style="margin-top:5px">
+						<label for="orgm_page_meta_shortened_url" class="sr-only"><?php _e('短縮URL')?></label>
+						<input type="text" id="orgm_page_meta_shortened_url" class="form-control input-sm" value="<?php echo h($shortened_url)?>">
+					</div>
+				</div>
+			</div>
+		
+			<div class="modal-body">
+			</div>
+		
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal"><?php _e('閉じる') ?></button>
+				<button class="btn btn-primary" data-save><?php _e('保存') ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/x-jquery-tmpl" id="tmpl_meta_customizer">
+
+	<div class="modal-body">
+		<div class="container">
+			<form method="post" action="<?php echo h($script.'?cmd=page_meta&page='.$r_page.'&mode=update') ?>">
+
+				<div class="form-group">
+					<label class="control-label" for="orgm_page_meta_page_title"><?php _e('ページタイトル')?></label>
+					<div class="controls">
+						<input type="text" name="title" class="form-control" placeholder="${page}" id="orgm_page_meta_page_title" value="${title}">
+						<span class="help-block muted">
+						{{if isDefaultPage}}
+							<?php _e('検索結果に「${title}」のように表示されます。')?>
+						{{else}}
+							<?php echo sprintf(__('検索結果に「${title} | %s」のように表示されます。'), $site_title)?>
+						{{/if}}
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label" for="orgm_page_meta_description"><?php _e("説明") ?></label>
+					<div class="controls">
+						<textarea id="orgm_page_meta_description" name="description" rows="2" class="form-control" placeholder="${auto_description}">${description}</textarea>
+						<span class="help-block muted"><?php _e('このページの簡単な説明を書いてください。Google等の検索結果に表示されます。')?></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label" for="orgm_page_meta_keywords"><?php _e("キーワード") ?></label>
+					<div class="controls">
+						<textarea id="orgm_page_meta_keywords" name="keywords" rows="2" class="form-control">${keywords}</textarea>
+						<span class="help-block muted"><?php _e('このページで重要なキーワードをいくつか、半角カンマ（,）区切りで書いてください。')?></span>
+					</div>
+				</div>
+
+				<hr>
+				
+				<div class="form-group" style="margin-bottom:20px;">
+					<label class="control-label"><?php _e("公開設定")?></label>
+					<div class="controls">
+						<label class="radio-inline"><input type="radio" name="close" value="public" /> <?php _e("一般公開") ?></label>
+						<label class="radio-inline"><input type="radio" name="close" value="closed" /> <?php _e("一時閉鎖") ?></label>
+						<label class="radio-inline"><input type="radio" name="close" value="password" /> <?php _e("限定公開") ?></label>
+						<label class="radio-inline"><input type="radio" name="close" value="redirect" /> <?php _e("転送") ?></label>
+						
+						<div id="close_password" class="well form-inline" data-close-set style="margin-top:10px;">
+							<div class="row">
+								<div class="col-sm-4">
+									<input type="text" name="password" class="form-control input-sm" value="${password}" placeholder="<?php _e("パスワード")?>" />
+								</div>
+								<div class="col-sm-8">
+									<div class="input-group">
+										<span class="input-group-addon input-sm">限定URL</span>
+										<input type="text" class="uneditable-input form-control input-sm" value="${limited_url}" readonly />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="close_redirect" class="well" data-close-set style="margin-top:10px;">
+							<div class="form-group">
+								<input type="text" name="redirect" class="form-control input-sm" value="${redirect}" placeholder="<?php _e("転送先URLまたは、ページ名")?>" />
+							</div>
+							<div class="form-group">
+								<div class="radio">
+									<label>
+										<input type="radio" name="redirect_status" value="301" /> <?php _e("恒久的転送（301 リダイレクト）") ?>
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="redirect_status" value="302" /> <?php _e("一時的転送（302 リダイレクト）") ?>
+									</label>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<hr>
+				
+				<div class="form-group">
+					<label class="control-label"><?php _e("レイアウト") ?></label>
+					<div class="row layout">
+						<ul class="thumbnails">
+							{{each(i, v) templates}}
+							<li class="col-sm-3 orgm-template-item{{if template_name == i}} active{{/if}}" data-template="${i}">
+								<div class="thumbnail">
+
+								{{if v.thumbnail}}
+						 			<img src="${v.thumbnail}" alt="<?php echo sprintf(__('${i} のサムネール'))?>" width="75" height="100">
+								{{else}}
+									<div class="no-thumbnail"><i class="orgm-icon orgm-icon-image"></i> <?php _e("画像がありません") ?></div>
+								{{/if}}
+									<div class="thumbnail_name"><span>${i}</span></div>
+
+								</div>
+							</li>
+							{{/each}}
+						</ul>
+						<input type="hidden" name="template_name" value="${template_name}" />
+					</div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label class="control-label" for="orgm_page_meta_user_head"><?php _e("&lt;head&gt;タグを編集") ?></label>
+					<div class="controls">
+						<textarea id="orgm_page_meta_user_head" name="user_head" rows="2" class="form-control">${user_head}</textarea>
+					</div>
+				<div>
+			</form>
+
+ 		</div>
+	</div>
+
+</script>
+
+

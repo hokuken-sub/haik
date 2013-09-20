@@ -1,0 +1,186 @@
+#orgm_former_controls {
+	position:relative;
+}
+
+.former-list-wrapper{
+	padding-left:120px;
+	position:relative;
+	box-sizing:border-box;
+}
+
+.cut {
+	background-color: #fff;
+	border: 2px solid #ccc;
+}
+
+.cut:hover {
+	border-color:#3399cc;
+}
+
+.cut > span.description{
+	position: absolute;
+	width: 110px;
+	line-height: 21px;
+	padding: 5px;
+	top: 25px;
+	left: 0;
+	color: #777;
+}
+
+#former_add_trigger{
+	position:relative;
+	overflow: hidden; /*不要部分キリトリ*/
+	height: 120px; /*正方形にしたいサイズ*/
+	width: 120px; /*正方形にしたいサイズ*/
+	display: block; /*SPANなのでブロック要素に*/
+	padding: 30px 30px 0;
+	text-align: left;
+	background-color:#fff;
+	color: #999;
+	border: 2px solid #ccc;
+	box-sizing: border-box;
+	position:absolute;
+	left:0;
+	z-index: 1000;
+	line-height: 1.5em;
+}
+
+#former_add_trigger i.orgm-icon-plus{
+	font-size:12px;
+}
+
+#former_add_trigger:hover{
+	color: #666;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+section {
+	margin-bottom: 60px;
+}
+
+section > div {
+	padding: 10px;
+}
+
+#orgm_former_config .form .help-block {
+	font-size: 12px;
+	margin-bottom: 20px;
+}
+
+#orgm_former_parts ul {
+	margin :0;
+	list-style: none;
+}
+
+#orgm_former_parts .orgm-form-part {
+	cursor: pointer;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	position: relative;
+}
+
+#orgm_former_parts .orgm-form-part:hover {
+	background-color: #f7f7f7;
+}
+
+#orgm_former_parts .orgm-form-part.active {
+	position: relative;
+	background-color: #fff;
+}
+
+#orgm_former_parts .orgm-form-part.active:before {
+	content: '';
+	position:absolute;
+	top:0;
+	bottom:0;
+	left: -10px;
+	border-left: 5px solid #006dcc;
+	width: 5px;
+	box-sizing: border-box;
+}
+
+
+#orgm_former_parts .part-controls {
+	position: absolute;
+	top:10px;
+	right: 10px;
+	display: none;
+}
+#orgm_former_parts .orgm-form-part:hover .part-controls {
+	display: block;
+}
+
+#orgm_former_parts .orgm-form-part.active .part-controls {
+	display: none;
+}
+
+#orgm_former_parts .orgm-form-part[data-type=hidden] {
+	border: 2px dashed #ccc;
+}
+
+#orgm_former_parts .orgm-form-part .part-dragmark {
+	position: absolute;
+	bottom:0;
+	left: 0;
+	height: 20px;
+	width: 100%;
+	background-color: rgba(0,0,0, 0.2);
+	text-align: center;
+	color: #fff;
+	cursor: move;
+	display: none;
+}
+
+#orgm_former_parts .orgm-form-part:hover .part-dragmark {
+	display: block;
+}
+
+section .exnote-agwrapper textarea {
+	font-size: 14px;
+}
+
+#orgm_former_list {
+	margin-left: 10px;
+}
+#orgm_former_list li {
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#orgm_former_list li.new {
+	-webkit-animation-name: bluePulse;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: 3;
+	border-radius: 7px;
+}
+
+.postdata-connector {
+	opacity: .7;
+}
+
+.hide-on-show {
+	display: none;
+}
+.form-actions {
+	margin-top: 10px;
+}
+
+.part-config-option-item {
+	margin-bottom: 5px;
+}
+
+
+
+/* !Typeahead */
+
+.twitter-typeahead {
+/* 	display: table-cell !important; */
+}
+
+/*
+.tt-query {
+	vertical-align: middle !important;
+}
+*/

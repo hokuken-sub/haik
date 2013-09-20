@@ -1,0 +1,28 @@
+<div class="page-header"><?php echo h($title)?></div>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<p>現在のバージョンは、<?php echo h(APP_VERSION) ?> です。<br>最新のバージョン <?php echo h($version) ?> に更新します。</p>
+		
+		<?php if(version_compare($version, APP_VERSION) <= 0) : ?>
+		<div class="alert alert-info">
+			<a href="#" class="close" data-dismiss="alert">&times;</a>
+			最新バージョンですので、更新の必要はありません。
+		</div>
+		<?php endif; ?>
+		
+		<div class="container">
+			<?php
+				$url = $script . '?cmd=app_update';
+				$url = ($config) ? $url.'&config' : $url;
+			?>
+			<form action="<?php echo h($url) ?>" method="post">
+				<input type="hidden" name="mode" value="update">
+				<input type="submit" value="今すぐ更新" class="btn btn-primary">
+				<a href="#" class="btn btn-default" data-cancel>キャンセル</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+<?php include(PLUGIN_DIR.'app_update/cancel_form.html'); ?>

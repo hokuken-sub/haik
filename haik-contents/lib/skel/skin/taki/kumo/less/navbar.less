@@ -1,0 +1,160 @@
+//
+// Navbars (Redux)
+// --------------------------------------------------
+
+// Inner for background effects
+// Gradient is applied to its own element because overflow visible is not honored by IE when filter is present
+
+#orgm_navbar {
+
+	background-color: @navbarBackground;
+	.box-shadow(0 0 0 rgba(255,255,255,0));
+	border-color: @navbarBorder;
+	
+	// Plain text in topbar
+	// -------------------------
+	.navbar-text {
+	  color: @navbarText;
+	}
+	
+	// Janky solution for now to account for links outside the .nav
+	// -------------------------
+	.navbar-link {
+	  color: @navbarLinkColor;
+	  &:hover,
+	  &:focus {
+	    color: @navbarLinkColorHover;
+	  }
+	}
+	
+	// Dividers in navbar
+	// -------------------------
+	.divider-vertical {
+	  border-left: 1px solid @navbarBackground;
+	  border-right: 1px solid @navbarBackgroundHighlight;
+	}
+	
+	
+	
+	// NAVIGATION
+	// ----------
+	
+	// Links
+	.nav > li > a {
+	  // Vertically center the text given @navbarHeight
+	  color: @navbarLinkColor;
+	  text-shadow: 0 1px 0 @navbarBackgroundHighlight;
+	}
+	
+	// Hover/focus
+	.nav > li > a:focus,
+	.nav > li > a:hover {
+	/*   background-color: @navbarLinkBackgroundHover; // "transparent" is default to differentiate :hover/:focus from .active */
+	  color: @navbarLinkColorHover;
+	  text-decoration: none;
+	}
+	
+	// Active nav items
+	.nav > li > a:hover,
+	.nav > .active > a,
+	.nav > .active > a:focus {
+	  color: @navbarLinkColorActive;
+	  text-decoration: none;
+	  background-color: @navbarLinkBackgroundActive;
+	}
+	
+	// Navbar button for toggling navbar items in responsive layouts
+	// These definitions need to come after '.btn'
+	.btn-navbar {
+	  .btn-pseudo-states(@white, @navbarBackground, @navbarBackground);
+	}
+	.btn-navbar .icon-bar {
+	  background-color: #f5f5f5;
+	  border-radius: 1px;
+	}
+	
+	// Dropdown menus
+	// --------------
+	
+	// Menu position and menu carets
+	.nav > li > .dropdown-menu {
+	  &:before {
+	    border-bottom-color: @dropdownBorder;
+	  }
+	  &:after {
+	    border-bottom: 6px solid @dropdownBackground;
+	  }
+	}
+	// Menu position and menu caret support for dropups via extra dropup class
+	.navbar-fixed-bottom .nav > li > .dropdown-menu {
+	  &:before {
+	    border-top-color: @dropdownBorder;
+	  }
+	  &:after {
+	    border-top: 6px solid @dropdownBackground;
+	  }
+	}
+	
+	// Caret should match text color on hover/focus
+	.nav li.dropdown > a:hover .caret,
+	.nav li.dropdown > a:focus .caret {
+	  border-top-color: @navbarLinkColorHover;
+	  border-bottom-color: @navbarLinkColorHover;
+	}
+	
+	// Remove background color from open dropdown
+	.nav li.dropdown.open > .dropdown-toggle,
+	.nav li.dropdown.active > .dropdown-toggle,
+	.nav li.dropdown.open.active > .dropdown-toggle {
+	  background-color: @navbarLinkBackgroundActive;
+	  color: @navbarLinkColorActive;
+	}
+	.nav li.dropdown > .dropdown-toggle .caret {
+	  border-top-color: @navbarLinkColor;
+	  border-bottom-color: @navbarLinkColor;
+	}
+	.nav li.dropdown.open > .dropdown-toggle .caret,
+	.nav li.dropdown.active > .dropdown-toggle .caret,
+	.nav li.dropdown.open.active > .dropdown-toggle .caret {
+	  border-top-color: @navbarLinkColorActive;
+	  border-bottom-color: @navbarLinkColorActive;
+	}
+	
+	.share_buttons ul.nav > li > a {
+		color: @navbarLinkColor;
+		text-shadow: none;
+	}
+
+	
+}
+
+@media (max-width: 767px) {
+
+	#orgm_navbar .navbar-toggle:hover {
+		border-color: @white;
+		background-color: @white;
+	}
+	
+	#orgm_navbar  .navbar-toggle:hover .icon-bar {
+		background-color: #ddd;
+	}
+	
+	#orgm_navbar .navbar-collapse {
+		background-color: @navbarBackground;
+	}
+
+	#orgm_nav > .nav > li {
+		background-color: transparent;
+		border-style: none;
+	}
+	
+	#orgm_nav .nav > li:first-child {
+		border-radius: 0;
+	}
+
+	#orgm_navbar .nav > li.dropdown.open ul.dropdown-menu {
+		background-color: transparent;
+		color: @white;
+	}
+}
+

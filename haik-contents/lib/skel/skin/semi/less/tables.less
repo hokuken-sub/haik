@@ -1,0 +1,27 @@
+//
+// Tables
+// --------------------------------------------------
+
+
+
+
+// TABLE BACKGROUNDS
+// -----------------
+// Exact selectors below required to override .table-striped
+
+.table.theme th {
+	color: @theme;
+}
+
+.table tbody tr {
+  &.theme > td {
+    background-color: lighten(@theme, 20%);
+  }
+}
+
+// Hover states for .table-hover
+.table-hover tbody tr {
+  &.theme:hover > td {
+    background-color: lighten(@theme, 15%);
+  }
+}

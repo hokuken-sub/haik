@@ -1,0 +1,59 @@
+
+	<div class="page-header"><?php echo h($title) ?></div>
+	
+	<section class="setting">
+		<div class="container">
+			<ul class="setting_list">
+				<li>
+					<div class="row">
+						<div class="col-sm-3"><?php _e('&lt;head&gt;内のタグ') ?></div>
+						<div class="col-sm-7 current"></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="user_head"><?php _e('編集') ?></a></div>
+					</div>
+				</li>
+				<li>
+					<div class="row">
+						<div class="col-sm-3"><?php _e('バックアップ・復元') ?></div>
+						<div class="col-sm-7 current"></div>
+						<div class="col-sm-2 pull-right"><a href="<?php echo h($script.'?cmd=dump') ?>" class="pull-right"><?php _e('詳細') ?></a></div>
+					</div>
+				</li>
+				<li>
+					<div class="row">
+						<div class="col-sm-3"><?php _e('フォーム設定') ?></div>
+						<div class="col-sm-7 current"></div>
+						<div class="col-sm-2 pull-right"><a href="<?php echo h($script.'?cmd=former') ?>" class="pull-right"><?php _e('詳細') ?></a></div>
+					</div>
+				</li>				
+			</ul>
+		</div>
+		
+		<a href="<?php echo h($script.'?cmd=app_config_system'); ?>" class="app-config-more"><?php _e('より詳細な設定') ?></a>
+	</section>
+
+
+<script id="tmpl_conf_user_head" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_advance" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_advance" data-error="">		
+			<input type="hidden" name="phase" value="save" data-error="">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php echo _e('&lt;head&gt;内のタグ') ?></label>
+				<div class="col-sm-9">
+					<textarea name="user_head" rows="5" class="form-control">${user_head}</textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>

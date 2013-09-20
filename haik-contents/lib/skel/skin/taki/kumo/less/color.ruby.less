@@ -1,0 +1,38 @@
+@theme:                    #e73562;
+@themeText:                darken(@theme, 15%);
+@themeBorder:              lighten(@theme, 30%);
+@themeBackground:          lighten(@theme, 35%);
+
+// Navbar
+// -------------------------
+//@navbarBackgroundHighlight:       #ffffff; //white
+@navbarBackground:                @theme;
+@navbarBackgroundHighlight:       lighten(@theme, 5%);
+@navbarBorder:                    @theme;
+
+@navbarText:                      @grayLighter;
+@navbarLinkColor:                 @grayLighter;
+@navbarLinkColorActive:           #fff;
+@navbarLinkColorHover:            @navbarLinkColorActive;
+@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundActive:      darken(@theme, 5%);
+@navbarBrandColor:                @navbarLinkColor;
+
+@import "skin.less";
+@import "color.less";
+@import "scaffolding.less";
+
+#logo a.navbar-brand {
+	color: @theme;
+}
+
+@media (max-width: 767px) {
+	#logo a.navbar-brand {
+		color: @white;
+	}
+}
+
+.marketing .page-header h1,
+{
+	color: @theme;
+}

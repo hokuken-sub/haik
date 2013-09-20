@@ -1,0 +1,39 @@
+
+
+<?php include(PLUGIN_DIR . 'filer/nav.html')?>
+
+
+
+<div class="row">
+	<div class="filer-list-wrapper">
+		<a id="fileupload_trigger" class="thumbnail cut"><?php _e('ファイルを追加') ?></a>
+		<input id="fileupload" type="file" name="files[]" data-url="index.php?cmd=filer&mode=upload" multiple style="display:none;">
+		<ul id="orgm_folder_list" class="thumbnails">
+		</ul>
+	<div>
+
+</div>
+
+
+<script id="tmpl_folderlist" type="text/x-jquery-tmpl">
+		<li>
+			<a href="${url}" class="thumbnail cut">
+			{{each(i, v) files}}
+				<span class="filer-folder">
+				{{if v.type == 'doc'}}
+					<i class="orgm-icon orgm-icon-file-4"></i>
+				{{else v.type == 'image'}}
+					<img class="cut_image" src="${v.thumbnail}" />
+				{{else v.type == 'audio'}}
+					<i class="orgm-icon orgm-icon-music"></i>
+				{{else v.type == 'video'}}
+					<i class="orgm-icon orgm-icon-camera"></i>
+				{{else v.type == 'other'}}
+					<i class="orgm-icon orgm-icon-file-3"></i>
+				{{/if}}
+				</span>
+			{{/each}}
+				<span class="filetitle caption">${title}</span>
+			</a
+		</li>
+</script>

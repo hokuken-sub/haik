@@ -1,0 +1,19 @@
+@theme:                    #e73562;
+@themeText:                darken(@theme, 15%);
+@themeBorder:              lighten(@theme, 30%);
+@themeBackground:          lighten(@theme, 35%);
+@linkColor:                @theme;
+
+@import "skin.less";
+@import "color.less";
+
+@import "scaffolding.less";
+
+#logo a.navbar-brand {
+	color: @theme;
+}
+
+.marketing .page-header h1,
+{
+	color: @theme;
+}

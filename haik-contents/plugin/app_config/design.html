@@ -1,0 +1,81 @@
+<div id="orgm_designer" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4><?php echo h($title) ?></h4>
+			</div>
+		
+			<form action="?cmd=app_config_design" method="post" class="">
+				<div class="modal-body"></div>
+			
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal"><?php _e('閉じる') ?></button>
+					<button type="button" class="btn btn-info" id="preview_skin"><?php _e('プレビュー')?></button>
+					<input type="submit" class="btn btn-primary" value="<?php _e('変更') ?>">
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+	
+<script id="tmpl_conf_style_name" type="text/x-jquery-tmpl">
+
+	<div class="config-general-style-name">
+			<input type="hidden" name="cmd" value="app_config_design">		
+			<input type="hidden" name="phase" value="save">	
+			
+			<h5>デザイン</h5>
+
+			<div class="controls layout row">
+				<ul class="thumbnails list-unstyled">
+					<?php foreach($skin_dirs as $skinname => $skin) : ?>
+					<li class="col-sm-4 col-xs-4 orgm-template-item{{if style_name == '<?php echo h($skinname) ?>'}} active{{/if}}">
+						<div class="thumbnail" title="<?php echo h($skinname)?>">
+						<?php if ($skin['thumbnail'] != '') : ?>
+				 			<img src="<?php echo h(SKIN_DIR.$skinname.'/'.$skin['thumbnail'])?>">
+				 		<?php else: ?>
+							<div class="no-thumbnail"><i class="orgm-icon orgm-icon-image"></i> <?php _e("画像がありません") ?></div>
+						<?php endif; ?>
+							<div class="thumbnail_name"><span><?php echo h($skinname)?></span></div>
+						</div>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+				<input type="hidden" name="style_name" value="${style_name}">
+			</div>
+
+
+			<div class="sample-style-name-<?php echo h($style_name) ?>" data-style_name="<?php echo h($style_name) ?>">
+
+				<h5>カラー</h5>
+				
+				<div class="container">
+					<ul class="thumbnails list-unstyled" data-type="style_color">
+						<li class="sample-cut <?php echo ($style_color == '') ? 'active' : ''; ?>"><a href="#" class="thumbnail sample-style-color" data-style_color=""><?php echo __('なし') ?></a></li>
+					<?php foreach($skin_dirs[$style_name]['colors'] as $color => $file) : ?>
+						<li class="sample-cut  <?php echo ($style_color == $color) ? 'active' : ''; ?>"><a href="#" class="thumbnail sample-style-color-<?php echo h($color) ?>" data-style_color="<?php echo h($color) ?>" title="<?php echo h($color) ?>"><span class="sr-only"><?php echo h($color) ?></span></a></li>
+					<?php endforeach; ?>
+					</ul>
+					<input type="hidden" name="style_color" value="${style_color}">
+				</div>
+
+				<h5><?php _e('背景・素材')?></h5>
+				
+				<div class="container">
+					<ul class="thumbnails list-unstyled" data-type="style_texture">
+						<li class="sample-cut <?php echo ($style_texture == '') ? 'active' : ''; ?>"><a href="#" class="thumbnail sample-style-texture" data-style_texture="" title="<?php _e('なし') ?>"><span class="sr-only"><?php _e('なし') ?></span></a></li>
+					<?php foreach($skin_dirs[$style_name]['textures'] as $texture => $file) : ?>
+						<li class="sample-cut <?php echo ($style_texture == $texture) ? 'active' : ''; ?>">
+							<a href="#" class="thumbnail sample-style-texture-<?php echo h($texture) ?> <?php echo ($texture === 'custom' && $custom_bg) ? '' : 'undefined'?>" data-style_texture="<?php echo h($texture) ?>" title="<?php echo h($texture) ?>" style="<?php echo ($texture === 'custom' && $custom_bg) ? 'background-image: url('.h($custom_bg).');' : ''?>"><?php echo ($texture === 'custom') ? '<i class="orgm-icon orgm-icon-wrench"></i>' : ''?><span class="sr-only"><?php echo h($texture) ?></span></a>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+					<input type="hidden" name="style_texture" value="${style_texture}">
+					<input type="hidden" name="style_custom_bg[filename]" value="${style_custom_bg.filename}" data-filepath="<?php echo $custom_bg ? h($custom_bg) : ''?>">
+				</div>
+			</div>
+	</div>
+
+</script>

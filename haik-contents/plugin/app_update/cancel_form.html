@@ -1,0 +1,6 @@
+<form id="app_update_cancel" action="<?php echo $script . '?cmd=app_update'?>" method="post" class="hide">
+	<input type="hidden" name="mode" value="cancel">
+	<?php if ($config) : ?>
+	<input type="hidden" name="config" value="1">
+	<?php endif; ?>
+</form>

@@ -1,0 +1,95 @@
+//
+// Dropdown menus
+// --------------------------------------------------
+
+#orgm_navbar {
+
+	// Dropdown arrow/caret
+	// --------------------
+	.caret {
+	  display: inline-block;
+	  width: 0;
+	  height: 0;
+	  border-top:   4px solid @black;
+	  border-right: 4px solid transparent;
+	  border-left:  4px solid transparent;
+	  content: "";
+	}
+	
+	// The dropdown menu (ul)
+	// ----------------------
+	.dropdown-menu {
+	  background-color: @dropdownBackground;
+	  border: 1px solid #ccc; // Fallback for IE7-8
+	  border: 1px solid @dropdownBorder;
+	  .box-shadow(0 5px 10px rgba(0,0,0,.2));
+	  -webkit-background-clip: padding-box;
+	     -moz-background-clip: padding;
+	          background-clip: padding-box;
+	
+	  // Aligns the dropdown menu to right
+	  &.pull-right {
+	    right: 0;
+	    left: auto;
+	  }
+	
+	  // Links within the dropdown menu
+	  > li > a {
+	    color: @dropdownLinkColor;
+	  }
+	}
+	
+	// Hover/Focus state
+	// -----------
+	.dropdown-menu > li > a:hover,
+	.dropdown-menu > li > a:focus,
+	.dropdown-submenu:hover > a,
+	.dropdown-submenu:focus > a {
+	  text-decoration: none;
+	  color: @dropdownLinkColorHover;
+	  #gradient > .vertical(@theme, darken(@theme, 5%));
+	}
+	
+	// Active state
+	// ------------
+	.dropdown-menu > .active > a,
+	.dropdown-menu > .active > a:hover,
+	.dropdown-menu > .active > a:focus {
+	  color: @dropdownLinkColorActive;
+	  #gradient > .vertical(@theme, darken(@theme, 5%));
+	}
+	
+	// Disabled state
+	// --------------
+	// Gray out text and ensure the hover/focus state remains gray
+	.dropdown-menu > .disabled > a,
+	.dropdown-menu > .disabled > a:hover,
+	.dropdown-menu > .disabled > a:focus {
+	  color: @grayLight;
+	}
+	// Nuke hover/focus effects
+	.dropdown-menu > .disabled > a:hover,
+	.dropdown-menu > .disabled > a:focus {
+	  text-decoration: none;
+	  background-color: transparent;
+	  background-image: none; // Remove CSS gradient
+	  .reset-filter();
+	  cursor: default;
+	}
+	
+	// Allow for dropdowns to go bottom up (aka, dropup-menu)
+	// ------------------------------------------------------
+	// Just add .dropup after the standard .dropdown class and you're set, bro.
+	// TODO: abstract this so that the navbar fixed styles are not placed here?
+	
+	// Sub menus
+	// ---------------------------
+	
+	// Caret to indicate there is a submenu
+	.dropdown-submenu > a:after {
+	  border-left-color: darken(@dropdownBackground, 20%);
+	}
+	.dropdown-submenu:hover > a:after {
+	  border-left-color: @dropdownLinkColorHover;
+	}
+}

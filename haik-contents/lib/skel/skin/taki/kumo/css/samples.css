@@ -1,0 +1,172 @@
+.sample-style-name-kumo [class*=sample-style-color] {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0);
+}
+.sample-style-name-kumo .sample-style-color {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent)), -webkit-gradient(linear, left bottom, right top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent));
+  background-image: -moz-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -moz-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: -o-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -o-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: linear-gradient(45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), linear-gradient(-45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+}
+.sample-style-name-kumo .sample-style-color-white {
+  background-color: #ffffff;
+}
+.sample-style-name-kumo .sample-style-color-black {
+  background-color: #222222;
+}
+.sample-style-name-kumo .sample-style-color-brown {
+  background-color: #3f312b;
+}
+.sample-style-name-kumo .sample-style-color-green {
+  background-color: #316745;
+}
+.sample-style-name-kumo .sample-style-color-wakatake {
+  background-color: #5dac81;
+}
+.sample-style-name-kumo .sample-style-color-seiji {
+  background-color: #69b0ac;
+}
+.sample-style-name-kumo .sample-style-color-mizu {
+  background-color: #81c7d4;
+}
+.sample-style-name-kumo .sample-style-color-shinbashi {
+  background-color: #0089a7;
+}
+.sample-style-name-kumo .sample-style-color-haizakura {
+  background-color: #d7c4bb;
+}
+.sample-style-name-kumo .sample-style-color-gold {
+  background-color: #af966e;
+}
+.sample-style-name-kumo .sample-style-color-grayshblue {
+  background-color: #d7e1e6;
+}
+.sample-style-name-kumo .sample-style-color-grayshgreen {
+  background-color: #dce1d2;
+}
+.sample-style-name-kumo .sample-style-color-shironeri {
+  background-color: #fcfaf2;
+}
+.sample-style-name-kumo .sample-style-color-lapis {
+  background-color: #0f2350;
+}
+.sample-style-name-kumo .sample-style-color-ruby {
+  background-color: #e73562;
+}
+.sample-style-name-kumo .sample-style-color-turquoise {
+  background-color: #25b7c0;
+}
+.sample-style-name-kumo .sample-style-color-white-amethyst {
+  background-color: #a59aca;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(#a59aca), color-stop(0.49, #a59aca), color-stop(0.5, #ffffff), to(#ffffff));
+  background-image: -moz-linear-gradient(135deg, #a59aca, #a59aca 49%, #ffffff 50%, #ffffff);
+  background-image: -o-linear-gradient(135deg, #a59aca, #a59aca 49%, #ffffff 50%, #ffffff);
+  background-image: linear-gradient(-45deg, #a59aca, #a59aca 49%, #ffffff 50%, #ffffff);
+}
+.sample-style-name-kumo .sample-style-color-white-green {
+  background-color: #82ae46;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(#82ae46), color-stop(0.49, #82ae46), color-stop(0.5, #ffffff), to(#ffffff));
+  background-image: -moz-linear-gradient(135deg, #82ae46, #82ae46 49%, #ffffff 50%, #ffffff);
+  background-image: -o-linear-gradient(135deg, #82ae46, #82ae46 49%, #ffffff 50%, #ffffff);
+  background-image: linear-gradient(-45deg, #82ae46, #82ae46 49%, #ffffff 50%, #ffffff);
+}
+.sample-style-name-kumo .sample-style-color-white-orange {
+  background-color: #f39800;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(#f39800), color-stop(0.49, #f39800), color-stop(0.5, #ffffff), to(#ffffff));
+  background-image: -moz-linear-gradient(135deg, #f39800, #f39800 49%, #ffffff 50%, #ffffff);
+  background-image: -o-linear-gradient(135deg, #f39800, #f39800 49%, #ffffff 50%, #ffffff);
+  background-image: linear-gradient(-45deg, #f39800, #f39800 49%, #ffffff 50%, #ffffff);
+}
+.sample-style-name-kumo [class*=sample-style-texture] {
+  background-image: transparent;
+  color: rgba(0, 0, 0, 0);
+}
+.sample-style-name-kumo .sample-style-texture {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent)), -webkit-gradient(linear, left bottom, right top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent));
+  background-image: -moz-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -moz-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: -o-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -o-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: linear-gradient(45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), linear-gradient(-45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+}
+.sample-style-name-kumo .sample-style-texture-hemp {
+  background-image: url("../img/hemp-cloth-05.jpg");
+}
+.sample-style-name-kumo .sample-style-texture-arches {
+  background-image: url("../img/arches.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-struckaxiom {
+  background-image: url("../img/struckaxiom.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-swirl {
+  background-image: url("../img/swirl.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-greytile {
+  background-image: url("../img/random_grey_variations.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-ravenna {
+  background-image: url("../img/ravenna.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-wood {
+  background-image: url("../img/tileable_wood_texture.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-wood2 {
+  background-image: url("../img/wood_pattern.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-grass {
+  background-image: url("../img/grass_bg.jpg");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-sea {
+  background-image: url("../img/sea_mono_bg.jpg");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-aurora {
+  background-image: url("../img/aurora_bg.jpg");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-cloth {
+  background-image: url("../img/cloth.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-paper {
+  background-image: url("../img/paper.png");
+  background-size: cover;
+}
+.sample-style-name-kumo .sample-style-texture-custom {
+  background-size: cover;
+  position: relative;
+  color: #fff;
+  font-size: 20px;
+}
+.sample-style-name-kumo .sample-style-texture-custom.undefined {
+  font-size: 60px;
+  color: #999;
+  overflow: hidden;
+  text-indent: 0;
+}
+.sample-style-name-kumo .sample-style-texture-custom i {
+  position: absolute;
+  bottom: -5px;
+  right: -10px;
+  text-shadow: 1px 1px 4px #333;
+}
+.sample-style-name-kumo .sample-style-texture-custom.undefined i {
+  position: relative;
+  text-shadow: none;
+}
+@media (max-width: 767px) {
+  .sample-style-name-kumo .sample-style-texture-custom.undefined {
+    font-size: 30px;
+    color: #999;
+    overflow: hidden;
+    text-indent: 0;
+  }
+}

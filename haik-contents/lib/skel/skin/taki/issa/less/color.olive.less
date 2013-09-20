@@ -1,0 +1,77 @@
+@theme:                    #a69425;
+@themeInverse:             #f7f7f7;
+@themeText:                darken(@theme, 50%);
+@themeBorder:              darken(@theme, 3%);
+@themeBackground:          @theme;
+
+// Navbar
+// -------------------------
+//@navbarBackgroundHighlight:       #ffffff; //white
+@navbarBackground:                @theme;
+@navbarBackgroundHighlight:       lighten(@theme, 5%);
+@navbarBorder:                    @theme;
+
+@navbarText:                      @white;
+@navbarLinkColor:                 @white;
+@navbarLinkColorActive:           @themeInverse;
+@navbarLinkColorHover:            @navbarLinkColorActive;
+@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundActive:      @theme;
+@navbarBrandColor:                @navbarLinkColor;
+
+@import "skin.less";
+@import "color.less";
+
+body {
+/* 	background-color: lighten(@theme, 2%); */
+/* 	color: @themeInverse; */
+}
+
+#contents {
+/* 	color: @theme; */
+}
+
+#contents h1,
+#contents h2,
+#contents h3,
+#contents h4,
+#contents h5 {
+	color: @theme;
+}
+
+#orgm_navbar {
+
+	.dropdown-menu > li > a {
+		color: @themeInverse;
+	}
+
+	.dropdown-menu > li > a:hover,
+	.dropdown-menu {
+		background-color: @theme;
+	}
+	
+	.nav > li > .dropdown-menu:after {
+		border-bottom: 6px solid @theme;
+	}
+
+	// Hover/Focus state
+	// -----------
+	.dropdown-menu > li > a:hover,
+	.dropdown-menu > li > a:focus,
+	.dropdown-submenu:hover > a,
+	.dropdown-submenu:focus > a {
+		color: @themeInverse;
+		background-color: lighten(@theme, 5%);
+		background-image: none;
+	}
+
+	.brand {
+		color: @themeInverse;
+		text-shadow: none;
+	}
+}
+
+.table tbody tr.theme > td {
+	background-color: @theme;
+	color: @white;
+}

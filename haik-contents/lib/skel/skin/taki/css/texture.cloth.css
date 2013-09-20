@@ -1,0 +1,21 @@
+body {
+  background-image: url("../img/cloth.png");
+}
+#orgm_container {
+  background-color: transparent;
+  color: #555;
+  /* 	.box-shadow(1px 1px 5px rgba(0, 0, 0, .25)); */
+
+}
+hr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #f7f7f7;
+}
+.musthead h3 a {
+  color: #555;
+}
+@media (max-width: 767px) {
+  #orgm_container {
+    padding: 0 15px;
+  }
+}

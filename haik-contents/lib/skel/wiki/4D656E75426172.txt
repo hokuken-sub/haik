@@ -1,0 +1,5 @@
+#box(well){{
+* メニュー
+- [[トップ>FrontPage]]
+- [[お問い合わせ>Contact]]
+}}

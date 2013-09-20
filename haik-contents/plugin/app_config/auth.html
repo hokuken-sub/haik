@@ -1,0 +1,104 @@
+<style>
+	.progress {
+		height: 10px;
+	}
+
+</style>
+
+	<div class="page-header"><?php echo h($title) ?></div>
+	
+	<section class="setting">
+		<div class="container">
+			<ul class="setting_list">
+				<li>
+					<div class="row">
+						<div class="col-sm-3"><?php _e('メールアドレス') ?></div>
+						<div class="col-sm-7 current"><?php echo h($username) ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="username">編集</a></div>
+					</div>
+				</li>
+				<li>
+					<div class="row">
+						<div class="col-sm-3"><?php _e('パスワード') ?></div>
+						<div class="col-sm-7 current"><?php echo str_repeat('*', 8) ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="passwd">編集</a></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+
+<script id="tmpl_conf_username" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_auth" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_auth">		
+			<input type="hidden" name="phase" value="save">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('メールアドレス') ?></label>
+				<div class="col-sm-9 form-inline">
+					<div class="input-group">
+						<input type="text" name="username" value="${username}" class="form-control" />
+						<span class="input-group-btn">
+							<button type="button" class="mailcheck btn btn-default"><?php _e('送信チェック') ?></button>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+
+<script id="tmpl_conf_passwd" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_auth" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_auth">		
+			<input type="hidden" name="phase" value="save">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('現在のパスワード') ?></label>
+				<div class="col-sm-4">
+					<input type="password" name="passwd" value="" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('新しいパスワード') ?></label>
+				<div class="col-sm-4">
+					<input type="password" name="new_passwd" value="" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('パスワードの確認') ?></label>
+				<div class="col-sm-4">
+					<input type="password" name="re_passwd" value="" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-4">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+</script>
+

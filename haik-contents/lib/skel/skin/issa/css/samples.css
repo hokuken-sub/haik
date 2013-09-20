@@ -1,0 +1,59 @@
+.sample-style-name-issa [class*=sample-style-color] {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0);
+}
+.sample-style-name-issa .sample-style-color {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent)), -webkit-gradient(linear, left bottom, right top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent));
+  background-image: -moz-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -moz-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: -o-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -o-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: linear-gradient(45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), linear-gradient(-45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+}
+.sample-style-name-issa .sample-style-color-white {
+  background-color: #ffffff;
+}
+.sample-style-name-issa .sample-style-color-beige {
+  background-color: #f3f2ec;
+}
+.sample-style-name-issa .sample-style-color-blue {
+  background-color: #007bbb;
+}
+.sample-style-name-issa .sample-style-color-yellow {
+  background-color: #ffd900;
+}
+.sample-style-name-issa .sample-style-color-brown {
+  background-color: #543f32;
+}
+.sample-style-name-issa .sample-style-color-red {
+  background-color: #e83929;
+}
+.sample-style-name-issa .sample-style-color-olive {
+  background-color: #a69425;
+}
+.sample-style-name-issa [class*=sample-style-texture] {
+  background-image: transparent;
+  color: rgba(0, 0, 0, 0);
+}
+.sample-style-name-issa .sample-style-texture {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent)), -webkit-gradient(linear, left bottom, right top, from(transparent), color-stop(0.46, transparent), color-stop(0.51, rgba(0, 0, 0, 0.3)), color-stop(0.51, transparent), color-stop(1, transparent), to(transparent));
+  background-image: -moz-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -moz-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: -o-linear-gradient(225deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), -o-linear-gradient(135deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+  background-image: linear-gradient(45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent), linear-gradient(-45deg, transparent, transparent 49%, rgba(0, 0, 0, 0.3) 50%, transparent 51%, transparent);
+}
+.sample-style-name-issa .sample-style-texture-square {
+  background-color: #fafafa;
+  background-image: url("../img/square_bg.png");
+}
+.sample-style-name-issa .sample-style-texture-dust {
+  background-color: #fafafa;
+  background-image: url("../img/dust.png");
+}
+.sample-style-name-issa .sample-style-texture-cloth {
+  background-color: #fafafa;
+  background-image: url("../img/cloth.png");
+}
+.sample-style-name-issa .sample-style-texture-project_paper {
+  background-color: #fafafa;
+  background-image: url("../img/project_paper.png");
+}

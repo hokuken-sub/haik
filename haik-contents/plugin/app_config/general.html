@@ -1,0 +1,264 @@
+
+<div class="page-header"><?php echo h($title) ?></div>
+<section class="setting">
+	<div class="container">
+		<ul class="setting_list">
+			<li>
+				<div class="row">
+					<div class="col-sm-3"><?php _e('サイトタイトル') ?></div>
+					<div class="col-sm-7 current"><?php echo h($site_title) ?></div>
+					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_title">編集</a></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="row">
+					<div class="col-sm-3"><?php _e('ロゴタイトル') ?></div>
+					<div class="col-sm-7 current"><?php echo h($logo_title)?></div>
+					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="logo_title">編集</a></div>
+				</div>
+			</li>
+			
+			<li>
+				<div class="row">
+					<div class="col-sm-3"><?php _e('ロゴ画像') ?></div>
+					<div class="col-sm-7 current"><?php echo ($logo_image != '') ? h($logo_image) :__('指定なし：ロゴタイトルが使用されます。') ?></div>
+					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="logo_image">編集</a></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="row">
+					<div class="col-sm-3"><?php _e('デザイン') ?></div>
+					<div class="col-sm-7 current">
+						<?php echo h($style_name) ?><?php echo ($style_color != '') ? '（色：'.h($style_color).'、背景：'.h($style_texture).'）' : ''; ?>
+						<?php echo $is_preview ? '（プレビュー中）' : ''?>
+					</div>
+					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="style_name">編集</a></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="row">
+					<div class="col-sm-3"><?php _e('サイトの公開') ?></div>
+					<div class="col-sm-7 current"><?php echo h($site_close) ?></div>
+					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_close_all">編集</a></div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</section>
+	
+	
+<script id="tmpl_conf_site_title" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_general" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_general">
+			<input type="hidden" name="phase" value="save">	
+			
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('サイトタイトル') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="site_title" value="${site_title}" class="form-control">
+					<span class="help-block muted">
+						サイトの名前を入力してください。<br>
+						検索結果に<strong>【<?php echo h($page_title_sample)?>】</strong>のように表示されます。
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_logo_title" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_general" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_general">		
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('ロゴタイトル') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="logo_title" value="${logo_title}" class="form-control">
+					<span class="help-block muted">
+						ロゴ部分に表示する言葉を簡潔に入力してください。<br>
+						例）haik、北研
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>	
+
+<script id="tmpl_conf_logo_image" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_general" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_general">		
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('ロゴ画像') ?></label>
+				<div class="col-sm-9">
+					<a href="#" class="config-general-logo-image thumbnail cut {{if logo_image == ''}}img-add{{/if}}" data-image>
+					{{if logo_image != ''}}
+						<img src="<?php echo h(UPLOAD_DIR) ?>${logo_image}?${ORGM.getTime()}" alt="<?php _e('ロゴ画像')?>">
+						<span class="triangle-btn triangle-right-top red show" data-image-delete><i class="orgm-icon orgm-icon-close"></i></span>
+					{{else}}
+						クリックで画像選択
+					{{/if}}
+					</a>
+					<input type="hidden" name="logo_image" value="${logo_image}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>	
+
+
+
+<script id="tmpl_conf_style_name" type="text/x-jquery-tmpl">
+
+	<div class="well config-general-style-name">
+		<form action="?cmd=app_config_general" method="post" class="">
+			<input type="hidden" name="cmd" value="app_config_general">		
+			<input type="hidden" name="phase" value="save">	
+			
+			<legend>デザイン</legend>
+
+			<div class="row layout">
+				<ul class="thumbnails list-unstyled">
+					<?php foreach($skin_dirs as $skinname => $skin) : ?>
+					<li class="col-sm-4 col-xs-4 orgm-template-item{{if style_name == '<?php echo h($skinname) ?>'}} active{{/if}}">
+						<div class="thumbnail" title="<?php echo h($skinname)?>">
+						<?php if ($skin['thumbnail'] != '') : ?>
+				 			<img src="<?php echo h(SKIN_DIR.$skinname.'/'.$skin['thumbnail'])?>" />
+				 		<?php else: ?>
+							<div class="no-thumbnail"><i class="orgm-icon orgm-icon-image"></i> <?php _e("画像がありません") ?></div>
+						<?php endif; ?>
+							<div class="thumbnail_name"><span><?php echo h($skinname)?></span></div>
+						</div>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+				<input type="hidden" name="style_name" value="${style_name}" />
+			</div>
+
+
+			<div class="sample-style-name-<?php echo h($style_name) ?> container" data-style_name="<?php echo h($style_name) ?>">
+
+				<legend>カラー</legend>
+				
+				<div class="">
+					
+					<ul class="thumbnails list-unstyled" data-type="style_color">
+						<li class="sample-cut <?php echo ($style_color == '') ? 'active' : ''; ?>"><a href="#" class="thumbnail sample-style-color" data-style_color=""><span class="sr-only"><?php _e('なし') ?></span></a></li>
+					<?php foreach($skin_dirs[$style_name]['colors'] as $color => $file) : ?>
+						<li class="sample-cut  <?php echo ($style_color == $color) ? 'active' : ''; ?>"><a href="#" class="thumbnail sample-style-color-<?php echo h($color) ?>" data-style_color="<?php echo h($color) ?>" title="<?php echo h($color) ?>"><span class="sr-only"><?php echo h($color) ?></span></a></li>
+					<?php endforeach; ?>
+					</ul>
+					<input type="hidden" name="style_color" value="${style_color}">
+				</div>
+				
+
+				<legend><?php _e('背景・素材')?></legend>
+
+				<div class="">
+
+					<ul class="thumbnails list-unstyled" data-type="style_texture">
+						<li class="sample-cut <?php echo ($style_texture == '') ? 'active' : ''; ?>"><a href="#" class="thumbnail sample-style-texture" data-style_texture="" title="<?php _e('なし') ?>"><span class="sr-only"><?php _e('なし') ?></span></a></li>
+					<?php foreach($skin_dirs[$style_name]['textures'] as $texture => $file) : ?>
+						<li class="sample-cut <?php echo ($style_texture == $texture) ? 'active' : ''; ?>">
+							<a href="#" class="thumbnail sample-style-texture-<?php echo h($texture) ?> <?php echo ($texture === 'custom' && $custom_bg) ? '' : 'undefined'?>" data-style_texture="<?php echo h($texture) ?>" title="<?php echo h($texture) ?>" style="<?php echo ($texture === 'custom' && $custom_bg) ? 'background-image: url('.h($custom_bg).');' : ''?>"><?php echo ($texture === 'custom') ? '<i class="orgm-icon orgm-icon-wrench"></i>' : ''?><span class="sr-only"><?php echo h($texture) ?></span></a>
+						</li>
+
+					<?php endforeach; ?>
+					</ul>
+					<input type="hidden" name="style_texture" value="${style_texture}">
+					<input type="hidden" name="style_custom_bg[filename]" value="${style_custom_bg.filename}" data-filepath="<?php echo $custom_bg ? h($custom_bg) : ''?>">
+				</div>
+
+			</div>
+
+			<div class="row" style="margin-top: 30px;">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<button type="button" class="btn btn-info" id="preview_skin"><?php _e('プレビュー')?></button>
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_site_close_all" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		
+		<form action="?cmd=app_config_general" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_general">		
+			<input type="hidden" name="phase" value="save">
+			{{if site_close_all == '0' }}
+				<input type="hidden" name="site_close_all" value="1">
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="" escape=""><?php _e('公開予定日') ?></label>
+					<div class="col-sm-9">
+						<div class="row">
+							<div class="col-sm-4">
+								<input type="text" class="datepicker form-control" name="site_open_date" value="" data-date-format="yyyy-mm-dd">
+							</div>
+						</div>
+						<span class="help-block" escape=""><?php _e('※ 手動で公開する場合は、空欄にしてください') ?></span>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="" escape=""></label>
+					<div class="col-sm-9">
+						<input type="submit" class="btn btn-primary" value="<?php _e('閉鎖') ?>" />
+
+
+			{{else}}
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="" escape=""></label>
+					<div class="col-sm-9">
+						<input type="hidden" name="site_close_all" value="0">
+						<input type="submit" class="btn btn-primary" value="<?php _e('公開') ?>" />
+				{{/if}}
+						<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+					</div>
+				</div>
+		</form>
+	</div>
+</script>

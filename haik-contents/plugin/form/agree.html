@@ -1,0 +1,20 @@
+<div class="form-group<?php echo array_key_exists($name, $error) ? ' has-error' : ''?>">
+	<input type="hidden" name="data[<?php echo h($name)?>]" value="0">
+	
+	<div class="<?php echo h($form_only_control_class)?>">
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" id="orgm_form_<?php echo $form['id']?>_<?php echo h($name)?>" name="data[<?php echo h($name)?>]" value="1">
+				<?php echo $item['label']?><?php echo $item['required'] ? $require_mark: ''?>
+			</label>
+		</div>
+		
+		<span class="help-block">
+		<?php if (array_key_exists($name, $error)):?>
+			<?php echo $error[$name]?>
+		<?php else:?>
+			<?php echo $item['help']?>
+		<?php endif;?>
+		</span>
+	</div>	
+</div>

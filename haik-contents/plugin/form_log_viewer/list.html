@@ -1,0 +1,80 @@
+<style type="text/css">
+	#contents {
+		min-height: 100%;
+	}
+	#contents .content-wrapper {
+		overflow-x: scroll;
+	}
+	thead th {
+		min-width: 100px;
+		white-space: nowrap;
+	}
+	.log-download {
+		position:fixed;
+		width:100px;
+		height:60px;
+		bottom:10px;
+		right:10px;
+		text-align:center;
+		padding-top:10px;
+		box-sizing: border-box;
+	}
+</style>
+
+<ul class="nav nav-pills pull-right">
+	<?php if (isset($vars['refer'])) : ?>
+	<li><a href="<?php echo $script.'?'.rawurlencode($vars['refer']) ?>">設置先へ戻る</a></li>
+	<?php endif; ?>
+	<li><a href="<?php echo $script.'?cmd=former' ?>">一覧</a></li>
+</ul>
+
+<div class="page-header"><?php echo sprintf(__('フォーム投稿ログ：%s'), $id) ?></div>
+
+<div class="container">
+
+	<a href="<?php echo h($script.'?cmd=form_log_viewer&mode=download&id='.$id.'&lognum='.$lognum) ?>" data-download class="log-download thumbnail"><span>このページを<br>ダウンロード</span></a>
+
+<?php if (count($files) > 1) : ?>
+	<ul class="pagination pull-left">
+	<?php foreach ($files as $num => $file) : ?>
+		<li><a href="<?php echo h($script.'?cmd=form_log_viewer&id='.$id.'&lognum='.$num) ?>"><?php echo h($num+1) ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+<?php endif; ?>
+
+</div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>日時</th>
+		<?php foreach ($heads as $key => $label): ?>
+			<th><?php echo h($label)?></th>
+		<?php endforeach;?>
+			<th>その他</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($logs as $i => $log):?>
+		<tr>
+			<td><?php echo h($log['time'])?></td>
+		<?php foreach ($heads as $key => $label):?>
+			<td><?php echo h($log['data'][$key])?></td>
+		<?php endforeach;?>
+			<td>
+				<?php echo h($log['overflow']) ?>
+			</td>
+		</tr>
+	<?php endforeach;?>
+	</tbody>
+</table>
+
+<div class="container">
+<?php if (count($files) > 1) : ?>
+	<ul class="pagination">
+	<?php foreach ($files as $num => $file) : ?>
+		<li><a href="<?php echo h($script.'?cmd=form_log_viewer&id='.$id.'&lognum='.$num) ?>"><?php echo h($num+1) ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+<?php endif; ?>
+</div>

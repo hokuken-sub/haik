@@ -1,0 +1,19 @@
+<div class="page-header"><?php echo h($title) ?></div>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<p>更新の前に、バックアップをしてください。</p>
+		<p><a href="<?php echo h($script.'?cmd=dump')?>" class="btn btn-success" target="_backup">バックアップ</a></p>
+	</div>
+</div>
+
+<div>
+<?php
+	$url = $script.'?cmd=app_update&mode=confirm';
+	$url = ($config) ? $url.'&config' : $url;
+?>
+	<a href="<?php echo h($url) ?>" class="btn btn-primary">次へ</a>
+	<a href="#" class="btn btn-default" data-cancel>キャンセル</a>
+</div>
+
+<?php include(PLUGIN_DIR.'app_update/cancel_form.html'); ?>

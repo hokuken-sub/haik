@@ -1,0 +1,67 @@
+	<div class="page-header"><?php echo h($title) ?></div>
+	
+	<section class="setting">
+		<h3 class="sub-header"><?php echo h($description) ?></h3>
+		<div class="panel">
+			<a href="#" class="close" data-dismiss="alert">&times</a>
+			<p><strong>通常のServerでは設定の必要がありません</strong></p>
+			<p>サーバー側でセッションの保存先が正しく設定されていない場合、<?php echo APP_NAME ?>のログインができません。<br>
+				そこで、対処法として <?php echo APP_NAME ?> にセッションを保存します。<br>
+			</p>
+			<p>ログインは成功しているのに管理者ナビが表示されない場合、この設定を試してみてください。</p>
+			<p><?php echo APP_NAME ?> でのセッション保存先フォルダ：<?php echo CACHE_DIR ?></p>
+		</div>
+
+		<div class="container">
+			<ul class="setting_list">
+				<li>
+					<div class="row">
+						<div class="col-sm-3"><?php _e('セッションの保存先') ?></div>
+						<div class="col-sm-7 current"><?php echo ($session_save_path == '') ?__('未設定') : __('設定あり') ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="session_save_path">編集</a></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+
+<script id="tmpl_conf_session_save_path" type="text/x-jquery-tmpl">
+
+	<div class="well">
+			<div class="alert">この設定をするには、管理者のメールアドレスとパスワードが必要です。</div>
+		<form action="?cmd=app_config_session" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_session">		
+			<input type="hidden" name="phase" value="save">
+			
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('メールアドレス') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="username" value="${username}" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('パスワード') ?></label>
+				<div class="col-sm-5">
+					<input type="password" name="passwd" value="" class="form-control" />
+				</div>
+			</div>
+
+			{{if (session_save_path == '')}}
+				<input type="hidden" name="session_save_path" value="<?php h(CACHE_DIR) ?>" />
+			{{else}}
+				<input type="hidden" name="session_save_path" value="" />
+			{{/if}}
+			<div class="form-group">
+				<label for="" class="col-sm-3 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="{{if (session_save_path == '') }}設定{{else}}解除{{/if}}" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>

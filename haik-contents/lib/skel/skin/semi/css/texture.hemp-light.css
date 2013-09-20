@@ -1,0 +1,51 @@
+/*!
+ * Bootstrap v2.3.2
+ *
+ * Copyright 2012 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
+/* @theme:                 #3ABEB4; //emerald*/
+/* @theme:                 #F34541; //rose */
+/* @theme:                 #FAA732; //orange */
+/* @theme:                 #3498DB; //blue */
+/* @theme:				   #74ac24; //green */
+/*
+@themeBackground:       lighten(@theme, 30%);
+@themeBorder:           lighten(@theme, 20%);
+@themeText:             darken(@theme, 15%);
+*/
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+/*
+// Block level inputs
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: @inputHeight; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  .box-sizing(border-box); // Makes inputs behave like true block-level elements
+}
+
+*/
+#orgm_eyecatch .carousel {
+  background: url("../img/hemp-cloth-05.jpg") repeat center center;
+}

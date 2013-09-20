@@ -1,0 +1,527 @@
+<div id="orgm_former_controls" class="">
+	<div class="container">
+		<ul class="nav navbar-nav orgm-former-controls">
+			<li><a href="#orgm_former_config"><i class="orgm-icon orgm-icon-globe"></i> <?php _e('全般') ?></a></li>
+			<li><a href="#orgm_former_parts"><i class="orgm-icon orgm-icon-wrench"></i> <?php _e('フォームパーツ') ?></a></li>
+			<li><a href="#orgm_former_mail"><i class="orgm-icon orgm-icon-mail"></i> <?php _e('メール') ?></a></li>
+			<li><a href="#orgm_former_message"><i class="orgm-icon orgm-icon-checkmark"></i> <?php _e('完了メッセージ') ?></a></li>
+			<li><a href="#orgm_former_postdata"><i class="orgm-icon orgm-icon-link"></i> <?php _e('連動登録') ?></a></li>
+		</ul>
+		<div id="toolbar_buttons" class="pull-right">
+			<div class="btn-toolbar">
+				<input type="button" value="<?php _e('更新') ?>" class="btn btn-primary navbar-btn" data-edit-type="write">
+				<input type="button" value="<?php _e('キャンセル') ?>" class="btn btn-default navbar-btn" data-edit-type="cancel">
+			</div>
+		</div>
+	</div>
+</div>
+
+<a href="<?php echo h($list_url) ?>" class="pull-right"><i class="orgm-icon orgm-icon-list"></i> <?php _e('フォーム一覧へ') ?></a>
+
+<div class="page-header">
+	<?php _e('フォーム編集')?>
+</div>
+
+<!-- ! General Config -->
+<section id="orgm_former_config">
+
+	<div class="panel">
+		<div class="panel-heading">
+			<h3><?php _e('全般')?></h3>
+		</div>
+
+
+		<div class="row">
+			<div class="col-sm-5">
+	
+				<div class="form">
+				
+					<div class="form-group">
+						<label for="orgm_former_id" class="control-label"><?php _e('フォームID')?></label>
+						<div class="controls">
+							<input type="text" id="orgm_former_id" name="form[id]" placeholder="<?php _e('フォームID')?>" value="<?php echo h($form['id'])?>" class="form-control">
+							<span class="help-block"><?php _e('半角英数字で指定してください。')?></span>
+						</div>
+					</div>
+	
+					<div class="form-group">
+						<label for="orgm_former_style" class="control-label"><?php _e('フォームのスタイル')?></label>
+						<div class="controls">
+							<select name="form[class]" id="orgm_former_style" class="form-control">
+								<option value="form-horizontal" selected><?php _e('横並び')?></option>
+								<option value=""><?php _e('縦並び')?></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="controls">
+							<div class="checkbox">
+								<label>
+									<input type="hidden" name="form[log]" value="0">
+									<input type="checkbox" name="form[log]" value="1" id=""> <?php _e('投稿のログを記録する')?>
+								</label>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+	
+				
+			</div>
+			
+			<div class="col-sm-5 col-sm-offset-1">
+				<div class="form">
+	
+					<div class="form-group">
+						<label for="orgm_former_memo" class="control-label"><?php _e('フォームのメモ')?></label>
+						<div class="controls">
+							<textarea id="orgm_former_memo" name="form[description]" placeholder="<?php _e('メモ')?>" class="form-control" data-exnote="onready"><?php echo h($form['description'])?></textarea>
+							<span class="help-block"><?php _e('設置時には表示されません。')?></span>
+						</div>
+					</div>
+	
+	
+				
+				</div>
+			</div>
+			
+		</div>
+
+
+	</div>
+
+
+	
+</section>
+
+
+<!-- ! Parts Config -->
+
+<section id="orgm_former_parts">
+
+	<div class="panel">
+		<div class="panel-heading">
+			<h3><?php _e('フォームパーツ')?></h3>
+		</div>
+
+		<div class="<?php echo $form['class']?>" id="orgm_former_parts_wrapper">
+		
+			<ul class="orgm-form-parts-list"></ul>
+			
+			<div class="form-group form-actions">
+				<div class="col-sm-9 col-sm-offset-3">
+					<button type="button" class="btn btn-primary"><?php _e('確認')?></button>
+				</div>
+			</div>
+		</div>
+		
+		<hr>
+		<a href="#" class="btn btn-default" data-add-parts><?php _e('フォームパーツの追加')?></a>
+	
+
+	</div>
+</section>
+
+<!-- ! Reply and Notify Mail Config -->
+<section id="orgm_former_mail">
+
+	<div class="panel">
+		<div class="panel-heading">
+			<h3><?php _e('メール')?></h3>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-5" id="orgm_former_mail_notifier">
+				
+				<h4><?php _e('通知メール')?></h4>
+				<p>
+					<?php _e('フォームへ投稿があった際、管理者へ通知します。')?>
+				</p>
+				<div class="form">
+				
+					<div class="form-group">
+						<input type="text" name="form[mail][notify][subject]" value="<?php echo h($form['mail']['notify']['subject'])?>" placeholder="<?php _e('件名')?>" class="form-control">
+					</div>
+					<div class="form-group">
+						<div class="parts-buttons btn-group" data-target="#formMailNotifyBody">
+							<a href="#" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
+								<?php _e('挿入')?>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu"></ul>
+						</div>
+						<textarea id="formMailNotifyBody" name="form[mail][notify][body]" placeholder="<?php _e('本文')?>" class="form-control" data-exnote="onready"><?php echo h($form['mail']['notify']['body'])?></textarea>
+					</div>
+	
+				</div>
+	
+				
+			</div>
+			<div class="col-sm-5 col-sm-offset-1" id="orgm_former_mail_replyer">
+	
+				<h4><?php _e('自動返信メール')?></h4>
+				<p>
+					<?php _e('フォームへ投稿があった際、自動的に返信を行います。')?>
+				</p>
+	
+				<div class="form">
+				
+					<div class="form-group">
+						<input type="text" name="form[mail][reply][subject]" value="<?php echo h($form['mail']['reply']['subject'])?>" placeholder="<?php _e('件名')?>" class="form-control">
+					</div>
+					<div class="form-group">
+						<div class="parts-buttons btn-group" data-target="#formMailReplyBody">
+							<a href="#" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
+								<?php _e('挿入')?>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu"></ul>
+						</div>
+						<textarea id="formMailReplyBody" name="form[mail][reply][body]" placeholder="本文" class="form-control" data-exnote="onready"><?php echo h($form['mail']['reply']['body'])?></textarea>
+					</div>
+				</div>
+	
+				<p>
+					<?php _e('※ フォームパーツに「メールアドレス（ID：EMAIL）」を指定してない場合は、自動返信を行いません。')?>
+				</p>
+	
+			</div>
+		</div>
+
+	</div>
+
+	
+</section>
+
+<!-- ! Complete Message -->
+<section id="orgm_former_message">
+	
+	<div class="panel">
+		<div class="panel-heading">
+			<h3><?php _e('完了メッセージ')?></h3>
+		</div>
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form">
+					<div class="form-group">
+						<div class="controls">
+							<div class="parts-buttons btn-group" data-target="#formMessage">
+								<a href="#" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
+									<?php _e('挿入')?>
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu"></ul>
+							</div>
+							<textarea name="form[message]" id="formMessage" placeholder="<?php _e('完了メッセージ')?>" class="form-control" data-exnote="onready"><?php echo h($form['message'])?></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ! Postdata -->
+<section id="orgm_former_postdata">
+	
+	<div class="panel">
+		<div class="panel-heading">
+			<h3><?php _e('連動登録') ?></h3>
+		</div>
+
+		<p><?php _e('メルマガなどの外部のサービスへ連動登録をする場合に利用します。')?></p>
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form">
+					<div class="form-group">
+						<label for="orgm_former_post_url" class="control-label"><?php _e('URL')?></label>
+						<div class="controls">
+							<input type="text" id="orgm_former_post_url" name="form[post][url]" class="form-control" value="" placeholder="<?php _e('送信先URL')?>">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="orgm_former_post_encode" class="control-label"><?php _e('エンコード')?></label>
+						<div class="controls">
+							<input type="text" id="orgm_former_post_encode" name="form[post][encode]" class="form-control" value="UTF-8" placeholder="">
+							<span class="help-block"><?php _e('UTF-8, Shift_JIS, EUC-JP など')?></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-5 col-sm-offset-1">
+				<div class="form postdata-config">
+					<div class="form-group postdata">
+						<label class="control-label"><?php _e('登録データ')?></label>
+						<div class="controls"></div>
+					</div>
+					<div class="form-group">
+						<div class="controls">
+							<a href="#" class="btn btn-default" data-add><?php _e('追加')?></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- !Templates -->
+
+<!-- !  Add Postdata -->
+<script type="text/x-jquery-tmpl" id="tmpl_former_postdata_add">
+	<div class="form-group postdata-option clearfix">
+		<div class="col-xs-5">
+			<input type="text" name="form[post][data][${idx}][key]" value="${key}" class="form-control col-xs-5 postdata-key" placeholder="key">
+		</div>
+		<div class="col-xs-2 text-center">
+			<span class="postdata-connector"><i class="orgm-icon orgm-icon-arrow-right"></i></span>
+		</div>
+		<div class="col-xs-5">
+			<input type="text" name="form[post][data][${idx}][value]" value="${value}" class="form-control typeahead postdata-value" placeholder="value" autocomplete="off" data-source="">
+		</div>
+		
+<!--
+		<div class="input-group">
+			<input type="text" name="form[post][data][${idx}][key]" value="${key}" class="form-control postdata-key" placeholder="key">
+			<span class="input-group-addon postdata-connector"><i class="orgm-icon orgm-icon-arrow-right"></i></span>
+			<input type="text" name="form[post][data][${idx}][value]" value="${value}" class="form-control typeahead postdata-value" placeholder="value" autocomplete="off" data-source="">
+		</div>
+-->
+	</div>
+</script>
+
+<!-- !  Part config -->
+
+<script type="text/x-jquery-tmpl" id="tmpl_form_part_list">
+	<li class="orgm-form-part" data-name="${name}" data-type="${type}">
+		
+		<div class="part-preview">
+				{{html html}}
+		</div>
+		
+		<div class="part-config"></div>
+		
+		<div class="part-controls hide-on-show">
+			<button type="button" class="btn btn-default btn-xs" data-edit><?php _e('編集')?></button>
+			<button type="button" class="btn btn-default btn-xs" data-copy><?php _e('複製')?></button>
+			<button type="button" class="btn btn-default btn-xs" data-delete><?php _e('削除')?></button>
+		</div>
+		
+		<div class="part-dragmark">
+			:: <?php _e('ドラッグで並び替え')?> ::
+		</div>
+
+	</li>
+	
+</script>
+
+
+<script type="text/x-jquery-tmpl" id="tmpl_form_part_config">
+
+	<div class="well">
+	<div class="row">
+		
+		<div class="col-sm-5">
+			<div class="form">
+				<div class="form-group">
+					<label class="control-label"><?php _e('種類')?></label>
+					<div class="controls">
+						<select name="type" class="form-control">
+							<option value="text"><?php _e('テキスト')?></option>
+							<option value="email"><?php _e('メールアドレス')?></option>
+							<option value="checkbox"><?php _e('チェックボックス')?></option>
+							<option value="radio"><?php _e('ラジオボタン')?></option>
+							<option value="select"><?php _e('選択リスト')?></option>
+							<option value="textarea"><?php _e('テキストボックス')?></option>
+							<option value="hidden"><?php _e('隠しフィールド')?></option>
+							<option value="file"><?php _e('ファイル')?></option>
+							<option value="agree"><?php _e('同意チェック')?></option>
+						</select>								
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="id">
+					<label class="control-label"><?php _e('ID')?></label>
+					<div class="controls">
+						<input type="text" name="id" value="${id}" placeholder="<?php _e('ID')?>" class="form-control">
+						<span class="help-block">
+							<?php _e('半角英数字、ハイフン、またはアンダースコアが使用できます。<br>
+							他のパーツと重複しないようにしてください。')?></span>
+					</div>
+				</div>
+				<div class="form-group hide-on-show" data-block="label">
+					<label class="control-label"><?php _e('ラベル')?></label>
+					<div class="controls"><input type="text" name="label" value="${label}" placeholder="<?php _e('ラベル')?>" class="form-control"></div>
+				</div>
+				<div class="form-group hide-on-show" data-block="help">
+					<label class="control-label"><?php _e('補足説明')?></label>
+					<div class="controls">
+						<input type="text" name="help" value="${help}" placeholder="<?php _e('例）読み仮名はカタカナでご入力ください。')?>" class="form-control">
+					</div>
+				</div>
+				<div class="form-group hide-on-show" data-block="required">
+					<div class="controls">
+						<input type="hidden" name="required" value="0">
+						<div class="checkbox">
+							<label><input type="checkbox" name="required" value="1"> <?php _e('必須チェック')?></label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-sm-5 col-sm-offset-1">
+
+			<div class="form">
+				
+				<div class="form-group hide-on-show" data-block="validation">
+					<label class="control-label"><?php _e('入力値のチェック')?></label>
+					<div class="controls">
+						<select name="validation" class="form-control">
+							<option value=""><?php _e('なし')?></option>
+							<option value="alnum"><?php _e('半角英数のみ可')?></option>
+							<option value="number"><?php _e('数値のみ可')?></option>
+							<option value="int"><?php _e('整数のみ可')?></option>
+							<option value="email"><?php _e('メールアドレスのみ可')?></option>
+						</select>							
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="options">
+					<label class="control-label"><?php _e('オプション')?></label>
+					<div class="controls row">
+						{{each(i, v) options}}
+						<div class="col-sm-6 part-config-option-item">
+							<input type="text" name="options[]" class="form-control" placeholder="<?php _e('オプション名')?>" value="${v}">
+						</div>
+						{{/each}}
+					</div>
+					<div class="controls">
+						<a href="#" class="btn btn-default btn-sm" data-add-options><?php _e('追加')?></a>
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="empty">
+					<label class="control-label"><?php _e('空オプション')?></label>
+					<div class="controls">
+						<input type="text" name="empty" value="${empty}" class="form-control" placeholder="<?php _e('オプション名')?>">
+						<span class="help-block"><?php _e('空のオプションを作成したい場合は指定してください。')?></span>
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="value">
+					<label class="control-label"><?php _e('初期値')?></label>
+					<div class="controls">
+						<input type="text" name="value" value="${value}" placeholder="" class="form-control">
+						<span class="help-block"><?php _e('あらかじめ入力しておきたい値を決められます。')?></span>
+					</div>
+				</div>
+				
+				<div class="form-group hide-on-show" data-block="size">
+					<label class="control-label"><?php _e('幅')?></label>
+					<div class="controls">
+						<select name="size" class="form-control">
+							<option value="col-sm-2"><?php _e('小さめ')?></option>
+							<option value="" selected><?php _e('標準')?></option>
+							<option value="col-sm-8"><?php _e('大きめ')?></option>
+							<option value="col-sm-12"><?php _e('フォーム幅（100%）')?></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="rows">
+					<label class="control-label"><?php _e('行数')?></label>
+					<div class="controls">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="input-group">
+									<input type="text" name="rows" class="form-control" placeholder="" value="${rows}">
+									<span class="input-group-addon"><?php _e('行')?></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="placeholder">
+					<label class="control-label"><?php _e('ヒント')?></label>
+					<div class="controls">
+						<input type="text" name="placeholder" class="form-control" value="${placeholder}" placeholder="<?php _e('これがヒントです。')?>">
+						<span class="help-block"><?php _e('空欄のときに表示されます。')?></span>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="form-group hide-on-show" data-block="before">
+							<label class="control-label"><?php _e('前置文字')?></label>
+							<div class="controls">
+								<input type="text" name="before" class="form-control" value="${before}" placeholder="<?php _e('例）￥、＃')?>">
+								<span class="help-block"><?php _e('入力欄の前に表示されます。')?></span>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-sm-5 col-sm-offset-1">
+						<div class="form-group hide-on-show" data-block="after">
+							<label class="control-label"><?php _e('後置文字')?></label>
+							<div class="controls">
+								<input type="text" name="after" class="form-control" value="${after}"placeholder="<?php _e('例）円、人')?>">
+								<span class="help-block"><?php _e('入力欄の後ろに表示されます。')?></span>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="form-group hide-on-show" data-block="layout">
+					<label class="control-label"><?php _e('配置')?></label>
+					<div class="controls">
+						<select name="layout" class="form-control">
+							<option value="horizontal" selected><?php _e('横並び')?></option>
+							<option value="vertical"><?php _e('縦並び')?></option>
+						</select>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
+	<div class="form form-actions">
+		<button class="btn btn-primary" data-update><?php _e('反映する')?></button> <button class="btn btn-default" data-cancel><?php _e('キャンセル')?></button>
+	</div>
+
+	</div>
+	
+</script>
+
+<!-- !  Button config -->
+
+<script type="text/x-jquery-tmpl" id="tmpl_form_button_config">
+
+	<div class="well">
+		<div class="row">
+			
+			<div class="col-sm-5">
+				<div class="form">
+					<div class="form-group">
+						<label class="control-label"><?php _e('ラベル')?></label>
+						<div class="controls">
+							<input type="text" name="button" value="${label}" placeholder="<?php _e('ラベル')?>" id="" class="form-control">
+						</div>
+							
+					</div>
+				</div>
+	
+			</div>
+		</div>
+		
+		<div class="form form-actions">
+			<button class="btn btn-primary" data-update><?php _e('反映する')?></button> <button class="btn" data-cancel><?php _e('キャンセル')?></button>
+		</div>
+
+	</div>	
+</script>

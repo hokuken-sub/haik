@@ -1,0 +1,19 @@
+
+@theme:        #a59564;
+@themeBackground: lighten(@theme, 30%);
+@themeBorder:     lighten(@theme, 25%);
+@themeText:       darken(@theme, 5%);
+
+@linkColor:       @theme;
+
+@baseColor:    @theme; //brown
+@endColor:     lighten(@baseColor, 30%);
+@baseOpacity:  .3;
+
+@import "color.less";
+@import "skin.less";
+
+.btn-theme {
+	background-color: lighten(@theme, 15%);
+	border-color: lighten(@theme, 10%);
+}

@@ -1,0 +1,32 @@
+
+<div id="orgm_former_controls">
+
+<?php if ( ! $iframe_mode):?>
+	<div class="page-header"><?php _e('フォームの編集')?></div>
+<?php endif;?>
+
+	<div class="row">
+		<div class="former-list-wrapper">
+			<a href="<?php echo h($new_url)?>" id="former_add_trigger" class="thumbnail cut"><i class="orgm-icon orgm-icon-plus" title=""></i><br><?php _e('フォームを追加') ?></a>
+			<ul id="orgm_former_list" class="list-unstyled">
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script id="tmpl_former_list" type="text/x-jquery-tmpl">
+		{{each(key, v) this.data}}
+		<li data-id="${key}">
+			<a href="#" class="thumbnail cut" data-former>
+				<span class="id caption">${key}</span>
+				<span class="description">${v.description}</span>
+				{{if v.deletable}}
+				<span class="delete triangle-btn triangle-right-top red" title="<?php _e('削除')?>"><i class="orgm-icon orgm-icon-close"></i></span>
+				{{/if}}
+				{{if v.log}}
+				<span class="showlog triangle-btn triangle-left-top" title="<?php _e('ログを見る')?>"><i class="orgm-icon orgm-icon-file-4"></i></span>
+				{{/if}}
+			</a>
+		</li>
+		{{/each}}
+</script>

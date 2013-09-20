@@ -1,0 +1,4 @@
+CENTER:
+[[トップ>FrontPage]]　　[[お問い合わせ>Contact]]
+
+#share_buttons(center)

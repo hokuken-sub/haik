@@ -1,0 +1,310 @@
+
+body {
+/*
+	padding-top: 20px;
+	padding-bottom: 40px;
+*/
+}
+
+/* Custom container */
+#orgm_container {
+	margin: 20px auto 20px;
+	max-width: 700px;
+	background-color: #fff;
+	padding: 0 30px;
+	border-radius: 7px;
+}
+#orgm_container > hr {
+	margin: 30px 0;
+}
+
+/* navi */
+.musthead {
+	padding-top: 10px;
+	padding-left:0;
+	padding-right:0;
+}
+
+#logo {
+	padding: 0 0;
+	line-height: 40px;
+	box-sizing: border-box;
+	margin: 0;
+	height: 40px;
+}
+
+
+#logo .navbar-brand {
+	font-size: 24.5px;
+	color: #777;
+	text-decoration: none;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left:0;
+	padding-right: 0;
+	line-height: 40px;
+}
+
+#logo .navbar-brand.logo-image {
+	padding: 0;
+	border-style: none;
+	margin: 0;
+	line-height: 40px;
+}
+
+#logo .navbar-brand.logo-image img {
+	max-height: 40px;
+	max-width: none;
+}
+
+
+/* Main marketing message and sign up button */
+#orgm_eyecatch .jumbotron {
+/* 	margin: 60px -30px; */
+	margin: 30px 0;
+	padding: 0;
+	text-align: center;
+	border-radius: 0;
+	background-color: #fff;
+	z-index: 1;
+}
+.jumbotron h1 {
+	line-height: 1;
+}
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+#orgm_eyecatch .eyecatch.jumbotron {
+	padding: 0;
+}
+
+#orgm_eyecatch .carousel .item {
+	height: 300px;
+}
+
+#orgm_eyecatch .carousel.fit .item{
+	height: auto;
+}
+
+#orgm_eyecatch .carousel .item img {
+	min-height: 100%;
+	min-width: 100%;
+}
+
+
+#orgm_eyecatch .carousel.single .item img{
+	min-height: inherit;
+	min-width: 100%;
+}
+
+#orgm_eyecatch .carousel-caption {
+	background-color: transparent;
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	text-align: center;
+	width: 100%;
+	left: 0;
+	right:0;
+	top: 45%;
+	margin-top: -75px;
+}
+
+#orgm_eyecatch .carousel-caption h1,
+#orgm_eyecatch .carousel-caption h4,
+#orgm_eyecatch .carousel-caption .lead {
+	color: #333;
+}
+
+#orgm_eyecatch .carousel-indicators .active {
+	background-color: #333;
+}
+
+#orgm_eyecatch .carousel-indicators li {
+	border-color: #333;
+}
+
+#orgm_eyecatch .carousel .carousel-control {
+	background-image: none;
+}
+
+#orgm_eyecatch .carousel.single .carousel-control,
+#orgm_eyecatch .carousel.single .carousel-indicators {
+	display: none;
+}
+
+#orgm_eyecatch:empty + hr {
+	display: none;
+}
+
+/* Supporting marketing content */
+.marketing {
+/* 	margin: 30px 0 60px; */
+	margin: 0 0 60px;
+	line-height: 1.7em;
+}
+.marketing h1 {
+	margin-top: 30px;	
+	margin-bottom: 20px;	
+}
+.marketing h2 {
+	margin-top: 30px;	
+	margin-bottom: 20px;	
+}
+.marketing h3 {
+	margin-top: 30px;	
+	margin-bottom: 20px;	
+}
+.marketing h4 {
+	margin-top: 30px;	
+	margin-bottom: 20px;	
+}
+.marketing p {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+.marketing p + h4 {
+	margin-top: 28px;
+}
+
+.footer {
+	padding-bottom: 30px;
+}
+
+#licence {
+	margin-top: 30px;
+	text-align: center;	
+}
+
+/* emurate #orgm_nav ul.nav-pills.pull-right */
+
+#orgm_nav ul {
+	float: right;
+	z-index: 10;
+}
+#orgm_nav ul:before {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+#orgm_nav ul:after {
+	display: table;
+	line-height: 0;
+	content: "";
+	clear: both;
+}
+
+#orgm_nav > ul.nav > li + li {
+	margin-left: 2px;
+}
+
+#orgm_nav > ul > li > a {
+	padding-right: 12px;
+	padding-left: 12px;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 40px;
+}
+
+#orgm_nav .nav > .active > a,
+#orgm_nav .nav > li > a:hover,
+#orgm_nav .nav > li > a:focus {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.navbar-toggle {
+	border-color: #ddd;
+	margin-top: 0;
+}
+.navbar-toggle .icon-bar {
+	background-color: #ddd;
+}
+
+
+#orgm_nav ul li.dropdown.open .dropdown-menu li a {
+	border-radius: 0;
+}
+
+#orgm_nav ul li.dropdown.open .caret {
+	border-bottom-color: #005580;
+	border-top-color: #005580;
+}
+
+#orgm_nav .share_buttons ul.nav > li > a {
+	line-height: 40px;	
+}
+
+@media (max-width: 767px) {
+
+	body {
+		padding-left: 0;
+		padding-right: 0;
+		box-sizing: border-box;
+	}
+	
+	#logo {
+/* 		float: none !important; */
+	}
+	#logo .navbar-brand{
+		text-align: left;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	#orgm_nav ul {
+		float: none !important;
+	}
+	
+	#orgm_nav ul > li:first-child {
+		border-top-right-radius: 4px;
+		border-top-left-radius: 4px;
+	}
+
+	#orgm_nav > ul > li {
+		position: relative;
+		display: block;
+		padding: 0 0;
+		margin-bottom: -1px;
+		background-color: #ffffff;
+		border: 1px solid #dddddd;
+	}
+
+	#orgm_nav > ul > li.active a {
+		border-radius: 0;
+	}
+
+	#orgm_nav > ul > li.open a {
+		border-radius: 0;
+	}
+	
+	#orgm_nav > ul > li.open .dropdown-menu {
+		border-style: none;
+		box-shadow: 0 0 0;
+	}
+
+	#orgm_nav > ul.nav > li + li {
+		margin-left: 0;
+	}
+	
+	#orgm_eyecatch .carousel .item {
+		height: 200px;
+	}
+	#orgm_eyecatch .carousel .item img {
+		min-height: 200px;
+	}
+	#orgm_eyecatch .carousel .carousel-caption {
+		position: absolute;
+	}
+	#orgm_eyecatch .carousel .carousel-caption h1 {
+		font-size: 30px;
+	}
+	
+	
+	
+}
+

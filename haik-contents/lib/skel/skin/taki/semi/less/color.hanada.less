@@ -1,0 +1,54 @@
+// Theme Color
+// ---------------
+@theme:                 #006284; //blue
+@themeBackground:       darken(@theme, 7%);
+@themeBorder:           darken(@theme, 10%);
+@themeText:             darken(@theme, 15%);
+
+@import "skin.less";
+
+@linkColor:				@theme;
+@linkColorHover:		@themeText;
+
+// Inverted navbar
+@navbarInverseBackground:                @theme;
+@navbarInverseBackgroundHighlight:       @theme;
+@navbarInverseBorder:                    @theme;
+
+@navbarInverseText:                      @grayLighter;
+@navbarInverseLinkColor:                 @grayLighter;
+@navbarInverseLinkColorHover:            @white;
+@navbarInverseLinkColorActive:           @white;
+@navbarInverseLinkBackgroundHover:       transparent;
+@navbarInverseLinkBackgroundActive:      darken(@theme, 3%);
+@navbarInverseBrandColor:                @navbarInverseLinkColor;
+
+@import "color.less";
+
+#orgm_navbar.navbar-inverse {
+	background-color: @theme;
+	border-color: darken(@theme, 2%);
+	
+	#orgm_nav .nav > li.dropdown.open > .dropdown-menu {
+		background-color: @theme;
+		color: @navbarInverseLinkColor;
+		border-color: @navbarInverseBorder;
+	}
+
+	#orgm_nav .nav > li.dropdown.open > .dropdown-menu > li > a {
+		color: @navbarInverseLinkColor;
+	}
+}
+
+#orgm_eyecatch {
+	.carousel {
+		background-color: @themeBackground;
+	}
+}
+
+a.list-group-item.active,
+a.list-group-item.active:hover {
+	color: @white;
+	background-color: @theme;
+}
+

@@ -1,0 +1,24 @@
+<div class="form-group<?php echo array_key_exists($name, $error) ? ' has-error' : ''?>">
+	<label for="orgm_form_<?php echo $form['id']?>_<?php echo h($name)?>" class="<?php echo h($form_label_class)?> control-label">
+		<?php echo $item['label']?><?php echo $item['required'] ? $require_mark: ''?>
+	</label>
+	
+	<div class="<?php echo h($form_control_class)?> controls">
+	
+		<div class="row">
+			<div class="<?php echo $item['size'] ? h($item['size']) : 'col-sm-6'?>">
+
+				<textarea name="data[<?php echo h($name)?>]" id="orgm_form_<?php echo $form['id']?>_<?php echo h($name)?>" placeholder="<?php echo h($item['placeholder'])?>" class="form-control <?php echo $item['size'] ? h($item['size']) : '' ?>" rows="<?php echo h($item['rows'])?>"><?php echo h($item['value'])?></textarea>
+
+			</div>
+		</div>
+		
+		<span class="help-block">
+		<?php if (array_key_exists($name, $error)):?>
+			<?php echo $error[$name]?>
+		<?php else:?>
+			<?php echo $item['help']?>
+		<?php endif;?>
+		</span>
+	</div>
+</div>

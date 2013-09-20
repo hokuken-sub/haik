@@ -1,0 +1,35 @@
+<?php
+/**
+ *   Filer Nav
+ *   -------------------------------------------
+ *   /app/haik-contents/plugin/filer/nav.html
+ *   
+ *   Copyright (c) 2013 hokuken
+ *   http://hokuken.com/
+ *   
+ *   created  : 
+ *   modified : 2013/06/20
+ *   
+ *   filer のメイン画面と、iframe のヘッダーに表示する。
+ *   iframe 時のスタイルは admin.css に定義
+ *   
+ */
+?>
+<ul class="nav nav-pills pull-right orgm-filer-nav">
+<?php if ($iframe_mode):?>
+	<li class="filer-fullscreen-link"><a href="#"><i class="orgm-icon-pencil"></i> <?php _e('編集モード')?></a></li>
+<?php endif;?>
+	<li class="filer-star-link"><a href="<?php echo h($star_link)?>" data-search_word=":star"><i class="orgm-icon-star-2"></i> <?php _e('スター付き')?></a></li>
+	<li class="filer-all-link"><a href="<?php echo h($all_link)?>" data-search_word=":all"><?php _e('すべてを表示')?></a></li>
+	<li class="filer-revert-link"><a href="#"><?php _e('元の表示')?></a></li>
+	<li>
+		<form id="orgm_filer_search_form" method="get" action="<?php echo h($all_link)?>" class="">
+			<input type="hidden" name="cmd" value="filer">
+			<input type="hidden" name="refer" value="<?php echo h($refer)?>">
+			<div class="input-group">
+				<input name="search_word" type="text" value="<?php echo isset($vars['search_word']) ? $vars['search_word'] : ''?>" id="orgm_filer_search" class="form-control typeahead" placeholder="<?php _e('検索') ?>" autocomplete="off">
+				<span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="orgm-icon orgm-icon-search"></i></button></span>
+			</div>
+		</form>
+	</li>
+</ul>

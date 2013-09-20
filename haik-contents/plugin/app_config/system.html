@@ -1,0 +1,455 @@
+
+	<div class="page-header"><?php echo h($title) ?></div>
+	<section class="setting">
+		<div class="container">
+
+			<h4 class="sub-header">サイト</h4>
+			<ul class="setting_list">
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('自動リンク') ?></div>
+						<div class="col-sm-6 current"><?php echo $autolink ? __('有効') : __('無効'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="autolink">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('ログインチェック') ?></div>
+						<div class="col-sm-6 current"><?php echo $check_login ? __('有効') : __('無効'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="check_login">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('キャッシュ機能') ?></div>
+						<div class="col-sm-6 current"><?php echo $enable_cache ? __('有効') : __('無効'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="enable_cache">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('メンテナンス') ?></div>
+						<div class="col-sm-6 current">キャッシュ削除、ファイル権限チェック</div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-confirm="maintenance">実行</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('更新時のタイムスタンプ') ?></div>
+						<div class="col-sm-6 current"><?php echo $change_timestamp ? __('常に更新') : __('手動で更新'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="change_timestamp">編集</a></div>
+					</div>
+				</li>
+			</ul>
+
+			<h4 class="sub-header">メール</h4>
+			<ul class="setting_list">
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('メール設定') ?></div>
+						<div class="col-sm-6 current"><?php echo ($smtp_server == '') ? __('標準') : __('SMTP送信'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="smtp_server">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('メールの文字コード') ?></div>
+						<div class="col-sm-6 current"><?php echo ($mail_encode == 'UTF-8') ? __('日本語以外の言語（UTF-8）') : __('日本語（ISO-2022-JP）'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="mail_encode">編集</a></div>
+					</div>
+				</li>
+			</ul>
+			
+			<h4 class="sub-header">外部サービス</h4>
+			<ul class="setting_list">
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('Open Graph Protocolの利用') ?></div>
+						<div class="col-sm-6 current"><?php echo $ogp_tag ? __('有効') : __('無効'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="ogp_tag">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('Google API Key') ?></div>
+						<div class="col-sm-6 current"><?php echo $google_api_key ? h($google_api_key) : __('設定なし'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="google_api_key">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('Facebookアプリ設定') ?></div>
+						<div class="col-sm-6 current"><?php echo $fb_auth ? h($fb_auth) : __('設定なし'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="fb_auth">編集</a></div>
+					</div>
+				</li>
+
+				<li>
+					<div class="row">
+						<div class="col-sm-4"><?php _e('Disqusショートネーム') ?></div>
+						<div class="col-sm-6 current"><?php echo $disqus_shortname ? h($disqus_shortname) : __('設定なし'); ?></div>
+						<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="disqus_shortname">編集</a></div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</section>
+	
+	
+
+<script id="tmpl_conf_enable_cache" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('キャッシュ機能') ?></label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" name="enable_cache" value="1"> 有効</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="enable_cache" value="0"> 無効</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>	
+
+<script id="tmpl_conf_autolink" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('自動リンク') ?></label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" name="autolink" value="8"> 有効</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="autolink" value="0"> 無効</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>	
+
+<script id="tmpl_conf_check_login" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('ログインチェック') ?></label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" name="check_login" value="1"> 有効</label>						</div>
+					<div class="radio">
+						<label><input type="radio" name="check_login" value="0"> 無効</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+
+<script id="tmpl_conf_smtp_server" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('SMTPサーバー') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="smtp_server" value="${smtp_server}" class="form-control" />
+					<span class="help-block"><?php _e('ポート番号を指定する場合は、SMTPサーバーの最後に指定します<br>例：smtp.example.com:587 （※ 587がポート番号）') ?></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('SMTP認証の利用') ?></label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" name="smtp_auth" value="1"> 利用する</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="smtp_auth" value="0"> 利用しない</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('ユーザー') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="mail_userid" value="${mail_userid}" class="form-control" />
+				</div>
+				
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('パスワード') ?></label>
+				<div class="col-sm-9">
+					<input type="password" name="mail_passwd" value="" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('POPサーバー') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="pop_server" value="${pop_server}" class="form-control" />
+					<span class="help-block"><?php _e('POPの認証をする場合は、POPサーバーを指定してください') ?></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+
+<script id="tmpl_conf_mail_encode" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('文字コードの選択') ?></label>
+				<div class="col-sm-9">
+					<select name="mail_encode" class="form-control">
+						<option value="ISO-2022-JP">日本語（ISO-2022-JP）</option>
+						<option value="UTF-8">日本語以外の言語（UTF-8）</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+
+<script id="tmpl_conf_ogp_tag" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-4 control-label" for="" escape=""><?php _e('Open Graph Protocolの利用') ?></label>
+				<div class="col-sm-8">
+					<div class="radio">
+						<label><input type="radio" name="ogp_tag" value="1"> 有効</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="ogp_tag" value="0"> 無効</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-4"></label>
+				<div class="col-sm-8">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>	
+
+
+<script id="tmpl_conf_google_api_key" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">		
+			<input type="hidden" name="phase" value="save">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('Google API Key') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="google_api_key" value="${google_api_key}" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_fb_auth" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('Facebookの利用') ?></label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" name="fb_auth" value="1"> 有効</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="fb_auth" value="0"> 無効</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('アプリID') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="fb_app_id" value="${fb_app_id}" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('シークレットキー') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="fb_app_secret" value="${fb_app_secret}" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('グループID') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="fb_group_id" value="${fb_group_id}"  class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_change_timestamp" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">
+			<input type="hidden" name="phase" value="save">	
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="" escape=""><?php _e('更新時のタイムスタンプ') ?></label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" name="change_timestamp" value="1"> 常に更新</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="change_timestamp" value="0"> 手動で更新</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_disqus_shortname" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="?cmd=app_config_system" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_system">		
+			<input type="hidden" name="phase" value="save">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php _e('Disqusショートネーム') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="disqus_shortname" value="${disqus_shortname}" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>" />
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+

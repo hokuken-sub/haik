@@ -1,0 +1,178 @@
+
+	<div class="page-header"><?php echo h($title) ?></div>
+
+	
+	<section class="setting">
+		<div class="container">
+
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#orgm_access" data-toggle="tab"><?php _e('アクセス解析') ?></a>
+				</li>
+				<li>
+					<a href="#orgm_mail" data-toggle="tab"><?php _e('メルマガ連携') ?></a>
+				</li>
+			</ul>
+			
+			<div class="tab-content">
+				<div class="tab-pane active" id="orgm_access">
+					<ul class="setting_list">
+						<li class="clearfix">
+							<div class="row">
+								<div class="col-sm-5"><?php _e('Google Analytics のトラッキング ID') ?></div>
+								<div class="col-sm-5 current"><?php echo h($ga_tracking_id) ?></div>
+								<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="ga_tracking_id">編集</a></div>
+							</div>
+						</li>
+						<li class="clearfix">
+							<div class="row">
+								<div class="col-sm-5"><?php _e('トラッキングコード') ?></div>
+								<div class="col-sm-5 current"><?php echo h($tracking_script ? __('指定済み') : __('指定なし')) ?></div>
+								<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="tracking_script">編集</a></div>
+							</div>
+						</li>
+					</ul>
+					<!-- <div style="margin:0 0 10px 25px;padding:8px" ><a href="#"><?php _e('レポートを表示') ?></a></div>-->
+				</div>
+			
+				<div class="tab-pane" id="orgm_mail">
+					<ul class="setting_list">
+						<li class="clearfix">
+							<div class="row">
+								<div class="col-sm-4"><?php _e('MailChimp の APIキー') ?></div>
+								<div class="col-sm-6 current"><?php echo h($mc_api_key) ?></div>
+								<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="mc_api_key">編集</a></div>
+							</div>
+						</li>
+						<li class="clearfix">
+							<div class="row">
+								<div class="col-sm-4"><?php _e('MailChimp の リスト選択') ?></div>
+								<div class="col-sm-6 current"><?php echo h($mc_list['name']) . '（' . h($mc_list['id']) . '）' ?></div>
+								<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="mc_list">編集</a></div>
+							</div>
+						</li>
+					</ul>
+					<div style="margin:0 0 10px 0;padding:8px" >
+						<a href="#" data-toggle="collapse" data-target="#mc_form_confirm"><?php _e('フォームの確認') ?></a>
+						<div id="mc_form_confirm" class="collapse" data-mc_list_id="<?php echo h($mc_list['id'])?>">
+							<?php echo $mc_form ?>
+						</div>
+					</div>
+					
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+
+<script id="tmpl_conf_ga_tracking_id" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="<?php echo h($script)?>?cmd=app_config_marketing" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_marketing" data-error="">		
+			<input type="hidden" name="phase" value="save" data-error="">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><?php echo _e('トラッキング ID') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="ga_tracking_id" value="${ga_tracking_id}" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_tracking_script" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="<?php echo h($script)?>?cmd=app_config_marketing" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_marketing" data-error="">		
+			<input type="hidden" name="phase" value="save" data-error="">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php echo _e('トラッキングコード') ?></label>
+				<div class="col-sm-9">
+					<textarea name="tracking_script" cols="30" rows="10" class="form-control">${tracking_script}</textarea>
+					<span class="help-block">GoogleAnalytics 以外のトラッキングコードはこちらに指定してください。</span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_mc_api_key" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="<?php echo h($script)?>?cmd=app_config_marketing" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_marketing" data-error="">		
+			<input type="hidden" name="phase" value="save" data-error="">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php echo _e('MailChimp の APIキー') ?></label>
+				<div class="col-sm-9">
+					<input type="text" name="mc_api_key" value="${mc_api_key}" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>
+
+<script id="tmpl_conf_mc_list" type="text/x-jquery-tmpl">
+
+	<div class="well">
+		<form action="<?php echo h($script)?>?cmd=app_config_marketing" method="post" class=" form-horizontal">
+			<input type="hidden" name="cmd" value="app_config_marketing" data-error="">		
+			<input type="hidden" name="phase" value="save" data-error="">
+			<input type="hidden" name="mode" value="select_list" data-error="">
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for=""><?php echo _e('リストの選択') ?></label>
+				<div class="col-sm-9">
+					<select name="mc_list_id" class="form-control" data-selected>
+					{{each mc_lists}}
+						<option value="${$value.id}"{{if mc_list.id == $value.id}} selected{{/if}}>${$value.name}</option>
+					{{/each}}
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="<?php _e('更新') ?>">
+					<input type="button" class="btn btn-default" value="<?php _e('キャンセル') ?>" data-dismiss="configblock">
+				</div>
+			</div>
+		</form>
+	</div>
+
+</script>

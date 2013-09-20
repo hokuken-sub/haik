@@ -1,0 +1,44 @@
+@theme:                    #554236;
+@themeText:                darken(@theme, 15%);
+@themeBorder:              lighten(@theme, 30%);
+@themeBackground:          lighten(@theme, 35%);
+@linkColor:                @theme;
+
+@import "skin.less";
+@import "color.less";
+@import "scaffolding.less";
+
+#logo a.navbar-brand {
+	color: @theme;
+}
+
+.marketing .page-header h1,
+{
+	color: @theme;
+}
+
+.alert.alert-theme {
+	text-shadow: none;
+
+	a {
+		color: lighten(@theme, 60%);
+		text-shadow: none;
+		text-decoration: underline;
+	}
+
+	a:hover {
+		color: @grayLighter;
+	}
+	
+	.close {
+		color: @gray;
+		.opacity(100);
+		text-shadow: none;
+	}
+}
+
+.table {
+	tr.theme td {
+		color: @white;
+	}
+}

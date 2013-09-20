@@ -1,0 +1,21 @@
+<div class="container">
+	<div class="row">
+		<div class="page-header"><?php echo h($title) ?></div>
+		
+		<div class="lead">
+			<p>
+				<?php echo h(APP_NAME)?> のインストールが完了しました。<br>
+				詳細を <?php echo h($username) ?> にお送りしましたのでご確認ください。
+			</p>
+			<p>
+				メールが届かない場合は、迷惑メールフォルダもご確認ください。
+			</p>
+
+			<div class="form-group">
+				<a href="<?php echo h($script . '?cmd=app_start&mode=guide') ?>" class="btn btn-primary"><?php _e('次へ')?></a>
+			</div>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,20 @@
+@theme:                    #a59aca;
+@themeInverse:             @black;
+@themeText:                darken(@theme, 10%);
+@themeBorder:              lighten(@theme, 20%);
+@themeBackground:          lighten(@theme, 25%);
+@linkColor:                @theme;
+
+@import "skin.less";
+@import "color.less";
+
+@import "scaffolding.less";
+
+#logo a.navbar-brand {
+	color: @themeInverse;
+}
+
+.marketing .page-header h1,
+{
+	color: @themeInverse;
+}

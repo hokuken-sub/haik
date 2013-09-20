@@ -1,0 +1,159 @@
+#haik_intro_start_modal {
+	font-size: 14px;
+	line-height: 1.5em;
+	top: 20%;
+	text-align: center;
+}
+
+#haik_intro_start_modal .modal-dialog{
+	width: 400px;
+}
+
+#haik_intro_start_modal .modal-body {
+	padding-top: 20px;
+}
+
+
+#haik_intro_start_modal .move-to-licence {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.introjs-overlay {
+	background-image: none;
+	background-color: #000;
+	opacity: .5 !important;
+}
+
+.orgm-intro-no-controls .introjs-tooltipbuttons {
+	display: none;
+}
+
+.introjs-helperNumberLayer {
+	width: 30px;
+	height: 30px;
+	background-image: none;
+	background-color: #f0ad4e;
+	background-color: #428bca;
+	border-radius: 5px;
+	text-shadow: none;
+	box-shadow: none;
+	top: 0;
+	left: 0;
+}
+
+.introjs-tooltip {
+	padding: 30px 20px 20px 40px;
+	font-size: 14px;
+}
+
+.introjs-tooltip .introjs-tooltiptext div.row {
+	margin-top: 5px;
+}
+
+.introjs-tooltip.orgm-intro-top-center {
+	margin-left: -100px;
+}
+
+.introjs-helperLayer {
+	background-color: rgba(255,255,255,1);
+}
+
+.introjs-tooltipbuttons {
+	margin-top: 10px;
+}
+
+.introjs-skipbutton {
+	color: #999;
+	position: absolute;
+	top: 0;
+	right: 5px;
+	width: 20px;
+	height: 20px;
+	border-style: none;
+	background-color: transparent;
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.introjs-prevbutton {
+	display: none;
+}
+
+.introjs-nextbutton.disabled {
+	display: none;
+}
+
+.orgm-intro-top-center .introjs-arrow {
+	margin-left: 80px;
+}
+
+.intro-done {
+	margin-top: 10px;
+}
+
+.orgm-intro-login {
+	max-width: 350px;
+	min-width: 250px;
+	margin-left: -30px;
+}
+
+body[data-intro-step=eyecatch] .introjs-tooltip,
+body[data-intro-step=menu]     .introjs-tooltip {
+	max-width: 400px;
+	min-width: 300px;
+}
+
+body[data-intro-step=admin] .introjs-tooltip {
+	max-width: 450px;
+	min-width: 350px;
+	right: 0;
+}
+
+body.orgm-intro-root-admin[data-intro-step=menu] .introjs-tooltip {
+	right:-100px;
+	left: auto !important;
+}
+
+/*
+#msg.introjs-showElement {
+	z-index: 0 !important;
+}
+*/
+
+body.orgm-intro-root-admin #admin_nav {
+	z-index: 1031 !important;
+}
+
+body.orgm-intro-root-admin #sitelink,
+body.orgm-intro-root-admin #systemlink {
+	color: #fff;
+	font-weight: bold;
+}
+
+body.orgm-intro-root-admin .introjs-overlay {
+	z-index: 1000;
+}
+
+body.orgm-intro-root-admin[data-intro-step=nav] .introjs-helperLayer,
+body.orgm-intro-root-admin[data-intro-step=admin] .introjs-helperLayer,
+body.orgm-intro-root-admin[data-intro-step=eyecatch] .introjs-helperLayer {
+	background-color: rgba(0,0,0,0);
+	border-style: none;
+	box-shadow: none;
+}
+
+body.orgm-intro-root-admin .introjs-arrow {
+	margin-left: 100px;
+}
+
+
+body.orgm-intro-root-admin[data-intro-step=nav]  .introjs-arrow,
+body.orgm-intro-root-admin[data-intro-step=menu] .introjs-arrow {
+	margin-left: 0;
+}
+
+body[data-intro-step=admin] .introjs-helperNumberLayer {
+	display: none;
+}

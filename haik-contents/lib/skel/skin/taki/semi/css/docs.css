@@ -1,0 +1,371 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+/*   padding-bottom: 40px; */
+  color: #5a5a5a;
+}
+
+
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+	position:relative;
+	margin-top: 18px;
+	z-index: 12;
+	margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+}
+
+.navbar-wrapper .navbar {
+
+}
+
+/* Remove border and change up box shadow for more contrast */
+#orgm_navbar .navbar{
+  border: 0;
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+/* Downsize the brand/project name a bit */
+.navbar .navbar-brand {
+  padding: 0 20px;
+  line-height: 50px;
+  font-size: 16px;
+  font-weight: normal;
+  box-sizing: border-box;
+/*   text-shadow: 0 -1px 0 rgba(0,0,0,.5); */
+}
+
+.navbar .navbar-brand.logo-image {
+	padding: 0 20px;
+	border-style: none;
+	margin: 0;
+	line-height: 50px;
+	height: 50px;
+	box-sizing: border-box;
+}
+
+.navbar .navbar-brand.logo-image img {
+	max-height: 50px;
+	max-width: none;
+}
+
+#orgm_nav > .nav {
+	margin-bottom: 0;
+}
+
+/* Navbar links: increase padding for taller navbar */
+#orgm_nav .nav > li > a {
+   padding: 0 20px;
+   line-height: 50px;
+   box-sizing: border-box;
+}
+
+/* Offset the responsive button for proper vertical alignment */
+.navbar .btn-navbar {
+	margin-top: 10px;
+}
+
+#orgm_nav .nav > li > .dropdown-menu:before {
+	border-style:none;
+	border-bottom-color: #222;
+}
+#orgm_nav .nav > li > .dropdown-menu:after {
+	border-style:none;
+	border-bottom-color: #222;
+}
+
+#orgm_nav .nav > li.dropdown.open > .dropdown-menu {
+	background-color: #222;
+}
+
+#orgm_nav .nav > li.dropdown.open > .dropdown-menu > li > a {
+	color: #fff;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+#orgm_eyecatch .carousel {
+	margin-bottom: 30px;
+	background-color: #333;
+}
+
+#orgm_eyecatch .carousel-control {
+	margin-top: 0;
+	font-size: 120px;
+	text-shadow: 0 1px 1px rgba(0,0,0,.4);
+	background-color: transparent;
+	border: 0;
+	z-index: 10;
+	line-height: 500px;
+	color:	#555;
+}
+
+#orgm_eyecatch .carousel .item {
+	height: 500px;
+}
+
+#orgm_eyecatch .carousel img {
+	position: relative;
+	min-width: 100%;
+}
+
+#orgm_eyecatch .carousel.fit .item{
+	height: auto;
+}
+#orgm_eyecatch .carousel.fit .item img {
+	min-height: inherit;
+	height: auto;
+}
+
+#orgm_eyecatch .carousel-caption {
+	background-color: transparent;
+	position: absolute;
+	top:50%;
+	padding: 0;
+	z-index: 9;
+	margin-top: -30px;
+	text-align: left;
+}
+
+#orgm_eyecatch .carousel-caption h1,
+#orgm_eyecatch .carousel-caption .lead {
+	margin: 0;
+	line-height: 1.25;
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+
+#orgm_eyecatch .carousel-caption .btn {
+	margin-top: 10px;
+}
+
+#orgm_eyecatch .carousel .carousel-control {
+	background-image:none;
+}
+
+#orgm_eyecatch .carousel.single .carousel-control {
+	display: none;
+}
+
+#orgm_eyecatch.no-eyecatch {
+	height: 90px;
+}
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing {
+	line-height: 1.7em;
+}
+
+.marketing h1 {
+	margin-top: 0;
+/* 	margin-bottom: 30px; */
+}
+
+.marketing h2 {
+  font-weight: normal;
+}
+
+.marketing h3 {
+  font-weight: normal;
+}
+
+.marketing h4 {
+  font-weight: normal;
+}
+
+.marketing p {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+
+.marketing .col-lg-4 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.marketing .page-header h1 {
+	font-weight: normal;
+}
+
+
+/* MenuBar CONTENT
+-------------------------------------------------- */
+#orgm_menu h2{
+	font-size: 1.5em;
+  font-weight: normal;
+}
+
+#orgm_menu h3{
+	font-size: 1.2em;
+  font-weight: normal;
+}
+
+#orgm_menu h4{
+	font-size: 1em;
+  font-weight: normal;
+}
+
+#orgm_menu ul.list1 {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+/* Footer
+--------------------------*/
+.footer {
+}
+
+#licence {
+	padding:30px 0;
+	text-align: center;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+.featurette {
+  padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden; /* Vertically center images part 2: clear their floats. */
+}
+.featurette-image {
+  margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+  margin-right: 40px;
+}
+.featurette-image.pull-right {
+  margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (max-width: 979px) {
+
+	body {
+		box-sizing: border-box;
+	}
+
+  .navbar-wrapper {
+    margin-bottom: 0;
+    width: 100%;
+    position: absolute;
+/*     top: 40px; */
+  }
+
+  .navbar-wrapper .navbar-inner {
+    border-radius: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  #orgm_nav .nav .dropdown-menu > li > a:hover {
+  	background-color: transparent;
+  	background-image: none;
+  	color: inherit;
+  }
+
+
+  #orgm_eyecatch .carousel .item {
+    height: 500px;
+  }
+  #orgm_eyecatch .carousel img {
+    width: auto;
+    height: 500px;
+  }
+
+  .featurette {
+    height: auto;
+    padding: 0;
+  }
+  .featurette-image.pull-left,
+  .featurette-image.pull-right {
+    display: block;
+    float: none;
+    max-width: 40%;
+    margin: 0 auto 20px;
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  body {
+    box-sizing: border-box;
+  }
+
+  .navbar-wrapper .navbar-inner {
+    margin: -20px -20px;
+    box-sizing: border-box;
+  }
+  #orgm_nav .nav.list1 {
+	  margin-left: -15px;
+  }
+
+  #orgm_eyecatch .carousel {
+  }
+
+  #orgm_eyecatch .carousel .item {
+    height: 300px;
+  }
+  #orgm_eyecatch .carousel img {
+    min-height: 300px;
+    min-width:100%;
+  }
+  #orgm_eyecatch .carousel-caption {
+  }
+  #orgm_eyecatch .carousel-caption h1 {
+    font-size: 30px;
+  }
+  #orgm_eyecatch .carousel-caption .lead,
+  #orgm_eyecatch .carousel-caption .btn {
+    font-size: 18px;
+  }
+  
+  #orgm_eyecatch .carousel-control {
+	  line-height: 300px;
+  }
+
+  .marketing .col-lg-4 + .col-lg-4 {
+    margin-top: 40px;
+  }
+
+  .featurette-heading {
+    font-size: 30px;
+  }
+  .featurette .lead {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+}

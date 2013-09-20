@@ -1,0 +1,98 @@
+@theme:                    #fff;
+@themeInverse:             @black;
+@themeColor:               #82ae46;
+@themeText:                darken(@themeColor, 15%);
+@themeBorder:              lighten(@themeColor, 30%);
+@themeBackground:          lighten(@themeColor, 35%);
+
+// Navbar
+// -------------------------
+//@navbarBackgroundHighlight:       #ffffff; //white
+@navbarBackground:                @theme;
+@navbarBackgroundHighlight:       @theme;
+@navbarBorder:                    @theme;
+
+@navbarText:                      @gray;
+@navbarLinkColor:                 @gray;
+@navbarLinkColorActive:           @themeColor;
+@navbarLinkColorHover:            @navbarLinkColorActive;
+@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundActive:      @theme;
+@navbarBrandColor:                @navbarLinkColor;
+
+@import "skin.less";
+
+@linkColor:                @themeColor;
+@linkColorHover:			darken(@themeColor, 15%);
+
+@import "color.less";
+
+@btn-theme-color:              @white;
+@btn-theme-bg:                 @themeColor;
+@btn-theme-border:             @themeColor;
+
+@import "scaffolding.less";
+
+
+#orgm_navbar {
+	border-style: none;
+	.box-shadow(0 0 0 rgba(255,255,255,1));
+	background-color: transparent;
+	background-image: none;
+
+	// Active nav items
+	.nav > .active > a,
+	/* .nav > .active > a:hover, */
+	.nav > .active > a:focus {
+		.box-shadow(0 0 0 rgba(255,255,255,1));
+		background-color: transparent;
+/* 		font-weight: bold; */
+	}
+
+	.nav li.dropdown.open > .dropdown-toggle,
+	.nav li.dropdown.active > .dropdown-toggle,
+	.nav li.dropdown.open.active > .dropdown-toggle {
+		font-weight: bold;
+		background-color: transparent;
+	}
+
+	// Hover/Focus state
+	// -----------
+	.dropdown-menu > li > a:hover,
+	.dropdown-menu > li > a:focus,
+	.dropdown-submenu:hover > a,
+	.dropdown-submenu:focus > a {
+		background-color: @themeColor;
+	}
+	
+}
+
+@media (max-width: 767px) {
+	#orgm_navbar .nav > li.dropdown.open ul.dropdown-menu {
+		background-color: transparent;
+		color: inherit;
+	}
+
+	#orgm_nav > .nav > li {
+		border-style: solid;
+	}
+}
+
+#logo a.navbar-brand {
+	color: @themeInverse;
+}
+
+.marketing .page-header h1,
+{
+	color: @themeInverse;
+}
+
+.alert.alert-theme {
+	a {
+		color: @themeColor;
+	}
+}
+
+.table tbody tr.theme > td {
+	background-color: lighten(@themeColor, 30%);
+}
