@@ -86,9 +86,9 @@ function catbody($title, $page, $body)
 	$_LINK['search']   = "$script?cmd=search";
 	$_LINK['top']      = dirname($script . 'dummy.php'). '/';
 	
-	$_LINK['apply_preview_skin']  = "$script?cmd=app_config_general&phase=apply_preview_design&refer=$r_page";
-	$_LINK['cancel_preview_skin'] = "$script?cmd=app_config_general&phase=cancel_preview_design&refer=$_page";
-	$_LINK['preview_skin_edit'] = "$script?cmd=app_config_general#style_name";
+	$_LINK['apply_preview_skin']  = "$script?cmd=app_config_design&phase=apply_preview_design&refer=$r_page";
+	$_LINK['cancel_preview_skin'] = "$script?cmd=app_config_design&phase=cancel_preview_design&refer=$_page";
+	$_LINK['preview_skin_edit'] = "$script?cmd=app_config_design#style_name";
 
 	$_LINK['unfreeze']  = "$script?cmd=unfreeze&page=$r_page";
 	$_LINK['login']     = $script."?cmd=login&refer=$r_page";

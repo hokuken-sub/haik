@@ -367,7 +367,7 @@
 			
 		},
 		
-		template: '<label class="control-label text-right text-${className}"><i class="orgm-icon orgm-icon-${icon}"></i> ${label}</label>' +
+		template: '<label class="control-label text-right text-${className}">${label}</label>' +
 					'<div class="progress">{{each rankStack}}<div class="progress-bar progress-bar-${$value.className}" style="width:${$value.progress}%"><span class="sr-only">${$value.progress}% Complete</span></div>{{/each}}</div>',
 
 		setLabel: function(data) {

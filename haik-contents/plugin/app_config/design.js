@@ -8,14 +8,6 @@ $(function(){
         $(tmpl).tmpl(ORGM.options).appendTo($("#orgm_designer .modal-body").empty());
 
 	})
-/*
-	.on("hidden", function(e){
-		// ! プレビューの時は、プレビューの解除をする
-		$.post(ORGM.cancelPreviewUrl, {}, function(res){
-			$li.find('.current').text(res.value);
-		},'json');
-	})
-*/
 	.on("click", "li.orgm-template-item", function(e){
 
 		var	skin = $(".thumbnail_name > span",this).text()
@@ -45,7 +37,10 @@ $(function(){
 			$div.find("ul[data-type=style_texture]").html(res.texture.html)
 				.find(".sample-style-texture-custom").each(function(){
 					var filename, filepath
-					  , $input = $("input:hidden[name='style_custom_bg[filename]']");
+					  , $input = $("input:hidden[name='style_custom_bg[filename]']")
+					  , text = $(this).text();
+
+					 $(this).empty().append('<i class="orgm-icon orgm-icon-wrench"></i>').append('<span class="sr-only"></span>').find('.sr-only').text(text);
 					
 					if ($input.val().length > 0) {
 						filepath = $input.data("filepath");

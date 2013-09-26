@@ -52,9 +52,12 @@ function plugin_app_config_auth_action()
 <script type="text/javascript" src="'.JS_DIR.'jquery.passwdcheck.js"></script>
 ';
 	$qt->prependv_once('plugin_app_config_auth_script', 'plugin_script', $include_script);
+
 	$qt->setjsv('passwdcheck', array(
 		'options' => $passwdcheck_options
 	));
+	
+	$example_passwd = create_password();
 	
 
 	if (isset($vars['phase']) && $vars['phase'] === 'save')

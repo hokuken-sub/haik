@@ -105,7 +105,9 @@ function plugin_app_start_set_auth_()
 	}
 	
 	$title = sprintf(__('%s 管理者設定'), APP_NAME);
-	
+	$example_passwd = create_password();
+
+
 	$errmsg = isset($vars['app_start_set_auth_err']) ? $vars['app_start_set_auth_err'] : '';
 
 	$tmpl_file = PLUGIN_DIR . 'app_start/set_auth.html';

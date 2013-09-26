@@ -18,7 +18,7 @@
 
 define('APP_NAME', 'haik');
 define('S_VERSION', '1.4.7');//PukiWiki version
-define('APP_VERSION', '0.8.1-beta');
+define('APP_VERSION', '0.8.2-beta');
 
 // URLs
 define('APP_OFFICIAL_SITE', 'http://toiee.jp/haik/');

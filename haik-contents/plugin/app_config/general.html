@@ -29,17 +29,6 @@
 
 			<li>
 				<div class="row">
-					<div class="col-sm-3"><?php _e('デザイン') ?></div>
-					<div class="col-sm-7 current">
-						<?php echo h($style_name) ?><?php echo ($style_color != '') ? '（色：'.h($style_color).'、背景：'.h($style_texture).'）' : ''; ?>
-						<?php echo $is_preview ? '（プレビュー中）' : ''?>
-					</div>
-					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="style_name">編集</a></div>
-				</div>
-			</li>
-
-			<li>
-				<div class="row">
 					<div class="col-sm-3"><?php _e('サイトの公開') ?></div>
 					<div class="col-sm-7 current"><?php echo h($site_close) ?></div>
 					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_close_all">編集</a></div>

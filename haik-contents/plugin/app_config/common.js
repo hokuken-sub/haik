@@ -26,10 +26,6 @@
 				}
 			});
 			
-			if ($block.hasClass("config-general-style-name")) {
-				$(".orgm-template-item.active", $block).click();
-			}
-			
 			if ($.fn.passwdcheck) {
 				$('input[name=new_passwd]', $block).passwdcheck($.extend({}, ORGM.passwdcheck.options, {placeholderClass:"col-sm-3"}));
 			}
@@ -47,15 +43,6 @@
 //			console.log("hidden");
 //			console.log($block);
 			var $li = $(this);
-			// ! プレビューの時は、プレビューの解除をする
-			if ($block.hasClass('config-general-style-name')) {
-				$.post(ORGM.cancelPreviewUrl, {}, function(res){
-					$li.find('.current').text(res.value);
-				},'json');
-				
-			}
-
-
 		})
 
 		.on("submit", "> li", function(e, data){
@@ -98,153 +85,6 @@
 			
 			$('.form-group').filter('.has-error').removeClass('has-error')
 				.find('[data-error-message]').remove();
-		})
-		.on("click", "li.orgm-template-item", function(e){
-			var $configbox = $(this).closest('form').parent();
-			var $li = $configbox.prev();
-			var	skin = $(".thumbnail_name > span",this).text()
-				,item = $("[data-edit]", $li).data("edit");
-
-			$("input:hidden[name="+item+"]").val(skin);
-			$(this).addClass("active").siblings().removeClass("active");
-
-			var data = {
-				cmd: 'app_config_general',
-				phase: 'get_skin_data',
-				style_name: skin
-			};
-			
-			$.post(ORGM.baseUrl, data, function(res){
-				if (res.error)
-				{
-					ORGM.notify(res.error, 'error');
-					return false;
-				}
-				//set skin name
-				var $div = $("[data-style_name]", $configbox);
-				var orgSkin = $div.data("style_name")
-				  , clsName = "sample-style-name-" + orgSkin;
-				$div.attr("data-style-name", skin).data("style_name", skin).removeClass(clsName).addClass("sample-style-name-" + skin);
-				$div.find("ul[data-type=style_color]").html(res.color.html);
-				$div.find("ul[data-type=style_texture]").html(res.texture.html)
-					.find(".sample-style-texture-custom").each(function(){
-						var filename, filepath
-						  , $input = $("input:hidden[name='style_custom_bg[filename]']");
-						
-						if ($input.val().length > 0) {
-							filepath = $input.data("filepath");
-							$(this).css("background-image", "url("+filepath+")").removeClass("undefined");
-						}
-						else {
-							$(this).css("background-image", "none").addClass("undefined");
-						}
-					});
-
-				//load sample style file
-				if (res.sample_style) {
-					if (res.sample_style.type == "text/less") {
-						var link  = document.createElement('link');
-						link.rel  = "stylesheet";
-						link.type = res.sample_style.type;
-						link.href = res.sample_style.file;
-						less.sheets.push(link);
-						less.refresh();
-					}
-					else {
-						var link  = document.createElement('link');
-						link.rel  = "stylesheet";
-						link.type = res.sample_style.type;
-						link.href = res.sample_style.file;
-						$("body").append(link);
-					}
-				}
-
-//				ORGM.notify(res.success);
-				return false;
-				
-			}, 'json');
-			
-			return false;
-		})
-		.on("click", "[data-style_name] li.sample-cut", function(){
-
-			var $ul = $(this).closest('ul');
-			var value = $(this).children('a').data($ul.data('type'));
-
-			$(this).addClass("active").siblings().removeClass("active");
-			$ul.next().val(value);
-
-			return false;
-
-		})
-		.on("click", "#preview_skin", function(e){
-			e.preventDefault();
-			
-			var $configbox = $(this).closest('form').parent();
-
-			var style_custom_bg = {};
-			$("input:hidden[name^=style_custom_bg]", $configbox).each(function(){
-				var key, value;
-				key = $(this).attr("name").replace(/style_custom_bg\[(.+)\]/, "$1");
-				value = $(this).val();
-				style_custom_bg[key] = value;
-			});
-			
-			var data = $.extend({}, $(this).data(), {
-				cmd : 'app_config_general',
-				phase : 'preview_design',
-				style_name : $("li.orgm-template-item.active .thumbnail_name > span", $configbox).text(),
-				style_color : $("input:hidden[name=style_color]", $configbox).val(),
-				style_texture : $("input:hidden[name=style_texture]", $configbox).val(),
-				style_custom_bg : style_custom_bg
-			});
-			
-			$.post(ORGM.baseUrl, data, function(res){
-				
-				if (res.error) {
-					ORGM.notify(res.error, 'error');
-				}
-				if (res.redirect) {
-					location.href = res.redirect;
-				}
-			}, "json");
-		})
-		.on("click", ".sample-style-texture-custom", function(e){
-			
-			var $self = $(this);
-			var $configbox = $(this).closest('form').parent();
-			
-			//filer 起動
-			var $filer = $("#orgm_filer_selector");
-			
-			$filer.find("iframe").data({
-				search_word: ":image",
-				select_mode: "exclusive"
-			});
-			$filer
-			.on("show.bs.modal", function(){
-				$(document).on("selectFiles.design", function(e, selectedFiles){
-					if (selectedFiles.length > 0) {
-						var fileinfo = selectedFiles[0];
-						
-						//画像を入れ替え
-						$self.css("background-image", "url("+fileinfo.filepath+")")
-						.removeClass("undefined");
-						
-						//input:hidden のデータ入れ替え
-						$configbox.find("input:hidden[name='style_custom_bg[filename]']")
-						.val(fileinfo.filename).data("filepath", fileinfo.filepath);
-						
-						$filer.modal("hide");
-					}
-				});
-			})
-			.on("hidden.bs.modal", function(){
-				$(document).off("selectFiles.design");
-			})
-			.data("footer", "")
-			.modal();
-			
 		})
 		.on('click', '[data-image]', function(e){
 			e.preventDefault();
@@ -357,50 +197,10 @@
 			
 		});
 	
-		
-		// set preview value to options
-		if (typeof ORGM.previewSkin !== "undefined") {
-			ORGM.options = $.extend({}, ORGM.options, ORGM.previewSkin);
-		}
 		// set mc_lists value to options
 		if (typeof ORGM.mcLists !== "undefined") {
 			ORGM.options = $.extend({}, ORGM.options, {mc_lists: ORGM.mcLists});
 		}
-		
-
-/*
-		ORGM.Facebook.login(function(){
-		
-			$("#fb_login").addClass("hide");
-			$("#fb_auth").removeClass("hide");
-		
-			$("#fb_group_select").each(function(){
-				var $select = $(this);
-				FB.api('/me/groups', function(response){
-					if (typeof response.data !== "undefined") {
-						for (var i = 0; i < response.data.length; i++) {
-							var $option = $('<option></option>');
-							$option.val(response.data[i].id).text(response.data[i].name);
-							$select.append($option);
-						}
-						$select.val($select.attr("data-default-value"));
-					}
-				});
-			});
-
-		});
-		
-		$("input:radio[name=qblog_social_widget][value=html]").parent().after($("textarea[name=qblog_social_html]").parent().hide());
-		$("input:radio[name=qblog_social_widget]").click(function(){
-			var $textarea = $("textarea[name=qblog_social_html]").parent();
-			if ($(this).val() == 'html') {
-				$textarea.show();
-			}
-			else {
-				$textarea.hide();
-			}
-		});
-*/
 
 	});
 	
@@ -446,14 +246,6 @@
         this.$element.trigger(e);
 
         if (this.isShown || e.isDefaultPrevented()) return
-
-/*
-        var template_data = $.extend({}, ORGM.options);
-        if (typeof this.options.btnName != 'undefined') {
-	        template_data = $.extend(template_data, {btn_name: this.options.btnName});
-        }
-        this.$block = $(tmpl).tmpl(template_data);
-*/
 
         this.$block = $(tmpl).tmpl(ORGM.options, {unixtime: function(){return "hoge"}});
         this.$block.insertAfter(this.$element);

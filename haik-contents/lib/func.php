@@ -1644,6 +1644,40 @@ function clear_onetime_token()
 	if (isset($_SESSION['token'])) unset($_SESSION['token']);
 }
 
+function create_password($length = 8)
+{
+	$pwd_strings =	array(
+						"sletter" => range('a', 'z'),
+						"cletter" => range('A', 'Z'),
+						"number"  => range('0', '9'),
+						"symbol"  => array_merge(range('!', '/'), range(':', '?'), range('{', '~'))
+					);
+ 
+    $pwd = array();
+ 
+	while (count($pwd) < $length)
+	{
+		// 4種類必ず入れる
+		if (count($pwd) < 4)
+		{
+			$key = key($pwd_strings);
+			next($pwd_strings);
+		}
+		else
+		{
+			// 後はランダムに取得
+			$key = array_rand($pwd_strings);
+		}
+		$pwd[] = $pwd_strings[$key][array_rand($pwd_strings[$key])];
+	}
+	
+	// 生成したパスワードの順番をランダムに並び替え
+	shuffle($pwd);
+	
+	return implode($pwd);
+}
+
+
 function get_admin_tools($page)
 {
 	global $script, $_LINK;

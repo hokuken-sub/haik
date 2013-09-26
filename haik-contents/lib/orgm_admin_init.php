@@ -234,7 +234,7 @@ EOS;
 		unset($tools['editlink'], $tools['sitelink']);
 		
 		//モバイルでは表示しない
-		$tools['systemlink']['class'] = 'hidden-xs';
+		unset($tools['systemlink']);
 		
 		$tools_buttons = '
 			<div class="btn-toolbar">

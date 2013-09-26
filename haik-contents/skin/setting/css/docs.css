@@ -236,6 +236,15 @@ section.setting ul.setting_list .well .form-actions {
 	background-color: #f7f6f1;
 }
 
+.setting_list .well.app_config_auth_passwd .progress {
+	margin-bottom: 0;
+}
+
+.passwdcheck-placeholder .progress {
+	margin-bottom: 0;
+}
+
+
 #orgm_users table > tbody > tr > td:first-child {
 	background-color: transparent;
 }
@@ -1161,6 +1170,12 @@ form.bs-docs-example {
 	margin-left:18px;
 }
 
+
+/* tool */
+.strong-italic {
+	font-weight: bold;
+	font-style: italic;
+}
 
 
 /* Responsive
