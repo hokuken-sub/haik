@@ -43,7 +43,7 @@ function plugin_app_config_auth_action()
 		'rankBetterLabel'        => '簡単です',
 		'rankGoodLabel'          => '安心です',
 		'rankStrongLabel'        => '強力です',
-		'rankGodLabel'           => '神です',
+		'rankGodLabel'           => '強力です！',
 		'tooShortErrorLabel'     => '短すぎます',
 		'tooLongErrorLabel'      => '長すぎます',
 		'hasForbiddenCharsLabel' => '使用できない文字が含まれています',

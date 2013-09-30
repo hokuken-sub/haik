@@ -38,7 +38,7 @@ function plugin_app_start_action()
 		'rankBetterLabel'        => '簡単です',
 		'rankGoodLabel'          => '安心です',
 		'rankStrongLabel'        => '強力です',
-		'rankGodLabel'           => '神です',
+		'rankGodLabel'           => '強力です！',
 		'tooShortErrorLabel'     => '短すぎます',
 		'tooLongErrorLabel'      => '長すぎます',
 		'hasForbiddenCharsLabel' => '使用できない文字が含まれています',
@@ -104,7 +104,7 @@ function plugin_app_start_set_auth_()
 		}
 	}
 	
-	$title = sprintf(__('%s 管理者設定'), APP_NAME);
+	$title = sprintf(__('あと一歩です。'), APP_NAME);
 	$example_passwd = create_password();
 
 
@@ -169,7 +169,7 @@ function plugin_app_start_set_auth()
 
 	}
 	
-	$title = sprintf(__('%s 管理者設定'), APP_NAME);
+	$title = sprintf(__('あと一歩です。'), APP_NAME);
 	
 	$tmpl_file = PLUGIN_DIR . 'app_start/set_auth.html';
 	ob_start();
@@ -269,7 +269,7 @@ function plugin_app_start_ftp_connect_()
 		'dir' => APP_HOME,
 	);
 	
-	$title = __('インストール準備');
+	$title = __('もう少しです。');
 	
 	$ftp_type = is_writable(CACHE_DIR) ? 'default' : 'full';
 
