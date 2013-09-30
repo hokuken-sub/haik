@@ -71,7 +71,8 @@ function plugin_reset_pw_form_remind($error_msg = '')
 	$body = '
 <div class="page-header">'.__('パスワードの再設定').'</div>
 <div class="container">
-	<p class="lead">'.__("パスワードをリセットするには、管理者メールアドレスを入力してください。<br>送信するボタンをクリックすると、管理者メールアドレスへメールを送信します。").'</p>
+	<p>'.__("パスワードをリセットするには、管理者メールアドレスを入力してください。<br>送信するボタンをクリックすると、管理者メールアドレスへメールを送信します。").'</p>
+	<br>
 	'.$error_msg.'
 	<form method="post" action="'.h($script).'">
 		<input type="hidden" name="mode" value="send" />
