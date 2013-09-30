@@ -5,13 +5,13 @@
  */
 if ( ! defined('ALLOW_PASSWD_PATTERN'))
 {
-	define('ALLOW_PASSWD_PATTERN', "/^[!-~]+$/");
+	define('ALLOW_PASSWD_PATTERN', '/^[a-zA-Z0-9`~!@#$%^&*\(\)_\+=\{\}\[\]\|:;"\'<>,.?\/ -]+$/');
 }
 
 function plugin_reset_pw_action()
 {
 	global $script, $username, $vars, $get, $app_ini_path;
-	global $admin_style_name, $style_name;
+	global $admin_style_name, $style_name, $disable_site_auth;
 	
 	$qt = get_qt();
 
@@ -26,9 +26,12 @@ function plugin_reset_pw_action()
 
 	if( ! is_writable($app_ini_path) )
 	{
-		set_flash_msg(__("設定ファイル orgm.ini.php に書き込めません。<br>権限を設定してください（666）。"));
+		set_flash_msg(__("設定ファイル config/haik.ini.php に書き込めません。<br>権限を設定してください（666）。"));
 		redirect($script);
 	}
+	
+	//サイト認証を無効にする
+	$disable_site_auth = 1;
 	
 	// 再発行URLの送信
 	if (isset($vars['mode']) && $vars['mode'] == 'send')
@@ -71,7 +74,7 @@ function plugin_reset_pw_form_remind($error_msg = '')
 	$body = '
 <div class="page-header">'.__('パスワードの再設定').'</div>
 <div class="container">
-	<p>'.__("パスワードをリセットするには、管理者メールアドレスを入力してください。<br>送信するボタンをクリックすると、管理者メールアドレスへメールを送信します。").'</p>
+	<p>'.__("パスワードをリセットするには、管理者メールアドレスを入力してください。<br>送信ボタンをクリックすると、管理者メールアドレスへメールを送信します。").'</p>
 	<br>
 	'.$error_msg.'
 	<form method="post" action="'.h($script).'">
@@ -146,38 +149,88 @@ function plugin_reset_pw_form_reset($error = '')
 		$error_msg = '<p class="text-error">'.$error.'</p>';
 	}
 
+	$qt = get_qt();
+	
+	//password checker を読み込む
+	$passwdcheck_options = array(
+		'rankWeakLabel'          => '単純すぎます',
+		'rankBetterLabel'        => '簡単です',
+		'rankGoodLabel'          => '安心です',
+		'rankStrongLabel'        => '強力です',
+		'rankGodLabel'           => '強力です！',
+		'tooShortErrorLabel'     => '短すぎます',
+		'tooLongErrorLabel'      => '長すぎます',
+		'hasForbiddenCharsLabel' => '使用できない文字が含まれています',
+	);
+	
+	$include_style = '
+<style>
+	.passwdcheck-placeholder label.control-label {
+		padding-top:0;
+	}
+	.passwdcheck-placeholder .progress{
+		height: 10px;
+	}
+</style>
+';
+	$qt->prependv_once('plugin_reset_pw_style', 'plugin_script', $include_style);
+	
+	$include_script = '
+<script type="text/javascript" src="'.JS_DIR.'jquery.passwdcheck.js"></script>
+<script type="text/javascript">
+$(function(){
+			$("input[name=\'reset_pw[password1]\']").passwdcheck($.extend({}, ORGM.passwdcheck.options, {placeholderClass:"col-sm-5"}));
+});
+</script>
+';
+	$qt->prependv_once('plugin_reset_pw_script', 'plugin_script', $include_script);
+	$qt->setjsv('passwdcheck', array(
+		'options' => $passwdcheck_options
+	));
+
+	$example_passwd = create_password();
 
 	$body = '
 <div class="page-header">'.__('パスワードの再設定').'</div>
 <div class="container">
-	<p class="lead">'.__('新しいパスワードを入力してください').'</p>
+	<p>'.__('新しいパスワードを入力してください').'</p>
 '.$error_msg.'
 	<form method="post" action="'.$script.'" class="form-horizontal">
 	
 		<div class="form-group">
 			<label for="" class="col-sm-3 control-label">'.__('メールアドレス').'</label>
-			<div class="col-sm-6">
-				<input type="text" name="reset_pw[username]" value="'.$vars['reset_pw']['username'].'" class="form-control">
+			<div class="row">
+				<div class="col-sm-6">
+					<input type="text" name="reset_pw[username]" value="'.$vars['reset_pw']['username'].'" class="form-control">
+				</div>
 			</div>
 		</div>
 	
 		<div class="form-group">
 			<label for="" class="col-sm-3 control-label">'.__('新しいパスワード').'</label>
-			<div class="col-sm-4">
-				<input type="password" name="reset_pw[password1]" class="form-control">
+			<div class="row">
+				<div class="col-sm-3">
+					<input type="password" name="reset_pw[password1]" class="form-control">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-9 col-sm-offset-3 help-block">
+					<span class="password-example strong-italic">'.h($example_passwd).'</span> のように、大文字、小文字、数字、記号を混ぜ、ランダムなパスワードを入力してください。
+				</div>
 			</div>
 		</div>
 	
 		<div class="form-group">
 			<label for="" class="col-sm-3 control-label">'.__('パスワード再入力').'</label>
-			<div class="col-sm-4">
-				<input type="password" name="reset_pw[password2]" class="form-control">
+			<div class="row">
+				<div class="col-sm-4">
+					<input type="password" name="reset_pw[password2]" class="form-control">
+				</div>
 			</div>
 		</div>
 	
 		<div class="form-group">
-			<label for="" class="col-sm-3"></label>
-			<div class="col-sm-9">
+			<div class="col-sm-9 col-sm-offset-3">
 				<input type="submit" class="btn btn-primary" value="'.__('設定する').'" />
 			</div>
 		</div>
@@ -207,12 +260,17 @@ function plugin_reset_pw_reset_password()
 	}
 	if ( ! preg_match(ALLOW_PASSWD_PATTERN , $vars['reset_pw']['password1']))
 	{
-		$error .= __('パスワードは、英数半角と一部の記号のみ(スペース不可)で入力してください<br>');
+		$error .= __('パスワードにご利用できない文字が入っています。<br>');
 	}
-	if (strlen($vars['reset_pw']['password1']) < 6 )
+	if (strlen($vars['reset_pw']['password1']) < 8 )
 	{
-		$error .= __('パスワードは、6文字以上を設定してください<br>');
+		$error .= __('パスワードは、8文字以上を設定してください<br>');
 	}
+	if (strlen($vars['reset_pw']['password1']) >= 32 )
+	{
+		$error .= __('パスワードは、32文字以内を設定してください<br>');
+	}
+
 
 	if ($error != '')
 	{
@@ -223,8 +281,7 @@ function plugin_reset_pw_reset_password()
 	
 	// 設定ファイルへの書込み
 	$data = array(
-		'passwd' => '{x-php-md5}'.md5($vars['reset_pw']['password1']),
-		'encrypt_ftp' => '',
+		'passwd' => pkwk_hash_compute($vars['reset_pw']['password1']),
 		'reset_pw_token' => '',
 	);
 	orgm_ini_write($data);
@@ -244,10 +301,11 @@ function plugin_reset_pw_reset_password()
 	$body = '
 <h2>'.__('パスワードの再設定完了').'</h2>
 <p>'.__('パスワードの再設定を完了しました。<br>再度、ログインが必要です。').'</p>
-<p><a href="'.$login_url.'" class="btn">ログインする</a></p>
+<p><a href="'.$login_url.'" class="btn btn-primary">ログインする</a></p>
 ';
 	
 	return array('msg'=>$msg, 'body'=>$body);
 }
 
-?>
+/* End of file reset_pw.inc.php */
+/* Location: /haik-contents/plugin/reset_pw.inc.php */

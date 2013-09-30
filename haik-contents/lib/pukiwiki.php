@@ -59,6 +59,8 @@ if (! extension_loaded('mbstring')) {
 // Defaults
 $notify = 0;
 
+$disable_site_auth = 0;
+
 // Load *.ini.php files and init PukiWiki
 require(LIB_DIR . 'init.php');
 
@@ -92,6 +94,7 @@ $qt->enable_cache = $enable_cache;
 if (!$qt->set_page) {
 	$qt->set_page(isset($vars['page'])  ? $vars['page']  : '');
 }
+
 //フラッシュメッセージをQHM Template にセット
 if (isset($_SESSION['notices']) && is_array($_SESSION['notices']))
 {
@@ -151,13 +154,13 @@ if (isset($retvars['msg']) && $retvars['msg'] != '') {
 $page_meta = meta_read($base);
 
 //全体認証
-if (! ss_admin_check() && $vars['phase'] !== 'sssavepath')
+if ( ! ss_admin_check() && ! $disable_site_auth)
 {
 	if ($site_close_all)
 	{
 		//------------------------------------------------------
 		// * サイト全体を閉鎖するオプションがOnの場合、
-		//　　qhmloginへのアクセス以外、全部、「閉鎖中」を出す
+		//　　cmd=loginへのアクセス以外、全部、「閉鎖中」を出す
 		//------------------------------------------------------
 		$_SESSION['usr'] = null;
 		output_site_close_message($site_title, $script.'?cmd=login');
