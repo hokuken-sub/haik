@@ -158,10 +158,6 @@ function plugin_app_start_set_auth()
 		{
 			$errmsg = __('パスワードにご利用できない文字が入っています。');
 		}
- 		else if ($vars['re_passwd'] !== $vars['passwd'])
-		{
-			$errmsg = __('パスワードを2度、正しくご入力ください。');
-		}
 		
 		if ($errmsg === '')
 		{
@@ -205,7 +201,7 @@ function plugin_app_start_init_()
 	$fs = new QHM_FS($config);
 	
 
-	if (isset($vars['username']) && isset($vars['passwd']) && isset($vars['re_passwd']))
+	if (isset($vars['username']) && isset($vars['passwd']))
 	{
 
 		$errmsg = '';
@@ -229,10 +225,6 @@ function plugin_app_start_init_()
 		else if ( ! preg_match('/^[a-zA-Z0-9`~!@#$%^&*\(\)_\+=\{\}\[\]\|:;"\'<>,.?\/ -]+$/', $vars['passwd']))
 		{
 			$errmsg = __('パスワードにご利用できない文字が入っています。');
-		}
- 		else if ($vars['re_passwd'] !== $vars['passwd'])
-		{
-			$errmsg = __('パスワードを2度、正しく入力してください。');
 		}
 		
 		if ($errmsg === '')
@@ -380,11 +372,11 @@ function plugin_app_start_complete_()
 	$username = $config['username'];
 
 	// インストーラーを続けるため。。。
-	$conf = array('app_start' => 1);
+	$conf = array('app_start' => 0);
 	orgm_ini_write($conf);
 
 
-	$title = sprintf(__('おめでとうございます！'), APP_NAME);
+	$title = sprintf(__('ようこそ %s へ！'), APP_NAME);
 	
 	plugin_app_start_send_mail();
 	

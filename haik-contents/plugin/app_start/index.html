@@ -1,12 +1,24 @@
-<div class="row">
-		<div class="page-header"><?php echo h($title) ?></div>
+	<div class="heading">
+		<div class="branding"></div>
+		<h1><?php echo h($title) ?></h1>
+	</div>
 
-		<div class="row movie">
-			<iframe width="560" height="315" src="//www.youtube.com/embed/4R2_ALRUV64?theme=light&showinfo=0&autohide=1" frameborder="0" allowfullscreen></iframe>
+	<div class="row">
+		<div class="col-sm-12 content-wrapper" role="main">
+			<!-- BODYCONTENTS START> -->
+			<div id="orgm_body" style="max-width: 624px;">
+				<div style="margin: 32px;">
+
+					<div class="movie">
+						<iframe width="560" height="315" src="//www.youtube.com/embed/4R2_ALRUV64?theme=light&showinfo=0&autohide=1" frameborder="0" allowfullscreen></iframe>
+					</div>
+					
+					<div class="form-group" style="width:560px;margin-left:auto;margin-right:auto;">
+						<a href="<?php echo h($script.'?cmd=app_start&mode=set_auth') ?>" class="btn btn-primary btn-lg btn-block"><?php _e('次へ')?></a>
+					</div>
+
+				</div>
+			</div>
+			<!-- BODYCONTENTS START> -->
 		</div>
-		
-		<div class="form-group" style="width:560px;margin-left:auto;margin-right:auto;">
-			<a href="<?php echo h($script.'?cmd=app_start&mode=set_auth') ?>" class="btn btn-primary"><?php _e('次へ')?></a>
-		</div>
-		
-</div>
+	</div>

@@ -1,21 +1,30 @@
-<div class="container">
-	<div class="row">
-		<div class="page-header"><?php echo h($title) ?></div>
-		
-		<div class="lead">
-			<p>
-				<?php echo h(APP_NAME)?> のインストールが完了しました。<br>
-				詳細を <?php echo h($username) ?> にお送りしましたのでご確認ください。
-			</p>
-			<p>
-				メールが届かない場合は、迷惑メールフォルダもご確認ください。
-			</p>
-
-			<div class="form-group">
-				<a href="<?php echo h($script . '?cmd=app_start&mode=guide') ?>" class="btn btn-primary"><?php _e('次へ')?></a>
-			</div>
-
-		</div>
-
+	<div class="heading">
+		<div class="branding"></div>
+		<h1><?php echo h($title) ?></h1>
+		<h2><?php echo __('おめでとうございます') ?></h2>
 	</div>
-</div>
+
+	<div class="row">
+		<div class="col-sm-12 content-wrapper" role="main">
+			<!-- BODYCONTENTS START> -->
+			<div id="orgm_body" style="max-width:624px;">
+				<div style="margin:32px;">
+
+					<div class="movie">
+						<iframe width="560" height="315" src="//www.youtube.com/embed/4R2_ALRUV64?theme=light&showinfo=0&autohide=1" frameborder="0" allowfullscreen></iframe>
+					</div>
+
+					<div class="form-group" style="margin-top: 30px;">
+						<a href="<?php echo h($script) ?>" class="btn btn-primary btn-lg btn-block"><?php _e('今すぐ、アイデアを世界へ発信する')?></a>
+
+						<div class="help-block" style="margin-top: 30px;">
+							<?php _e(sprintf("詳細を %s にお送りしましたのでご確認ください", $username)) ?><br>
+							<?php _e("メールが届かない場合は、迷惑メールフォルダもご確認ください。") ?>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- BODYCONTENTS START> -->
+		</div>
+	</div>

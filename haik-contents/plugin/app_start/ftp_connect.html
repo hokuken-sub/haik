@@ -1,63 +1,74 @@
-<div class="page-header"><?php echo $title?></div>
+	<div class="heading">
+		<div class="branding"></div>
+		<h1><?php echo h($title) ?></h1>
+		<h2><?php _e('あなたのWebサイトを編集するための<br>ログインID・パスワードを設定します。')?></h2>
+	</div>
 
-<div class="admin qhmupdate">
+	<div class="row">
+		<div class="col-sm-12 content-wrapper" role="main">
+			<!-- BODYCONTENTS START> -->
+			<div id="orgm_body">
+				<div>
 
-<!--ftp login_form start-->
-<form id="UserLoginForm" method="post" action="<?php echo h($script.'?cmd=app_start') ?>">
+					<!--ftp login_form start-->
+					<form id="UserLoginForm" method="post" action="<?php echo h($script.'?cmd=app_start') ?>">
+					
+						<?php if (isset($error) && strlen($error) > 0) : ?>
+						<div class="alert alert-danger"><?php echo $error ?></div>
+						<?php endif; ?>
+						
+						<?php if ($ftp_type == 'full') : ?>
+						<div class="form-group">
+							<label class="control-label">FTPサーバー</label>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="text" name="ftp_hostname" size="30" tabindex="1" maxlength="128" value="<?php echo h($ftp_config['hostname'])?>" id="ftp_hostname" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<?php endif; ?>
+						
+						<div class="form-group">
+							<label class="control-label">FTPユーザー名</label>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="text" name="ftp_username" size="30" tabindex="2" maxlength="128" value="<?php echo h($ftp_config['username'])?>" id="ftp_username" class="form-control" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label">FTPパスワード</label>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="password" name="ftp_password" size="30" tabindex="3" value="<?php echo h($ftp_config['password'])?>" id="ftp_password" class="form-control" />
+								</div>
+							</div>
+						</div>
+						
+						<?php if ($ftp_type == 'full') : ?>
+						<div class="form-group">
+							<label class="control-label">設置先フォルダ（フルパス）</label>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="text" name="install_dir" size="30" tabindex="4" value="<?php echo h($ftp_config['dir'])?>" id="install_dir" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<?php endif; ?>
+						
+						</label>
+					
+						<input type="hidden" name="mode" value="ftp_login">
+						<input type="hidden" name="mode" value="ftp_connect">
+					
+						<div class="form-group">
+							<input type="submit" name="ftp_connect" tabindex="5" value="<?php h(_e('次へ'))?>" class="btn btn-primary">
+						</div>
+					</form>
 
-	<?php if (isset($error) && strlen($error) > 0) : ?>
-	<div class="alert alert-danger"><?php echo $error ?></div>
-	<?php endif; ?>
-	
-	<?php if ($ftp_type == 'full') : ?>
-	<div class="form-group">
-		<label class="control-label">FTPサーバー</label>
-		<div class="row">
-			<div class="col-sm-12">
-				<input type="text" name="ftp_hostname" size="30" tabindex="1" maxlength="128" value="<?php echo h($ftp_config['hostname'])?>" id="ftp_hostname" class="form-control" />
+				</div>
 			</div>
+			<!-- BODYCONTENTS END> -->
 		</div>
 	</div>
-	<?php endif; ?>
-	
-	<div class="form-group">
-		<label class="control-label">FTPユーザー名</label>
-		<div class="row">
-			<div class="col-sm-12">
-				<input type="text" name="ftp_username" size="30" tabindex="2" maxlength="128" value="<?php echo h($ftp_config['username'])?>" id="ftp_username" class="form-control" />
-			</div>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label class="control-label">FTPパスワード</label>
-		<div class="row">
-			<div class="col-sm-12">
-				<input type="password" name="ftp_password" size="30" tabindex="3" value="<?php echo h($ftp_config['password'])?>" id="ftp_password" class="form-control" />
-			</div>
-		</div>
-	</div>
-	
-	<?php if ($ftp_type == 'full') : ?>
-	<div class="form-group">
-		<label class="control-label">設置先フォルダ（フルパス）</label>
-		<div class="row">
-			<div class="col-sm-12">
-				<input type="text" name="install_dir" size="30" tabindex="4" value="<?php echo h($ftp_config['dir'])?>" id="install_dir" class="form-control" />
-			</div>
-		</div>
-	</div>
-	<?php endif; ?>
-	
-	</label>
-
-	<input type="hidden" name="mode" value="ftp_login">
-	<input type="hidden" name="mode" value="ftp_connect">
-
-	<div class="form-group">
-		<input type="submit" name="ftp_connect" tabindex="5" value="<?php h(_e('次へ'))?>" class="btn btn-primary">
-	</div>
-</form>
-
-
-</div>

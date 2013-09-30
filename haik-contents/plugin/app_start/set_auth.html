@@ -1,60 +1,59 @@
-<div class="container">
-
-	<div class="page-header"><?php echo h($title) ?></div>
-
-	<div class="lead">
-		<p class="text-center">
-			<?php _e('あなたのWebサイトを編集するための<br>ログインID・パスワードを設定します。')?>
-		</p>
+	<div class="heading">
+		<div class="branding"></div>
+		<h1><?php echo h($title) ?></h1>
+		<h2><?php _e('あなたのWebサイトを編集するための<br>メールアドレス・パスワードを設定します。')?></h2>
 	</div>
-
-	<?php if ($errmsg != '') : ?>
-	<div class="alert alert-danger">
-		<a href="#" class="close" data-dismiss="alert">&times;</a>
-		<?php echo h($errmsg); ?>
+<!--
+	<div class="step-breadcrumb">
+		<span>Step 1</span>
+		<span class="active">Step 2</span>
+		<span>Step 3</span>
 	</div>
-	<?php endif; ?>
+-->
 
-	<form method="post" action="<?php echo h($script . '?cmd=app_start') ?>" class="">
-		<div class="row">
-			<input type="hidden" name="mode" value="init">
-			
-			<div class="form-group">
-				<label class="control-label"><?php _e('メールアドレス')?></label>
-				<div class="row">
-					<div class="col-sm-12">
-							<input type="text" name="username" value="<?php echo $vars['username'] ?>" class="form-control" id="">
-					</div>
-				</div>
-			</div>
-	
-			<div class="form-group">
-				<label for="" class="control-label"><?php _e('パスワード')?></label>
-				<div class="row">
-					<div class="col-sm-7">
-						<input type="password" name="passwd" class="form-control" id="" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<span class="password-example strong-italic"><?php echo  h($example_passwd) ?></span> のように、大文字、小文字、数字、記号を混ぜ、ランダムなパスワードを入力してください。</div>
-					</div>
-				</div>
-			</div>
-	
-			<div class="form-group">
-				<label for="" class="control-label"><?php _e('パスワードの確認')?></label>
-				<div class="row">
-					<div class="col-sm-7">
-						<input type="password" name="re_passwd" class="form-control" id="" />
-					</div>
-				</div>
-			</div>
+	<div class="row">
+		<div class="col-sm-12 content-wrapper" role="main">
+			<!-- BODYCONTENTS START> -->
+			<div id="orgm_body">
+				<div>
 
-			<div class="form-group">
-				<input type="submit" class="btn btn-primary" value="<?php _e('次へ') ?>">
+					<form method="post" action="<?php echo h($script . '?cmd=app_start') ?>" class="">
+						<?php if ($errmsg != '') : ?>
+						<div class="alert alert-danger"><?php echo h($errmsg); ?></div>
+						<?php endif; ?>
+
+						<input type="hidden" name="mode" value="init">
+						
+						<div class="form-group">
+							<label class="control-label"><?php _e('メールアドレス')?></label>
+							<div class="row">
+								<div class="col-sm-12">
+										<input type="text" name="username" value="<?php echo $vars['username'] ?>" class="form-control" id="">
+								</div>
+							</div>
+						</div>
+				
+						<div class="form-group">
+							<label for="" class="control-label"><?php _e('パスワード')?></label>
+							<div class="row">
+								<div class="col-sm-7">
+									<input type="password" name="passwd" class="form-control" id="" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 help-block">
+									<span class="password-example strong-italic"><?php echo  h($example_passwd) ?></span> のように、大文字、小文字、数字、記号を混ぜ、ランダムなパスワードを入力してください。
+								</div>
+							</div>
+						</div>
+				
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary btn-lg btn-block" value="<?php _e('次へ') ?>">
+						</div>
+					</form>
+				</div>
 			</div>
+			<!-- BODYCONTENTS START> -->
+
 		</div>
-	</form>
-
-</div>
+	</div>

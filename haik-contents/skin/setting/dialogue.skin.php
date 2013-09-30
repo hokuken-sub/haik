@@ -19,19 +19,15 @@
                             
 </head>
 
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<body class="wrap">
 
 #{$body_first}
 #{$sr_link}
 
 <!-- Body
 ================================================== -->
-<div class="container-narrow" id="contents">
-	<div class="row">
-		<div class="col-sm-12 content-wrapper" role="main">
-			#{$body}
-		</div>
-	</div>
+<div class="container-narrow wrapper" id="contents">
+	#{$body}
 </div>
 
 <aside>
