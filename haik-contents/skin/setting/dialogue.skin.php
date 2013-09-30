@@ -47,7 +47,6 @@
 
 #{$plugin_script}
 #{$user_script}
-<script type="text/javascript" src="#{$style_path}skin.js"></script>
 
 </body>
 </html>

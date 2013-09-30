@@ -944,7 +944,7 @@ function output_site_close_message($site_name, $login_url)
 	
 	$qt->setv('meta_content_type', '<meta charset="UTF-8">');
 	
-	$app_sign = ($display_login > 0) ? '<a href="'. h($login_url) . '">'.h(APP_NAME).'</a>' : h(APP_NAME);
+	$app_sign = ($display_login > 0) ? '<a href="'. h($login_url) . '" rel="nofollow">'.h(APP_NAME).'</a>' : h(APP_NAME);
 
 	//output 503 Status
 	header('HTTP/1.1 503 Service Temporarily Unavailable');
@@ -952,7 +952,8 @@ function output_site_close_message($site_name, $login_url)
 	
 	$qm = get_qm();
 	$closetitle = __('閉鎖中');
-	$closemsg = __('このサイトは、現在閉鎖中です。<br>お手数ですが、公開されるまで、今しばらくお待ち下さい。');
+	$closesubtitle = __('このサイトは、現在閉鎖中です。');
+	$closemsg = __('お手数ですが、公開されるまで、<br>今しばらくお待ち下さい。');
 	
 	//日付指定の場合
 	$openmsg = '';
@@ -972,7 +973,6 @@ function output_site_close_message($site_name, $login_url)
 
 	$style_files = array(
 		CSS_DIR . 'bootstrap.min.css',
-		CSS_DIR . 'bootstrap-responsive.min.css',
 		CSS_DIR . 'origami.css',
 		SKIN_DIR . $admin_style_name . '/' . $style_config['style_file'],
 	);
@@ -986,25 +986,53 @@ function output_site_close_message($site_name, $login_url)
 	$qt->setv('style_css', $style_css);
 	$qt->setv('style_path', SKIN_DIR . $admin_style_name . '/');
 	$qt->setv('template_name', 'dialogue');
+	$qt->setv('page_title', $closetitle);
+	
+	$include_script = '
+<script type="text/javascript" src="'.JS_DIR.'jquery.js"></script>
+<script type="text/javascript" src="'.JS_DIR.'bootstrap.min.js"></script>
+<script type="text/javascript" src="'.JS_DIR.'origami.js"></script>
+';
+	$qt->setv('plugin_script', $include_script);
+	
+	
+	if (exist_plugin('notify'))
+	{
+		do_plugin_convert("notify");
+	}
+	
+	//favicon
+	if (file_exists('favicon.ico'))
+	{
+		$qt->appendv('style_css', "\n\t".'<link rel="shortcut icon" href="favicon.ico">');
+	}
+	else if (file_exists(IMAGE_DIR . 'favicon.ico'))
+	{
+		$qt->appendv('style_css', "\n\t".'<link rel="shortcut icon" href="'.IMAGE_DIR.'favicon.ico">');
+	}
 	
 	$body = <<< EOD
 
-<div>
-	<div class="page-header">
-		$closetitle
+	<div class="heading">
+		<div class="branding"></div>
+		<h1>{$closetitle}</h1>
+		<h2>{$closesubtitle}</h2>
 	</div>
-	
-	<div class="lead">
-		<p>$closemsg</p>
-		
-		<p>$openmsg</p>
-	</div>
-	
-	<div class="lead text-right muted">
-		<div id="login">powered by {$app_sign}</div>
-	</div>
-</div>
 
+	<div class="row">
+		<div class="col-sm-12 content-wrapper" role="main">
+			<!-- BODYCONTENTS START> -->
+			<div id="orgm_body">
+				<div class="orgm-site-close-message">
+					<p>{$closemsg}</p>
+					<p>{$openmsg}</p>
+				</div>
+			</div>
+			<div class="orgm-site-close-licence text-center muted">
+				<div id="login">powered by {$app_sign}</div>
+			</div>
+		</div>
+	</div>
 EOD;
 
 

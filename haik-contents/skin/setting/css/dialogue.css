@@ -145,3 +145,20 @@ box-shadow: none;
 .passwdcheck-placeholder .progress{
 	height: 12px;
 }
+
+.orgm-site-close-message {
+	margin:32px;
+	font-size: 14px;
+}
+
+.orgm-site-close-message p {
+	line-height: 1.7em;
+}
+
+.orgm-site-close-licence #login {
+	font-size: 13px;
+}
+
+.orgm-notice {
+	font-size: 14px;
+}
