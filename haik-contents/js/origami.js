@@ -186,21 +186,7 @@
 	    });
 	    
 
-		// ! menubar .list2 dropdown
-		$("#orgm_menu li > a").each(function(){
-		});
-		$("#orgm_menu .list2").each(function(i){
-			var $ul = $(this)
-			  , $a = $(this).prev()
-			  , $li = $(this).parent()
-			  , id = "orgm_menu_collapse_list_" + i;
-			
-//			$li.addClass("");
-			$ul.addClass("collapse nav nav-list").attr("id", id);
-			$a.attr("data-toggle", "collapse").attr("data-target", "#" + id).attr("href", "#").on("click", function(e){e.preventDefault()});
-			$a.append('<i class="icon-chevron-down pull-right" style="opacity:0.5"></i>');
-
-		});
+		// ! menubar
 		
 		// ! page list
 		$(".scroll-up").click(function(e){

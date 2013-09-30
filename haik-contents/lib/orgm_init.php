@@ -3,7 +3,8 @@
 //
 // ページメタ情報の展開
 //-------------------------------------------------
-$qt->appendv('user_head', $page_meta['user_head']);
+//$qt->appendv('user_head', $page_meta['user_head']);
+$qt->prependv('user_head', $page_meta['user_head']);
 $description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : $page_meta['auto_description'];
 $qt->setv('description', $description);
 $qt->setv('keywords', $page_meta['keywords']);
@@ -128,7 +129,6 @@ if (isset($style_config['colors'][$style_color]))
 	}
 	else if (file_exists($color_cssfile))
 	{
-
 		$style_css .= "\t".'<link rel="stylesheet" href="'.h($color_cssfile).'">'. "\n";
 	}
 	unset($lessfile);
@@ -277,13 +277,13 @@ if (in_array($menubar, $style_config['templates'][$template_name]['layouts']))
 			'|<ul class="(list2)"|',
 			'|<li>(.+href="('.$scripturi.')".+)?</li>|',
 		);
+
 		$rpls = array(
-			'<ul class="$1 nav nav-list"',
-			'<ul class="$1"',
+			'<ul class="$1 nav"',
+			'<ul class="$1 nav"',
 			'<li class="active">$1</li>',
 		);
 		$_menubody = do_plugin_convert('menu');
-
 		$_menubody = preg_replace($ptns, $rpls, $_menubody);
 		
 		unset($vars['page_alt']);
