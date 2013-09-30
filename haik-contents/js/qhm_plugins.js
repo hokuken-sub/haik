@@ -3499,6 +3499,8 @@ ORGM.plugins = {
 
 			exnote.moveToNextLine();			
 			this.insert(value);
+			
+			clearTimeout(this.timeout);
 		},
 		preview: function(init){
 			init = init || false;
@@ -3506,12 +3508,29 @@ ORGM.plugins = {
 				,self = this
 				,data;
 			
-			data = $("input, select, textarea", $dialog).serialize();
+			data = $("input, select, textarea", $dialog).serializeArray();
 			
-			$.getJSON(ORGM.baseUrl + "?cmd=fb_likebox&preview=1", data, function(res){
-				$(".previewarea", $dialog).html(res.html);
-				if (init) FB.init({xfbml:true});
+			$.getJSON(ORGM.baseUrl + "?cmd=fb_likebox&preview=1&init=" + (init ? 1 : 0), data, function(res){
+				$(".previewarea", $dialog).empty().html(res.html);
+				if (true) FB.init({xfbml:true});
 			})
+			
+			var setHeight = function(){
+				var $div = $(".previewarea", $dialog)
+				  , height = $div.height(), maxHeight = 0;
+				if ($div.data("maxHeight")) {
+					maxHeight = $div.data("maxHeight");
+				} else {
+					$div.data("maxHeight", height);
+					maxHeight = height;
+				}
+				
+				if (maxHeight >= height) {
+					$div.css("height", height).data("maxHeight", height);
+				}
+				this.timeout = setTimeout(setHeight, 1000);
+			};
+			this.timeout = setTimeout(setHeight, 1000);
 		}
 	},
 	// !Facebook おすすめ一覧
