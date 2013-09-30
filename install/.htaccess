@@ -1,0 +1,2 @@
+#AddType text/plain .txt .php
+php_flag engine Off
