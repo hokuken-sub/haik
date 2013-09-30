@@ -136,10 +136,7 @@
 				var height = 0;
 				$(".navbar-fixed-top:visible").each(function(){
 					if ($(this).css("position") == "fixed") {
-						if ($('ul.nav', this).length)
-						{
-							height += $(this).height();
-						}
+						height += $(this).height();
 					}
 					
 				});
