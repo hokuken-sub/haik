@@ -961,9 +961,9 @@ ORGM.plugins = {
 			
 			$modal.find("input:text[name=size]").data("source", this.options.sizePresets);
 			
-			$("input:text[name$=color]").colorpalette();
+			$("input:text[name$=color]", $modal).colorpalette();
 			
-			$("input:text[name=size]").typeahead({
+			$("input:text[name=size]", $modal).typeahead({
 				name: "font-size",
 				local: this.options.sizePresets
 			});
@@ -1000,7 +1000,7 @@ ORGM.plugins = {
 				}
 			})
 			.on("hide.bs.modal", function(){
-				$("input:text[name$=color]").colorpalette("hide")
+				$("input:text[name$=color]", $modal).colorpalette("hide")
 			});
 
 		},
