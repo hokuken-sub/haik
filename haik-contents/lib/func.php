@@ -1028,7 +1028,7 @@ function output_site_close_message($site_name, $login_url)
 					<p>{$openmsg}</p>
 				</div>
 			</div>
-			<div class="orgm-site-close-licence text-center muted">
+			<div class="orgm-site-close-license text-center muted">
 				<div id="login">powered by {$app_sign}</div>
 			</div>
 		</div>

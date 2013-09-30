@@ -81,7 +81,7 @@ body {
 	overflow: hidden;
 	border: 0;
 }
-#headcopy,#header,#navigator,#navigator2,#footer,#licence,#wrap_sidebar,#wrap_sidebar2,#toolbar_upper_max,#toolbar_upper_min{
+#headcopy,#header,#navigator,#navigator2,#footer,#license,#wrap_sidebar,#wrap_sidebar2,#toolbar_upper_max,#toolbar_upper_min{
 	display: none;
 }
 #wrap_content {

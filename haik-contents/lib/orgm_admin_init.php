@@ -378,7 +378,7 @@ if ($display_login > 0)
 	{
 		$app_sign = '<a href="'. h($_LINK['login']) .'" rel="nofollow" id="orgm_login" class="haik-brand">'.APP_NAME.'</a>';
 	}
-	$qt->setv('licence_tag',
+	$qt->setv('license_tag',
 			'<p>powered by '. $app_sign .'</p>');
 }
 

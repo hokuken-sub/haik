@@ -37,7 +37,7 @@
 			$('body').append(ORGM.intro.steps[0].html);
 			
 			$(ORGM.intro.steps[0].selector)
-			.on("click", ".move-to-licence", function(){
+			.on("click", ".move-to-license", function(){
 
 				$(ORGM.intro.steps[0].selector).data("step", 2).modal("hide");
 

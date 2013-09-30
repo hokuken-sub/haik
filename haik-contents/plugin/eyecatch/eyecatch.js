@@ -449,7 +449,7 @@
 		.end().find('[data-slide]').data(carouselOption);
 
 		// !ナビクリックの封印
-		$("#orgm_nav,#logo,#licence").on("click", "a", function(e){e.preventDefault()});
+		$("#orgm_nav,#logo,#license").on("click", "a", function(e){e.preventDefault()});
 		$("#orgm_eyecatch_controls .navbar-brand").on("click", function(e){e.preventDefault()});
 
 
