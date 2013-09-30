@@ -18,8 +18,8 @@
  */
  
 define('APP_NAME', 'haik');
-define('APP_DOWNLOAD_URL', 'http://ensmall.net/dev/gethaik/download.php');
-define('APP_VERSION_URL', 'https://ensmall.net/dev/gethaik/version');
+define('APP_DOWNLOAD_URL', 'http://ensmall.net/gethaik/download.php');
+define('APP_VERSION_URL', 'https://ensmall.net/gethaik/version');
 
 
 // ! 関数定義

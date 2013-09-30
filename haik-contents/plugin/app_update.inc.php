@@ -20,8 +20,8 @@ require_once(LIB_DIR . 'Ftp.php');
 require_once(LIB_DIR . 'qhm_fs.php');
 require_once(LIB_DIR . 'Unzip.php');
 
-define('APP_PACKAGE_URL_FORMAT', 'https://ensmall.net/dev/gethaik/download.php?v=%s');
-define('APP_VERSION_URL', 'https://ensmall.net/dev/gethaik/version');
+define('APP_PACKAGE_URL_FORMAT', 'https://ensmall.net/gethaik/download.php?v=%s');
+define('APP_VERSION_URL', 'https://ensmall.net/gethaik/version');
 
 function plugin_app_update_init()
 {

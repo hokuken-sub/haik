@@ -17,7 +17,7 @@
  *   
  */
 define('DEBUG', FALSE);
-define('APP_INSTALLER_URL', 'http://ensmall.net/dev/haik-inst/installer.php');
+define('APP_INSTALLER_URL', 'http://ensmall.net/haik-inst/installer.php');
 define('INSTALL_DIR', dirname(__FILE__) . '/');
 
 
