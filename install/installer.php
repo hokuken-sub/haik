@@ -216,7 +216,8 @@ require($files['unzip']);
 
 
 // ! メイン処理
-$title = 'もう少しです。';
+$title = 'インストールを開始します。';
+$subtitle = 'システムをダウンロードして設定します。（約2〜3分程度）';
 $installer = new Installer();
 
 // FTP接続が必要かチェック
