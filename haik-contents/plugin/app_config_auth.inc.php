@@ -119,6 +119,13 @@ function plugin_app_config_auth_action()
 		
 		$data = array_intersect_key($vars, array_flip($fields));
 		orgm_ini_write($data);
+		
+		//username を変更した場合、
+		//セッションも書き換える
+		if (isset($data['username']) && $data['username'])
+		{
+			$_SESSION['usr'] = $data['username'];
+		}
 
 		$res['message'] = '設定を更新しました';
 		
