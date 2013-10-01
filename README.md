@@ -1,6 +1,6 @@
 Haik
 ==========
-Haik - Haik is a SIMPLE web site builder.
+Haik - Haik is an Inspiratioin Kit.
 Haik makes you web site owner very quickly.
 
 This is a fork of Quick Homepage Maker based on PukiWiki 1.4.7
@@ -14,12 +14,12 @@ Requirements
 * [PHP](php.net) 5+
 
 
-Installation
+Installion
 -----------
 
-1. Download install.php from [toiee.jp](http://toiee.jp/haik/).
-2. Upload the install.php to your web server.
-3. Access the install.php by web browser.
+1. [Download](http://toiee.jp/haik/) and extract package or clone git repository.
+2. Upload the Haik folders and files to your server. Normally the index.php file will be at document root.
+3. Access the index.php by web browser.
 4. Follow Haik install dialog.
 
 
@@ -33,7 +33,7 @@ Some Handy Links
 - See [Hokuken.Inc Support](https://ensmall.net/club/)
 
 - [haik on GitHub](https://github.com/toiee/haik)
-- [haik skin Repos](https://github.com/toiee) check haik-skin-SKINNAME
+- [haik skin Repos](https://github.com/toiee) haik-skin-SKINNAME
 
 
 License
