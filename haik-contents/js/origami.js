@@ -33,7 +33,8 @@
 		    }, delay);
 		},
 		
-		notify: function(message, type){
+		notify: function(message, type, callback){
+			callback = callback || function(){};
 			type = type || "success";
 			type = (type === "error") ? "danger" : type;
 			
@@ -51,9 +52,14 @@
 			
 			var misec = $('[data-auto-click]', $notice).data('auto-click');
 			
+			$notice.on("click", "[data-auto-click]", function(){
+				callback.call();
+			});
+			
 			setTimeout(function(){
 				$notice.find('button.close').click();
 			}, misec);
+
 			
 		},
 		
