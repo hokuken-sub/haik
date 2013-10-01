@@ -1946,6 +1946,7 @@ function get_admin_tools($page)
 					'link'   => $_LINK['help_site'],
 					'style'  => '',
 					'visible'=> TRUE,
+					'target' => 'help',
 				),
 				'divider4'    => array(
 					'name'   =>'',
@@ -2073,7 +2074,8 @@ function get_admin_tools_html($tools)
 					}
 					else
 					{
-						$atag = '<a href="'.h($lv2['link']).'" id="'.h($lv2key).'" '.$data_modal.'>'.$lv2['name'].'</a>';
+						$atarget = (isset($lv2['target']) && $lv2['target']) ? ('target="'.$lv2['target'].'"') : '';
+						$atag = '<a href="'.h($lv2['link']).'" id="'.h($lv2key).'" '.$data_modal.' '.$atarget.'>'.$lv2['name'].'</a>';
 					}
 					
 					$str .= '
@@ -2337,7 +2339,7 @@ function manual_link($pagename, $hash = '', $tag = TRUE)
 {
 	if ($tag === TRUE)
 	{
-		$tag_format = '<a href="%s" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>';
+		$tag_format = '<a href="%s" target="help"><span class="glyphicon glyphicon-question-sign"></span></a>';
 	}
 	else if ($tag)
 	{

@@ -105,7 +105,7 @@ function catbody($title, $page, $body)
 	$_LINK['map']       = $script.'?cmd=map&refer='.$r_page;
 	$_LINK['password']  = $script.'?plugin=qhmsetting&phase=user2&mode=form';
 	$_LINK['system_update'] = $script.'?plugin=app_update';
-	$_LINK['help_site'] = APP_OFFICIAL_SITE. 'index.php?Help';
+	$_LINK['help_site'] = APP_MANUAL_SITE;
 	
 	if (is_login()) $qt->setjsv('links', $_LINK);
 
@@ -470,7 +470,7 @@ EOD;
 			$class = 'hide';
 		}
 		$page_title = isset($page_meta['title']) ? $page_meta['title'] : $page;
-		$manual_link = manual_link('Guide', '', '<a href="%s" id="haik_edit_manual_link" class="btn btn-default btn-sm" target="_blank">?</a>');
+		$manual_link = manual_link('StartGuide', '', '<a href="%s" id="haik_edit_manual_link" class="btn btn-default btn-sm" target="_blank">?</a>');
 		
 		$body = '
 <div class="container">
