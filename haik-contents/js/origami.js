@@ -292,7 +292,7 @@
 		}
 		
 		//動画再生
-		$(".orgm-video-play-trigger").each(function(e){
+		$(".orgm-video-play-trigger:visible").each(function(e){
 			var data = $(this).data();
 			var parentWidth = $(this).parent().width()
 				, width = (parentWidth < data.orgWidth) ? parentWidth : data.orgWidth
