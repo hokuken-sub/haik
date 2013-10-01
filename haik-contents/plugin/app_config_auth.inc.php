@@ -119,15 +119,25 @@ function plugin_app_config_auth_action()
 		
 		$data = array_intersect_key($vars, array_flip($fields));
 		orgm_ini_write($data);
+
+		$res['message'] = '設定を更新しました';
 		
+		//passwd を変更した場合、
+		//強制ログアウトし、ログインを促す
+		if (isset($data['passwd']) && $data['passwd'])
+		{
+			$_SESSION = array();
+			ss_auth_logout();
+			$res['item'] = 'passwd';
+			$res['message'] = 'パスワードを変更しました。<br>もう一度ログインし直してください。';
+			$res['redirect_to'] = $script . '?cmd=login';
+		}
 		//username を変更した場合、
 		//セッションも書き換える
-		if (isset($data['username']) && $data['username'])
+		else if (isset($data['username']) && $data['username'])
 		{
 			$_SESSION['usr'] = $data['username'];
 		}
-
-		$res['message'] = '設定を更新しました';
 		
 		print_json($res);
 		exit;

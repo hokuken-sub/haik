@@ -46,7 +46,8 @@
 		})
 
 		.on("submit", "> li", function(e, data){
-			var $configbox = $(this).next();
+			var $configbox = $(this).next()
+			  , callback = function(){};
 
 			if (data.error) {
 				$configbox.find("input, select, textarea").filter("[name="+data.item+"]")
@@ -62,12 +63,24 @@
 				return false;
 			}
 			
-			// mc_api_key の場合、mc_lists を options へセットする
-			if (typeof data.item !== "undefined" && data.item === "mc_api_key") {
-				data.options = $.extend(data.options, {mc_lists: data.mc_lists});
-			}
-			else if (typeof data.item !== "undefined" && data.item === "mc_list_id" && data.mc_list_id.length > 0) {
-				$("#mc_form_confirm").filter(".in").collapse("hide");
+			if (typeof data.item !== "undefined") {
+
+				// mc_api_key の場合、mc_lists を options へセットする
+				if (data.item === "mc_api_key") {
+					data.options = $.extend(data.options, {mc_lists: data.mc_lists});
+				}
+				else if (data.item === "mc_list_id" && data.mc_list_id.length > 0) {
+					$("#mc_form_confirm").filter(".in").collapse("hide");
+				}
+				// passwd 変更した場合、ログアウト状態になるので、
+				// redirect_to へ転送する
+				else if (data.item === "passwd" && typeof data.redirect_to !== "undefinded") {
+					
+					callback = function(){
+						location.href = data.redirect_to;
+					};
+				}
+				
 			}
 			
 
@@ -77,7 +90,7 @@
 			$('.current', this).text(data.value);
 			$(this).configblock('hide');
 
-			ORGM.notify(data.message);
+			ORGM.notify(data.message, "success", callback);
 
 		})
 		.on("submitStart", "> li", function(e){
