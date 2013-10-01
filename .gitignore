@@ -9,7 +9,7 @@ haik-contents/wiki/*.txt
 haik-contents/upload/*
 !haik-contents/upload/thumbnail/
 haik-contents/upload/thumbnail/*
-!haik-contents/upload/thumbnail/.gitkeep
+!haik-contents/upload/thumbnail/empty
 
 haik-contents/skin/*/
 !haik-contents/skin/setting/
