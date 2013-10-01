@@ -16,11 +16,17 @@
 				$url = $script . '?cmd=app_update';
 				$url = ($config) ? $url.'&config' : $url;
 			?>
-			<form action="<?php echo h($url) ?>" method="post">
+			<form action="<?php echo h($url) ?>" method="post" id="plugin_app_update_do_update">
 				<input type="hidden" name="mode" value="update">
 				<input type="submit" value="今すぐ更新" class="btn btn-primary">
 				<a href="#" class="btn btn-default" data-cancel>キャンセル</a>
 			</form>
+			
+			<div id="plugin_app_update_progress" class="progress progress-striped active hide" style="margin-top: 30px">
+				<div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+					<span class="sr-only">0% Complete</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
