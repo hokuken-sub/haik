@@ -31,13 +31,16 @@
 function plugin_tabs_convert()
 {
 	static $s_tabs_cnt = 1;
-	
+
 	$args   = func_get_args();
 	$body   = array_pop($args);
     $body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
+
+	$qt = get_qt();
     
     $open_index = 1;
     $justified = FALSE;
+    $vertical = FALSE;
     
     foreach ($args as $arg)
     {
@@ -50,12 +53,18 @@ function plugin_tabs_convert()
 	    {
 		    $justified = TRUE;
 	    }
+	    else if ($arg === 'vertical')
+	    {
+		    $vertical = TRUE;
+	    }
     }
 
 	$panes = explode('====', $body);
 	$header = array_shift($panes);
 	
 	$header_html = '';
+	$active_css = '';
+	$hover_css = '';
 	$str = '';
 	$headnum = 1;
 	foreach (explode("\n", $header) as $line)
@@ -84,6 +93,14 @@ function plugin_tabs_convert()
 			$str = '<li class="'.$add_class.'"><a href="'.$link.'" data-toggle="'.$data_toggle.'">'.$head.'</a></li>';
 			$header_html .= $str;
 			$headnum++;
+		}
+		else if (preg_match('/^active=(.+)$/', $line, $matches))
+		{
+			$active_css .= $matches[1];
+		}
+		else if (preg_match('/^hover=(.+)$/', $line, $matches))
+		{
+			$hover_css .= $matches[1];
 		}
 	}
 
@@ -114,10 +131,35 @@ EOD;
 	}
 
 	$data_parent = 'tab'.$s_tabs_cnt;
-	$justified_class =  $justified ? ' nav-justified' : '';
+
+	$include_css = '
+<style>
+#'.$data_parent.' > li.active > a {
+'.$active_css.'
+}
+
+#'.$data_parent.' > li > a:hover {
+'.$hover_css.'
+}
+</style>
+';
+	$qt->appendv("plugin_head", $include_css);
+
+
+
+	$class = '';
+	if ($vertical)
+	{
+		$class = 'nav-pills nav-stacked';
+	}
+	else
+	{
+		$justified_class =  $justified ? ' nav-justified' : '';
+		$class = 'nav-tabs'. $justified_class;
+	}
 
 	$html = <<< EOD
-	<ul class="nav nav-tabs{$justified_class}" id="{$data_parent}">
+	<ul class="nav {$class}" id="{$data_parent}">
 		{$header_html}
 	</ul>
 	<div class="tab-content">
