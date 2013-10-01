@@ -414,10 +414,10 @@ $("#FtpConnectForm")
 		dataType: "json",
 		
 		beforeSend: function(){
-			$("input:text,input:password").prop('disabled', true).addClass("disabled");
+			$("input:text,input:password,input:submit").prop('disabled', true).addClass("disabled");
 		},
 		complete: function(){
-			$("input:text,input:password").prop('disabled', false).removeClass("disabled");
+			$("input:text,input:password,input:submit").prop('disabled', false).removeClass("disabled");
 		},
 		
 		success: function(res){
