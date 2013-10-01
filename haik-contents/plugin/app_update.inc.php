@@ -232,6 +232,9 @@ function plugin_app_update_update_()
 {
 	global $script;
 	
+	//memory_limit を上げる
+	ini_set('memory_limit', '-1');
+	
 	$title = sprintf(__('%sの更新'), APP_NAME);
 
 	$config = array();
