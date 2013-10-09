@@ -186,19 +186,28 @@
     //}}}
     function presize($obj, w, h) //{{{
     {
-      var nw = $obj.width(),
-          nh = $obj.height();
-
+      var ow, oh, nw, nh;
+      if (options.hasOwnProperty('trueSize')) {
+	    ow = nw = options.trueSize[0];
+	    oh = nh = options.trueSize[1];
+      }
+      else {
+        ow = nw = $obj.width();
+        oh = nh = $obj.height();
+      }
+      
       if ((nw > w) && w > 0) {
         nw = w;
-        nh = (w / $obj.width()) * $obj.height();
+        nh = (w / ow) * oh;
       }
       if ((nh > h) && h > 0) {
         nh = h;
-        nw = (h / $obj.height()) * $obj.width();
+        nw = (h / oh) * ow;
       }
-      xscale = $obj.width() / nw;
-      yscale = $obj.height() / nh;
+      xscale = ow / nw;
+      yscale = oh / nh;
+      
+      console.log([ow, oh, nw, nh, xscale, yscale]);
       $obj.width(nw).height(nh);
     }
     //}}}

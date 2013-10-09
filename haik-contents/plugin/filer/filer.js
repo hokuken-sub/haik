@@ -241,6 +241,8 @@ $(function () {
 				this.disable();
 				$a.data("Jcrop", this);
 				
+				jc = this;
+				
 				if ($('#edit').is(':visible')) {
 					// ! Jcropの再起動
 					$('a[href=#info]', filergrid.$expander).click();

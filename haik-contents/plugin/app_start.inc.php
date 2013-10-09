@@ -269,7 +269,7 @@ function plugin_app_start_ftp_connect_()
 		'dir' => APP_HOME,
 	);
 	
-	$title = __('もう少しです。');
+	$title = __('FTP接続');
 	
 	$ftp_type = is_writable(CACHE_DIR) ? 'default' : 'full';
 
@@ -348,7 +348,7 @@ function plugin_app_start_ftp_connect_()
 		{
 			// cannot connect
 			$error = $fs->ftp->errmsg;
-			$ftp_type = 'default';
+			$ftp_type = 'full';
 			$title = __('FTP 接続：エラー');
 		}
 	}
