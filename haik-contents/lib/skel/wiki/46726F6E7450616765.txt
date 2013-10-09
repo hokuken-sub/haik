@@ -13,4 +13,4 @@
 
 
 
-&button(http://toiee.jp/haik/,theme){YouTubeで学ぶ};
+&button(http://toiee.jp/haik/,theme){ヘルプサイトで学ぶ};

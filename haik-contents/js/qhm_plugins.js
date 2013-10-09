@@ -308,7 +308,7 @@ ORGM.plugins = {
 	
 	// !見出し
 	h1: {
-		label: "#h1(先頭見出し）",
+		label: "#h1(先頭見出し)",
 		format: "#h1({header})\n",
 		options: {defval: "先頭見出し"},
 		style: {
@@ -319,7 +319,7 @@ ORGM.plugins = {
 			ORGM.plugins.header.onStart.call(this);
 			this.caret = {
 				offset: -this.value.length + 4,
-				length: this.value.length - 5
+				length: this.value.length - 6
 			};
 		}
 
