@@ -477,9 +477,14 @@ function plugin_filer_hash_check_()
 	$filer = plugin_filer_get_instance();
 	
 	//更新を感知
-	if ( ! $filer->checkHash())
-	{
-		$json['result'] = 'changed';
+	try {
+		if ( ! $filer->checkHash())
+		{
+			$json['result'] = 'changed';
+		}
+	} catch (AccessControlException $e) {
+		$json['result'] = 'error';
+		$json['error'] = $e->getMessage();
 	}
 	
 	print_json($json);
@@ -1421,11 +1426,15 @@ class ORGM_Filer {
 			$this->saveHash();
 			return FALSE;
 		}
+		if ( ! is_writable($this->hashFile))
+		{
+			throw new AccessControlException(sprintf(__('ファイルに書き込み権限がありません：%s'), $this->hashFile));
+		}
 
 		$saved_md5 = file_get_contents($this->hashFile);
 		
 		$now_md5 = $this->createHash();
-	
+		
 		//更新を感知
 		if ($saved_md5 !== $now_md5)
 		{
@@ -1600,6 +1609,7 @@ class ORGM_Filer {
 			}
 		}
 		
+		$this->saveHash();
 		$this->vacuum();
 		
 		$file_size = $file_size - filesize($this->dbFile);

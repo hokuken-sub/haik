@@ -597,6 +597,10 @@ $(function () {
 	// !check hash
 	if ( ! ORGM.filer.iframe || window.parent === window) {
 		$.getJSON(ORGM.filer.hashCheckUrl, function(res){
+			if (res.error) {
+				ORGM.notify(res.error, "danger");
+				return;
+			}
 			if (res.result === "changed") {
 				location.href = ORGM.filer.checkUrl;
 			}
