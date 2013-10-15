@@ -51,9 +51,10 @@ function is_pagename($str)
 	return $is_pagename;
 }
 
-function is_url($str, $only_http = FALSE)
+function is_url($str, $only_http = FALSE, $omit_protocol = FALSE)
 {
 	$scheme = $only_http ? 'https?' : 'https?|ftp|news';
+	$scheme = $omit_protocol ? ('('. $scheme . ')?') : $scheme;
 	return preg_match('/^(' . $scheme . ')(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]*)$/', $str);
 }
 

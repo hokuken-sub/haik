@@ -10,45 +10,48 @@
  *   created  : 
  *   modified : 2013/10/09
  *   
- *   Description
+ *   iframe を設置する。
+ *   オートリサイズ機能：親要素の横幅に合わせて、iframe をリサイズする機能。デフォルトで有効。
+ *   オートフィット機能：iframe window の大きさに合わせて iframe をリサイズする機能。デフォルトで無効。X-FRAME-OPTION: SAMEORIGIN の場合、動作しない場合があるので注意
  *   
  *   Usage :
+ *     #iframe(URL[,HEIGHT[,WIDTH]])
+ *     #iframe(URL[,WIDTHxHEIGHT])
+ *     #iframe(URL[,width=WIDTH[,height=HEIGHT]])
+ *     #iframe{{
+ *     <iframe ...></iframe>
+ *     }}
  *   
  */
-define('PLUGIN_IFRAME_ALLOW_CSS', TRUE);
-
-// ----
-define('PLUGIN_IFRAME_FIT_IFRAME_JS', '
-<script type="text/javascript">
-$(function(){
-	$(\'iframe.autofit_iframe\').load(function(){
-    if (this.contentWindow.document.documentElement)
-		$(this).height(this.contentWindow.document.documentElement.scrollHeight+10);
-    });
-    $(\'iframe.autofit_iframe\').triggerHandler(\'load\');
-});
-</script>
-'
-);
 
 function plugin_iframe_convert()
 {
-	global $pkwk_dtd;
-	$qm = get_qm();
-
 	$qt = get_qt();
 	
 	$args = func_get_args();
-	$body = trim(str_replace(array("\n", "\r"), ' ', array_pop($args)));
-	$src = trim(array_shift($args));
+	$body = '';
+	if (count($args) > 0)
+	{
+		$body = trim(str_replace(array("\n", "\r"), ' ', $args[count($args)-1]));
+		if (preg_match('/^<iframe ([^>]+)><\/iframe>$/i', $body, $mts))
+		{
+			array_pop($args);
+		}
+		else
+		{
+			$body = '';
+		}
+	}
+	$src = isset($args[0]) && is_url($args[0], FALSE, TRUE) ? array_shift($args) : '';
 
-	
+//var_dump(h($body), $src);
+
 	//オプション：デフォルト値
 	$width = '100%';
 	$height = 200;
 	$align = 'center';
 	$resize = TRUE;
-	$fit = TRUE;
+	$fit = FALSE;
 	$fit_force = FALSE;
 	$options = array(
 		'frameborder' => '0',
@@ -57,7 +60,7 @@ function plugin_iframe_convert()
 	$add_class = 'plugin-haik-iframe';
 	
 	//HTMLが指定されている場合、そちらからオプションを読み込む
-	if (preg_match('/^<iframe ([^>]+)><\/iframe>$/i', $body, $mts))
+	if ($body)
 	{
 		$attrs = ' ' . $mts[1] . ' ';
 		if (preg_match_all('/\s([^= ]+?)(?:="([^"]*)")/', $attrs, $mtsarr))
@@ -180,11 +183,66 @@ EOD;
 		$addscript = <<< EOS
 <script>
 $(function(){
-	$("[data-haik-autoresize!=off]");
+	var \$autofit = $("iframe[data-haik-autofit][data-haik-autofit!=off]")
+	.on("load.haik.iframe", function(){
+		if (this.contentWindow.document.documentElement)
+			$(this).height(this.contentWindow.document.documentElement.scrollHeight+10);
+	});
+	setTimeout(function(){
+		\$autofit.triggerHandler("load.haik.iframe");
+	}, 25);
+
+	var \$autoresize = $("iframe[data-haik-autoresize][data-haik-autoresize!=off]")
+	.each(function(){
+		var \$self = \$(this)
+		  , orgWidth = \$self.width()
+		  , orgHeight = \$self.height()
+		\$self.data({
+			orgWidth: orgWidth,
+			orgHeight: orgHeight
+		});
+		var ratio = false;
+		if (/^\d+$/.test(\$self.attr("width"))) {
+			ratio = orgHeight / orgWidth;
+		}
+		\$self.data("ratio", ratio);
+	})
+	.on("resize.haik.iframe", function(){
+		var \$self = \$(this);
+		var width, height, ratio, parentWidth,
+			orgWidth, orgHeight, newWidth, newHeight;
+		width = \$self.width();
+		height = \$self.height();
+		orgWidth = \$self.data("orgWidth");
+		orgHeight = \$self.data("orgHeight");
+		ratio = \$self.data("ratio");
+		parentWidth = \$self.parent().width();
+		if (parentWidth < width) {
+			newWidth = parentWidth;
+			newHeight = ratio !== false ? newWidth * ratio : height;
+			\$self.width(newWidth).height(newHeight);
+		}
+		else if (parentWidth > width && width < orgWidth) {
+			\$self.width(orgWidth).height(orgHeight);
+		}
+		
+	});
+	
+	var fireResize = function(){
+		\$autoresize.each(function(){
+			\$(this).triggerHandler("resize.haik.iframe");
+		});
+	};
+	
+	setTimeout(fireResize, 25);
+	
+	$(window).on("resize.haik.iframe", fireResize);
+	
 })
 </script>
 
 EOS;
+		$qt->appendv_once('plugin_iframe', 'plugin_script', $addscript);
 		
 	}
 	
