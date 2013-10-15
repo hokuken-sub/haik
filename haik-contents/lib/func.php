@@ -1014,7 +1014,6 @@ function output_site_close_message($site_name, $login_url)
 	$body = <<< EOD
 
 	<div class="heading">
-		<div class="branding"></div>
 		<h1>{$closetitle}</h1>
 		<h2>{$closesubtitle}</h2>
 	</div>
