@@ -124,23 +124,39 @@ $(function(){
 function plugin_gmap_get_markers($spots)
 {
 	$markers = array();
-
 	$spots = str_replace("\r", "\n", str_replace("\r\n", "\n", $spots));
 	$spots = explode("\n", $spots);
 	
+	setlocale(LC_ALL, 'ja_JP.UTF-8');
+
 	foreach ($spots as $spot)
 	{
-		if (strlen($spot) == 0)
+		if (strlen(trim($spot)) == 0)
 		{
 			continue;
 		}
-		list($adress, $label, $content) = array_pad(explode(',', $spot), 3, '');
-		$geoobj = plugin_gmap_getGeocoding($adress);
+
+		$mapdata = str_getcsv(trim($spot), ',', '"');
+		
+		// アドレスから軽度、緯度を取得する
+		$geoobj = plugin_gmap_getGeocoding($mapdata[0]);
+		
+		$lng = $geoobj ? $geoobj['lng'] : '135.505969';
+		$lat = $geoobj ? $geoobj['lat'] : '34.77114';
+		if (isset($mapdata[3]) && $mapdata[3] != '')
+		{
+			$lng = $mapdata[3];
+		}
+		if (isset($mapdata[4]) && $mapdata[4] != '')
+		{
+			$lat = $mapdata[4];
+		}
+		
 		$markers[] = array(
-			'label' => $label,
-			'content' => $content,
-			'lng' => $geoobj ? $geoobj['lng'] : '135.505969',
-			'lat' => $geoobj ? $geoobj['lat'] : '34.77114',
+			'label' => $mapdata[1],
+			'content' => $mapdata[2],
+			'lng' => $lng,
+			'lat' => $lat,
 		);
 	}
 	
@@ -153,9 +169,11 @@ function plugin_gmap_getGeocoding($address)
     if (empty($address)) {
         return FALSE;
     }
+    
+    $r_address = rawurlencode($address);
 
     // Google Map Api から Json形式で緯度・経度等のデータを取得
-    $geo_url = "http://maps.google.com/maps/api/geocode/json?address={$address}&sensor=false&language=ja";
+    $geo_url = "http://maps.google.com/maps/api/geocode/json?address={$r_address}&sensor=false&language=ja";
     $geostr = file_get_contents($geo_url);
 	$json = json_decode($geostr,true);
 

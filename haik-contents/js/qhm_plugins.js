@@ -2606,14 +2606,14 @@ ORGM.plugins = {
 				,data = {br: "\n"}
 				,zoom = $(".orgm-gmap").gmap("getZoom");
 
-			data.address = $("input[name=address]", $dialog).val();
+			data.address = '"' + $("input[name=address]", $dialog).val() + '"';
 			data.label   = $("input[name=label]", $dialog).val();
 			data.content = $("input[name=content]", $dialog).val();
 			data.height  = $("input[name=height]", $dialog).val();
 			data.width   = $("input[name=width]", $dialog).val();
 			data.zoom    = 'zoom=' + zoom;
 			data.size = '';
-
+			
 			if (data.height != '') {
 				if (data.width == '') {
 					data.size = data.height;
