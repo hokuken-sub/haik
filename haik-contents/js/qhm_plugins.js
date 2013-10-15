@@ -1972,7 +1972,7 @@ ORGM.plugins = {
 				$(document).off("selectFiles.pluginDownload");
 			});
 			
-			$("input[name=file]").click(function(){
+			$("input[name=file]", $modal).click(function(){
 				$filer.find("iframe").data(self.options.filer.options);
 				$filer.data("footer", "").modal();
 			});
