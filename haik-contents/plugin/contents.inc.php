@@ -27,6 +27,8 @@ function plugin_contents_convert()
 	$target = PLUGIN_CONTENTS_DEFAULT_TARGET;
 	$flat   = PLUGIN_CONTENTS_DEFAULT_FLAT_FLAG;
 	$title  = __('目次');
+	$notitle= FALSE;
+	$class  = 'orgm-toc';
 	
 	foreach ($args as $arg)
 	{
@@ -43,14 +45,24 @@ function plugin_contents_convert()
 		{
 			$flat = 1;
 		}
+		else if ($arg === 'notitle')
+		{
+			$notitle = TRUE;
+		}
+		else if ($arg === 'noborder')
+		{
+			$class .= ' orgm-toc-noborder';
+		}
 		//目次タイトル
 		else
 		{
 			$title = $arg;
 		}
 	}
+	
+	$title = $notitle ? '' : $title;
 
-	return '<nav class="orgm-toc" data-level="'. h($level) .'" data-selector="h1,h2,h3,h4" data-target="'. h($target) .'" data-flat="'. h($flat) .'" data-title="'. h($title) .'"></nav>';
+	return '<nav class="'. h($class) .'" data-level="'. h($level) .'" data-selector="h1,h2,h3,h4" data-target="'. h($target) .'" data-flat="'. h($flat) .'" data-title="'. h($title) .'"></nav>';
 
 }
 

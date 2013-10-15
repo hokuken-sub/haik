@@ -307,6 +307,12 @@ select.form-control {
 	border: 1px solid #ddd;
 	border-radius: 4px;	
 }
+.orgm-toc-noborder {
+    border-style: none;
+    background-color: inherit;
+    margin: 0;
+    padding: 0;
+}
 
 .orgm-toc > h2.no-toc {
 	margin-top: 10px;
