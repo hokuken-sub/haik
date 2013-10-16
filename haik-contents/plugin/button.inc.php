@@ -30,6 +30,11 @@ function plugin_button_inline()
 		{
 			$href = $script.'?'.rawurlencode($href);
 		}
+		//存在しないページ
+		else if ( ! is_url($href) && is_pagename($href))
+		{
+			$href = $script . '?cmd=edit&page=' . rawurlencode($href);
+		}
 	
 		$type = ' btn-default';
 		$size = '';
