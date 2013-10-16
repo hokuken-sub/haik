@@ -105,6 +105,7 @@ function catbody($title, $page, $body)
 	$_LINK['map']       = $script.'?cmd=map&refer='.$r_page;
 	$_LINK['password']  = $script.'?plugin=qhmsetting&phase=user2&mode=form';
 	$_LINK['system_update'] = $script.'?plugin=app_update';
+	$_LINK['skin_update'] = $script.'?plugin=design_wand';
 	$_LINK['help_site'] = APP_MANUAL_SITE;
 	
 	if (is_login()) $qt->setjsv('links', $_LINK);

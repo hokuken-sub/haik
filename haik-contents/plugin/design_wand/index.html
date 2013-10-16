@@ -1,0 +1,79 @@
+<div class="page-header">
+	<h2>デザイン管理</h2>
+</div>
+
+<div id="design_wand" data-ftp="<?php echo $is_ftp ?>">
+	<fieldset>
+
+		<legend>アップデート可能 <button class="btn btn-default btn-xs pull-right" data-type="design-update" data-design="all">すべてアップデート</button></legend>
+		<div class="design-wand-update"></div>
+		<p class="design-wand-none-design text-muted text-center hide">アップデートできるデザインはありません。</p>
+	</fieldset>
+</div>
+
+<script id="tmpl_update_list" type="text/x-jquery-tmpl">
+	<div class="update-list-design col-sm-2">
+		<span class="label label-default update-list-name">${name}</span>
+		<img src="<?php echo SKIN_DIR ?>${name}/${thumbnail}" class="img-responsive img-thumbnail">
+		<div class="info">
+			<button type="button" class="btn btn-xs btn-success" data-type="design-update" data-design="${name}">アップデート</button>
+		</div>
+	</div>
+</script>
+
+<?php if ($is_ftp) : ?>
+<div id="design_wand_ftp" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">アップデート（FTP接続）</h4>
+			</div>
+			<div class="modal-body">
+				
+				<div class="form-group hide">
+					<label class="control-label">FTPサーバー</label>
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="text" name="ftp_hostname" size="30" tabindex="1" maxlength="128" value="<?php echo h($ftp_config['hostname'])?>" id="ftp_hostname" class="form-control" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group hide">
+					<label class="control-label">FTPユーザー名</label>
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="text" name="ftp_username" size="30" tabindex="2" maxlength="128" value="<?php echo h($ftp_config['username'])?>" id="ftp_username" class="form-control" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">FTPパスワード</label>
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="password" name="ftp_password" size="30" tabindex="3" value="<?php echo h($ftp_config['password'])?>" id="ftp_password" class="form-control" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group hide">
+					<label class="control-label">設置先フォルダ（フルパス）</label>
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="text" name="install_dir" size="30" tabindex="4" value="<?php echo h($ftp_config['dir'])?>" id="install_dir" class="form-control" />
+						</div>
+					</div>
+				</div>
+				
+				<input type="hidden" name="mode" value="ftp_connect" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+				<button type="button" class="btn btn-primary" data-type="ftp_connect">接続してアップデート</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php endif; ?>

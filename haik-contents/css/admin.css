@@ -1090,3 +1090,8 @@ ul.orgm-page-list li.nav-header{
 		padding-bottom: 15px;
 	}
 }
+
+.orgm-plugin-desgin-wand-link {
+	margin-right: 15px;
+	font-weight: normal;
+}

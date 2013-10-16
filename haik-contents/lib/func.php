@@ -1958,6 +1958,13 @@ function get_admin_tools($page)
 					'style'  => '',
 					'visible'=> TRUE,
 				),
+				'skinupdatelink' => array(
+					'name'   => __('デザインアップデート'),
+					'link'   => $_LINK['skin_update'],
+					'style'  => '',
+					'class'  => 'hide',
+					'visible'=> TRUE,
+				),
 				'helplink' => array(
 					'name'   => __('ヘルプ'),
 					'link'   => $_LINK['help_site'],

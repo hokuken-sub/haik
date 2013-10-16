@@ -870,6 +870,13 @@ $(document).ready(function(){
 				.parent().addClass("update-comes");
 		}
 	});
+	$.getJSON(ORGM.baseUrl + '?cmd=design_wand&mode=check_version', function(data){
+		if (data.updates.length > 0) {
+			$("#skinupdatelink").html($("#skinupdatelink").text() + ' <i class="orgm-icon-notification"></i>')
+				.parent().addClass("update-comes").removeClass("hide");
+			$(".orgm-plugin-desgin-wand-link").removeClass("hide");
+		}
+	});
 
 	// ! Admin methods
 

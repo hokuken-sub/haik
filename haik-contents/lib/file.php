@@ -1450,6 +1450,18 @@ function form_write($id, $key, $value = NULL, $merge = FALSE)
 	
 }
 
+/**
+ * スキン情報を読み込む
+ */
+function style_config_read_skel($style = '', $key = NULL)
+{
+	global $style_name;
+	
+	$style = ($style == '') ? $style_name : $style;
+	
+	$conf_file = SKEL_DIR . 'skin/' . $style . '/config.php';
+	return _style_config_read($conf_file, $key);
+}
 
 /**
  * スキン情報を読み込む
@@ -1461,7 +1473,16 @@ function style_config_read($style = '', $key = NULL)
 	$style = ($style == '') ? $style_name : $style;
 	
 	$conf_file = SKIN_DIR . $style . '/config.php';
-	
+
+	return _style_config_read($conf_file, $key);
+}
+
+/**
+ * スキン情報を読み込む
+ */
+function _style_config_read($conf_file, $key = NULL)
+{
+	$config = array();
 	try
 	{
 		$config = ini_read($conf_file, $key);
@@ -1483,7 +1504,6 @@ function style_config_read($style = '', $key = NULL)
 
 	return $config;
 }
-
 
 
 /**
