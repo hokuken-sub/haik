@@ -362,6 +362,32 @@ select.form-control {
 /* 	overflow-y: scroll; */
 }
 
+/* accordion */
+.orgm-accordion {
+	margin-bottom: 20px;
+}
+.orgm-accordion .panel-heading h4.panel-title {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.orgm-accordion .panel-heading {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.orgm-accordion .panel-heading a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: block;
+}
+.orgm-accordion .panel-heading a:hover {
+	text-decoration: none;
+}
+.orgm-accordion .panel-heading a:active,
+.orgm-accordion .panel-heading a:focus {
+	text-decoration: none;
+	outline-style: none;
+}
+
 .orgm-box-block > p:first-child,
 .orgm-box-block.panel > .panel-body > p:first-child {
 	margin-top: 0;

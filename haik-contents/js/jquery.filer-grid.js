@@ -15,6 +15,7 @@
 		self.$element.on("click.filergrid", function(e){
 			e.preventDefault();
 			if ( ! $(e.target).is("i")) {// <span class="triangle-btn"><i /></span> からのイベントは無視
+				e.stopPropagation();
 				self.show();
 			}
 		});
@@ -49,7 +50,6 @@
 			if ($item.hasClass("filer-grid-expanded")) return;
 			
 			this.hideSiblings(function(){
-
 				var $expander = $("<div></div>", {class: "filer-grid-expander"})
 				
 				self.$element.after($expander);
@@ -87,9 +87,9 @@
 			var $siblings = this.$item.siblings(".filer-grid-expanded");
 			
 			if ($siblings.length > 0) {
-				this.$item.siblings(".filer-grid-expanded").each(function(){
+				this.$item.siblings(".filer-grid-expanded").each(function(i){
 					var filergrid = $(".filer-grid", this).data("filer-grid");
-					if (filergrid) {
+					if (i === ($siblings.length - 1) && filergrid) {
 						filergrid.hide(callback);
 					}
 				});
@@ -125,7 +125,7 @@
 			var self = this,
 				onEndFn = function() {
 //					if( support ) {
-						self.$item.off( $.support.transition.end );
+//						self.$item.off( $.support.transition.end );
 //					}
 					self.$item.addClass( 'filer-grid-expanded' );
 					self.shown = true;
@@ -135,7 +135,9 @@
 
 			self.calcHeight();
 			self.$expander.css( 'height', self.detailHeight );
-			self.$item.css( 'height', self.itemHeight ).on( $.support.transition.end, onEndFn );
+			self.$item.css( 'height', self.itemHeight );
+			
+			setTimeout(onEndFn, 300);
 
 //			if( !support ) {
 //				onEndFn.call();
@@ -144,7 +146,7 @@
 			this.setPosition();
 		},
 
-		setPosition : function() {
+		setPosition: function(){
 			var winsize = getWinSize();
 
 			// scroll page
@@ -207,6 +209,8 @@
 	$(document)
 	.on("click", ".filer-grid", function(e){
 		if ( ! $(this).data("filer-grid")) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
 			$(this).filergrid(this).filergrid("show");
 		}
 	})

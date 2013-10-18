@@ -37,13 +37,30 @@ function plugin_accordion_convert()
 	$args   = func_get_args();
 	$body   = array_pop($args);
     $body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
-    
-    if (count($args) == 1)
+	
+	$nostyle = FALSE;
+	$panel_color = 'panel-default';
+
+	$open_index = 0;
+    if (count($args) > 0)
     {
-	    if (is_numeric(trim($args[0])))
-	    {
-	    	$open_index = trim($args[0]);
-	    }
+    	foreach ($args as $arg)
+    	{
+			// 開いておくタブ指定
+			if (is_numeric(trim($arg)))
+			{
+				$open_index = trim($arg);
+			}
+			// パネルを利用しない
+			else if ($arg === 'nostyle')
+			{
+				$nostyle = TRUE;
+			}
+			else
+			{
+				$panel_color = get_bs_style($arg, 'panel');
+			}
+    	}
     }
 
 	$blocks = explode('====', $body);
@@ -73,11 +90,15 @@ function plugin_accordion_convert()
 
 	$data_parent = 'accordion'.$s_accordion_cnt;
 	$accordion_body = '';
+
+	$accordion_collase_class = $nostyle ? "accordion-collapse" : "panel-collapse";
+	$accordion_body_class = $nostyle ? "accordion-body" : "panel-body";
+
+
 	for ($i=0; $i < count($headers); $i++)
 	{
 		$collapse_id = 'acc'.$s_accordion_cnt.'_collapse'.($i+1);
 		$block_body = '';
-		$icon_class = 'icon-plus';
 		if (isset($blocks[$i]) && trim($blocks[$i]) != '')
 		{
 			$add_class = '';
@@ -86,13 +107,12 @@ function plugin_accordion_convert()
 			if ($open_index == ($i+1))
 			{
 				$add_class = ' in';
-				$icon_class = 'icon-minus';
 			}
 			
 			$block_body = convert_html($blocks[$i]);
 			$block_body = <<< EOD
-		<div id="{$collapse_id}" class="accordion-body collapse{$add_class}">
-			<div class="accordion-inner">{$block_body}</div>
+		<div id="{$collapse_id}" class="$accordion_collase_class collapse{$add_class}">
+			<div class="{$accordion_body_class}">{$block_body}</div>
 		</div>
 EOD;
 		}
@@ -102,15 +122,19 @@ EOD;
 		if ($headers[$i]['link'] != '#'.$collapse_id)
 		{
 			$data_toggle = '';
-			$icon_class = 'icon-chevron-right';			
 		}
 
+		$accordion_group_class   = $nostyle ? "accordion-panel" : "panel ".$panel_color;
+		$accordion_heading_class = $nostyle ? "accordion-heading" : "panel-heading";
+		$accordion_title_start   = $nostyle ? "" : '<h4 class="panel-title">';
+		$accordion_title_end     = $nostyle ? "" : '</h4>';
+
 		$str = <<< EOD
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<a class="accordion-toggle" data-toggle="{$data_toggle}" data-parent="#{$data_parent}" href="{$headers[$i]['link']}">
-	<i class="{$icon_class} orgm-accordion-icon"></i>
-	{$headers[$i]['head']}</a>
+	<div class="{$accordion_group_class}">
+		<div class="{$accordion_heading_class}">
+			{$accordion_title_start}
+				<a class="accordion-toggle" data-toggle="{$data_toggle}" data-parent="#{$data_parent}" href="{$headers[$i]['link']}">{$headers[$i]['head']}</a>
+			{$accordion_title_end}
 		</div>
 		{$block_body}
 	</div>
@@ -118,8 +142,11 @@ EOD;
 		$accordion_body .= $str;
 	}
 	
+	
+	$accordion_class = $nostyle ? "accordion-group" : "panel-group";
+
 	$html = <<< EOD
-<div class="accordion" id="{$data_parent}">
+<div class="orgm-accordion {$accordion_class}" id="{$data_parent}">
 {$accordion_body}
 </div>
 EOD;

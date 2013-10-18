@@ -207,7 +207,6 @@
       xscale = ow / nw;
       yscale = oh / nh;
       
-      console.log([ow, oh, nw, nh, xscale, yscale]);
       $obj.width(nw).height(nh);
     }
     //}}}

@@ -201,6 +201,7 @@ $(function () {
 
 	})
 	.on("shown.filergrid", "a.filer-grid", function(e){
+
 		var $a = $(this);
 		var fileinfo = $a.data("filer"),
 			filergrid = $a.data("filer-grid");
@@ -240,8 +241,9 @@ $(function () {
 			}, function(){
 				this.disable();
 				$a.data("Jcrop", this);
+
 				
-				jc = this;
+				//jc = this;//debug
 				
 				if ($('#edit').is(':visible')) {
 					// ! Jcropの再起動
@@ -345,9 +347,13 @@ $(function () {
 	// !slide button
 	.on('click', 'a[data-slide]',function(e){
 		e.preventDefault();
+		e.stopPropagation();
 		
 		var id = $('#orgm_filer_carousel').data('id');
 		var $li = $('#orgm_filer_list').find('[data-id='+id+']');
+
+		//閉じる
+		$("[data-dismiss=filer-grid]", $li).click();
 
 		if ($(this).data('slide') == 'prev') {
 			$li.prevAll("[data-id]").filter(":first").find('a').click();

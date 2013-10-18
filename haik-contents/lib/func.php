@@ -2302,7 +2302,6 @@ function get_bs_style($color, $type = 'btn')
 		case 'info':
 		case 'success':
 		case 'danger':
-		case 'important':
 		case 'warning':
 			$class = $type . '-' .$color;
 			break;
