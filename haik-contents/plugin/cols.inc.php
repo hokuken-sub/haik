@@ -101,10 +101,11 @@ EOD;
 
 	$data = array_pad(explode($delim, $body, count($cols)), count($cols), '');
 
-	global $block_style, $block_class;
+	global $block_style, $block_class, $block_image;
 	if ( ! isset($block_style)) $block_style = '';
 	if ( ! isset($block_class)) $block_class = '';
-	
+	if ( ! isset($block_image)) $block_image = '';
+
 	for($i = 0; $i < count($cols); $i++)
 	{
 		$option = $cols[$i];
@@ -115,8 +116,8 @@ EOD;
 		$close_tag = '</div>';
 		if ($type === 'thumbnails')
 		{
-			$open_tag = '<div class="col-sm-'.$option['span']. $offset . '" style="%s"><div class="thumbnail">';
-			$close_tag = '</div></div>';
+			$open_tag = '<div class="col-sm-'.$option['span']. $offset . ' %s" style="%s"><div class="thumbnail">%s<div class="caption">';
+			$close_tag = '</div></div></div>';
 		}
 		
 		$str = '';
@@ -126,9 +127,9 @@ EOD;
 	        $lines = explode("\n", $str);
 	        $str = convert_html($lines);
 		}
-		$html .= sprintf($open_tag, " " . h($block_class), h($block_style));
+		$html .= sprintf($open_tag, " " . h($block_class), h($block_style), $block_image);
 		$html .= $str . $close_tag;
-		$block_class = $block_style = '';
+		$block_class = $block_style = $block_image = '';
 	}
 	
 	if ($type === 'thumbnails')

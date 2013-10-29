@@ -27,7 +27,6 @@ function plugin_thumbnails_convert()
 	plugin_cols_type('set', 'thumbnails');
 
 	$args   = func_get_args();
-	
 	$body = call_user_func_array('plugin_cols_convert', $args);
 
 	plugin_cols_type('set', 'normal');

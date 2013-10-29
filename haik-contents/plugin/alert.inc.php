@@ -41,7 +41,7 @@ function plugin_alert_convert()
     $body = convert_html($lines);
 	
 	$html = <<<EOD
-<div class="alert {$type}">
+<div class="orgm-alert alert {$type}">
 	{$close}
 	{$body}
 </div>

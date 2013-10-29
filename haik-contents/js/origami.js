@@ -280,8 +280,10 @@
 							webkitAllowFullScreen: "",
 							mozallowfullscreen: "",
 							allowFullScreen: ""
-						}).attr("src", url)
+						})
 						.attr("width", width).attr("height", height)
+						.wrap('<div class="orgm-video-embed-wrapper"></div>')
+						.parent()
 						.insertAfter($a);
 						$a.remove();
 

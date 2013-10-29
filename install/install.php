@@ -18,6 +18,7 @@
  */
 define('DEBUG', FALSE);
 define('APP_INSTALLER_URL', 'http://ensmall.net/gethaik/install/installer.php');
+define('APP_MANUAL_URL', 'http://toiee.jp/haik/help/index.php');
 define('INSTALL_DIR', dirname(__FILE__) . '/');
 
 
@@ -33,6 +34,32 @@ else
 	{
 		header('Location: ./index.php');
 		exit;
+	}
+
+	//致命的な設定の上書きを試行する
+	ini_set('safe_mode', 'Off');
+	ini_set('allow_url_fopen', 'On');
+	
+	//check php.ini
+	if (ini_get('safe_mode'))
+	{
+		die_message(
+			'safe_mode が有効な環境ではインストールできません。',
+			'<strong>Runtime Error</strong><br>
+			PHP の safe_mode が有効（On）になっているため、インストールできません。<br>
+			php.ini を編集して、safe_mode を無効（Off）にしてください。',
+			'PHP_Safe_Mode'
+		);
+	}
+	if ( ! ini_get('allow_url_fopen'))
+	{
+		die_message(
+			'allow_url_fopen が無効な環境ではインストールできません。',
+			'<strong>Runtime Error</strong><br>
+			PHP の allow_url_fopen が無効（Off）になっているため、インストールできません。<br>
+			php.ini を編集して、allow_url_fopen を無効（On）にしてください。',
+			'PHP_Allow_Url_Fopen'
+		);
 	}
 
 	ini_set('display_errors', 'Off');
@@ -92,4 +119,50 @@ function printd($msg)
 	{
 		echo $msg . "<br>\n";
 	}
+}
+
+/**
+ * @param string $title: page title
+ * @param string $msg : error messages
+ * @param string $link_to : page name of the manual site | URL
+ */
+function die_message($title, $msg, $link_to = '')
+{
+	$link = '';
+	if ($link_to)
+	{
+		if ( ! preg_match('/^https?:\/\//', $link_to))
+		{
+			$link_to = APP_MANUAL_URL . '?' . rawurlencode($link_to);
+		}
+		$link = '<a href="'.$link_to.'" class="btn btn-info btn-large">詳しくはこちら</a>';
+	}
+
+	$html = <<< EOH
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>$title</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="jumbotron">
+	<div class="container">
+	<h2>$title</h2>
+
+	<div class="alert alert-danger">
+		$msg
+	</div>
+	
+	$link
+	</div>
+	
+</div>
+</body>
+</html>
+
+
+EOH;
+	die($html);
 }

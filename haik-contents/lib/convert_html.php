@@ -1082,6 +1082,30 @@ class Body extends Element
 				$block_class = $matches[1];
 				continue;
 			}
+			if (preg_match('/^IMAGE:(.*)$/', $line, $matches))
+			{
+				global $block_image;
+				$block_imagefile = '';
+				if (preg_match('/\.(gif|png|jpe?g)$/i', $matches[1]))
+				{
+					if (is_url($matches[1]) || is_file($matches[1]))
+					{
+						$block_imagefile = $matches[1];
+					}
+					else
+					{
+						if (is_file(UPLOAD_DIR.$matches[1]))
+						{
+							$block_imagefile = UPLOAD_DIR.$matches[1];
+						}
+					}
+				}
+				if ($block_imagefile != '')
+				{
+					$block_image = '<img src="'.h($block_imagefile).'">';
+				}
+				continue;
+			}
 			if (is_a($this->last, 'Align') && $this->last->ptag)
 			{
 				$this->last = $this->last->add(Factory_Inline('~'.$line));

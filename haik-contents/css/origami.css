@@ -113,10 +113,12 @@ select.form-control {
 }
 
 
+.share_buttons {
+	display: table;
+}
 .share_buttons.center {
 	margin: 0 auto;
 	text-align: center;
-	max-width: 135px;
 }
 
 .share_buttons.right {
@@ -332,6 +334,9 @@ select.form-control {
 	margin-bottom: 0;
 	padding: 0;
 }
+.orgm-toc > ul > li {
+	margin-top: 10px;
+}
 .orgm-toc > ul > li > a {
 	font-size: 1.2em;
 	font-weight: 100;
@@ -340,10 +345,13 @@ select.form-control {
 .orgm-toc > ul {
 	list-style-type: none;
 }
+.orgm-toc > ul > li > ul {
+	margin-bottom: 5px;
+}
 .orgm-toc > ul > li > ul > li {
 	margin-top: 10px;
 }
-.orgm-toc > ul > li > ul > li > a{
+.orgm-toc > ul > li > ul > li > a {
 	font-size: 1.1em;
 	font-weight: 100;
 	color: #333;
@@ -388,10 +396,26 @@ select.form-control {
 	outline-style: none;
 }
 
+/* alert */
+.orgm-alert.alert > p:first-child,
+.orgm-alert.alert > ul:first-child,
+.orgm-alert.alert > .close + p,
+.orgm-alert.alert > .close + ul {
+	margin-top: 0;
+}
+
+.orgm-alert.alert > p:last-child,
+.orgm-alert.alert > ul:last-child {
+	margin-bottom: 0;
+}
+
+/* box */
 .orgm-box-block > p:first-child,
+.orgm-box-block > .close + p,
 .orgm-box-block.panel > .panel-body > p:first-child {
 	margin-top: 0;
 }
+
 .orgm-box-block > p:last-child,
 .orgm-box-block.panel > .panel-body > p:last-child {
 	margin-bottom: 0;
