@@ -140,7 +140,8 @@
 				<div class="form">
 				
 					<div class="form-group">
-						<input type="text" name="form[mail][notify][subject]" value="<?php echo h($form['mail']['notify']['subject'])?>" placeholder="<?php _e('件名')?>" class="form-control">
+						<label for="formMailNotifySubject" class="sr-only"><?php _e('件名')?></label>
+						<input type="text" id="formMailNotifySubject" name="form[mail][notify][subject]" value="<?php echo h($form['mail']['notify']['subject'])?>" placeholder="<?php _e('件名')?>" class="form-control">
 					</div>
 					<div class="form-group">
 						<div class="parts-buttons btn-group" data-target="#formMailNotifyBody">
@@ -150,7 +151,14 @@
 							</a>
 							<ul class="dropdown-menu"></ul>
 						</div>
+						<label for="formMailNotifyBody" class="sr-only"><?php _e('本文')?></label>
 						<textarea id="formMailNotifyBody" name="form[mail][notify][body]" placeholder="<?php _e('本文')?>" class="form-control" data-exnote="onready"><?php echo h($form['mail']['notify']['body'])?></textarea>
+					</div>
+					
+					<div class="form-group">
+						<label for="formMailNotifyTo" class="sr-only"><?php _e('通知先メールアドレス')?></label>
+						<input type="text" id="formMailNotifyTo" name="form[mail][notify][to]" value="<?php echo h($form['mail']['notify']['to'])?>" placeholder="<?php _e('通知先メールアドレス')?>" class="form-control">
+						<span class="help-block"><?php echo sprintf(__('空欄の場合、<code>%s</code>へ通知されます。'), $username)?></span>
 					</div>
 	
 				</div>
@@ -160,14 +168,21 @@
 			<div class="col-sm-5 col-sm-offset-1" id="orgm_former_mail_replyer">
 	
 				<h4><?php _e('自動返信メール')?></h4>
+				
 				<p>
 					<?php _e('フォームへ投稿があった際、自動的に返信を行います。')?>
 				</p>
+				<div id="formMailNotifyWarning" class="panel panel-warning hide" aria-hidden="true">
+					<div class="panel-body">
+					<?php _e('<i class="glyphicon glyphicon-warning-sign"></i> フォームパーツに「メールアドレス（ID：<code>EMAIL</code>）」を指定してない場合は、自動返信を行いません。')?>
+					</div>
+				</div>
 	
 				<div class="form">
 				
 					<div class="form-group">
-						<input type="text" name="form[mail][reply][subject]" value="<?php echo h($form['mail']['reply']['subject'])?>" placeholder="<?php _e('件名')?>" class="form-control">
+						<label for="formMailReplySubject" class="sr-only"><?php _e('件名')?></label>
+						<input type="text" id="formMailReplySubject" name="form[mail][reply][subject]" value="<?php echo h($form['mail']['reply']['subject'])?>" placeholder="<?php _e('件名')?>" class="form-control">
 					</div>
 					<div class="form-group">
 						<div class="parts-buttons btn-group" data-target="#formMailReplyBody">
@@ -177,13 +192,24 @@
 							</a>
 							<ul class="dropdown-menu"></ul>
 						</div>
-						<textarea id="formMailReplyBody" name="form[mail][reply][body]" placeholder="本文" class="form-control" data-exnote="onready"><?php echo h($form['mail']['reply']['body'])?></textarea>
+						<label for="formMailReplyBody" class="sr-only"><?php _e('本文')?></label>
+						<textarea id="formMailReplyBody" name="form[mail][reply][body]" placeholder="<?php _e('本文')?>" class="form-control" data-exnote="onready"><?php echo h($form['mail']['reply']['body'])?></textarea>
 					</div>
+					
+					<fieldset>
+						<legend><?php _e('送信者設定')?></legend>
+						<div class="form-group">
+							<label for="formMailReplyFromName" class="sr-only"><?php _e('送信者名')?></label>
+							<input type="text" id="formMailReplyFromName" name="form[mail][reply][from_name]" value="<?php echo h($form['mail']['reply']['from_name'])?>" placeholder="<?php _e('送信者名')?>" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="formMailReplyFromEmail" class="sr-only"><?php _e('送信メールアドレス')?></label>
+							<input type="text" id="formMailReplyFromEmail" name="form[mail][reply][from_email]" value="<?php echo h($form['mail']['reply']['from_email'])?>" placeholder="<?php _e('送信メールアドレス')?>" class="form-control">
+							<span class="help-block"><?php echo sprintf(__('空欄の場合、<code>%1$s &lt;%2$s&gt;</code>から送信されます。'), $username, $site_title)?></span>
+						</div>
+					</fieldset>
 				</div>
 	
-				<p>
-					<?php _e('※ フォームパーツに「メールアドレス（ID：EMAIL）」を指定してない場合は、自動返信を行いません。')?>
-				</p>
 	
 			</div>
 		</div>

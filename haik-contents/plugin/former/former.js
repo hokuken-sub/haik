@@ -239,6 +239,7 @@ $(function(){
 		$($li.find(".part-config select[name=validation]").val(data.validation));
 		$($li.find(".part-config select[name=size]").val(data.size));
 		$($li.find(".part-config :checkbox[name=required]").prop("checked", data.required));
+		$($li.find(".part-config :text[name=id]").val(name));//EMAIL の場合、IDが変わらない場合があるため
 		
 		var $config = $li.find(".part-config");
 		var position = $li.offset().top, winheight = $(window).height();
@@ -530,7 +531,7 @@ $(function(){
 			
 			$("#tmpl_form_part_list").tmpl(res).appendTo("#orgm_former_parts ul");
 			updateUtility(true);
-
+			
 		}, "json");
 		
 		//form[post][data]
@@ -566,6 +567,7 @@ $(function(){
 	
 		setTypeahead();
 		setPartsButtons();
+		updateElements();
 		
 		if (sort)
 		{
@@ -633,6 +635,19 @@ $(function(){
 		});
 		
 		$(".parts-buttons ul").html(html);
+		
+	}
+	
+	function updateElements() {
+		
+		if (_.has(ORGM.former.form.parts, 'EMAIL')) {
+			$("#formMailNotifyWarning").addClass("hide").attr("aria-hidden", true);
+		}
+		else {
+			$("#formMailNotifyWarning").removeClass("hide").attr("aria-hidden", false);
+		}
+
+
 		
 	}
 

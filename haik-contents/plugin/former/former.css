@@ -1,3 +1,7 @@
+legend {
+	font-size: 16px;
+}
+
 #orgm_former_controls {
 	position:relative;
 }
@@ -170,8 +174,6 @@ section .exnote-agwrapper textarea {
 .part-config-option-item {
 	margin-bottom: 5px;
 }
-
-
 
 /* !Typeahead */
 

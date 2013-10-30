@@ -616,14 +616,14 @@ function plugin_form_send()
 		$subject = $form['mail']['reply']['subject'];
 		$body = $form['mail']['reply']['body'];
 		$merge_tags['all_post_data'] = join("\n", $all_post_data);
-		orgm_mail_send($subject, $body, $data['EMAIL'], $merge_tags, $form['reply']);
+		orgm_mail_send($subject, $body, $data['EMAIL'], $merge_tags, $form['mail']['reply']);
 	}
 
 	// ! 管理者へメール送信
 	$subject = $form['mail']['notify']['subject'];
 	$body = $form['mail']['notify']['body'];
 	$merge_tags['all_post_data'] = join("\n", $all_post_data_admin);
-	plugin_form_mail_notify($subject, $body, $merge_tags, $files);
+	plugin_form_mail_notify($subject, $body, $merge_tags, $files, $form['mail']['notify']);
 
 	// ! POST 送信
 	if (isset($form['post']['url']) && $form['post']['url'] !== '')
@@ -646,14 +646,21 @@ function plugin_form_send()
 
 }
 
-function plugin_form_mail_notify($subject, $message, $merge_tags = NULL, $files = array())
+function plugin_form_mail_notify($subject, $message, $merge_tags = NULL, $files = array(), $options = array())
 {
 	require_once(LIB_DIR . 'simplemail.php');
 	
 	global $username;
 	global $smtp_server, $smtp_auth, $pop_server, $mail_userid, $mail_passwd, $mail_encode;
 	
-	$mailaddress = $username;
+	if (isset($options['to']) && $options['to'] !== '')
+	{
+		$mailaddress = $options['to'];
+	}
+	else
+	{
+		$mailaddress = $username;
+	}
 	
 	$mail = new SimpleMail();
 	$mail->set_encode($mail_encode);

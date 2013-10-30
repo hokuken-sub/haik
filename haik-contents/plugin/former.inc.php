@@ -161,7 +161,7 @@ function plugin_former_get_forms()
 
 function plugin_former_edit_()
 {
-	global $script, $vars;
+	global $script, $vars, $username, $site_title;
 	
 	$qt = get_qt();
 	$id = isset($vars['id']) ? $vars['id'] : '';
@@ -358,6 +358,15 @@ function plugin_former_update_()
 	{
 		//エラー
 		print_json(array('error'=> __('連動登録設定のURLが正しくありません')));
+		exit;
+	}
+	
+	//notify[to]
+	//reply[from_email]
+	if (($form['mail']['notify']['to'] !== '' && ! is_email($form['mail']['notify']['to'])) OR
+		($form['mail']['reply']['from_email'] !== '' && ! is_email($form['mail']['reply']['from_email'])))
+	{
+		print_json(array('error'=>__('通知先・送信元メールアドレスに正しくメールアドレスを入力しているかご確認ください')));
 		exit;
 	}
 	
