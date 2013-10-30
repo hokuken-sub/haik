@@ -248,13 +248,14 @@ EOS;
 						<li><a href="#" data-edit-type="write">タイムスタンプを変えずに更新</a></li>
 					</ul>';
 		}
+		$return_page = (isset($vars['refer']) && is_page($vars['refer'])) ? $vars['refer'] : $vars['page'];
 		$tools_buttons .= '
 				</div>
 				<div class="btn-group">
 					<input type="button" value="プレビュー" tabindex="4" class="btn btn-info navbar-btn" data-edit-type="preview">
 				</div>
 				<div class="btn-group">
-					<input type="button" value="キャンセル" tabindex="6" class="btn btn-default navbar-btn" data-edit-type="cancel">
+					<a href="'.h(get_page_url($return_page)).'" class="btn btn-default navbar-btn" tabindex="6" data-edit-type="cancel">キャンセル</a>
 				</div>
 			</div>
 ';
