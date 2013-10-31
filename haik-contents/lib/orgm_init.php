@@ -153,19 +153,20 @@ if (isset($style_config['textures'][$style_texture]))
 	unset($lessfile);
 }
 
-// include user css
-$user_cssfile = CONFIG_DIR . 'user_style.css';
-if (file_exists($user_cssfile))
+// include custom css
+$custom_cssfile = CSS_DIR . 'custom_style.css';
+$custom_lessfile = CSS_DIR . 'custom_style.less';
+if ($style_name !== $admin_style_name &&
+   (file_exists($custom_cssfile) OR file_exists($custom_lessfile)))
 {
-	$lessfile = CONFIG_DIR . 'user_style.less';
 	if ($use_less && file_exists($lessfile))
 	{
-		$style_css .= "\t" . '<link href="'.h($lessfile).'" rel="stylesheet">' . "\n";
+		$style_css .= "\t" . '<link href="'.h($custom_lessfile).'" rel="stylesheet/less">' . "\n";
 		$less_load = TRUE;
 	}
 	else
 	{
-		$style_css .= "\t" . '<link href="'.h($user_cssfile).'" rel="stylesheet">' . "\n";
+		$style_css .= "\t" . '<link href="'.h($custom_cssfile).'" rel="stylesheet">' . "\n";
 	}
 }
 

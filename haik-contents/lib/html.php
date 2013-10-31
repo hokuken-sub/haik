@@ -20,7 +20,7 @@ function catbody($title, $page, $body)
     global $pkwk_dtd;     // XHTML 1.1, XHTML1.0, HTML 4.01 Transitional...
     global $site_title, $site_title_delim;   // Title of this site
     global $do_backup;    // Do backup or not
-    global $style_name, $logo_title, $logo_image, $logo_header;
+    global $style_name, $logo_title, $logo_image, $logo_header, $admin_style_name;
     global $noindex, $accesstag_moved; //for skin by hokuken
     global $display_login;	// Site administration menu 20 JUN 2007
     global $adcode;			// AD code (exp. Google Adwords, Analytics ... )  25 JLY 2007 by hokuken.com
