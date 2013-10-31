@@ -249,8 +249,8 @@
 			$("a[href]").each(function(){
 				var $a = $(this);
 				if ($a.attr("href") == $a.text()) {
-					if ($a.attr("href").match(/^https?:\/\/www\.youtube\.com\/watch\?v=(\w+)/)
-					 || $a.attr("href").match(/^https?:\/\/youtu\.be\/(\w+)/)) {
+					if ($a.attr("href").match(/^https?:\/\/www\.youtube\.com\/watch\?v=([-\w]+)/)
+					 || $a.attr("href").match(/^https?:\/\/youtu\.be\/([-\w]+)/)) {
 						var url = "//www.youtube.com/embed/" + RegExp.$1 + ORGM.videoAutoload.youtube.embededOption;
 						
 						width = ORGM.videoAutoload.width;

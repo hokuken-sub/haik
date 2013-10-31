@@ -254,8 +254,8 @@ function plugin_video_embed($url, $width, $height, $block = FALSE)
 	
 	//YouTube
 	//短縮URL(youtu.be)も
-	if (preg_match('|^https?://www\.youtube\.com/watch\?v=(\w+)|', $url, $mts)
-	 OR preg_match('|^https?://youtu\.be/(\w+)|', $url, $mts))
+	if (preg_match('|^https?://www\.youtube\.com/watch\?v=([-\w]+)|', $url, $mts)
+	 OR preg_match('|^https?://youtu\.be/([-\w]+)|', $url, $mts))
 	{
 		$width = $width ? (int)$width : PLUGIN_VIDEO_EMBED_WIDTH;
 		$height = $height ? (int)$height : PLUGIN_VIDEO_EMBED_HEIGHT;
