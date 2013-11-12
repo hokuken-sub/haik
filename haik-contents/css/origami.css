@@ -488,6 +488,10 @@ a.noexists {
 	clear: both;
 }
 
+.orgm-rbutton-lighter:hover,
+.orgm-show-lighter:hover {
+	opacity: .6;
+}
 .orgm-show-block.pull-right {
 	margin-left: 15px;
 }

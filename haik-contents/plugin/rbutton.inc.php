@@ -83,10 +83,7 @@ function plugin_rbutton_inline()
 	$style .= "text-decoration:none;text-align:center;";
 	$style .= "line-height:{$btnsize}px;";
 	
-	// !TODO: 他の明度を変える方法を考える
-	$add_att = "onmouseover=\"this.style.opacity='0.6'\" onmouseout=\"this.style.opacity='1'\"";
-
-	return "<a href=\"{$url}\" style=\"{$style}\" {$add_att}>{$text}</a>";
+	return "<a href=\"{$url}\" style=\"{$style}\" class=\"orgm-rbutton-lighter\">{$text}</a>";
 }
 
 /* End of file rbutton.inc.php */

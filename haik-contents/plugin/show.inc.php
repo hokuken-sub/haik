@@ -212,6 +212,7 @@ function plugin_show_body($args)
 		'noimg'   => FALSE, // 画像を展開しない
 		'zoom'    => FALSE, // 縦横比を保持する
 		'change'  => FALSE, // マウスオーバーで、画像を切り替える
+		'lighter' => FALSE, // マウスオーバーで、画像の明るさを上げる
 		'circle'  => FALSE, // .img-circle by bootstrap
 		'rounded' => FALSE, // .img-rounded by bootstrap
 		'round'   => FALSE, // .img-rounded
@@ -424,6 +425,8 @@ function qhm_preload(src) {
 		$qt->appendv_once('plugin_show_preload', 'plugin_script', $addscript);
 	}
 	
+	$iclass = '';
+
 	$aclass = $arel = '';
 	$url2 = $params['linkurl']? $params['linkurl']: $url2;
 	
@@ -518,6 +521,16 @@ $(function(){
 		}
 	}
 
+	if ($params['lighter'])
+	{
+		$aclass .= ' orgm-show-lighter';
+	}
+	
+
+	if ($iclass !== '')
+	{
+		$iclass = 'class="' . $iclass . '"';
+	}
 	//create class of <a>
 	if ($aclass !== '')
 	{
@@ -556,7 +569,7 @@ $(function(){
 		}
 	}
 	else{
-		$params['_body'] = "<img src=\"$url\" alt=\"$title\" title=\"$title\" $info $mouseover $style{$imgclass}>";
+		$params['_body'] = "<img src=\"$url\" alt=\"$title\" title=\"$title\" $info $mouseover $iclass $style{$imgclass}>";
 	}
 
 	if (! $params['nolink'] && $url2)
