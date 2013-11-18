@@ -50,7 +50,7 @@ function plugin_code_convert()
 
 	$skin = 'sons-of-obsidian';
 	$lang = NULL;
-	$display_lines = $plain = $scoll = FALSE;
+	$display_lines = $plain = $scroll = FALSE;
 
 	foreach ($args as $arg)
 	{

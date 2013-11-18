@@ -26,9 +26,9 @@ function plugin_user_script_convert()
 		return $qm->replace('fmt_err_not_editable', '#user_script', $page);
 	}
 
-	$args   = func_get_args();
-	$js = array_pop($args);
-	$js = str_replace("\r", "\n", str_replace("\r\n", "\r", $js));
+	$args = func_get_args();
+	$js   = array_pop($args);
+	$js   = str_replace("\r", "\n", str_replace("\r\n", "\r", $js));
 	$qt->appendv('user_script', $js);
 
 	return "";

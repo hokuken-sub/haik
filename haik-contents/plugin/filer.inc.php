@@ -1397,6 +1397,7 @@ class ORGM_Filer {
 		{
 			foreach ($this->uploadDirs as $dir => $option)
 			{
+				$dir = ($dir === '') ? $dir : ($dir . '/');
 				unlink(UPLOAD_DIR . $dir . $file['filename']);
 			}
 
