@@ -625,6 +625,10 @@ $(function(){
 					}).get();
 		
 		ids.unshift({
+			value: "*|FORM_URL|*",
+			label: "フォームのURL"
+		});
+		ids.unshift({
 			value: "*|ALL_POST_DATA|*",
 			label: "すべての投稿データ"
 		});

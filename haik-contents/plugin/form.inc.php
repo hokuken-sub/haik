@@ -598,7 +598,7 @@ function plugin_form_send()
 		
 		
 	}
-	$merge_tags['form_url'] = $script.'?'.$r_page;
+	$merge_tags['form_url'] = get_page_url($page);
 
 	// !ログ出力
 	if ($form['log'])
