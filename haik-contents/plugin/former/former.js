@@ -325,6 +325,13 @@ $(function(){
 				$id.focus().select();
 				return;
 			}
+			else if (/^ALL_POST_DATA|SITE_TITLE|FORM_URL$/i.test(id)) {
+				//error
+				ORGM.notify(id + 'は使用できません。', 'error');
+				$id.closest(".form-group").addClass("error");
+				$id.focus().select();
+				return;
+			}
 		}
 		
 		var data = {
@@ -624,6 +631,10 @@ $(function(){
 						return {'value': '*|'+ name + '|*', 'label': label};
 					}).get();
 		
+		ids.unshift({
+			value: "*|SITE_TITLE|*",
+			label: "サイト名"
+		});
 		ids.unshift({
 			value: "*|FORM_URL|*",
 			label: "フォームのURL"

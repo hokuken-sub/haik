@@ -543,7 +543,7 @@ function plugin_form_get_confirm_html()
 
 function plugin_form_send()
 {
-	global $script, $vars;
+	global $script, $vars, $site_title;
 
 	$page = $vars['page'];
 	$r_page = rawurlencode($page);
@@ -599,6 +599,8 @@ function plugin_form_send()
 		
 	}
 	$merge_tags['form_url'] = get_page_url($page);
+	
+	$merge_tags['site_title'] = $site_title;
 
 	// !ログ出力
 	if ($form['log'])
