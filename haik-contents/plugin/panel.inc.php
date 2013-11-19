@@ -30,7 +30,6 @@ function plugin_panel_convert()
 	$body   = array_pop($args);
 	
 	$msg = '';
-	
 	$delim = "\r====\r";
 
 	$panel_type = 'default';
@@ -52,10 +51,8 @@ function plugin_panel_convert()
 		}
 
 	}
-	
 
 	$data = explode($delim, $body, 3);
-
 	$data_length = count($data);
 	$header = $body = $footer = '';
 	
@@ -75,22 +72,30 @@ function plugin_panel_convert()
 	$footer_fmt = "\t" . '<div class="panel-footer">%s</div>' . "\n";
 
 	$html = '<div class="orgm-panel panel panel-'.h($panel_type).'">' . "\n";
-	
+
 	if ($header)
 	{
-		$header_html = convert_html($header, TRUE);
+		$header = str_replace("\r", "\n", str_replace("\r\n", "\n", $header));
+		$lines = explode("\n", $header);
+		$header_html = convert_html($lines, TRUE);
 		$header_html = preg_replace('/<h([1-7]) /', '<h\1 class="panel-title" ', $header_html);
 	}
 	
 	$html .= $header ? sprintf($header_fmt, $header_html) : '';
-	$html .= sprintf($body_fmt, convert_html($body));
-	$html .= $footer ? sprintf($footer_fmt, convert_html($footer, TRUE)) : '';
+	
+	$body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
+	$lines = explode("\n", $body);
+	$html .= sprintf($body_fmt, convert_html($lines));
+	
+	
+	$footer = str_replace("\r", "\n", str_replace("\r\n", "\n", $footer));
+	$lines = explode("\n", $footer);
+	$html .= $footer ? sprintf($footer_fmt, convert_html($lines, TRUE)) : '';
 	
 	$html .= '</div>' . "\n";
 	
 	return $html;
 }
-
 
 
 /* End of file panel.inc.php */
