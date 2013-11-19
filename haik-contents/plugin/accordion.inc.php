@@ -126,7 +126,7 @@ EOD;
 
 		$accordion_group_class   = $nostyle ? "accordion-panel" : "panel ".$panel_color;
 		$accordion_heading_class = $nostyle ? "accordion-heading" : "panel-heading";
-		$accordion_title_start   = $nostyle ? "" : '<h4 class="panel-title">';
+		$accordion_title_start   = $nostyle ? "" : '<h4 class="panel-title no-toc">';
 		$accordion_title_end     = $nostyle ? "" : '</h4>';
 
 		$str = <<< EOD
