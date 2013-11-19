@@ -532,7 +532,15 @@ function plugin_former_get_form_default()
 		'mail' => array(
 			'notify' => array(
 				'subject' => '【通知】お問い合わせがありました',
-				'body'    => '*|ALL_POST_DATA|*',
+				'body'    => 'お問い合わせがありました。
+
+投稿内容：
+*|ALL_POST_DATA|*
+
+
+フォーム：
+*|FORM_URL|*
+',
 				'to'      => '',
 			),
 			'reply' => array(

@@ -8,13 +8,21 @@ $config = array (
   array (
     'notify' => 
     array (
-      'subject' => '',
-      'body' => '*|ALL_POST_DATA|*',
+      'subject' => '【通知】お問い合わせがありました',
+      'body' => 'お問い合わせがありました。
+
+投稿内容：
+*|ALL_POST_DATA|*
+
+
+フォーム：
+*|FORM_URL|*
+',
       'to' => '',
     ),
     'reply' => 
     array (
-      'subject' => '',
+      'subject' => 'お問い合わせありがとうございます',
       'body' => '*|NAME|* 様
 こんにちは。
 
