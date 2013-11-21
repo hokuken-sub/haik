@@ -98,6 +98,9 @@ function plugin_edit_preview()
 		$body .= '</div>'. "\n";
 	}
 
+	// Off XSS Protection (Google Chrome)
+	header('X-XSS-Protection: 0');
+	
 	return array('msg'=>$qm->m['fmt_title_preview'], 'body'=>$body);
 }
 
@@ -345,7 +348,7 @@ function plugin_edit_write()
 			// ページ名の変更
 			if (exist_plugin('rename'))
 			{
-				// ! renameのために $vasの値を変更
+				// ! renameのために $varsの値を変更
 				$vars['page'] = $newpage = qblog_get_newpage($vars['qblog_date']);
 				$vars['refer'] = $refer = $page;
 				$pages = array();
@@ -396,10 +399,13 @@ function plugin_edit_write()
 		}
 	}
 
+	// Off XSS Protection (Google Chrome)
+	$_SESSION['disable_xss_protection'] = TRUE;
 	
 	set_flash_msg('ページを更新しました。');
 	
 	$redirect = $script . '?' . rawurlencode($refer);
+
 	header('Location: ' . $redirect);
 
 	exit;

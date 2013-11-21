@@ -25,6 +25,13 @@ function plugin_read_action()
 		// ページを表示
 		check_readable($page, true, true);
 		header_lastmod($page);
+
+		// Off XSS Protection (Google Chrome)
+		if (isset($_SESSION['disable_xss_protection']))
+		{
+			unset($_SESSION['disable_xss_protection']);
+			header('X-XSS-Protection: 0');
+		}
 		return array('msg'=>'', 'body'=>'');
 
 	}
