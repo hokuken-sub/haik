@@ -49,7 +49,6 @@ function plugin_iframe_convert()
 	//オプション：デフォルト値
 	$width = '100%';
 	$height = 200;
-	$align = 'center';
 	$resize = TRUE;
 	$fit = FALSE;
 	$fit_force = FALSE;
@@ -136,11 +135,6 @@ EOD;
 			$height = $mts[2];
 			$height_set = $width_set = TRUE;
 		}
-		//文字位置
-		else if (in_array($arg, array('left', 'center', 'right')))
-		{
-			$align = $arg;
-		}
 		//オートリサイズをオフ
 		else if ($arg === 'fix')
 		{
@@ -162,7 +156,6 @@ EOD;
 
 	$options['class'] .= ' ' . $add_class;
 	
-	
 	//fit を明示的に指定しておらず、
 	//width を指定している場合、fit を解除する
 	if ($width_set && ! $fit_force)
@@ -173,7 +166,7 @@ EOD;
 	$html = '<iframe src="'. h($src) .'" width="'. h($width) .'" height="'. h($height) .'" '. ($resize ? 'data-haik-autoresize' : '') .' '. ($fit ? 'data-haik-autofit' : '');
 	foreach ($options as $attr => $value)
 	{
-		$html .= ' ' . $attr . '=' . $value;
+		$html .= ' ' . $attr . '="' . $value. '"';
 	}
 	$html .= '></iframe>';
 	
