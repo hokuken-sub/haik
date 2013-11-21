@@ -436,13 +436,13 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 				$ret[$key] = $val;
 			}
 		}
-		// num_posts(num)
-		else if (strpos($arg, 'num=') === 0 && isset($ret['data-num-posts']))
+		// numposts(num)
+		else if (strpos($arg, 'num=') === 0 && isset($ret['data-numposts']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (preg_match('/^\d+$/', trim($val)))
 			{
-				$ret['data-num-posts'] = $val;
+				$ret['data-numposts'] = $val;
 			}
 		}
 		
@@ -496,4 +496,4 @@ function plugin_fb_root_create_tag($tag_name, $attrs = array())
 }
 
 /* End of file fb_root.inc.php */
-/* Location: ./plugin/fb_root.inc.php */
+/* Location: /haik-contents/plugin/fb_root.inc.php */

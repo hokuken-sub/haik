@@ -42,7 +42,7 @@ function plugin_fb_comments_action()
 	data-href="'. h($url) .'"
 	data-width="'. h($vars['width']) .'"
 	data-colorscheme="'.h($vars['color_scheme']).'"
-	data-num-posts="'. h($vars['num_posts']) .'">
+	data-numposts="'. h($vars['numposts']) .'">
 </div>';
 		
 		$json['html'] = $html;
@@ -77,7 +77,7 @@ function plugin_fb_comments_convert()
 	$def_attrs = array(
 		'data-href' => '',
 		'data-width' => '550',
-		'data-num_posts' => '2',// in arg: num
+		'data-numposts' => '2',// in arg: num
 		'data-colorscheme' => FALSE
 	);
 	
@@ -95,3 +95,6 @@ function plugin_fb_comments_convert()
 
 	return $tag;
 }
+
+/* End of file fb_comments.inc.php */
+/* Location: /haik-contents/plugin/fb_comments.inc.php */
