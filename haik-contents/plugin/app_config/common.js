@@ -30,6 +30,8 @@
 				$('input[name=new_passwd]', $block).passwdcheck($.extend({}, ORGM.passwdcheck.options, {placeholderClass:"col-sm-3"}));
 			}
 			
+			$("[data-exnote=onshown]", $block).exnote();
+			
 //			console.log("shown");
 //			console.log($block);
 		})
