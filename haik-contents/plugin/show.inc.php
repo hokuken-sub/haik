@@ -4,7 +4,7 @@
  *   -------------------------------------------
  *   show.inc.php
  *   
- *   Copyright (c) 2010 hokuken
+ *   Copyright (c) 2013 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 2010-09-14
@@ -267,7 +267,7 @@ function plugin_show_body($args)
 	}
 
 	if ( is_page($params['linkurl']) ) {
-		$params['linkurl'] = $script. '?'. rawurlencode($params['linkurl']);
+		$params['linkurl'] = get_page_url($params['linkurl']);
 	}
 
 	/*
@@ -763,4 +763,4 @@ function plugin_show_put_dummy($dummy_id, $args)
 
 
 /* End of file show.inc.php */
-/* Location: ./plugin/show.inc.php */
+/* Location: /haik-contents/plugin/show.inc.php */
