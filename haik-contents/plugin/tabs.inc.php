@@ -40,7 +40,6 @@ function plugin_tabs_convert()
     
     $open_index = 1;
     $justified = FALSE;
-    $vertical = FALSE;
     
     foreach ($args as $arg)
     {
@@ -52,10 +51,6 @@ function plugin_tabs_convert()
 	    else if (substr($arg, 0, 4) === 'just')
 	    {
 		    $justified = TRUE;
-	    }
-	    else if ($arg === 'vertical')
-	    {
-		    $vertical = TRUE;
 	    }
     }
 
@@ -148,15 +143,8 @@ EOD;
 
 
 	$class = '';
-	if ($vertical)
-	{
-		$class = 'nav-pills nav-stacked';
-	}
-	else
-	{
-		$justified_class =  $justified ? ' nav-justified' : '';
-		$class = 'nav-tabs'. $justified_class;
-	}
+	$justified_class =  $justified ? ' nav-justified' : '';
+	$class = 'nav-tabs'. $justified_class;
 
 	$html = <<< EOD
 	<ul class="nav {$class}" id="{$data_parent}">
