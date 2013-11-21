@@ -37,7 +37,7 @@ function plugin_goo_gl_inline()
 	}
 
 	
-	$args = func_get_args;
+	$args = func_get_args();
 	foreach ($args as $arg)
 	{
 		$arg = trim($arg);
