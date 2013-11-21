@@ -144,6 +144,7 @@ function plugin_rss_action()
 		}
 		$contents = mb_strimwidth( strip_htmltag( convert_html( $source ) ), 0, RSS_DESP_LENGTH , '...' );
 		$contents = preg_replace_callback('/(&[^;]+;)/', 'plugin_rss_html_entity_decode', $contents);
+		$contents = plugin_rss_utf8_for_xml($contents);
 		
 		switch ($version) {
 		case '0.91': /* FALLTHROUGH */
@@ -186,12 +187,15 @@ EOD;
 
 	// Feeding start
 	pkwk_common_headers();
-	header('Content-type: application/xml');
+	header('Content-type: application/xml; charset=utf-8');
 	print '<?xml version="1.0" encoding="UTF-8"?>' . "\n\n";
 
 	$r_whatsnew = rawurlencode($blog_mode ? $blog_mode : $whatsnew);
 	$pagename = $qblog_mode ? $qblog_defaultpage : $r_whatsnew;
 	$description = $qblog_mode ? 'QBlog Recent Changes' : $qm->m['plg_rss']['description'];
+
+	$page_title_utf8 = h(plugin_rss_utf8_for_xml($page_title_utf8));
+	$description = h(plugin_rss_utf8_for_xml($description));
 
 	switch ($version) {
 	case '0.91':
@@ -248,4 +252,10 @@ function plugin_rss_html_entity_decode($matches){
 	}
 }
 
-?>
+function plugin_rss_utf8_for_xml($string)
+{
+    return preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
+}
+
+/* End of file rss.inc.php */
+/* Location: /haik-contents/plugin/rss.inc.php */
