@@ -2,13 +2,13 @@
 /**
  *   Facebook LikeBox Plugin
  *   -------------------------------------------
- *   ./plugin/fb_likebox.inc.php
+ *   /haik-contents/plugin/fb_likebox.inc.php
  *   
- *   Copyright (c) 2011 hokuken
+ *   Copyright (c) 2013 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 2011-09-02
- *   modified :
+ *   modified : 2013-11-21
  *   
  *   Put Facebook LikeBox
  *   
@@ -69,26 +69,18 @@ function plugin_fb_likebox_convert()
 {
 	global $script, $vars;
 	$page = $vars['page'];
-	$r_page = rawurlencode($page);
-	$qm = get_qm();
-	$qt = get_qt();
 	$args = func_get_args();
-
-	if ( ! exist_plugin("fb_root"))
-	{
-		die('Fatal error: fb_root plugin not found');
-	}
 
 	// scaffold
 	$def_attrs = array(
-		'data-href' => '',
-		'data-width' => '190',
-		'data-height' => FALSE,
-		'data-colorscheme' => FALSE,
-		'data-show-faces' => 'true',
-		'data-show-border' => 'true',
-		'data-stream' => 'true',
-		'data-header' => 'true',
+		'href'        => '',
+		'width'       => '190',
+		'height'      => FALSE,
+		'colorscheme' => FALSE,
+		'show-faces'  => 'true',
+		'show-border' => 'true',
+		'stream'      => 'true',
+		'header'      => 'true',
 	);
 	
 	$attrs = plugin_fb_root_parse_args($args, $def_attrs);
@@ -101,10 +93,10 @@ function plugin_fb_likebox_convert()
 	$attrs['class'] = 'fb-like-box';
 
 	plugin_fb_root_set_jsapi(TRUE);
-//	$tag = plugin_fb_root_create_tag('fb:like-box', $attrs);
 	$tag = plugin_fb_root_create_tag('div', $attrs);
-
-	$body = $tag;
 
 	return $tag;
 }
+
+/* End of file fb_likebox.inc.php */
+/* Location: /haik-contents/plugin/fb_likebox.inc.php */

@@ -2,13 +2,13 @@
 /**
  *   Facebook Comments Plugin
  *   -------------------------------------------
- *   ./plugin/fb_comments.inc.php
+ *   /haik-contents/plugin/fb_comments.inc.php
  *   
- *   Copyright (c) 2011 hokuken
+ *   Copyright (c) 2013 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 2011-09-02
- *   modified :
+ *   modified : 2013-11-21
  *   
  *   Put Facebook Comments
  *   
@@ -35,7 +35,7 @@ function plugin_fb_comments_action()
 	{
 		
 		$html = plugin_fb_root_get_preview(TRUE);
-		$url = $vars['url'] ? $vars['url'] : $script . '?' . rawurlencode($vars['page']);
+		$url = $vars['url'] ? $vars['url'] : get_page_url($vars['page']);
 		
 		$html .= '
 <div class="fb-comments"
@@ -63,35 +63,27 @@ function plugin_fb_comments_convert()
 {
 	global $script, $vars;
 	$page = $vars['page'];
-	$r_page = rawurlencode($page);
-	$qm = get_qm();
-	$qt = get_qt();
 	$args = func_get_args();
-
-	if ( ! exist_plugin("fb_root"))
-	{
-		die('Fatal error: fb_root plugin not found');
-	}
 
 	// scaffold
 	$def_attrs = array(
-		'data-href' => '',
-		'data-width' => '550',
-		'data-numposts' => '2',// in arg: num
-		'data-colorscheme' => FALSE
+		'href'        => '',
+		'width'       => '550',
+		'numposts'    => '2',// in arg: num
+		'colorscheme' => FALSE
 	);
 	
 	$attrs = plugin_fb_root_parse_args($args, $def_attrs);
 	//default URL set
-	if ($attrs['href'] == '')
+	if ($attrs['data-href'] == '')
 	{
-		$attrs['href'] = $script. '?'. $r_page;
+		$attrs['data-href'] = get_page_url($page);
 	}
 
-	plugin_fb_root_set_jsapi(TRUE);
-	$tag = plugin_fb_root_create_tag('fb:comments', $attrs);
+	$attrs['class'] = 'fb-comments';
 
-	$body = $tag;
+	plugin_fb_root_set_jsapi(TRUE);
+	$tag = plugin_fb_root_create_tag('div', $attrs);
 
 	return $tag;
 }

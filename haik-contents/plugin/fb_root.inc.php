@@ -2,13 +2,13 @@
 /**
  *   Facebook Plugins' Init File
  *   -------------------------------------------
- *   ./plugin/fb_root.inc.php
+ *   /haik-contents/plugin/fb_root.inc.php
  *   
- *   Copyright (c) 2011 hokuken
+ *   Copyright (c) 2013 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 2011-08-10
- *   modified :
+ *   modified : 2013-11-21
  *   
  *   Description
  *   
@@ -161,8 +161,8 @@ function plugin_fb_root_set_jsapi($xfbml = FALSE, $locale = 'ja_JP')
 {
 	$qt = get_qt();
 
-	$beforescript = plugin_fb_root_get_jsapi($xfbml, $locale);
-	$qt->prependv_once('plugin_fb_root_jsapi', 'plugin_script', $beforescript);
+	$plugin_script = plugin_fb_root_get_jsapi($xfbml, $locale);
+	$qt->prependv_once('plugin_fb_root_jsapi', 'plugin_script', $plugin_script);
 }
 
 function plugin_fb_root_get_jsapi($xfbml = FALSE, $locale = 'ja_JP')
@@ -306,7 +306,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 		// href, site
 		if ( ! $init_url && is_url($arg))
 		{
-			if (isset($ret['data-href']))
+			if (isset($ret['href']))
 			{
 				$ret['href'] = $arg;
 			}
@@ -318,37 +318,37 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			$init_url = TRUE;
 		}
 		// no send
-		else if ($arg == 'nosend' && isset($ret['data-send']))
+		else if ($arg == 'nosend' && isset($ret['share']))
 		{
-			$ret['data-send'] = 'false';
+			$ret['share'] = 'false';
 		}
 		// no faces
-		else if ($arg == 'noface' && isset($ret['data-show-faces']))
+		else if ($arg == 'noface' && isset($ret['show-faces']))
 		{
-			$ret['data-show-faces'] = 'false';
+			$ret['show-faces'] = 'false';
 		}
 		// no header
-		else if ($arg == 'noheader' && isset($ret['data-header']))
+		else if ($arg == 'noheader' && isset($ret['header']))
 		{
-			$ret['data-header'] = 'false';
+			$ret['header'] = 'false';
 		}
 		// no stream
-		else if ($arg == 'nostream' && isset($ret['data-stream']))
+		else if ($arg == 'nostream' && isset($ret['stream']))
 		{
-			$ret['data-stream'] = 'false';
+			$ret['stream'] = 'false';
 		}
 		// no border
-		else if ($arg == 'noborder' && isset($ret['data-show-border']))
+		else if ($arg == 'noborder' && isset($ret['show-border']))
 		{
-			$ret['data-show-border'] = 'false';
+			$ret['show-border'] = 'false';
 		}
 		// force wall
-		else if ($arg == 'force-wall' && isset($ret['data-force-wall']))
+		else if ($arg == 'force-wall' && isset($ret['force-wall']))
 		{
-			$ret['data-force-wall'] = 'true';
+			$ret['force-wall'] = 'true';
 		}
 		// layouts
-		else if (strpos($arg, 'layout=') === 0 && isset($ret['data-layout']))
+		else if (strpos($arg, 'layout=') === 0 && isset($ret['layout']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (is_array($ret[$key]))
@@ -366,7 +366,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			}
 		}
 		// fonts
-		else if (strpos($arg, 'font=') === 0 && isset($ret['data-font']))
+		else if (strpos($arg, 'font=') === 0 && isset($ret['font']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (in_array($val, plugin_fb_root_get_fonts()))
@@ -375,7 +375,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			}
 		}
 		// color schemes
-		else if (strpos($arg, 'colorscheme=') === 0 && isset($ret['data-colorscheme']))
+		else if (strpos($arg, 'colorscheme=') === 0 && isset($ret['colorscheme']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (in_array($val, plugin_fb_root_get_colorschemes()))
@@ -384,33 +384,51 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			}
 		}
 		// link target
-		else if (strpos($arg, 'linktarget=') === 0 && isset($ret['data-linktarget']))
+		else if (strpos($arg, 'linktarget=') === 0 && isset($ret['linktarget']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
-			if (preg_match('/^_[a-zA-Z]+$/', trim($val)))
+			if (preg_match('/^[_a-zA-Z]+$/', trim($val)))
+			{
+				$ret[$key] = $val;
+			}
+		}
+		// max age
+		else if (strpos($arg, 'max-age=') === 0 && isset($ret['max-age']))
+		{
+			list($key, $val) = explode('=', $arg, 2);
+			if (preg_match('/^\d+$/', trim($val)))
+			{
+				$ret[$key] = $val;
+			}
+		}
+		// app id
+		else if (strpos($arg, 'app-id=') === 0 && isset($ret['app-id']))
+		{
+			list($key, $val) = explode('=', $arg, 2);
+			if (preg_match('/^\d+$/', trim($val)))
 			{
 				$ret[$key] = $val;
 			}
 		}
 		// actions
-		else if (strpos($arg, 'action=') === 0 && isset($ret['data-action']))
+		else if (strpos($arg, 'action=') === 0 && isset($ret['action']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (is_array($ret[$key]))
 			{
 				$opts = $ret[$key][1];
+				if (in_array($val, $opts))
+				{
+					$ret[$key] = $val;
+				}
 			}
 			else
 			{
-				$opts = $ret[$key];
-			}
-			if (in_array($val, $opts))
-			{
-				$ret[$key] = $val;
+				$ret[$key] = str_replace(' ', ',', $val);
 			}
 		}
 		// ref
-		else if (strpos($arg, 'ref=') === 0 && isset($ret['data-ref']))
+		else if (strpos($arg, 'ref=') === 0 && isset($ret['ref']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (preg_match('/^[a-zA-Z0-9+\/=.:_-]+$/', $val))
@@ -419,7 +437,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			}
 		}
 		// width
-		else if (strpos($arg, 'width=') === 0 && isset($ret['data-width']))
+		else if (strpos($arg, 'width=') === 0 && isset($ret['width']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (preg_match('/^\d+$/', trim($val)))
@@ -428,7 +446,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			}
 		}
 		// height
-		else if (strpos($arg, 'height=') === 0 && isset($ret['data-height']))
+		else if (strpos($arg, 'height=') === 0 && isset($ret['height']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (preg_match('/^\d+$/', trim($val)))
@@ -437,12 +455,12 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 			}
 		}
 		// numposts(num)
-		else if (strpos($arg, 'num=') === 0 && isset($ret['data-numposts']))
+		else if (strpos($arg, 'num=') === 0 && isset($ret['numposts']))
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			if (preg_match('/^\d+$/', trim($val)))
 			{
-				$ret['data-numposts'] = $val;
+				$ret['numposts'] = $val;
 			}
 		}
 		
@@ -468,7 +486,14 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 		}
 	}
 	
-	return $ret;
+	$attrs = array();
+	
+	foreach ($ret as $key => $val)
+	{
+		$attrs['data-' . $key] = $val;
+	}
+	
+	return $attrs;
 }
 
 
