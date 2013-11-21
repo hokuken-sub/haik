@@ -37,7 +37,12 @@ $(document).ready(function(){
 		}
 		
 		//本文にフォーカス
-		setTimeout(function(){$msg.focus()}, 1000);
+		var msgfocus_timeout = setTimeout(function(){$msg.focus()}, 1000);
+		$(window).on("scroll", function(){
+        	if ($(this).scrollTop() > ORGM.navbarHTotal) {
+	        	clearTimeout(msgfocus_timeout);
+	        }
+		});
 
 		//not iframe
 		if (window == parent) {
