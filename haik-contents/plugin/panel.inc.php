@@ -32,13 +32,11 @@ function plugin_panel_convert()
 	$msg = '';
 	$delim = "\r====\r";
 
+	$notitle = FALSE;
 	$panel_type = 'default';
-	// color
-	if (count($args) > 0)
+	foreach($args as $arg)
 	{
-		$color = trim($args[0]);
-		
-		switch ($color)
+		switch ($arg)
 		{
 			case 'primary':
 			case 'success':
@@ -46,10 +44,12 @@ function plugin_panel_convert()
 			case 'warning':
 			case 'danger':
 			case 'theme':
-				$panel_type = $color;
+				$panel_type = $arg;
+				break;
+			case 'notitle':
+				$notitle = TRUE;
 				break;
 		}
-
 	}
 
 	$data = explode($delim, $body, 3);
@@ -59,7 +59,21 @@ function plugin_panel_convert()
 	// header, body, footer
 	if ($data_length > 1)
 	{
-		list($header, $body, $footer) = array_pad($data, 3, '');
+		if ($data_length == 2)
+		{
+			if ($notitle)
+			{
+				list($body, $footer) = array_pad($data, 2, '');
+			}
+			else
+			{
+				list($header, $body) = array_pad($data, 2, '');
+			}
+		}
+		else
+		{
+			list($header, $body, $footer) = array_pad($data, 3, '');
+		}
 	}
 	// body
 	else
@@ -93,7 +107,8 @@ function plugin_panel_convert()
 	$html .= $footer ? sprintf($footer_fmt, convert_html($lines, TRUE)) : '';
 	
 	$html .= '</div>' . "\n";
-	
+
+
 	return $html;
 }
 
