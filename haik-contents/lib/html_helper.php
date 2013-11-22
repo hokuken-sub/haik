@@ -167,6 +167,7 @@ class HTML_Helper
 			'div' => TRUE,
 			'value' => isset($vars[$name]) ? $vars[$name] : '',
 			'data-error' => isset($vars[$name.'_error']) ? $vars[$name.'_error'] : '',
+			'class' => 'form-control',
 		), $options);
 		
 		$input_body = FALSE;
@@ -195,14 +196,14 @@ class HTML_Helper
 		$format = '%s';
 		if ($this->formType === 'horizontal' && $options['div'] !== FALSE)
 		{
-			$label = $options['label'] !== FALSE ? $this->tag('label', $options['label'], array('class' => 'control-label', 'for' => '', 'escape' => $options['escape'])) : '';
+			$label = $options['label'] !== FALSE ? $this->tag('label', $options['label'], array('class' => 'control-label col-sm-3', 'for' => '', 'escape' => $options['escape'])) : '';
 			$format = $this->tag('div',
 				$label .
 				$this->tag('div',
 					'%s' .
 					($options['help'] ? $this->tag('span', $options['help'], array('class' => 'help-block', 'escape' => $options['escape'])) : ''),
-				array('class' => 'controls', 'escape' => FALSE)),
-			array('class' => 'control-group', 'escape' => FALSE));
+				array('class' => 'controls col-sm-9', 'escape' => FALSE)),
+			array('class' => 'form-group', 'escape' => FALSE));
 			
 		}
 		else if ($this->formType === '' && $options['div'] !== FALSE)
@@ -358,7 +359,7 @@ class HTML_Helper
 		$format = '%s';
 		if ($this->formType === 'horizontal' && $options['div'])
 		{
-			$format = $this->tag('div', '%s', array('class' => 'form-actions'));
+			$format = $this->tag('div', '%s', array('class' => 'col-sm-offset-3 col-sm-9'));
 			unset($options['wrap']);
 		}
 		
