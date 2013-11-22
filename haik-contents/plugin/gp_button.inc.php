@@ -103,7 +103,7 @@ $(function(){
 </script>
 ';
 	}
-	$qt->appendv_once('plugin_gp_button_convert', 'beforescript', $beforescript);
+	$qt->appendv_once('plugin_gp_button_convert', 'plugin_script', $beforescript);
 
 	$fmt = '<g:plusone%s></g:plusone>';
 	$attr = '';
