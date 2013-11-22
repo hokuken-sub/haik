@@ -438,55 +438,24 @@ function qhm_preload(src) {
 	//表示設定
 	if ($params['popup'])
 	{
+		$addcss = '
+<link href="'.JS_DIR.'lightbox/css/lightbox.css" rel="stylesheet" />
+';
+		$qt->appendv_once('plugin_show_popup_css', 'plugin_head', $addcss);
+		
 		$addscript = '
-<script type="text/javascript" src="'.JS_DIR.'bootstrap-lightbox.js"></script>
-<link href="'.CSS_DIR.'bootstrap-lightbox.css" rel="stylesheet">
-<script type="text/javascript">
-$(function(){
-	$("a.orgm-show-popup").on("click", function(e){
-		e.preventDefault();
-		var $self = $(this)
-		  , data = {
-			filepath: $self.attr("href"),
-			title: $self.attr("title")
-		};
-		$("#pluginShowPopupTmpl").tmpl(data).appendTo("body");
-		$("#pluginShowPopup").lightbox();
-		
-	});
-	
-	$(document).on("hidden.bs.modal", "#pluginShowPopup", function(){
-		$(this).remove();
-	});
-});
-</script>
+<script src="'.JS_DIR.'lightbox/js/lightbox-2.6.min.js"></script>
 ';
-		$qt->appendv_once('plugin_show_popup', 'plugin_script', $addscript);
-		
-		$tmpl = '
-<script type="text/x-jquery-tmpl" id="pluginShowPopupTmpl">
-<div id="pluginShowPopup" class="modal lightbox fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content lightbox-content">
-		<img src="${filepath}">
-		<div class="lightbox-caption"><p>${title}</p></div>
-		</div>
-	</div>
-</div>
+		$qt->appendv_once('plugin_show_popup_js', 'plugin_script', $addscript);
 
-</script>
-';
-		$qt->appendv_once('plugin_show_popup_tmpl', 'body_last', $tmpl);
-		
 		//文字列の場合：グループ
 		if ($params['popup'] !== TRUE) {
-			$gb_type = ($url == $url2)? 'imageset': 'pageset';
 			$gb_grp = $params['popup'];
-//			$arel = ' rel="_'. $gb_grp.'"';
-			$aclass = 'orgm-show-popup';
 		} else {
-			$aclass = 'orgm-show-popup';
+			$gb_grp = md5($url);
 		}
+		$arel = ' data-lightbox="'.$gb_grp.'"';
+		
 		$params['nolink'] = FALSE;
 	}
 	else if ($params['normal'])
