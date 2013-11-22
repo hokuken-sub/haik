@@ -126,7 +126,7 @@ $(function(){
 	
 	
 
-	$html  = '<div class="orgm-mc-form row">';
+	$html  = '<div class="orgm-mc-form">';
 	if ( ! $notitle)
 	{
 		$html .= '<h2>'.$mc_list['name'].'</h2>';
