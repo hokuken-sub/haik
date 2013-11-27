@@ -126,7 +126,7 @@ function plugin_include_convert()
 		$goto_url  = $script . '?' . $r_page;
 		$html  = '<div class="orgm-include-wrapper">';
 		$html .= '<a href="'. h($goto_url) .'" class="orgm-include">'. h($goto_page). '</a>';
-		$html .= $body . '</div>';
+		$html .= $body . '<div class="orgm-include-wrapper-hover"></div></div>';
 		return $html;
 	}
 
