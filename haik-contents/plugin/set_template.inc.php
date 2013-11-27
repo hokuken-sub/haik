@@ -26,11 +26,11 @@ function plugin_set_template_convert()
 
 function plugin_set_template_switch($tmpl_name)
 {
+	global $include_skin_file_path;
 
 	$qt = get_qt();
 	
-	$config = style_config_read();
-	
+	$config = style_config_read($include_skin_file_path);
 	if (isset($config['templates'][$tmpl_name]))
 	{
 		$qt->setv('template_name', $tmpl_name);
