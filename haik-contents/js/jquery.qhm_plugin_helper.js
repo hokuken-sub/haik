@@ -96,8 +96,6 @@
 				if (max > 0 && list.length > max) {
 					list.splice(max, list.length - max);
 				}
-				//update localstorage
-				QHMPluginHelper.saveList(target, list);
 			}
 			//ある
 			else {
@@ -105,6 +103,8 @@
 				list.splice(idx, 1);
 				list.unshift(name);
 			}
+			//update localstorage
+			QHMPluginHelper.saveList(target, list);
 			return true;
 		}
 		
