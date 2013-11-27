@@ -16,6 +16,9 @@
  *   Usage :
  *     #tw_button(URL,style=v|h|n,user={user_name},related={related_user},rel_desc={related_user_description},lang=ja|en,{text})
  *     引数を省略すると、設置しているページのURLとタイトルでTweet する
+ *
+ *   See :
+ *     Twitter Developers: https://dev.twitter.com/docs/tweet-button
  */
 
 define('PLUGIN_TW_bUTTON_FMT', '<a href="https://twitter.com/share" class="twitter-share-button"%s>Tweet</a>');
@@ -63,7 +66,7 @@ function plugin_tw_button_body($args)
 	//data-via
 	//data-related
 
-	$qt->appendv_once('plugin_tw_button', 'lastscript', '<script type="text/javascript" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>');
+	$qt->appendv_once('plugin_tw_button', 'plugin_script', '<script src="//platform.twitter.com/widgets.js"></script>');
 	
 	//attr を構築
 	$init_url = FALSE;
@@ -125,17 +128,30 @@ function plugin_tw_button_body($args)
 			list($key, $val) = explode('=', $arg, 2);
 			$attrs['data-via'] = trim($val);
 		}
-		//data-related 関連アカウント名
-		else if (strpos($arg, 'related=') === 0)
+		//data-related 関連アカウント名 (username:description)
+		else if (strpos($arg, 'related=') === 0 OR strpos($arg, 'rel=') === 0)
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			$attrs['data-related'] = $val;
 		}
-		//data-related 関連アカウントの説明
+		//data-related 関連アカウントの説明部分 (username:description)
 		else if (strpos($arg, 'rel_desc=') === 0)
 		{
 			list($key, $val) = explode('=', $arg, 2);
 			$attrs['data-related-2'] = $val;
+		}
+		//data-size ボタンのサイズ。large が指定可能
+		else if (strpos($arg, 'size=') === 0)
+		{
+			list($key, $val) = explode('=', $arg, 2);
+			$attrs['data-size'] = $val;
+		}
+		//data-hashtags ハッシュタグの指定。カンマ区切り
+		//注）ドキュメント通りにボタンにハッシュタグが付かない
+		else if (strpos($arg, 'hashtags=') === 0 OR strpos($arg, 'hashtag=') === 0)
+		{
+			list($key, $val) = explode('=', $arg, 2);
+			$attrs['data-hashtags'] = $val;
 		}
 		//data-text
 		else
@@ -150,12 +166,22 @@ function plugin_tw_button_body($args)
 	
 	if ($init_url === FALSE)
 	{
-		$attrs['data-url'] = $script . '?go=' . get_tiny_code($page);
+	    if (PLUGIN_PAGE_META_USE_GOO_GL && exist_plugin('goo_gl'))
+	    {
+		    $attrs['data-url'] = plugin_goo_gl_get_shortened(get_page_url($page));
+	    }
+	    else
+	    {
+			$attrs['data-url'] = $script . '?go=' . get_tiny_code($page);
+	    }
+	    //count 先は元のURLにする
+//	    $attrs['data-counturl'] = get_page_url($page);
 	}
 	
 	if (isset($attrs['data-related']) && isset($attrs['data-related-2']))
 	{
 		$attrs['data-related'] = $attrs['data-related']. ':'. $attrs['data-related-2'];
+		unset($attrs['data-related-2']);
 	}
 	else if (isset($attrs['data-related-2']) && ! isset($attrs['data-related']))
 	{
@@ -175,4 +201,4 @@ function plugin_tw_button_body($args)
 }
 
 /* End of file tw_button.inc.php */
-/* Location: ./plugin/tw_button.inc.php */
+/* Location: /haik-contents/plugin/tw_button.inc.php */
