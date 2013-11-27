@@ -304,7 +304,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 		$arg = trim($arg);
 		
 		// href, site
-		if ( ! $init_url && is_url($arg))
+		if ( ! $init_href && is_url($arg))
 		{
 			if (isset($ret['href']))
 			{
@@ -315,7 +315,7 @@ function plugin_fb_root_parse_args($args, $tmpl = array())
 				$parsed_url = parse_url($arg);
 				$ret['site'] = $parsed_url['host'];
 			}
-			$init_url = TRUE;
+			$init_fref = TRUE;
 		}
 		// no send
 		else if ($arg == 'nosend' && isset($ret['share']))

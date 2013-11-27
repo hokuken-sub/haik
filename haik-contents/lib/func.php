@@ -54,7 +54,7 @@ function is_pagename($str)
 function is_url($str, $only_http = FALSE, $omit_protocol = FALSE)
 {
 	$scheme = $only_http ? 'https?' : 'https?|ftp|news';
-	$scheme = $omit_protocol ? ('('. $scheme . ':)?') : $scheme . ':';
+	$scheme = $omit_protocol ? ('(('. $scheme . '):)?') : ('(' . $scheme . '):');
 	return preg_match('/^(' . $scheme . ')(\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]*)$/', $str);
 }
 
