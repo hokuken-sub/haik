@@ -1056,20 +1056,6 @@ class Body extends Element
 				continue;
 			}
 			
-			
-			// Extend AUTOLINK SETTING by hokuken
-			if (preg_match('/^(NOAUTOLINK):(.*)$/', $line, $matches)){
-				global $autolink;
-				$autolink = 0;
-				continue;
-			}
-			
-			// Extend NOINDEX by hokuken
-			if (preg_match('/^(NOINDEX):(.*)$/', $line, $matches)){
-				global $noindex;
-				$noindex = '<meta name="robots" content="NOINDEX,NOFOLLOW">' . "\n" . '<meta name="googlebot" content="noindex,nofollow">';
-				continue;
-			}
 			if (preg_match('/^STYLE:(.*)$/', $line, $matches))
 			{
 				global $block_style;

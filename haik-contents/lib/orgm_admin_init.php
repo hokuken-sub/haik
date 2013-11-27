@@ -358,6 +358,11 @@ EOD;
 	$qt->appendv('head_tag', $canonical_tag);
 }
 
+if (check_non_list($vars['page']))
+{
+	$noindex = TRUE;
+}
+
 //search engine spider control
 $qt->setv('noindex', '');
 if ($noindex || $nofollow || ! $is_read)  { 
@@ -598,7 +603,6 @@ if (exist_plugin('intro'))
 {
 	plugin_intro_set();
 }
-
 
 /* End of file qhm_init.php */
 /* Location: ./lib/qhm_init.php */

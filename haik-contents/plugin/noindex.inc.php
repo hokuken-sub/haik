@@ -6,11 +6,11 @@
 // NoFollow plugin
 
 // Output contents with "nofollow,noindex" option
-function plugin_nofollow_convert()
+function plugin_noindex_convert()
 {
-	global $vars, $nofollow;
+	global $vars, $noindex;
 
-	$nofollow = 1;
+	$noindex = 1;
 
 	return '';
 }
