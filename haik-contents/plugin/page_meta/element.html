@@ -49,33 +49,28 @@
 
 				<div class="form-group">
 					<label class="control-label" for="orgm_page_meta_page_title"><?php _e('ページタイトル')?></label>
-					<div class="controls">
-						<input type="text" name="title" class="form-control" placeholder="${page}" id="orgm_page_meta_page_title" value="${title}">
-						<span class="help-block muted">
-						{{if isDefaultPage}}
-							<?php _e('検索結果に「${title}」のように表示されます。')?>
-						{{else}}
-							<?php echo sprintf(__('検索結果に「${title} | %s」のように表示されます。'), $site_title)?>
-						{{/if}}
-						</span>
-					</div>
+					<input type="text" name="title" class="form-control" placeholder="${page}" id="orgm_page_meta_page_title" value="${title}">
+					<span class="help-block muted">
+					{{if isDefaultPage}}
+						<?php _e('検索結果に「${title}」のように表示されます。')?>
+					{{else}}
+						<?php echo sprintf(__('検索結果に「${title} | %s」のように表示されます。'), $site_title)?>
+					{{/if}}
+					</span>
 				</div>
 				
 				<div class="form-group">
 					<label class="control-label" for="orgm_page_meta_description"><?php _e("説明") ?></label>
-					<div class="controls">
-						<textarea id="orgm_page_meta_description" name="description" rows="2" class="form-control" placeholder="${auto_description}">${description}</textarea>
-						<span class="help-block muted"><?php _e('このページの簡単な説明を書いてください。Google等の検索結果に表示されます。')?></span>
-					</div>
+					<textarea id="orgm_page_meta_description" name="description" rows="2" class="form-control" placeholder="${auto_description}">${description}</textarea>
+					<span class="help-block muted"><?php _e('このページの簡単な説明を書いてください。Google等の検索結果に表示されます。')?></span>
 				</div>
-
+				{{if keywords != ''}}
 				<div class="form-group">
 					<label class="control-label" for="orgm_page_meta_keywords"><?php _e("キーワード") ?></label>
-					<div class="controls">
-						<textarea id="orgm_page_meta_keywords" name="keywords" rows="2" class="form-control">${keywords}</textarea>
-						<span class="help-block muted"><?php _e('このページで重要なキーワードをいくつか、半角カンマ（,）区切りで書いてください。')?></span>
-					</div>
+					<textarea id="orgm_page_meta_keywords" name="keywords" rows="2" class="form-control">${keywords}</textarea>
+					<span class="help-block muted"><?php _e('このページで重要なキーワードをいくつか、半角カンマ（,）区切りで書いてください。')?></span>
 				</div>
+				{{/if}}
 
 				<hr>
 				
@@ -149,9 +144,7 @@
 				<br>
 				<div class="form-group">
 					<label class="control-label" for="orgm_page_meta_user_head"><?php _e("&lt;head&gt;タグを編集") ?></label>
-					<div class="controls">
-						<textarea id="orgm_page_meta_user_head" name="user_head" rows="2" class="form-control">${user_head}</textarea>
-					</div>
+					<textarea id="orgm_page_meta_user_head" name="user_head" rows="2" class="form-control">${user_head}</textarea>
 				</div>
 
 			</form>
@@ -160,5 +153,3 @@
 	</div>
 
 </script>
-
-
