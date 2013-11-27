@@ -73,9 +73,15 @@ function plugin_goo_gl_inline()
 	return sprintf($format, $surl);
 }
 
-function plugin_goo_gl_get_shortened($url)
+function plugin_goo_gl_get_shortened($url, $use_cache = TRUE)
 {
 	global $google_api_key;
+	static $cached_results = array();
+	
+	if ($use_cache && isset($cached_results[md5($url)]))
+	{
+		return $cached_results[md5($url)];
+	}
 
 	$apiurl = PLUGIN_GOO_GL_API_URL;
 	if ($google_api_key)
@@ -99,6 +105,7 @@ function plugin_goo_gl_get_shortened($url)
 	}
 	else
 	{
+		$cached_results[md5($url)] = $data->id;
 		return $data->id;
 	}
 }
