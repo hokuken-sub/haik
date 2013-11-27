@@ -219,7 +219,7 @@ $enable_cache = 0;
 
 
 // AutoLink minimum length of page name
-$autolink = 8; // Bytes, 0 = OFF (try 8)
+$autolink = 0; // Bytes, 0 = OFF (try 8)
 
 /////////////////////////////////////////////////
 // Change Timestamp at all times of updating page
@@ -296,7 +296,7 @@ $nofollow = 0; // 1 = Try hiding from search engines
 $ignore_plugin  = '/^#(autoclose|login)/';
 
 // strip plugin search and rss
-$strip_plugin = '/^(#(menu|category|contents|search_menu_key|notify|ssl|redirect|br)|CLASS|STYLE|\/\/)/';
+$strip_plugin = '/^(#(menu|category|search_menu_key|notify|ssl|redirect|br)|CLASS|STYLE|\/\/)/';
 
 // strip plugin search and rss
 $strip_plugin_inline = '/&(tag)(\(.*?\))?;/';

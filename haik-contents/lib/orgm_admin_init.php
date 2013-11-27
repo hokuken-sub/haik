@@ -40,8 +40,12 @@ define('TEMPLATE_ENCODE', $page_encoding ? $page_encoding : 'UTF-8');
 $is_editor = check_editable($_page, FALSE, FALSE);
 $qt->enable_cache = $is_editor ? FALSE : $qt->enable_cache;
 
+//pluginでデザインが指定されている場合
+if ($include_skin_file_path!='')
+{
+	$style_name = $include_skin_file_path;
+}
 $style_config = style_config_read();
-
 
 // !デザインのプレビュー中は、変数を書き換える
 if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
