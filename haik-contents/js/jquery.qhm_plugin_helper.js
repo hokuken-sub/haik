@@ -137,7 +137,7 @@
 		if (typeof ORGM.pluginCategories === "undefined") return;
 		
 		var html = "";
-		html += '<div class="modal fade" id="orgm_all_plugin_list"> <div class="modal-dialog"><div class="modal-content">';
+		html += '<div class="modal fade" role="dialog" tabindex="-1" aria-labelledby="haik plugins list" aria-hidden="true" id="orgm_all_plugin_list"> <div class="modal-dialog"><div class="modal-content">';
 		html += '<div class="modal-header">';
 		html += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>';
 		html += '<h3>機能リスト</h3></div>';//TODO: h3: ORGM.pluginListTitle 的なものにする
@@ -290,7 +290,14 @@
 			var helper = this;
 			this.onDialogShow();
 
-			var $modal = $('<div></div>', {id: "orgm_plugin_modal", "data-plugin": this.name});
+			var $modal = $('<div></div>', {
+				id: "orgm_plugin_modal",
+				"data-plugin": this.name,
+				"tabindex": -1,
+				"role": "dialog",
+				"aria-labelledby": "haik plugin "+this.name+" modal",
+				"aria-hidden": "true"
+			});
 			this.dialogElement = $modal.get(0);
 
 			$modal.addClass("modal orgm-plugin-modal")
