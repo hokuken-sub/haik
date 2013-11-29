@@ -362,7 +362,11 @@ EOD;
 	$qt->appendv('head_tag', $canonical_tag);
 }
 
-if (check_non_list($vars['page']))
+if ($noindex === -1)
+{
+	$noindex = FALSE;
+}
+else if (check_non_list($vars['page']))
 {
 	$noindex = TRUE;
 }
