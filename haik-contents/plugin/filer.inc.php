@@ -96,7 +96,7 @@ function plugin_filer_set_iframe($search_word = ':image', $select_mode = '', $fo
 	$nav = ob_get_clean();
 	
 	$html = '
-<div class="modal fade" id="orgm_filer_selector">
+<div class="modal fade" id="orgm_filer_selector" role="dialog" tabindex="-1" aria-labelledby="haik filer window" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header clearfix">
