@@ -179,24 +179,6 @@ a.cut:hover{
 	font-size: 5em;
 }
 
-
-
-@media screen and (min-width: 768px) {
-
-	#orgm_filer_modal .modal-dialog {
-		width:800px;
-	}
-
-	#orgm_filer_modal.in .modal-dialog {
-		padding-top: 100px;
-	}
-
-}
-
-#orgm_filer_modal .modal-dialog {
-	transition: margin-top 0.3s linear;
-}
-
 #info {
 	margin-top: 10px;
 }
@@ -239,14 +221,6 @@ a.cut:hover{
 	margin-left: 10px;
 }
 
-
-#orgm_filer_modal audio{
-	position: absolute;
-	top: 50%;
-	margin-top: -15px;
-	margin-left: auto;
-	margin-right:auto;
-}
 
 img.preview {
 	max-width: 100%;
@@ -306,14 +280,6 @@ img.preview {
 
 @media (max-width: 767px) {
 
-	#orgm_filer_modal {
-	}
-	
-	#orgm_filer_modal audio{
-		position: relative;
-		margin-top: 0;
-	}
-
 	#info > div > .col-sm-4 {
 		text-align: left;
 	}
@@ -324,10 +290,6 @@ img.preview {
 
 	.carousel-control {
 		display: none;
-	}
-	
-	#orgm_filer_modal.in {
-		top: 10px;
 	}
 	
 	#orgm_filer_list li {
