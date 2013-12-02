@@ -123,7 +123,7 @@ function plugin_former_set_iframe()
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" class="close" aria-hidden="true">&times;</button>
 				<h4>フォーム選択</h4>
 			</div>
 			<div class="modal-body">

@@ -143,7 +143,7 @@ function plugin_check_login_set()
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<a href="#" class="close" data-dismiss="modal">&times;</a>
+				<a href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
 				<h3>ログイン</h3>
 			</div>
 			<div class="modal-body">

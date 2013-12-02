@@ -100,7 +100,7 @@ function plugin_filer_set_iframe($search_word = ':image', $select_mode = '', $fo
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header clearfix">
-				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" class="close" aria-hidden="true">&times;</button>
 				<h4 class="pull-left">ファイル選択</h4>
 				'. $nav .'
 			</div>
