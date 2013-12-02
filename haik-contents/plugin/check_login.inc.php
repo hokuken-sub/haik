@@ -139,7 +139,7 @@ function plugin_check_login_set()
 
 	// !HTML
 	$addblock = '
-<div id="orgm_login_form" class="modal fade">
+<div id="orgm_login_form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="login dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

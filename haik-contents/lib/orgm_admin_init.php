@@ -500,7 +500,7 @@ if ((is_page($vars['page']) && check_editable($vars['page'], FALSE, FALSE)) && i
 {
 
 	$qt->appendv('body_last', '
-<div id="orgm_shortcut_cheatsheat" class="modal fade">
+<div id="orgm_shortcut_cheatsheat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="shortcut key list" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 		

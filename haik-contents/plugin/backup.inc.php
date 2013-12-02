@@ -331,7 +331,7 @@ $(function(){
 </div>
 
 <!-- Delete Modal -->
-<div id="deleteModal" class="modal fade">
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="backup delete dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
