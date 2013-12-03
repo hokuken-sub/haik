@@ -464,18 +464,6 @@ $qt->setv('bootstrap_script', '
 <script type="text/javascript" src="'.JS_DIR.'extends.js"></script>
 ');
 
-if ($qt->getv('include_facebook'))
-{
-	global $fb_app_id;
-	//TODO: en_US の自動変更
-	$qt->prependv('body_first', '<div id="fb-root"></div>
-<script src="//connect.facebook.net/en_US/all.js"></script>
-<script>
-    FB.init({appId: '. h($fb_app_id) .', status: true, cookie: true});
-</script>
-    ');
-}
-
 //-------------------------------------------------
 // ログインをチェックし、ログアウトしてれば再ログインをさせるjavascriptの読み込み
 //-------------------------------------------------
