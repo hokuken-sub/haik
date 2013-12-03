@@ -821,5 +821,26 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
 	}
 }
 
+//For qhm template engine & qhm cache engine
+function qhm_output_dtd($pkwk_dtd, $content_charset = CONTENT_CHARSET, $encode = CONTENT_CHARSET){
+
+	// Output HTTP headers
+	pkwk_common_headers();
+	header('Cache-control: no-cache');
+	header('Pragma: no-cache');
+	header('Content-Type: text/html; charset=' . $encode);
+	
+	// Output HTML DTD, <html>, and receive content-type
+	$meta_content_type = pkwk_output_dtd($pkwk_dtd);
+
+	if( $content_charset != $encode)
+	{
+		$meta_content_type = str_replace($content_charset, $encode, $meta_content_type);
+	}
+	
+	return $meta_content_type;
+}
+
+
 /* End of file html.php */
 /* Location: ./lib/html.php */

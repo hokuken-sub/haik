@@ -916,26 +916,6 @@ if( !function_exists('file_put_contents') ){
 	}
 }
 
-//For qhm template engine & qhm cache engine
-function qhm_output_dtd($pkwk_dtd, $content_charset, $encode){
-
-	// Output HTTP headers
-	pkwk_common_headers();
-	header('Cache-control: no-cache');
-	header('Pragma: no-cache');
-	header('Content-Type: text/html; charset=' . $encode);
-	
-	// Output HTML DTD, <html>, and receive content-type
-	$meta_content_type = pkwk_output_dtd($pkwk_dtd);
-
-	if( $content_charset != $encode)
-	{
-		$meta_content_type = str_replace($content_charset, $encode, $meta_content_type);
-	}
-	
-	return $meta_content_type;
-}
-
 
 function output_site_close_message($site_name, $login_url)
 {
