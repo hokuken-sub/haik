@@ -16,8 +16,14 @@ if (! defined('PKWK_READONLY')) die('PKWK_READONLY is not set');
 $qt->setv('site_title', $site_title);
 $qt->appendv('user_head', $user_head);
 $qt->setv('head_tag', $head_tag);
+
+$qt->appendv('plugin_head', '');
 $qt->appendv('body_first', '');
 $qt->appendv('body_last',  '');
+$qt->appendv('admin_script', '');
+$qt->appendv('plugin_script', '');
+$qt->appendv('user_script', '');
+
 $qt->setv('_page', $_page);
 $qt->setv('_script', $script);
 $common_script = '
