@@ -167,7 +167,7 @@ if ( ! ss_admin_check() && ! $disable_site_auth)
 		exit;
 	}
 	//Facebook Login
-	if ($fb_auth)
+	if (isset($fb_auth) && $fb_auth)
 	{
 		if ( ! isset($_SESSION['fb_user']) && exist_plugin('facebook_auth'))
 		{

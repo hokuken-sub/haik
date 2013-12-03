@@ -16,6 +16,8 @@ if (! defined('PKWK_READONLY')) die('PKWK_READONLY is not set');
 $qt->setv('site_title', $site_title);
 $qt->appendv('user_head', $user_head);
 $qt->setv('head_tag', $head_tag);
+$qt->appendv('body_first', '');
+$qt->appendv('body_last',  '');
 $qt->setv('_page', $_page);
 $qt->setv('_script', $script);
 $common_script = '
@@ -347,7 +349,7 @@ else{ //編集時は、必ずシステム情報でタイトルを作る
 }
 
 if ($title == $defaultpage){ //トップ用
-	$qt->setv('page_title', $page_meta['title'] ? $page_meta['title'] : $site_title);
+	$qt->setv('page_title', isset($page_meta['title']) && $page_meta['title'] ? $page_meta['title'] : $site_title);
 }
 
 
