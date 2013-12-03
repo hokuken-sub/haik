@@ -85,7 +85,7 @@ function plugin_fb_likebox_convert()
 	
 	$attrs = plugin_fb_root_parse_args($args, $def_attrs);
 	//no URL error
-	if ($attrs['href'] == '')
+	if ($attrs['data-href'] == '')
 	{
 		$errmsg = 'error - #fb_likebox: no facebook page url';
 	}

@@ -16,6 +16,8 @@
  *   
  */
 
+define('PLUGIN_PAGE_META_USE_GOO_GL', TRUE);
+
 include_once(LIB_DIR . 'html_helper.php');
 
 function plugin_page_meta_action()
@@ -149,13 +151,11 @@ function plugin_page_meta_set_body()
 	global $script, $vars, $defaultpage, $site_title;
 	global $style_name;
 	
-	
 	//一般アクセス時には実行しない
 	if ((is_page($vars['page']) && ! check_editable($vars['page'], FALSE, FALSE)) OR ! is_login())
 	{
 		return;
 	}
-	
 	
 	$qt = get_qt();
 	
@@ -169,6 +169,7 @@ function plugin_page_meta_set_body()
 	}
 	else
 	{
+		$is_defaultpage = FALSE;
 		$default_title = $page;
 	}
 	

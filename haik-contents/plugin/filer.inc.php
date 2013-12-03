@@ -87,7 +87,12 @@ function plugin_filer_set_iframe($search_word = ':image', $select_mode = '', $fo
 	
 	$qt = get_qt();
 	
-	$url = $script . '?cmd=filer&iframe=1';
+	$base_url = $script . '?cmd=filer';
+	$url = $base_url . '&iframe=1';
+	$star_link = $base_url . '&search_word=' . rawurlencode(':star');
+	$all_link = $base_url;
+	
+	$refer = '';
 	
 	$iframe_mode = TRUE;
 	
@@ -1701,6 +1706,17 @@ class ORGM_UploadHandler extends UploadHandler{
 	function __construct($options = null, $initialize = true) {
 		parent::__construct($options, $initialize);
 	}
+
+    protected function get_full_url() {
+        $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        return
+            ($https ? 'https://' : 'http://').
+            (!empty($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'].'@' : '').
+            (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ($_SERVER['SERVER_NAME'].
+            ($https && $_SERVER['SERVER_PORT'] === 443 ||
+            $_SERVER['SERVER_PORT'] === 80 ? '' : ':'.$_SERVER['SERVER_PORT']))).
+            substr(SCRIPT_NAME,0, strrpos(SCRIPT_NAME, '/'));
+    }
 	
 	public function convert_mb_name($name)
 	{

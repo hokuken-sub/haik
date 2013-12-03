@@ -60,7 +60,7 @@ function plugin_former_action()
 	$qt = get_qt();
 	$helper = new HTML_Helper();
 	
-	$page = $vars['refer'];
+	$page = isset($vars['refer']) ? $vars['refer'] : '';
 	$r_page = rawurlencode($page);
 	
 

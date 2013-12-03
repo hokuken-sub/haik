@@ -5,7 +5,7 @@
 //-------------------------------------------------
 //$qt->appendv('user_head', $page_meta['user_head']);
 $qt->prependv('user_head', isset($page_meta['user_head']) ? $page_meta['user_head'] : '');
-$description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : $page_meta['auto_description'];
+$description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : (isset($page_meta['auto_description']) ? $page_meta['auto_description'] : '');
 $qt->setv('description', $description);
 $qt->setv('keywords', isset($page_meta['keywords']) ? $page_meta['keywords'] : '');
 
@@ -33,7 +33,7 @@ $qt->setv('logo', '<a href="'.h($_LINK['top']).'" class="navbar-brand'.$logo_cla
 
 
 // ! アイキャッチ
-if ( ! (isset($style_config['eyecatch']) && !$style_config['eyecatch']))
+if (isset($style_config['eyecatch']) && $style_config['eyecatch'] && isset($page_meta['eyecatch']) && $page_meta['eyecatch'])
 {
 	$eyecatch = create_eyecatch($page_meta['eyecatch']);
 	$qt->setv('eyecatch', $eyecatch);

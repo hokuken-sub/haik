@@ -13,13 +13,15 @@ if (! defined('PKWK_READONLY')) die('PKWK_READONLY is not set');
 
 
 //---- set ini values for template engine
-$qt->setv('site_title', $site_title);
-$qt->appendv('user_head', $user_head);
-$qt->setv('head_tag', $head_tag);
+$qt->setv('site_title',   $site_title);
+$qt->setv('head_tag',     $head_tag);
 
+$qt->appendv('head_prefix', '');
+$qt->appendv('user_head', $user_head);
 $qt->appendv('plugin_head', '');
 $qt->appendv('body_first', '');
-$qt->appendv('body_last',  '');
+$qt->appendv('body_last', '');
+$qt->appendv('eyecatch', '');
 $qt->appendv('admin_script', '');
 $qt->appendv('plugin_script', '');
 $qt->appendv('user_script', '');
@@ -272,7 +274,7 @@ EOS;
 			</div>
 ';
 
-		if ($vars['preview'])
+		if (isset($vars['preview']) && $vars['preview'])
 		{
 			$refer = isset($vars['refer']) ? $vars['refer'] : $_page;
 			$digest = md5(get_source($_page, TRUE, TRUE));
@@ -334,7 +336,7 @@ EOS;
 	<div class="container">
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="pull-right">
-		'.$tools_buttons.'
+		'.(isset($tools_buttons) ? $tools_buttons : '').'
 		</div>
 	</div>
 </div>

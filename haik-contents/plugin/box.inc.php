@@ -32,6 +32,7 @@ function plugin_box_convert()
 	$type = 'well';
 	
 	$wrapper = array('', '');
+	$outer = array('', '');
 	
 	$height = FALSE;
 	$cols = 12;//full width

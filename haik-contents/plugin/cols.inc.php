@@ -57,9 +57,8 @@ function plugin_cols_convert()
 			}
 			
 			$col_num = (int)$mts[1];
-			$col_offset = (int)$mts[2];
-			$col_class = $mts[3];
-//			list($col_num, $col_offset) = explode('+', $args[$i], 2);
+			$col_offset = isset($mts[2]) ? (int)$mts[2] : 0;
+			$col_class = isset($mts[3]) ? $mts[3] : '';
 			$total += $col_num + $col_offset;
 			$cols[] = array('span'=>$col_num, 'offset' => $col_offset, 'class'=>$col_class);
 		}

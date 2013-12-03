@@ -2070,11 +2070,15 @@ function get_admin_tools_html($tools)
 					{
 						$data_modal = ' data-toggle="modal"';
 					}
+					if ( ! isset($lv2['class']))
+					{
+						$lv2['class'] = '';
+					}
 					
 					
 					if (isset($lv2['search']) && $lv2['search'])
 					{
-						$atag = '<form><div class="form-group col-sm-12"><input type="hidden" name="cmd" value="search"><div class="input-group input-group-sm"><span class="input-group-addon"><i class="orgm-icon orgm-icon-search"></i></span><input type="text" name="word" value="'. h($vars['word']) .'" placeholder="検索" class="form-control" id="orgm_nav_search"></div></div></form>';
+						$atag = '<form><div class="form-group col-sm-12"><input type="hidden" name="cmd" value="search"><div class="input-group input-group-sm"><span class="input-group-addon"><i class="orgm-icon orgm-icon-search"></i></span><input type="text" name="word" value="'. h(isset($vars['word']) ? $vars['word']: '') .'" placeholder="検索" class="form-control" id="orgm_nav_search"></div></div></form>';
 					}
 					else
 					{
@@ -2205,6 +2209,8 @@ function create_eyecatch($data)
 	$html = '';
 	
 	$style_config = style_config_read($style_name);
+	
+	if ( ! isset($style_config['eyecatch']) OR ! $style_config['eyecatch']) return '';
 
 	if ($data['images'] && is_array($data['images']))
 	{
