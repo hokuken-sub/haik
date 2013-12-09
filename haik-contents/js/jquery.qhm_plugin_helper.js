@@ -342,7 +342,6 @@
 				$modal.modal("hide");
 			})
 			.on("hide.bs.modal", function(){
-				$(helper.textarea).focus();
 				if (helper.cancelCallback !== false) {
 					QHMPluginHelper.directCall(helper.cancelCallback);
 					helper.cancelCallback = false;
