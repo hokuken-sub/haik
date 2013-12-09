@@ -104,12 +104,12 @@ function plugin_html_convert()
 		}
 	}
 	
-	if ($noskin) {
+	if (isset($noskin) && $noskin) {
 		pkwk_common_headers();
 		print $body;
 		exit;
 	}
-	else if ($iframe) {
+	else if (isset($iframe) && $iframe) {
 		$qt->setv('jquery_include', true);
 		exist_plugin('iframe');
 		$qt->appendv_once('plugin_iframe', 'beforescript', PLUGIN_IFRAME_FIT_IFRAME_JS);

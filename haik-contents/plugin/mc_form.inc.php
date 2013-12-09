@@ -234,7 +234,7 @@ function plugin_mc_form_get_tags()
 	{
 		// Mailchimpから取得
 		$api = new MCAPI($mc_api_key);
-		$mc_merge_tags = $api->listMergeVars($mc_list['id']);
+		$mc_merge_tags = $api->listMergeVars(isset($mc_list['id']) ? $mc_list['id'] : NULL);
 		if ($api->errorCode)
 		{
 			return array();

@@ -98,7 +98,7 @@ function plugin_box_convert()
 				if (preg_match('/^(\d+)(?:\+(\d+))?$/', $arg, $mts))
 				{
 					$cols = $mts[1];
-					$offset = $mts[2] ? $mts[2] : $offset;
+					$offset = isset($mts[2]) && $mts[2] ? $mts[2] : $offset;
 				}
 				else if (preg_match('/^height=(.+)$/', $arg, $mts))
 				{

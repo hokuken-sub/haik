@@ -418,7 +418,8 @@ class HTML_Helper
 		
 		$options = array_merge(array(
 			'tag' => 'div',
-			'escape' => FALSE
+			'escape' => FALSE,
+			'class' => '',
 		), $options);
 		
 		$options['class'] .= ' alert';

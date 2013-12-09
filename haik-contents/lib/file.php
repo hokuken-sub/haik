@@ -418,8 +418,8 @@ function lastmodified_add($update = '', $remove = '')
 	if (($update == '' || check_non_list($update)) && $remove == '')
 		return; // No need
 	$page_meta = meta_read($update);
-	if ($page_meta['close'] === 'closed' OR
-		($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== ''))
+	if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
+		($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
 	{
 		return;
 	}
@@ -561,8 +561,8 @@ function put_lastmodified()
 	rewind($fp);
 	foreach (array_keys($recent_pages) as $page) {
 		$page_meta = meta_read($page);
-		if ($page_meta['close'] === 'closed' OR
-			($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== ''))
+		if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
+			($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
 		{
 			continue;
 		}
