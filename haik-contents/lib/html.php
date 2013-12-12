@@ -280,7 +280,7 @@ function edit_form($page, $postdata, $digest = FALSE)
 
 	//新規作成の場合、ページ名を大見出しとして挿入する
 	$refer = (isset($vars['refer']) && $vars['refer'] != '') ? $vars['refer'] : $page;
-	$template_name = (isset($vars['template_name']) ? $vars['template_name'] : ($page_meta['template_name'] ? $page_meta['template_name'] : ''));
+	$template_name = (isset($vars['template_name']) ? $vars['template_name'] : (isset($page_meta['template_name']) && $page_meta['template_name'] ? $page_meta['template_name'] : ''));
 	$style_config = style_config_read($config['style_name']);
 
 	if ( ! isset($style_config['templates'][$template_name])
