@@ -1066,22 +1066,26 @@ function get_tiny_table($key_is_code=true)
 {
 	$file = CACHE_DIR.QHM_TINYURL_TABLE;
 	
-	$lines = explode("\n",file_get_contents($file));
 	$table = array();
-	foreach($lines as $line)
+
+	if (file_exists($file))
 	{
-		if( trim($line) != '')
+		$lines = explode("\n",file_get_contents($file));
+		foreach($lines as $line)
 		{
-			$arr = explode(',', $line);
-			
-			if($key_is_code)
+			if( trim($line) != '')
 			{
-				$table[ trim($arr[0]) ] = trim($arr[1]);
+				$arr = explode(',', $line);
+				
+				if($key_is_code)
+				{
+					$table[ trim($arr[0]) ] = trim($arr[1]);
+				}
+				else
+				{
+					$table[ trim($arr[1]) ] = trim($arr[0]);			
+				}	
 			}
-			else
-			{
-				$table[ trim($arr[1]) ] = trim($arr[0]);			
-			}	
 		}
 	}
 	

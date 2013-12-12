@@ -163,7 +163,7 @@ if ( !isset($script) || $script == '') {
 }
 
 //ssl接続用の$scriptを生成
-$default_script_ssl = $script_ssl;
+$default_script_ssl = isset($script_ssl) ? $script_ssl : '';
 if( ! isset($script_ssl) || $script_ssl == '' ){
 	$script_ssl = preg_replace('/^http:/', 'https:', $script);
 }

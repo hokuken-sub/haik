@@ -2087,7 +2087,7 @@ function get_admin_tools_html($tools)
 					}
 					
 					$str .= '
-						<li class="'.h($lv2['class']).'" style="'.h($lv2['style']).'">' . $atag;
+						<li class="'.h(isset($lv2['class']) ? $lv2['class'] : '').'" style="'.h(isset($lv2['style']) ? $lv2['style'] : '').'">' . $atag;
 				}
 				// invisible
 				else
