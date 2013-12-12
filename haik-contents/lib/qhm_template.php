@@ -232,11 +232,6 @@ class QHM_Template {
 		return TRUE;
 	}
 	
-	function include_facebook()
-	{
-		$this->setv('include_facebook', TRUE);
-	}
-
 	// ! -----------------------------
 
 	/**

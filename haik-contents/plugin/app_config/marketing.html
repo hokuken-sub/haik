@@ -40,14 +40,20 @@
 						<li class="clearfix">
 							<div class="row">
 								<div class="col-sm-4"><?php _e('MailChimp の APIキー') ?></div>
-								<div class="col-sm-6 current"><?php echo h($mc_api_key) ?></div>
+								<div class="col-sm-6 current"><?php echo $mc_api_key ? h($mc_api_key) : __('設定なし') ?></div>
 								<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="mc_api_key">編集</a></div>
 							</div>
 						</li>
 						<li class="clearfix">
 							<div class="row">
 								<div class="col-sm-4"><?php _e('MailChimp の リスト選択') ?></div>
-								<div class="col-sm-6 current"><?php echo h($mc_list['name']) . '（' . h($mc_list['id']) . '）' ?></div>
+								<div class="col-sm-6 current">
+									<?php if (isset($mc_list['id']) && $mc_list['id']):?>
+										<?php echo h($mc_list['name']) . '（' . h($mc_list['id']) . '）' ?>
+									<?php else:?>
+										<?php _e('設定なし')?>
+									<?php endif?>
+								</div>
 								<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="mc_list">編集</a></div>
 							</div>
 						</li>

@@ -22,6 +22,7 @@
  */
 
 define('PLUGIN_TW_bUTTON_FMT', '<a href="https://twitter.com/share" class="twitter-share-button"%s>Tweet</a>');
+define('PLUGIN_TW_BUTTON_USE_GOO_GL', TRUE);
 
 function plugin_tw_button_inline()
 {
@@ -166,7 +167,7 @@ function plugin_tw_button_body($args)
 	
 	if ($init_url === FALSE)
 	{
-	    if (PLUGIN_PAGE_META_USE_GOO_GL && exist_plugin('goo_gl'))
+	    if (PLUGIN_TW_BUTTON_USE_GOO_GL && exist_plugin('goo_gl'))
 	    {
 		    $attrs['data-url'] = plugin_goo_gl_get_shortened(get_page_url($page));
 	    }

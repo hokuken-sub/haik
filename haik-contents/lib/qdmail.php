@@ -43,7 +43,7 @@ if( !function_exists( 'qd_send_mail' ) ){
 	function qd_send_mail( $type , $to = null, $subject = null , $content = null , $other_header = array() , $attach = null, $debug = 0 ){
 		$type_org = $type;
 
-		$mail = & Qdmail::getInstance();
+		$mail = Qdmail::getInstance();
 		$mail->debug = $debug;
 		if(!is_array($type)){
 			$type = array('TYPE'=>$type);
@@ -624,7 +624,7 @@ class QdmailBase extends QdmailBranch{
 		$this->sendmail_path = ini_get("sendmail_path");
 	}
 
-	function & getInstance(){
+	function getInstance(){
 		static $instance = array();
 
 		if( isset($instance[0]) && is_object($instance[0]) ){
@@ -648,7 +648,7 @@ class QdmailBase extends QdmailBranch{
 
 			return $instance[0];
 		}
-		$instance[0] = & new Qdmail();
+		$instance[0] = new Qdmail();
 		return  $instance[0];
 	}
 	//--------------------------
@@ -2021,7 +2021,7 @@ class QdmailBase extends QdmailBranch{
 		}
 
 		if( is_object( $option ) ){
-			$this->smtp_object = & $option;
+			$this->smtp_object = $option;
 			$this->smtp = true;
 			$option = null ;
 		}
@@ -2332,7 +2332,7 @@ $this->debugEchoLf($this->to);
 	function replaceBodyStructure( $kind ){
 		$content_type = ( 'TEXT' === $kind ) ? 'text/plain':'text/html';
 		$false = false;
-		$rep = & $this->serchBodyStructure( $content_type , $this->body_structure , $false );
+		$rep = $this->serchBodyStructure( $content_type , $this->body_structure , $false );
 		if( false === $rep ){
 			return false;
 		}
@@ -2342,7 +2342,7 @@ $this->debugEchoLf($this->to);
 		$rep['HEADER']['Content-Transfer-Encoding'] = $enc ;
 	}
 
-	function & serchBodyStructure( $content_type , & $bbs , & $false ){
+	function serchBodyStructure( $content_type , & $bbs , & $false ){
 		foreach($bbs as $fkey => $bs){
 			if( isset( $bs['HEADER']) && ( 0 < count($bs['HEADER']))) {
 				$len = strlen($content_type);
@@ -2355,7 +2355,7 @@ $this->debugEchoLf($this->to);
 			if( !isset( $bs['CONTENT']) || ( isset( $bs['CONTENT']) && !is_array( $bs['CONTENT']))){
 				continue;
 			}
-			$ret = & $this->serchBodyStructure( $content_type , $bbs[$fkey]['CONTENT'] , $false );
+			$ret = $this->serchBodyStructure( $content_type , $bbs[$fkey]['CONTENT'] , $false );
 			return $ret;
 		}
 		return $false;
@@ -3631,7 +3631,7 @@ EOF;
 	//------------------------------------------
 	// expecting Override on the other FrameWork
 	//------------------------------------------
-	function & smtpObject( $null = false ){
+	function smtpObject( $null = false ){
 		if(is_null($null)){
 			$this->smtp_object = null;
 			return true;
@@ -3644,12 +3644,12 @@ EOF;
 		}elseif( !class_exists ( 'Qdsmtp' ) && !file_exists( 'qdsmtp.php' )){
 			return $this->errorGather('Plese load SMTP Program - Qdsmtp http://hal456.net/qdsmtp',__LINE__);
 		}
-		$this->smtp_object = & new Qdsmtp();
+		$this->smtp_object = new Qdsmtp();
 		return $this->smtp_object;
 	}
-	function setSmtpObject( & $obj ){
+	function setSmtpObject($obj ){
 		if(is_object($obj)){
-			$this->smtp_object = & $obj;
+			$this->smtp_object = $obj;
 			return true;
 		}else{
 			return false;
@@ -3717,8 +3717,8 @@ class QdmailComponent extends QdmailUserFunc{
 		parent::__construct( $param );
 	}
 
-	function startup(&$controller) {
-		$this->Controller =& $controller;
+	function startup($controller) {
+		$this->Controller = $controller;
 		if( defined( 'COMPONENTS' ) ){
 			$this->logPath(COMPONENTS);
 			$this->errorlogPath(COMPONENTS);
@@ -3728,7 +3728,7 @@ class QdmailComponent extends QdmailUserFunc{
 	//----------------------------
 	// Override Parent Method
 	//----------------------------
-	function & smtpObject(){
+	function smtpObject(){
 		if( isset( $this->Qdsmtp ) && is_object( $this->Qdsmtp ) ){
 			return $this->Qdsmtp;
 		}
@@ -3738,7 +3738,7 @@ class QdmailComponent extends QdmailUserFunc{
 				return $this->errorGather('Qdmail<->CakePHP Component Load Error , the name is Qdsmtp',__LINE__);
 			}
 		}
-		$this->Qdsmtp = & new QdsmtpComponent();
+		$this->Qdsmtp = new QdsmtpComponent();
 		if( !is_object( $this->Qdsmtp ) ){
 				return $this->errorGather('Qdmail<->CakePHP Component making Instance Error , the name is QdsmtpComponent',__LINE__);
 		}
@@ -3787,7 +3787,7 @@ class QdmailComponent extends QdmailUserFunc{
 			}
 		}
 		$type = strtolower( $type );
-		$view = & new $this->Controller->view( $this->Controller , false );
+		$view = new $this->Controller->view( $this->Controller , false );
 		$view->layout = $this->layout;
 		$mess = null;
 		$content = $view->renderElement( $this->view_dir . DS . $type . DS . $this->template , array('content' => $content ) , true );

@@ -353,6 +353,8 @@ function auth_catbody($title, $contents, $messages=array())
 	$script_url = qhm_get_script_path();
 	$lastscript = $qt->getv('lastscript');
 	
+	$intro_head = '';
+	
 	if ($intro)
 	{
 		$intro_addjs = $qt->getv('plugin_script');
@@ -423,6 +425,7 @@ EOI;
 		
 	}
 
+	$msg_html = '';
 	foreach ($messages as $msg)
 	{
 		$msg_html .= '<div class="alert alert-'.$msg['type'].'"><button type="button" class="close" data-dismiss="alert">&times;</button>'.$msg['msg'].'</div>';

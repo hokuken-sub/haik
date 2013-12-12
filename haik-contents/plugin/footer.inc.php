@@ -24,7 +24,7 @@ function plugin_footer_convert()
 	return '';
 }
 
-function plugin_footer_page($page, $reset = FALSE)
+function plugin_footer_page($page = NULL, $reset = FALSE)
 {
 	global $site_footer;
 	static $footerpage = NULL;
@@ -48,7 +48,7 @@ function plugin_footer_create()
 	
 	$qt = get_qt();
 
-	$preview = ($vars['preview'] && $vars['page'] === $site_footer);
+	$preview = (isset($vars['preview']) && $vars['preview'] && isset($vars['page']) && $vars['page'] === $site_footer);
 	$body = $preview ? $vars['msg'] : get_source($footerpage, TRUE, TRUE);
     $body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
     $lines = explode("\n", $body);

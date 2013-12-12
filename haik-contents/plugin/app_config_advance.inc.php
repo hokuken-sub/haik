@@ -35,8 +35,6 @@ function plugin_app_config_advance_action()
 	$qt = get_qt();
 	$helper = new HTML_Helper();
 	
-	$qt->setv('include_facebook', TRUE);
-	
 	$title = __('高度な設定');
 	$description = __('サイト関連する設定を行います。');
 

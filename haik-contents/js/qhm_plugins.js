@@ -500,6 +500,7 @@ ORGM.plugins = {
 			defval: "箇条書き",
 			lineNum: 3
 		},
+		focus: ".modal-complete",
 		dialog:'<div class="container"><p>例）</p><ul class="list1"><li>箇条書き</li><li>箇条書き</li><li>箇条書き</li></ul><p class="muted">※ 箇条書きの色や形は、お使いのデザインによって異なります</p></div>',
 		onComplete :function(){
 			var self = this;
@@ -932,7 +933,7 @@ ORGM.plugins = {
 		label: "文字装飾",
 		format: "&deco({options}){{text}};",
 		options: {sizePresets: ["12", "14", "18", "24", "small", "medium", "large"]},
-		focus: false,
+		focus: "input:checkbox:first",
 		dialog: '<div class=""><form action="" class="form-horizontal">'+
 			'<div class="form-group"><label class="col-sm-3 control-label">装飾</label><div class="col-sm-9 checkbox"><label class="checkbox-inline" style="font-weight:bold;"><input type="checkbox" name="bold" /> 太字</label><label class="checkbox-inline" style="font-style:italic;"><input type="checkbox" name="italic" /> 斜体</label><label class="checkbox-inline" style="text-decoration:underline;"><input type="checkbox" name="underline" /> 下線</label></div></div>'+
 			'<div class="form-group"><label class="col-sm-3 control-label">文字色</label><div class="col-sm-3"><input type="text" name="color" class="form-control input-sm" /></div></div>'+
@@ -1058,25 +1059,26 @@ ORGM.plugins = {
 		label: "配置（左・中央・右）",
 		format: "{align}:\n",
 		init: false,
+		focus: "input:radio:first",
 		dialog: '<div class="row plugin-align">' +
 '<ul class="thumbnails">' +
-'  <li class="col-sm-4" data-align="LEFT">' +
-'    <div class="thumbnail">' +
+'  <li class="col-sm-4 selected" data-align>' +
+'    <label><div class="thumbnail" tabindex="8">' +
 '    	<p class="muted" style="text-align:left">Lorem ipsum augue<br>arcu pulvinar urna luctus<br>imperdiet mattis cubilia.</p>' +
 '    </div>' +
-'	<div class="title">左揃え</div>' +
+'	<div class="title"><input type="radio" name="align" value="LEFT" checked> 左揃え</div></label>' +
 '  </li>' +
-'  <li class="col-sm-4" data-align="CENTER">' +
-'    <div href="#" class="thumbnail">' +
+'  <li class="col-sm-4" data-align>' +
+'    <label><div class="thumbnail" tabindex="9">' +
 '    	<p class="muted" style="text-align:center">Lorem ipsum augue<br>arcu pulvinar urna luctus<br>imperdiet mattis cubilia.</p>' +
 '    </div>' +
-'	<div class="title">中央</div>' +
+'	<div class="title"><input type="radio" name="align" value="CENTER"> 中央</div></label>' +
 '  </li>' +
-'  <li class="col-sm-4" data-align="RIGHT">' +
-'    <div href="#" class="thumbnail">' +
+'  <li class="col-sm-4" data-align>' +
+'    <label><div class="thumbnail" tabindex="10">' +
 '    	<p class="muted" style="text-align:right">Lorem ipsum augue<br>arcu pulvinar urna luctus<br>imperdiet mattis cubilia</p>' +
 '    </div>' +
-'	<div class="title">右揃え</div>' +
+'	<div class="title"><input type="radio" name="align" value="RIGHT"> 右揃え</div></label>' +
 '  </li>' +
 '</ul>' +
 '</div>',
@@ -1085,9 +1087,12 @@ ORGM.plugins = {
 			
 			$('[data-align]', $dialog).css('cursor', 'pointer');
 			
-			$dialog.on('click', '[data-align]', function(){
-				$("[data-align]").removeClass("selected");
-				$(this).addClass("selected");
+			$dialog.on('change', 'input:radio', function(){
+				var $input = $(this);
+				if ($input.is(":checked")) {
+					$("[data-align]", $dialog).removeClass("selected");
+					$input.closest("[data-align]").addClass("selected");
+				}
 			});
 			
 		},
@@ -1098,7 +1103,7 @@ ORGM.plugins = {
 				,text = exnote.getSelectedText()
 				,$dialog = $(this.dialogElement);
 
-			var align = $(".selected", $dialog).data('align');
+			var align = $("input:radio:checked", $dialog).val();
 			value = value.replace("{align}", align);
 
 			if (text.length > 0) {
@@ -2832,7 +2837,7 @@ ORGM.plugins = {
 				'</form></div>',
 		focus: false,
 		onDialogOpen: function(){
-			var self = this;
+			var self = this, exnote = $(this.textarea).data("exnote");
 			var $dialog = $(this.dialogElement);
 
 			$("input[name=type]+button", $dialog).on("click", function(){
@@ -2846,12 +2851,14 @@ ORGM.plugins = {
 					engine: ORGM.tmpl,
 					template: ORGM.pageSuggestionTemplateForTypeahead,
 				});
-				
+			}).always(function(){
 				setTimeout(function(){
 					$("input:text[name=linkto]", $dialog).focus().select();
 				}, 25);
-				
-			}).fail(function(){});
+			});
+			
+			var text = exnote.getSelectedText();
+			$("input[name=alias]", $dialog).val(text);
 			
 			$('.btn-theme').tooltip({placement:'bottom'});
 			

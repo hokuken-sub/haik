@@ -155,10 +155,13 @@
 				range.select();
 				el.focus();
 			} else if (browser == 2) {
-				el.setSelectionRange(ln, ln + slen);
-				el.focus();
-				el.scrollTop = this.scrollPos;
+				setTimeout(function(){
+					el.setSelectionRange(ln, ln + slen);
+					el.focus();
+					el.scrollTop = this.scrollPos;
+				}, 25);
 			}
+			
 		},
 		
 		/**
@@ -388,7 +391,7 @@
 			}
 
 			this.attachFocus(value.length + slen + len + this.selectLength + caret.offset, caret.length);
-			
+
 			$(el).triggerHandler("insert");
 		},
 		

@@ -280,7 +280,7 @@ function edit_form($page, $postdata, $digest = FALSE)
 
 	//新規作成の場合、ページ名を大見出しとして挿入する
 	$refer = (isset($vars['refer']) && $vars['refer'] != '') ? $vars['refer'] : $page;
-	$template_name = (isset($vars['template_name']) ? $vars['template_name'] : ($page_meta['template_name'] ? $page_meta['template_name'] : ''));
+	$template_name = (isset($vars['template_name']) ? $vars['template_name'] : (isset($page_meta['template_name']) && $page_meta['template_name'] ? $page_meta['template_name'] : ''));
 	$style_config = style_config_read($config['style_name']);
 
 	if ( ! isset($style_config['templates'][$template_name])
@@ -820,6 +820,27 @@ function pkwk_output_dtd($pkwk_dtd = PKWK_DTD_XHTML_1_1, $charset = CONTENT_CHAR
 		return '<meta http-equiv="content-type" content="text/html; charset=' . $charset . '">' . "\n";
 	}
 }
+
+//For qhm template engine & qhm cache engine
+function qhm_output_dtd($pkwk_dtd, $content_charset = CONTENT_CHARSET, $encode = CONTENT_CHARSET){
+
+	// Output HTTP headers
+	pkwk_common_headers();
+	header('Cache-control: no-cache');
+	header('Pragma: no-cache');
+	header('Content-Type: text/html; charset=' . $encode);
+	
+	// Output HTML DTD, <html>, and receive content-type
+	$meta_content_type = pkwk_output_dtd($pkwk_dtd);
+
+	if( $content_charset != $encode)
+	{
+		$meta_content_type = str_replace($content_charset, $encode, $meta_content_type);
+	}
+	
+	return $meta_content_type;
+}
+
 
 /* End of file html.php */
 /* Location: ./lib/html.php */

@@ -870,8 +870,8 @@ class QdsmtpComponent extends QdsmtpBase{
 		parent::QdsmtpBase( $param );
 	}
 
-	function startup(&$controller) {
-		$this->Controller =& $controller;
+	function startup($controller) {
+		$this->Controller =$controller;
 		if( defined( 'COMPONENTS' ) ){
 			$this->logFilename(COMPONENTS.$this->name.'.log');
 			$this->errorlogFilename( COMPONENTS . '_error' . $this->name . '.log' );

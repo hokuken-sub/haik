@@ -60,7 +60,7 @@ function plugin_former_action()
 	$qt = get_qt();
 	$helper = new HTML_Helper();
 	
-	$page = $vars['refer'];
+	$page = isset($vars['refer']) ? $vars['refer'] : '';
 	$r_page = rawurlencode($page);
 	
 
@@ -119,11 +119,11 @@ function plugin_former_set_iframe()
 	$url = $script . '?cmd=former&iframe=1';
 	
 	$html = '
-<div class="modal fade" id="orgm_former_selector">
+<div class="modal fade" id="orgm_former_selector" role="dialog" tabindex="-1" aria-labelledby="haik former window" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" class="close" aria-hidden="true">&times;</button>
 				<h4>フォーム選択</h4>
 			</div>
 			<div class="modal-body">

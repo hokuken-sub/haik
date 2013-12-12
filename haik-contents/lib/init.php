@@ -18,7 +18,7 @@
 
 define('APP_NAME', 'haik');
 define('S_VERSION', '1.4.7');//PukiWiki version
-define('APP_VERSION', '0.12.0-RC');
+define('APP_VERSION', '0.12.1-RC');
 
 // URLs
 define('APP_OFFICIAL_SITE', 'http://toiee.jp/haik/');
@@ -163,7 +163,7 @@ if ( !isset($script) || $script == '') {
 }
 
 //ssl接続用の$scriptを生成
-$default_script_ssl = $script_ssl;
+$default_script_ssl = isset($script_ssl) ? $script_ssl : '';
 if( ! isset($script_ssl) || $script_ssl == '' ){
 	$script_ssl = preg_replace('/^http:/', 'https:', $script);
 }

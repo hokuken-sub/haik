@@ -80,7 +80,7 @@ function plugin_notify_get_body()
 {
 	$qt = get_qt();
 	
-	$notices = $qt->getv('notices');
+	$notices = $qt->getv('notices') ? $qt->getv('notices') : array();
 	
 	uasort($notices, 'plugin_notify_compare');
 

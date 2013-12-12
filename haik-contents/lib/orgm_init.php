@@ -4,10 +4,10 @@
 // ページメタ情報の展開
 //-------------------------------------------------
 //$qt->appendv('user_head', $page_meta['user_head']);
-$qt->prependv('user_head', $page_meta['user_head']);
-$description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : $page_meta['auto_description'];
+$qt->prependv('user_head', isset($page_meta['user_head']) ? $page_meta['user_head'] : '');
+$description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : (isset($page_meta['auto_description']) ? $page_meta['auto_description'] : '');
 $qt->setv('description', $description);
-$qt->setv('keywords', $page_meta['keywords']);
+$qt->setv('keywords', isset($page_meta['keywords']) ? $page_meta['keywords'] : '');
 
 //-------------------------------------------------
 //
@@ -33,7 +33,7 @@ $qt->setv('logo', '<a href="'.h($_LINK['top']).'" class="navbar-brand'.$logo_cla
 
 
 // ! アイキャッチ
-if ( ! (isset($style_config['eyecatch']) && !$style_config['eyecatch']))
+if (isset($style_config['eyecatch']) && $style_config['eyecatch'] && isset($page_meta['eyecatch']) && $page_meta['eyecatch'])
 {
 	$eyecatch = create_eyecatch($page_meta['eyecatch']);
 	$qt->setv('eyecatch', $eyecatch);
@@ -60,7 +60,7 @@ if ( ! (isset($style_config['eyecatch']) && !$style_config['eyecatch']))
 		}
 		$style .= "\t\t".'}'."\n";
 		
-		if ($page_meta['eyecatch']['height'] != '')
+		if (isset($page_meta['eyecatch']['height']) && $page_meta['eyecatch']['height'] != '')
 		{
 			$style .= "\t\t#orgm_eyecatch .carousel .item{\n\t\t\t" . 'height: '. $page_meta['eyecatch']['height']. "px;\n\t\t}\n";
 		}
@@ -116,10 +116,10 @@ $qt->appendv('style_css', '<link rel="stylesheet" href="'.CSS_DIR.'origami.css">
 $style_css = "\t" . '<link rel="stylesheet" href="'. h(SKIN_DIR . $style_name . '/' . $style_config['style_file']) . '">' . "\n";
 
 // include color css
-$color_cssfile = SKIN_DIR . $style_name.'/'.$style_config['colors'][$style_color];
 $less_load = $qt->getv('less_load');
 if (isset($style_config['colors'][$style_color]))
 {
+	$color_cssfile = SKIN_DIR . $style_name.'/'.$style_config['colors'][$style_color];
 	$lessfile = SKIN_DIR . $style_name . '/less/' . basename($color_cssfile, '.css') . '.less';
 	if ($use_less && file_exists($lessfile))
 	{
@@ -135,9 +135,9 @@ if (isset($style_config['colors'][$style_color]))
 }
 
 // include texture css
-$texture_cssfile = SKIN_DIR . $style_name . '/' . $style_config['textures'][$style_texture];
 if (isset($style_config['textures'][$style_texture]))
 {
+	$texture_cssfile = SKIN_DIR . $style_name . '/' . $style_config['textures'][$style_texture];
 	$lessfile = SKIN_DIR . $style_name . '/less/' . basename($texture_cssfile, '.css') . '.less';
 	if ($use_less && file_exists($lessfile))
 	{
@@ -416,35 +416,38 @@ $qt->setv('tracking_script', $tracking_script);
 //-------------------------------------------------
 // ページの公開、閉鎖
 //-------------------------------------------------
-if ($page_meta['close'] === 'closed')
+if (isset($page_meta['close']))
 {
-	if (exist_plugin("close"))
+	if ($page_meta['close'] === 'closed')
 	{
-		$body = plugin_close_page();
-		if ($body !== FALSE)
+		if (exist_plugin("close"))
 		{
-			$qt->setv("body", $body);
+			$body = plugin_close_page();
+			if ($body !== FALSE)
+			{
+				$qt->setv("body", $body);
+			}
 		}
 	}
-}
-else if ($page_meta['close'] === 'password')
-{
-	if (exist_plugin("secret"))
+	else if ($page_meta['close'] === 'password')
 	{
-		$body = plugin_secret_auth();
-		if ($body !== FALSE)
+		if (exist_plugin("secret"))
 		{
-			$qt->setv('body', $body);
+			$body = plugin_secret_auth();
+			if ($body !== FALSE)
+			{
+				$qt->setv('body', $body);
+			}
 		}
 	}
-}
-else if ($page_meta['close'] === 'redirect')
-{
-	if (exist_plugin("redirect"))
+	else if ($page_meta['close'] === 'redirect')
 	{
-		plugin_redirect_page();
+		if (exist_plugin("redirect"))
+		{
+			plugin_redirect_page();
+		}
+	
 	}
-
 }
 
 //-------------------------------------------------

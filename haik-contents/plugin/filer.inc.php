@@ -87,7 +87,12 @@ function plugin_filer_set_iframe($search_word = ':image', $select_mode = '', $fo
 	
 	$qt = get_qt();
 	
-	$url = $script . '?cmd=filer&iframe=1';
+	$base_url = $script . '?cmd=filer';
+	$url = $base_url . '&iframe=1';
+	$star_link = $base_url . '&search_word=' . rawurlencode(':star');
+	$all_link = $base_url;
+	
+	$refer = '';
 	
 	$iframe_mode = TRUE;
 	
@@ -96,11 +101,11 @@ function plugin_filer_set_iframe($search_word = ':image', $select_mode = '', $fo
 	$nav = ob_get_clean();
 	
 	$html = '
-<div class="modal fade" id="orgm_filer_selector">
+<div class="modal fade" id="orgm_filer_selector" role="dialog" tabindex="-1" aria-labelledby="haik filer window" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header clearfix">
-				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" class="close" aria-hidden="true">&times;</button>
 				<h4 class="pull-left">ファイル選択</h4>
 				'. $nav .'
 			</div>
@@ -1701,6 +1706,17 @@ class ORGM_UploadHandler extends UploadHandler{
 	function __construct($options = null, $initialize = true) {
 		parent::__construct($options, $initialize);
 	}
+
+    protected function get_full_url() {
+        $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        return
+            ($https ? 'https://' : 'http://').
+            (!empty($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'].'@' : '').
+            (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ($_SERVER['SERVER_NAME'].
+            ($https && $_SERVER['SERVER_PORT'] === 443 ||
+            $_SERVER['SERVER_PORT'] === 80 ? '' : ':'.$_SERVER['SERVER_PORT']))).
+            substr(SCRIPT_NAME,0, strrpos(SCRIPT_NAME, '/'));
+    }
 	
 	public function convert_mb_name($name)
 	{

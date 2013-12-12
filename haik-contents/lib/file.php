@@ -418,8 +418,8 @@ function lastmodified_add($update = '', $remove = '')
 	if (($update == '' || check_non_list($update)) && $remove == '')
 		return; // No need
 	$page_meta = meta_read($update);
-	if ($page_meta['close'] === 'closed' OR
-		($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== ''))
+	if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
+		($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
 	{
 		return;
 	}
@@ -561,8 +561,8 @@ function put_lastmodified()
 	rewind($fp);
 	foreach (array_keys($recent_pages) as $page) {
 		$page_meta = meta_read($page);
-		if ($page_meta['close'] === 'closed' OR
-			($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== ''))
+		if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
+			($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
 		{
 			continue;
 		}
@@ -974,6 +974,8 @@ function pkwk_touch_file($filename, $time = FALSE, $atime = FALSE)
 //regist tinyurl table
 function add_tinycode($page)
 {
+	global $whatsnew;
+	
 	if($page=='')
 		return false;
 	$qm = get_qm();
@@ -1066,22 +1068,26 @@ function get_tiny_table($key_is_code=true)
 {
 	$file = CACHE_DIR.QHM_TINYURL_TABLE;
 	
-	$lines = explode("\n",file_get_contents($file));
 	$table = array();
-	foreach($lines as $line)
+
+	if (file_exists($file))
 	{
-		if( trim($line) != '')
+		$lines = explode("\n",file_get_contents($file));
+		foreach($lines as $line)
 		{
-			$arr = explode(',', $line);
-			
-			if($key_is_code)
+			if( trim($line) != '')
 			{
-				$table[ trim($arr[0]) ] = trim($arr[1]);
+				$arr = explode(',', $line);
+				
+				if($key_is_code)
+				{
+					$table[ trim($arr[0]) ] = trim($arr[1]);
+				}
+				else
+				{
+					$table[ trim($arr[1]) ] = trim($arr[0]);			
+				}	
 			}
-			else
-			{
-				$table[ trim($arr[1]) ] = trim($arr[0]);			
-			}	
 		}
 	}
 	

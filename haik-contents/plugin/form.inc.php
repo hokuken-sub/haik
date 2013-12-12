@@ -335,42 +335,46 @@ function plugin_form_validate()
 			}
 		}
 		
-		foreach (explode(',', $item['validation']) as $rule)
+		if (isset($item['validation']) && $item['validation'])
 		{
-
-			if ($rule === 'int' && $value != '')
+			foreach (explode(',', $item['validation']) as $rule)
 			{
-				if ( ! preg_match('/^\d+$/', $value))
+	
+				if ($rule === 'int' && $value != '')
 				{
-					$error[$name] = __('整数を入力してください');
+					if ( ! preg_match('/^\d+$/', $value))
+					{
+						$error[$name] = __('整数を入力してください');
+					}
 				}
-			}
-			if ($rule === 'number'  && $value != '')
-			{
-				if ( ! is_numeric($value))
+				if ($rule === 'number'  && $value != '')
 				{
-					$error[$name] = __('数字を入力してください');
+					if ( ! is_numeric($value))
+					{
+						$error[$name] = __('数字を入力してください');
+					}
 				}
-			}
-			if ($rule === 'alnum'  && $value != '')
-			{
-				if ( ! ctype_alnum($value))
+				if ($rule === 'alnum'  && $value != '')
 				{
-					$error[$name] = __('半角英数を入力してください');
+					if ( ! ctype_alnum($value))
+					{
+						$error[$name] = __('半角英数を入力してください');
+					}
 				}
-			}
-			if ($rule === 'email'  && $value != '')
-			{
-				if ( ! is_email($value))
+				if ($rule === 'email'  && $value != '')
 				{
-					$error[$name] = __('メールアドレスを正しく入力してください');
+					if ( ! is_email($value))
+					{
+						$error[$name] = __('メールアドレスを正しく入力してください');
+					}
 				}
-			}
-			if ($rule === 'bool' &&  ! $value)
-			{
-				$error[$name] = __('チェックが必要です');
+				if ($rule === 'bool' &&  ! $value)
+				{
+					$error[$name] = __('チェックが必要です');
+				}
 			}
 		}
+		
 	}
 	
 	if (count($error) > 0)

@@ -94,7 +94,7 @@ $(function(){
  */
 function plugin_app_start_set_auth_()
 {
-	global $vars;
+	global $vars, $script;
 
 	if ( ! $_SESSION['app_start']['is_writable'])
 	{
@@ -107,6 +107,9 @@ function plugin_app_start_set_auth_()
 	$title = sprintf(__('あと一歩です。'), APP_NAME);
 	$example_passwd = create_password();
 
+	$vars = array_merge(array(
+		'username' => '',
+	), $vars);
 
 	$errmsg = isset($vars['app_start_set_auth_err']) ? $vars['app_start_set_auth_err'] : '';
 

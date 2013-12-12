@@ -310,7 +310,7 @@ $(function(){
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h5 id="backupModalLabel"></h5>
 			</div>
 			<div class="modal-body">
@@ -331,7 +331,7 @@ $(function(){
 </div>
 
 <!-- Delete Modal -->
-<div id="deleteModal" class="modal fade">
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="backup delete dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

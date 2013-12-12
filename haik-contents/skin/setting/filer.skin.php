@@ -41,9 +41,6 @@
 <!-- Footer
 ================================================== -->
 <footer class="footer">
-	<div class="container">
-		#{$site_footer}
-	</div>
 	<div id="license" class="container">
 		#{$license_tag}
 	</div>

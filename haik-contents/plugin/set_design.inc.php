@@ -26,7 +26,7 @@ function plugin_set_design_convert()
 	
 	$args = func_get_args();
 
-	$design = $laout = $color = $texture = '';
+	$design = $layout = $color = $texture = '';
 	foreach ($args as $arg)
 	{
 		list($optkey, $optval) = explode('=', $arg, 2);

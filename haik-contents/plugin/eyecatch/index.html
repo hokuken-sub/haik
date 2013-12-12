@@ -31,7 +31,7 @@
 
 </div>
 
-<div id="orgm_eyecatch_edit" class="modal fade">
+<div id="orgm_eyecatch_edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eyecatch editor" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 		</div><!-- /.modal-content -->
@@ -39,12 +39,12 @@
 </div><!-- /.modal -->
 
 
-<div id="orgm_eyecatch_delete" class="modal fade">
+<div id="orgm_eyecatch_delete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eyecatch delete confirmation" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 
 			<div class="modal-header">
-				<button type="button" data-dismiss="modal" area-hidden="true" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
 				<h5><?php _e('アイキャッチの削除')?></h5>
 			</div>
 			<div class="modal-body">
@@ -74,7 +74,7 @@
 
 <script type="text/x-jquery-tmpl" id="tmpl_eyecatch_edit_body">
 	<div class="modal-header">
-		<button type="button" data-dismiss="modal" area-hidden="true" class="close">&times;</button>
+		<button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
 		<h5>
 		{{if mode == 'edit'}}
 			<?php _e('アイキャッチの編集')?>
@@ -152,11 +152,11 @@
 
 </script>
 
-<div id="orgm_eyecatch_manage" class="modal fade">
+<div id="orgm_eyecatch_manage" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eyecatch panel manager" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" data-dismiss="modal" area-hidden="true" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
 				<h5><?php _e('アイキャッチの編集')?></h5>
 			</div>
 			<div class="modal-body">
@@ -202,11 +202,11 @@
 </script>
 
 
-<div id="orgm_eyecatch_background" class="modal fade">
+<div id="orgm_eyecatch_background" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eyecatch background config dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" data-dismiss="modal" area-hidden="true" class="close">&times;</button>
+				<button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
 				<h5><?php _e('アイキャッチの設定')?></h5>
 			</div>
 			<div class="modal-body">

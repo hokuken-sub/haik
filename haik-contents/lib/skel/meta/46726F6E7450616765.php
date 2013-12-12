@@ -12,6 +12,6 @@ $meta = array (
         'image' => '',
       ),
     ),
-    'background' => 'false',
+    'background' => false,
   ),
 );

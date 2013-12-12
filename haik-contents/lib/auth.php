@@ -253,7 +253,8 @@ function basic_auth($page, $auth_flag, $exit_flag, $auth_pages, $title_cannot)
 	//Customize from here
 	//Session Auth instead of Basic Auth
 	//Thanks & Refer SiteDev + AT by AKKO
-	if(in_array($_SESSION['usr'],$user_list)){
+	if (isset($_SESSION['usr']) && in_array($_SESSION['usr'],$user_list))
+	{
 		return TRUE;
 	}
 	

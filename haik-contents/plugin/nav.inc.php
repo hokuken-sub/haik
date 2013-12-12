@@ -24,7 +24,7 @@ function plugin_nav_convert()
 	return '';
 }
 
-function plugin_nav_page($page, $reset = FALSE)
+function plugin_nav_page($page = NULL, $reset = FALSE)
 {
 	global $site_nav;
 	static $navpage = NULL;
@@ -71,7 +71,7 @@ function plugin_nav_create($style = '')
 		}
 	}
 
-	$preview = ($vars['preview'] && $vars['page'] === $site_nav);
+	$preview = (isset($vars['preview']) && $vars['preview'] && isset($vars['page']) && $vars['page'] === $site_nav);
 
 	$body = $preview ? $vars['msg'] : get_source($navpage, TRUE, TRUE);
     $body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));

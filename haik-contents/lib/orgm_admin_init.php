@@ -13,9 +13,19 @@ if (! defined('PKWK_READONLY')) die('PKWK_READONLY is not set');
 
 
 //---- set ini values for template engine
-$qt->setv('site_title', $site_title);
+$qt->setv('site_title',   $site_title);
+$qt->setv('head_tag',     $head_tag);
+
+$qt->appendv('head_prefix', '');
 $qt->appendv('user_head', $user_head);
-$qt->setv('head_tag', $head_tag);
+$qt->appendv('plugin_head', '');
+$qt->appendv('body_first', '');
+$qt->appendv('body_last', '');
+$qt->appendv('eyecatch', '');
+$qt->appendv('admin_script', '');
+$qt->appendv('plugin_script', '');
+$qt->appendv('user_script', '');
+
 $qt->setv('_page', $_page);
 $qt->setv('_script', $script);
 $common_script = '
@@ -264,7 +274,7 @@ EOS;
 			</div>
 ';
 
-		if ($vars['preview'])
+		if (isset($vars['preview']) && $vars['preview'])
 		{
 			$refer = isset($vars['refer']) ? $vars['refer'] : $_page;
 			$digest = md5(get_source($_page, TRUE, TRUE));
@@ -326,7 +336,7 @@ EOS;
 	<div class="container">
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="pull-right">
-		'.$tools_buttons.'
+		'.(isset($tools_buttons) ? $tools_buttons : '').'
 		</div>
 	</div>
 </div>
@@ -347,7 +357,7 @@ else{ //編集時は、必ずシステム情報でタイトルを作る
 }
 
 if ($title == $defaultpage){ //トップ用
-	$qt->setv('page_title', $page_meta['title'] ? $page_meta['title'] : $site_title);
+	$qt->setv('page_title', isset($page_meta['title']) && $page_meta['title'] ? $page_meta['title'] : $site_title);
 }
 
 
@@ -362,7 +372,11 @@ EOD;
 	$qt->appendv('head_tag', $canonical_tag);
 }
 
-if (check_non_list($vars['page']))
+if ($noindex === -1)
+{
+	$noindex = FALSE;
+}
+else if (check_non_list($vars['page']))
 {
 	$noindex = TRUE;
 }
@@ -458,18 +472,6 @@ $qt->setv('bootstrap_script', '
 <script type="text/javascript" src="'.JS_DIR.'extends.js"></script>
 ');
 
-if ($qt->getv('include_facebook'))
-{
-	global $fb_app_id;
-	//TODO: en_US の自動変更
-	$qt->prependv('body_first', '<div id="fb-root"></div>
-<script src="//connect.facebook.net/en_US/all.js"></script>
-<script>
-    FB.init({appId: '. h($fb_app_id) .', status: true, cookie: true});
-</script>
-    ');
-}
-
 //-------------------------------------------------
 // ログインをチェックし、ログアウトしてれば再ログインをさせるjavascriptの読み込み
 //-------------------------------------------------
@@ -496,7 +498,7 @@ if ((is_page($vars['page']) && check_editable($vars['page'], FALSE, FALSE)) && i
 {
 
 	$qt->appendv('body_last', '
-<div id="orgm_shortcut_cheatsheat" class="modal fade">
+<div id="orgm_shortcut_cheatsheat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="shortcut key list" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 		
