@@ -96,6 +96,23 @@ function plugin_eyecatch_action()
 	return array('msg'=>$msg, 'body'=>$body);
 }
 
+function plugin_eyecatch_convert()
+{
+	$args = func_get_args();
+	
+	$html = '';
+	if (exist_plugin('section'))
+	{
+		array_unshift($args, 'eyecatch');
+		$html = call_user_func_array('plugin_section_convert', $args);
+	}
+	
+	$qt = get_qt();
+	$qt->setv('eyecatch', $html);
+	
+	return '';
+}
+
 function plugin_eyecatch_modify_data($data)
 {
 	$data = array_intersect_key($data, array_flip(array('images', 'background', 'height')));
