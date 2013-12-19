@@ -18,31 +18,165 @@
 
 function plugin_section_convert()
 {
+	static $cnt = 0;
+	
+	$qt = get_qt();
+	
 	$args = func_get_args();
 	$body = array_pop($args);
 	
 	$body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
 	
-	$delim = "\n====\n";
-	if (strpos($body, $delim) !== FALSE)
+	$h_align  = 'center';//left|center|right
+	$v_align  = 'middle';//top|middle|bottom
+	$height   = '300px';
+	$type     = 'cover';//cover|repeat
+	$style    = 'default';//primary|info|success|warning|danger
+	$fullpage =  FALSE;//full height section; fit window size
+	
+	$relative  = FALSE;//position: relative
+	$container = TRUE;//FALSE to enable 'fit' option
+
+	$background_image = FALSE;
+	$background_fix   = FALSE;
+	$background_color = FALSE;//transparent
+	$additional_class = $container_class = '';
+	
+	$attrs = array(
+		'id' => 'haik_section_' . ++$cnt,
+		'class' => 'haik-section',
+		'style' => '',
+	);
+	
+	foreach ($args as $arg)
 	{
-		$slides = explode($delim, $body);
-		$body = '';
-		
-		foreach ($slides as $slide)
+		if (preg_match('/\A(left|center|right)\z/i', $arg, $mts))
 		{
-			$part = convert_html($slide);
-			$body .= '<div class="slide">'.$part.'</div>';
+			$h_align = strtolower($mts[1]);
 		}
+		else if (preg_match('/\A(top|middle|bottom)\z/i', $arg, $mts))
+		{
+			$v_align = strtolower($mts[1]);
+		}
+		else if (preg_match('/\A(square|rect|repeat)\z/i', $arg, $mts))
+		{
+			$type = strtolower($mts[1]);
+		}
+		else if (preg_match('/\.(jpe?g|gif|png)\z/i', $arg))
+		{
+			$background_image = trim($arg);
+		}
+		else if (preg_match('/\A([\d.]+)(.*)\z/', $arg, $mts))
+		{
+			$height = $mts[1] . ($mts[2] ? $mts[2] : 'px');
+		}
+		else if ($arg === 'page')
+		{
+			$fullpage = TRUE;
+		}
+		else if (preg_match('/\A(primary|info|success|warning|danger)\z/i', $arg, $mts))
+		{
+			$style = $mts[1];
+		}
+		else if (preg_match('/\Aclass=(.+)\z/', $arg, $mts))
+		{
+			$additional_class .= $mts[1];
+		}
+		else if (preg_match('/\Acolor=(.+)\z/', $arg, $mts))
+		{
+			$background_color = $mts[1];
+		}
+		else if ($arg === 'fit')
+		{
+			$container = FALSE;
+		}
+		else if ($arg === 'fix')
+		{
+			$background_fix = TRUE;
+		}
+		else if ($arg === 'relative')
+		{
+			$relative = TRUE;
+		}
+		// eyecatch プラグインからの呼び出し時に自動的に付けられるオプション
+		else if ($arg === 'eyecatch')
+		{
+			$additional_class .= ' haik-eyecatch';
+		}
+	}
+	
+	// !set attributes
+	
+	//set base class
+	$attrs['class'] .= ' haik-section-' . $style;
+	
+	if ($relative)
+	{
+		$attrs['style'] .= 'position:relative;';
+	}
+	
+	if ($background_color)
+	{
+		$attrs['style'] .= 'background-color: ' . $background_color . ';';
+	}
+	if ($background_image)
+	{
+		if (is_url($background_image))
+		{
+			$filename = $background_image;
+		}
+		else
+		{
+			$filename = get_file_path($background_image);
+		}
+		$attrs['style'] .= 'background-image: url(' . h($filename) . ');';
+		
+		if ($background_fix)
+		{
+			$attrs['style'] .= 'background-attachment: fixed;';
+		}
+		$attrs['data-background-image'] = $background_image;
+		$attrs['data-background-type'] = $type;
+	}
+	
+	if ($fullpage)
+	{
+		$attrs['style'] .= 'height: 600px;';
+		$attrs['data-height'] = 'page';
 	}
 	else
 	{
-		$body = convert_html($body);
+		$attrs['style'] .= 'height: ' . $height. ';';
+		$attrs['data-height'] = $height;
 	}
+	
+	$attrs['data-horizontal-align'] = $h_align;
+	$attrs['data-vertical-align'] = $v_align;
+	
+	$attrs['class'] .= ' ' . $additional_class;
+	
+	$attr_string = '';
+	foreach ($attrs as $name => $value)
+	{
+		$attr_string .= ' ' . $name . '="' . h($value) . '"';
+	}
+	
+	if ($container)
+	{
+		$container_class = 'container';
+	}
+	
+	// ! make html
+	
+	$body = convert_html($body);
 
-	$format = '<div class="section">%s</div>';
-
-	$html = sprintf($format, $body);
+	$html = <<< EOH
+<div {$attr_string}>
+	<div class="{$container_class}">
+		{$body}
+	</div>
+</div>
+EOH;
 
 	return $html;
 }

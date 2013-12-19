@@ -224,6 +224,19 @@
 			$(this).prev(".accordion-heading").find("i").removeClass("icon-minus").addClass("icon-plus");
 		});
 		
+		// !section full-page
+		(function(){
+			var $sections = $(".haik-section[data-height=page]");
+			if ($sections.length === 0) return;
+			
+			var resizeSection = function resizeSection() {
+				var windowHeight = $(window).height() - ORGM.navbarHTotal;
+				$sections.height(windowHeight);
+			};
+			resizeSection();
+			$(window).on("resize", resizeSection);
+		})();
+		
 		// auto click
 		var autoClick = function(){
 			var $self = $(this);
