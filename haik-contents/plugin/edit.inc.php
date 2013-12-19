@@ -16,10 +16,9 @@ function plugin_edit_action()
 	global $vars, $layout_pages;
 	global $qblog_defaultpage, $style_name, $admin_style_name, $template_name;
 	
-	$qm = get_qm();
 	$qt = get_qt();
 
-	if (PKWK_READONLY) die_message($qm->m['fmt_err_pkwk_readonly']);
+	if (PKWK_READONLY) die_message(__('PKWK_READONLY prohibits editing'));
 
 	$page = isset($vars['page']) ? $vars['page'] : '';
 
@@ -50,7 +49,7 @@ function plugin_edit_action()
 	if ($postdata == '') $postdata = auto_template($page);
 
 	$vars['notimestamp'] = "true";
-	return array('msg'=>$qm->m['fmt_title_edit'], 'body'=> $prefix . edit_form($page, $postdata, FALSE));
+	return array('msg'=>__('$1 の編集'), 'body'=> $prefix . edit_form($page, $postdata, FALSE));
 }
 
 // Preview
@@ -58,7 +57,6 @@ function plugin_edit_preview()
 {
 	global $vars, $layout_pages;
 	global $qblog_defaultpage;
-	$qm = get_qm();
 	$qt = get_qt();
 
 	$page = isset($vars['page']) ? $vars['page'] : '';
@@ -82,8 +80,9 @@ function plugin_edit_preview()
 	{
 		$body = '<div id="preview_body">';
 		if ($postdata == '')
-			$body .= '<strong>' . $qm->m['fmt_msg_preview_delete'] . '</strong>';
-		$body .= '<br />' . "\n";
+		{
+			$body .= '<strong>' . __('（ページの内容は空です。更新するとこのページは削除されます。）') . '</strong><br>' . "\n";
+		}
 	
 		if ($postdata) {
 			if ($page !== $qblog_defaultpage && is_qblog())
@@ -101,14 +100,13 @@ function plugin_edit_preview()
 	// Off XSS Protection (Google Chrome)
 	header('X-XSS-Protection: 0');
 	
-	return array('msg'=>$qm->m['fmt_title_preview'], 'body'=>$body);
+	return array('msg'=>__('$1 のプレビュー'), 'body'=>$body);
 }
 
 // Inline: Show edit (or unfreeze text) link
 function plugin_edit_inline()
 {
 	global $script, $vars, $fixed_heading_anchor_edit;
-	$qm = get_qm();
 
 	if (PKWK_READONLY) return ''; // Show nothing 
 
@@ -126,7 +124,7 @@ function plugin_edit_inline()
 		case ''       :                   break;
 		case 'nolabel': $_nolabel = TRUE; break;
 		case 'noicon' : $_noicon  = TRUE; break;
-		default       : return $qm->m['plg_edit']['err_usage'];
+		default       : return '&amp;edit(pagename#anchor[[,noicon],nolabel])[{label}];';
 		}
 	}
 
@@ -141,11 +139,11 @@ function plugin_edit_inline()
 	$ispage   = is_page($s_page);
 
 	// Paragraph edit enabled or not
-	$short = h($qm->m['plg_edit']['title_short']);
+	$short = h(__('Edit'));
 	if ($fixed_heading_anchor_edit && $editable && $ispage && ! $isfreeze) {
 		// Paragraph editing
 		$id    = rawurlencode($id);
-		$title = h($qm->replace('plg_edit.title', $page));
+		$title = h(sprintf(__('Edit %s'), $page));
 		$icon = '<img src="' . IMAGE_DIR . 'paraedit.png' .
 			'" width="9" height="9" alt="' .
 			$short . '" title="' . $title . '" /> ';
@@ -154,10 +152,10 @@ function plugin_edit_inline()
 		// Normal editing / unfreeze
 		$id    = '';
 		if ($isfreeze) {
-			$title = $qm->replace('plg_edit.title_unfreeze', $s_page);
+			$title = sprintf(__('Unfreeze %s'), $s_page);
 			$icon  = 'unfreeze.png';
 		} else {
-			$title = $qm->replace('plg_edit.title', $s_page);
+			$title = sprintf(__('Edit %s'), $s_page);
 			$icon  = 'edit.png';
 		}
 		$title = h($title);
@@ -204,7 +202,6 @@ function plugin_edit_write()
 	global $notimeupdate, $do_update_diff_table;
 	global $qblog_defaultpage, $date_format, $qblog_menubar;
 	global $change_timestamp;
-	$qm = get_qm();
 
 	$page   = isset($vars['page'])   ? $vars['page']   : '';
 	$refer  = isset($vars['refer'])   ? $vars['refer']   : $page;
@@ -331,7 +328,7 @@ function plugin_edit_write()
 	}
 	if ($notimeupdate > 1 && $notimestamp && ! pkwk_login($vars['pass'])) {
 		// Enable only administrator & password error
-		$retvars['body']  = '<p><strong>' . $qm->m['fmt_msg_invalidpass'] . '</strong></p>' . "\n";
+		$retvars['body']  = '<p><strong>' . __('パスワードが間違っています。') . '</strong></p>' . "\n";
 		$retvars['body'] .= edit_form($page, $msg, $digest, FALSE);
 		return $retvars;
 	}
