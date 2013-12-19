@@ -18,38 +18,66 @@
  *     #h1(subject,block) wrapped by .page-header block
  *   
  */
+
+function plugin_h1_inline()
+{
+	$args = func_get_args();
+	
+	$title = array_pop($args);
+
+	return plugin_h1_body($title);
+}
+
 function plugin_h1_convert()
 {
-	static $id = 0;
-	$id++;
-	
 	$args = func_get_args();
+	
+	// まず body を取得
+	$body = array_pop($args);
 
-	if (count($args) > 1)
+	if (count($args) > 0)
 	{
-		$subtitle = array_pop($args);
+		//引数と複数行部分が同時にある場合、
+		//それぞれタイトルとサブタイトルとする
+		
 		$title = convert_html(join(',', $args), TRUE);
-		$class_name = 'page-header';
+		$subtitle = convert_html($body);
 	}
 	else
 	{
-		$subtitle = '';
-		$title = array_pop($args);
-		$class_name = '';
+		//複数行のみであれば、1行目をタイトル、
+		//2行目以降をサブタイトルとする
+		
+		$lines = explode("\r", $body);
+		$title = convert_html(array_shift($lines), TRUE);
+		$subtitle = convert_html(join("\n", $lines));
 	}
 	
-	$text = trim(convert_html($title, TRUE));
-	$subtitle = convert_html($subtitle);
-	
-	$html = <<<EOD
-		<div class="{$class_name}">
-			<h1 id="orgm_h1_{$id}">{$title}</h1>
-			{$subtitle}
-		</div>
+	return plugin_h1_body($title, $subtitle);
+}
+
+function plugin_h1_body($title, $subtitle = '')
+{
+	static $id = 0;
+	$id++;
+
+	if ($subtitle === '')
+	{
+		$html = '<h1 id="haik_h1_'.$id.'">'. $title.'</h1>' . "\n";
+	}
+	else
+	{
+		$html = <<< EOD
+<div class="page-header">
+	<h1 id="haik_h1_{$id}">{$title}</h1>
+	{$subtitle}
+</div>
 EOD;
-	
+	}
+
 
 	return $html;
+
 }
 
 /* End of file h1.inc.php */
