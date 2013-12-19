@@ -1,0 +1,29 @@
+<div class="container">
+	
+	<div class="page-header">
+		<h2><?php echo h($title) ?></h2>
+	</div>
+
+	<div>
+		<p>アイキャッチの移行処理を行います。</p>
+		<form action="<?php echo h($script)?>">
+			<input type="hidden" name="phase" value="move">
+			<input type="hidden" name="cmd" value="app_config_eyecatch">
+			<input type="submit" class="btn btn-primary" value="<?php _e('移行する') ?>">
+		</form>
+	</div>
+
+	<br>
+	<table class="table">
+		<thead>
+			<tr>
+				<th><?php _e('アイキャッチを設置しているページ'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($pages as $page) :?>
+			<tr><td><?php echo h($page)?></td></tr>
+			<?php endforeach;?>
+		</tbody>
+	</table>
+</div>
