@@ -385,9 +385,6 @@ $(document).ready(function(){
 				case 'h'://top
 					location.href = ORGM.baseUrl;
 					break;
-				case 'i'://eyecatch
-					if (ORGM.page.length > 0) location.href = ORGM.links.eyecatch;
-					break;
 				case 'l'://page list
 					location.href = ORGM.links.filelist;
 					break;
@@ -827,7 +824,6 @@ $(document).ready(function(){
 	
 	// !特定のリンクにホバーで強調
 	var links = {
-		eyecatchlink: "#orgm_eyecatch",
 		SiteNavigatorLink: "#orgm_nav ul",
 		SiteFooterLink: "#orgm_footer",
 		MenuBarLink: "#orgm_menu"

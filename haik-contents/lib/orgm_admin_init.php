@@ -234,10 +234,6 @@ EOS;
 		
 		$tools['editlink']['sub'] = array_merge(array_slice($tools['editlink']['sub'], 0, 4), $subitems, array_slice($tools['editlink']['sub'], 4));
 	}
-	if (isset($style_config['eyecatch']) && ! $style_config['eyecatch'])
-	{
-		unset($tools['editlink']['sub']['eyecatchlink']);
-	}
 	if ($_page === $defaultpage) {
 		unset($tools['editlink']['sub']['deletelink']);
 	}

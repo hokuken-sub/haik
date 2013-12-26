@@ -41,7 +41,6 @@ $config = array (
     'start' => 1,
     'login' => 1,
     'admin' => 1,
-    'eyecatch' => 1,
     'nav' => 1,
     'menu' => 1,
   ),

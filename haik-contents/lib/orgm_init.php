@@ -31,45 +31,6 @@ if ($logo_img_path !== '')
 
 $qt->setv('logo', '<a href="'.h($_LINK['top']).'" class="navbar-brand'.$logo_class.'">'.$logo_cnts.'</a>'."\n");
 
-
-// ! アイキャッチ
-if (isset($style_config['eyecatch']) && $style_config['eyecatch'] && isset($page_meta['eyecatch']) && $page_meta['eyecatch'])
-{
-	$eyecatch = create_eyecatch($page_meta['eyecatch']);
-	$qt->setv('eyecatch', $eyecatch);
-	
-	if ($page_meta['eyecatch']['background'])
-	{
-		$style = "\n\t" . '<style id="orgm_eyecatch_style">'."\n\t\t".'#orgm_eyecatch > * {' . "\n";
-		foreach ($page_meta['eyecatch']['background'] as $name => $value)
-		{
-			if ($name == 'image' && $value != 'none')
-			{
-				$value = get_file_path($value);
-				$value = 'url("'.h($value).'")';
-			}
-			else if ($name == 'color' && $value == '')
-			{
-				continue;
-			}
-			else
-			{
-				$value = h($value);
-			}
-			$style .= "\t\t\t" . 'background-'.h($name). ': '. $value. ';' . "\n";
-		}
-		$style .= "\t\t".'}'."\n";
-		
-		if (isset($page_meta['eyecatch']['height']) && $page_meta['eyecatch']['height'] != '')
-		{
-			$style .= "\t\t#orgm_eyecatch .carousel .item{\n\t\t\t" . 'height: '. $page_meta['eyecatch']['height']. "px;\n\t\t}\n";
-		}
-		
-		$style .= "\t</style>\n";
-		$qt->appendv('plugin_head', $style);	
-	}
-}
-
 // カスタム背景
 if (isset($style_config['textures']['custom']) 
 	&& isset($style_custom_bg['filename'])

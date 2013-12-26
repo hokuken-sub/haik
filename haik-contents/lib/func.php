@@ -1756,13 +1756,6 @@ function get_admin_tools($page)
 			'visible'=> TRUE,
 			'right'  => TRUE,
 			'sub'    => array(
-				'eyecatchlink' => array(
-					'name'   => __('アイキャッチ編集'),
-					'link'   => $_LINK['eyecatch'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
 				'pageinfolink' => array(
 					'name'   => __('ページの詳細設定'),
 					'link'   => '#orgm_meta_customizer',
@@ -2199,81 +2192,7 @@ function get_plugin_list()
 	return $plugins;
 }
 
-/**
- * アイキャッチ
- */
-function create_eyecatch($data)
-{
-	global $style_name;
-	
-	$html = '';
-	
-	$style_config = style_config_read($style_name);
-	
-	if ( ! isset($style_config['eyecatch']) OR ! $style_config['eyecatch']) return '';
 
-	if ($data['images'] && is_array($data['images']))
-	{
-		$tmpl = $style_config['eyecatch'];
-		$wrap_tmpl = SKIN_DIR . $style_name . '/' . $tmpl['wrap'];
-		$item_tmpl = SKIN_DIR . $style_name . '/' . $tmpl['item'];
-		
-		$wrap = file_exists($wrap_tmpl) ? file_get_contents($wrap_tmpl) : '<div class="carousel slide"><div class="carousel-inner">#{$items}</div></div>';
-		$item = file_exists($item_tmpl) ? file_get_contents($item_tmpl) : '<div class="item#{$active}">#{$image}<div class="carousel-caption"><h1 style="#{title_color}#{title_size}">#{$title}</h1><div style="#{content_color}#{content_size}">#{$content}</div></div></div>';
-
-		$fit = (count($data['images']) === 1 && file_exists($data['images'][0]['image'])) ? 'fit' : '';
-		$single = (count($data['images']) === 1) ? 'single' : '';
-
-		$active = TRUE;
-		$items_html = '';
-		$indicators_html = '';
-		foreach ($data['images'] as $i => $_the)
-		{
-			$img_tag = '';
-			$indicators_active = '';
-			if (file_exists($_the['image']))
-			{
-				$img_tag = '<img src="'. h($_the['image']) .'" alt="">';
-			}
-
-			$title = convert_html($_the['title'], TRUE);
-			$title_color = (isset($_the['title_color']) && $_the['title_color'] != '') ? 
-					h('color:'.$_the['title_color'].';') : '';
-			$title_size = '';
-			if (isset($_the['title_size']) && $_the['title_size'] != '')
-			{
-				$title_size = 'font-size: '.(is_numeric($_the['title_size']) ? $_the['title_size'].'px' : h($_the['title_size'])). ';';
-			}
-
-			$content = convert_html($_the['content']);
-			$content_color = (isset($_the['content_color']) && $_the['content_color'] != '') ? 
-					h('color:'.$_the['content_color'].';') : '';
-
-			$content_size = '';
-			if (isset($_the['content_size']) && $_the['content_size'] != '')
-			{
-				$content_size = 'font-size: '. (is_numeric($_the['content_size']) ? $_the['content_size'].'px' : h($_the['content_size'])). ';';
-			}
-
-			$items_html .= str_replace(
-array('#{$image}','#{$title}','#{$title_color}','#{$title_size}','#{$content}','#{$content_color}','#{$content_size}','#{$active}'), 	array($img_tag,$title,$title_color,$title_size,$content,$content_color,$content_size,($active ? ' active' : '')),
-$item
-			);
-			$active = FALSE;
-			
-			if ($i == 0) {
-				$indicators_active = ' class="active"';
-			}
-			
-			$indicators_html .= '<li data-target="#orgm_eyecatch .eyecatch" data-slide-to="'.$i.'"'.$indicators_active.'"></li>';
-		}
-		
-		$html = str_replace(array('#{$items}', '#{$single}', '#{$fit}', '#{$indicators}'), array($items_html, $single, $fit, $indicators_html), $wrap);
-	}
-
-	return $html;
-	
-}
 function get_bs_style($color, $type = 'btn')
 {
 	$class = '';

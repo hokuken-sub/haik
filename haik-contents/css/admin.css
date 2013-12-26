@@ -8,7 +8,6 @@ html, body {
 	position: relative;
 }
 
-#orgm_eyecatch.highlight,
 #orgm_nav ul.highlight,
 #orgm_footer.highlight,
 #orgm_menu.highlight,
@@ -16,7 +15,6 @@ html, body {
 	position: relative;
 }
 
-#orgm_eyecatch.highlight:after,
 #orgm_nav ul.highlight:after,
 #orgm_footer.highlight:after,
 #orgm_menu.highlight:after,

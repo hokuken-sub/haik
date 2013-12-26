@@ -68,7 +68,6 @@ function catbody($title, $page, $body)
 	$_LINK['copy']     = "$script?plugin=copy&refer=$r_page";
 	$_LINK['diff']     = "$script?cmd=diff&page=$r_page";
 	$_LINK['edit']     = "$script?cmd=edit&page=$r_page";
-	$_LINK['eyecatch'] = "$script?cmd=eyecatch&page=$r_page";
 	$_LINK['filelist'] = "$script?cmd=filelist&refer=$r_page";
 	$_LINK['freeze']   = "$script?cmd=freeze&page=$r_page";
 	$_LINK['help']     = "$script?" . rawurlencode('Help');

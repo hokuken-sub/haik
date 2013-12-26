@@ -30,16 +30,12 @@ function plugin_intro_set()
 	global $intro_flags, $vars, $script, $site_nav, $menubar;
 	$qt = get_qt();
 	
-	//admin, eyecatch, nav, menu
+	//admin, nav, menu
 	if (is_login())
 	{
 		if ($vars['cmd'] === 'read' && $intro_flags['admin'])
 		{
 			$json = plugin_intro_step_admin();
-		}
-		else if ($vars['cmd'] === 'eyecatch' && $intro_flags['eyecatch'])
-		{
-			$json = plugin_intro_step_eyecatch();
 		}
 		else if ($vars['cmd'] === 'edit' && $vars['page'] === $site_nav && $intro_flags['nav'])
 		{
@@ -50,7 +46,7 @@ function plugin_intro_set()
 			$json = plugin_intro_step_menu();
 		}
 		else if ($vars['cmd'] === 'intro' && $vars['done']
-			&& in_array($vars['done'], array('admin', 'nav', 'eyecatch', 'menu')))
+			&& in_array($vars['done'], array('admin', 'nav', 'menu')))
 		{
 			$step_keys = explode(',', $vars['done']);
 			$steps = array_combine($step_keys, array_fill(0, count($step_keys), 0));
@@ -183,28 +179,7 @@ function plugin_intro_step_admin()
 	return $json;
 	
 }
-function plugin_intro_step_eyecatch()
-{
-	$step_name = 'eyecatch';
-	
-	$steps = array(
-		array(
-			'selector' => '.orgm-eyecatch-controls',
-			'intro' => __('<div class="row"><span class="col-sm-3 text-right">編集 :</span><span class="col-sm-9">アイキャッチの追加、編集</span></div><div class="row"><span class="col-sm-3 text-right">設定 :</span><span class="col-sm-9">背景、高さを設定</span></div>'),
-		),
-		array(
-			'selector' => '#toolbar_buttons',
-			'intro' => __('編集が完了したら、<br>「更新」をクリックして反映'),
-		),
-	);
 
-	$json = array(
-		'current' => $step_name,
-		'steps' => $steps
-	);
-
-	return $json;
-}
 function plugin_intro_step_nav()
 {
 	$step_name = 'nav';

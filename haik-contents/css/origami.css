@@ -455,12 +455,65 @@ select.form-control {
 	opacity: 0.25;
 }
 
-#orgm_eyecatch .carousel-caption {
-	color: #fff;
+.haik-section {
+
+}
+.haik-section[data-horizontal-align],
+.haik-section[data-vertical-align] {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.haik-section[data-horizontal-align] > div,
+.haik-section[data-vertical-align] > div {
+	display: table-cell;
 }
 
-#orgm_eyecatch .carousel-caption p {
-	color: inherit;
+.haik-section[data-background-image] {
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.haik-section[data-background-image][data-background-type=repeat] {
+	background-position: 0 0;
+	background-size: auto;
+	background-repeat: repeat;
+}
+
+.haik-section > div > div {
+	width: 100%;
+}
+
+.haik-section[data-horizontal-align=left] > div {
+	text-align: left;
+}
+.haik-section[data-horizontal-align=center] > div {
+	text-align: center;
+}
+.haik-section[data-horizontal-align=right] > div {
+	text-align: right;
+}
+
+.haik-section[data-vertical-align=top] > div {
+	vertical-align: top;
+}
+.haik-section[data-vertical-align=bottom] > div {
+	vertical-align: bottom;
+}
+.haik-section[data-vertical-align=middle] > div {
+	height: 100%;
+	vertical-align: middle;
+}
+
+.haik-section[data-height=page] {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.haik-section[data-height=page] > div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
 

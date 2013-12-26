@@ -99,7 +99,6 @@
 	margin-left: -30px;
 }
 
-body[data-intro-step=eyecatch] .introjs-tooltip,
 body[data-intro-step=menu]     .introjs-tooltip {
 	max-width: 400px;
 	min-width: 300px;
@@ -137,8 +136,7 @@ body.orgm-intro-root-admin .introjs-overlay {
 }
 
 body.orgm-intro-root-admin[data-intro-step=nav] .introjs-helperLayer,
-body.orgm-intro-root-admin[data-intro-step=admin] .introjs-helperLayer,
-body.orgm-intro-root-admin[data-intro-step=eyecatch] .introjs-helperLayer {
+body.orgm-intro-root-admin[data-intro-step=admin] .introjs-helperLayer {
 	background-color: rgba(0,0,0,0);
 	border-style: none;
 	box-shadow: none;
