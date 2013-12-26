@@ -50,7 +50,7 @@ function plugin_h1_convert()
 		
 		$lines = explode("\r", $body);
 		$title = convert_html(array_shift($lines), TRUE);
-		$subtitle = convert_html(join("\n", $lines));
+		$subtitle = trim(convert_html(join("\n", $lines)));
 	}
 	
 	return plugin_h1_body($title, $subtitle);
