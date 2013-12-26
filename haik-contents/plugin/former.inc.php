@@ -1,8 +1,8 @@
 <?php
 /**
- *   eyecatch setting
+ *   Form setting Plugin
  *   -------------------------------------------
- *   eyecatch.inc.php
+ *   former.inc.php
  *
  *   Copyright (c) 2012 hokuken
  *   http://hokuken.com/
