@@ -86,12 +86,15 @@ function plugin_app_config_eyecatch_move_()
 				{
 					$title = $data['title'];
 					$content = $data['content'];
+					$content = str_replace("\n", '&br;', $content);
+					$content = str_replace("\r", '', $content);
+
 					$image = '';
-					if (isset($data['image']))
+					if (isset($data['image']) && $data['image'] != '' && $data['image'] != 'none')
 					{
 						$image = basename($data['image']);
 					}
-					else if (isset($meta['background']['image']))
+					else if ($meta['background'] != 'false' && isset($meta['background']['image']) && $meta['background']['image'] != '' && $meta['background']['image'] != 'none')
 					{
 						$image = basename($meta['background']['image']);
 					}
@@ -103,33 +106,38 @@ function plugin_app_config_eyecatch_move_()
 				
 				$height = '320';
 				// height
-				if (isset($meta['height']))
+				if (isset($meta['height']) && $meta['height'] != '')
 				{
 					$options[] = $height = $meta['height'];
-					
 				}
 
-				$options = array_marge($options, plugin_app_config_eyecatch_get_bgoption($meta));
+				$options = array_merge($options, plugin_app_config_eyecatch_get_bgoption($meta));
 
 				$slides = join("\n", $slides);
 				$options = join(',', $options);
 
-				$slides = "#slides({$height}){{\n".$slides."\n}}\n";
-				$eyecatch_str = "#eyecatch({$options}){{{\n{$slides}}}\n}}}\n";
+				$slides = "#slide({$height}){{\n".$slides."\n}}\n";
+				$eyecatch_str = "#eyecatch({$options}){{{\n{$slides}\n}}}\n";
 			}
 			else
 			{
 				// eyecatchが1枚
 				// ! タイトル、サブタイトル色問題
 				$data = array_shift($meta['images']);
+
 				$title = trim($data['title']);
 				$title_str = '';
 				if ($title != '')
 				{
 					$title_op = array();
-					if (isset($data['title_size'])) $title_op[] = $data['title_size'];
-					if (isset($data['title_color'])) $title_op[] = $data['title_color'];
-					$title_str = "&h1{&deco(".join(',',$title_op)."){".$title."};};\n";
+					if (isset($data['title_size']) && $data['title_size'] != '') $title_op[] = $data['title_size'];
+					if (isset($data['title_color']) && $data['title_color'] != '' ) $title_op[] = $data['title_color'];
+					if (count($title_op) > 0)
+					{
+						$title = "&deco(".join(',',$title_op)."){".$title."};";
+					}
+					
+					$title_str = "&h1{{$title}};\n";
 				}
 				
 				$content = trim($data['content']);
@@ -137,7 +145,7 @@ function plugin_app_config_eyecatch_move_()
 				if ($content != '')
 				{
 					$content_op = array();
-					if (isset($data['content_size']))
+					if (isset($data['content_size']) && $data['content_size'] != '')
 					{
 						if (is_numeric($data['content_size']))
 						{
@@ -145,24 +153,29 @@ function plugin_app_config_eyecatch_move_()
 						}
 						$content_op[] = 'font-size:'.$data['content_size'];
 					}
-					if (isset($data['content_color'])) $title_op[] = 'color:'.$data['content_color'];
-					$content_str = "#cols(++++){{{\nSTYLE:".join(';', $content_op)."\n{$content}\n}}}\n";
+					if (isset($data['content_color']) && $data['content_color'] != '') $content_op[] = 'color:'.$data['content_color'];
+					if (count($content_op) > 0)
+					{
+						$content = "STYLE:".join(';', $content_op)."\n{$content}";
+					}
+					$content_str = "#cols(++++){{{\n{$content}\n}}}\n";
 				}
+
 				$options = array();
 
 				// image
-				if (isset($data['image']))
+				if (isset($data['image']) && $data['image'] != '' && $data['image'] != 'none')
 				{
 					$options[] = basename($data['image']);
 				}
-				else if (isset($meta['background']['image']))
+				else if ($meta['background'] != 'false' && isset($meta['background']['image']) && $meta['background']['image'] != '' && $meta['background']['image'] != 'none')
 				{
 					$options[] = basename($meta['background']['image']);
 				
 				}
 				
 				// height
-				if (isset($meta['height']))
+				if (isset($meta['height']) && $meta['height'] != '')
 				{
 					$options[] = $meta['height'];
 				}
@@ -173,10 +186,7 @@ function plugin_app_config_eyecatch_move_()
 				$eyecatch_str = "#eyecatch({$options}){{{{\n{$title_str}\n{$content_str}\n}}}}\n";
 			}
 
-//var_dump($eyecatch_str);
-
 			// ページに書込み
-/*
 			$str = get_source($page, TRUE, TRUE);
 			$str = $eyecatch_str.$str;
 			$datafile = get_filename($page);
@@ -188,14 +198,13 @@ function plugin_app_config_eyecatch_move_()
 			fputs($fp, $str);
 			flock($fp, LOCK_UN);
 			fclose($fp);
-*/
 
 			// metaからeyecatchを削除して保存
 			unset($conf['eyecatch']);
 			meta_write($page, $conf, NULL, FALSE);
 		}
 	}
-exit;
+
 	set_flash_msg('アイキャッチを移行しました。');
 	$redirect = isset($vars['refer']) ? $vars['refer'] : $script;
 	redirect($redirect);
@@ -223,6 +232,10 @@ function plugin_app_config_eyecatch_get_bgoption($meta)
 		{
 			$options[] = 'cover';
 		}
+	}
+	else
+	{
+		$options[] = 'cover';
 	}
 
 	return $options;
