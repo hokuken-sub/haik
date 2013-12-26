@@ -22,6 +22,7 @@ require_once(LIB_DIR . 'Unzip.php');
 
 define('APP_PACKAGE_URL_FORMAT', 'https://ensmall.net/gethaik/download.php?v=%s');
 define('APP_VERSION_URL', 'https://ensmall.net/gethaik/version');
+define('PLUGIN_APP_UPDATE_DEV_PACKAGE', FALSE); //if use dev package input package file name
 
 function plugin_app_update_init()
 {
@@ -433,7 +434,17 @@ function plugin_app_update_get_version()
 {
 	static $version;
 	
-	if ( ! isset($version)) $version = file_get_contents(APP_VERSION_URL);
+	if ( ! isset($version))
+	{
+		if (PLUGIN_APP_UPDATE_DEV_PACKAGE !== FALSE)
+		{
+			$version = PLUGIN_APP_UPDATE_DEV_PACKAGE;
+		}
+		else
+		{
+			$version = file_get_contents(APP_VERSION_URL);
+		}
+	}
 	
 	return $version;
 }
