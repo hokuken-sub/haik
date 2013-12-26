@@ -79,19 +79,22 @@ function plugin_slide_convert()
 		
 		list($filename, $title, $caption) = explode(',', $line, 3);
 		$filepath = get_file_path($filename);
+
+		$image = '';
 		if (file_exists($filepath))
 		{
 			list($_width, $_height) = getimagesize($filepath);
 			$min_width = ($min_width !== FALSE) ? min($_width, $min_width) : $_width;
-			
-			$h = $title ? '<h3 class="no-toc">'.h($title).'</h3>' : '';
-			$p = $caption ? convert_html($caption) : '';
-			
-			$block = ($h OR $p);
+			$image = '<img src="'.$filepath.'" alt="">';
+		}
+		$h = $title ? '<h3 class="no-toc">'.h($title).'</h3>' : '';
+		$p = $caption ? convert_html($caption) : '';
+		
+		$block = ($h OR $p);
 
-			$items[] = '
+		$items[] = '
 		<div class="item'.($cnt ? '' : ' active'). $item_class. '"'. ($item_height ? ' style="max-height:'.h($item_height).'px;"' : '').'>
-			<img src="'.$filepath.'" alt="">
+			'.$image.'
 			<div class="'. ($block ? 'carousel-caption' : '') .'">
 			'.$h.'
 			'.$p.'
@@ -99,7 +102,6 @@ function plugin_slide_convert()
 		</div>
 ';
 			$cnt++;
-		}
 	}
 	
 	$plural = ($cnt > 1);
