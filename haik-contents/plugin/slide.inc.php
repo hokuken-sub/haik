@@ -20,6 +20,8 @@ function plugin_slide_convert()
 {
 	global $vars,$script;
 	static $slide_num = 0;
+
+
 	$qt = get_qt();
 
 	$args = func_get_args();
@@ -87,13 +89,22 @@ function plugin_slide_convert()
 			$min_width = ($min_width !== FALSE) ? min($_width, $min_width) : $_width;
 			$image = '<img src="'.$filepath.'" alt="">';
 		}
+		
 		$h = $title ? '<h3 class="no-toc">'.h($title).'</h3>' : '';
+
+		// アイキャッチの場合は、タイトルをh1にする
+		global $is_eyecatch;
+		if ($is_eyecatch)
+		{
+			$h = $title ? '<h1 class="no-toc">'.h($title).'</h1>' : '';
+		}
+
 		$p = $caption ? convert_html($caption) : '';
 		
 		$block = ($h OR $p);
 
 		$items[] = '
-		<div class="item'.($cnt ? '' : ' active'). $item_class. '"'. ($item_height ? ' style="max-height:'.h($item_height).'px;"' : '').'>
+		<div class="item'.($cnt ? '' : ' active'). $item_class. '"'. ($item_height ? ' style="max-height:'.h($item_height).'px;min-height:'.h($item_height).'px;"' : '').'>
 			'.$image.'
 			<div class="'. ($block ? 'carousel-caption' : '') .'">
 			'.$h.'
