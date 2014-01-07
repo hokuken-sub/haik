@@ -58,7 +58,7 @@ function plugin_section_convert()
 		{
 			$v_align = strtolower($mts[1]);
 		}
-		else if (preg_match('/\A(square|rect|repeat)\z/i', $arg, $mts))
+		else if (preg_match('/\A(cover|repeat)\z/i', $arg, $mts))
 		{
 			$type = strtolower($mts[1]);
 		}
