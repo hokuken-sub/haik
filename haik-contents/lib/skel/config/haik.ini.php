@@ -44,4 +44,5 @@ $config = array (
     'nav' => 1,
     'menu' => 1,
   ),
+  'eyecatch_converted' => 1,
 );

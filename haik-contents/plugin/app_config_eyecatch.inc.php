@@ -60,12 +60,157 @@ function plugin_app_config_eyecatch_action()
 	return array('msg' => $title, 'body' => $body);
 }
 
+
+function plugin_app_config_eyecatch_set_body()
+{
+	global $script, $vars, $eyecatch_converted, $whatsnew;
+
+	if (isset($eyecatch_converted) && $eyecatch_converted)
+	{
+		return;
+	}
+	
+	$_page = isset($vars['page']) ? $vars['page'] : '';
+
+	//一般アクセス時には実行しない
+	if ((is_page($_page) && ! check_editable($_page, FALSE, FALSE)) OR ! is_login())
+	{
+		return;
+	}
+
+	// 管理画面の時は、実行しない
+	if ($vars['cmd'] !== 'read')
+	{
+		return;
+	}
+
+	$pages = array();
+	$files = glob(META_DIR . '*.php');
+	foreach ($files as $file)
+	{
+		$page = decode(basename($file, '.php'));
+		$meta = meta_read($page);
+		if (isset($meta['eyecatch']))
+		{
+			$pages[] = $page;
+		}
+	}
+	
+	// 1ページもない場合は、移行しない
+	if (count($pages) === 0)
+	{
+		//移行完了フラグを設定
+		plugin_app_config_eyecatch_set_converted();
+		return;
+	}
+	
+	$title = __('アイキャッチの移行');
+	$description = __('アイキャッチの移行を行います。');
+	
+	$qt = get_qt();
+	$r_page = urlencode($vars['page']);
+	
+	$tmpl_file = PLUGIN_DIR . 'app_config/eyecatch.html';
+	ob_start();
+	include($tmpl_file);
+	$body = ob_get_clean();
+
+	$qt->appendv('body_last', $body);
+	
+	$plugin_script = '
+<script>
+$(function(){
+
+	$("#app_config_eyecatch_proceed").on("submit", function(e){
+		e.preventDefault();
+		
+		$("input:submit", this).prop("disabled", true);
+		
+		var data = $(this).serialize();
+		
+		$.ajax(ORGM.baseUrl, {
+			type: "POST",
+			data: data,
+			dataType: "json"
+		}).then(
+			function(res){
+			
+				if (res.error) {
+					ORGM.notify(res.errorMessage, "danger");
+					return;
+				}
+				
+				$(".alert", $modal).fadeOut();
+				$(".proceed-notice", $modal).html(res.message);
+			
+				$(".eyecatch-page-list a.btn", $modal).each(function(){
+					var $self = $(this);
+					var timeout = Math.floor(Math.random() * 1000);
+					setTimeout(function(){
+						$self.removeClass("btn-info").addClass("btn-danger");
+					}, timeout);
+					
+					$self.on("click", function(){
+						if ($self.is(".opened")) return;
+						$self.removeClass("btn-danger").addClass("btn-success opened")
+							.prepend($("<span></span>", {class: "glyphicon glyphicon-ok"}))
+					});
+				});
+				
+			},
+			function(){
+				ORGM.notify("問題が発生しました。ページを再読み込みし、もう一度お試しください。", "danger")
+			}
+		).always(function(){
+			
+		});
+		
+		
+	});
+	var $modal = $("#orgm_eyecatch_converter").modal();
+	
+});
+</script>	
+';
+	
+	$qt->appendv('plugin_script', $plugin_script);
+}
+
 function plugin_app_config_eyecatch_move_()
 {
 	global $script, $vars;
 	
+	$conf = orgm_ini_read();
+	
 	// metaをチェック
 	$files = glob(META_DIR . '*.php');
+
+	// kawazとsemiの場合、textureの指定をチェック
+	$texture_path = '';
+	$texture_repeat = 'repeat';
+	$haikini = orgm_ini_read();
+	if (($haikini['style_name'] == 'kawaz' OR $haikini['style_name'] == 'semi') && $haikini['style_texture'] != '')
+	{
+		$style_path = SKIN_DIR.$haikini['style_name'];
+		$textures = array(
+			'hemp-light'   => $style_path.'/img/hemp-cloth-05.jpg',
+			'hemp-dark'    => $style_path.'/img/hemp-cloth-01.jpg',
+			'square'       => $style_path.'/img/square_bg.png',
+			'wood'         => $style_path.'/img/wood_pattern_rotate.png',
+			'rainbow'      => $style_path.'/img/rainbow_bg.jpg',
+		);
+		$texture_path = $textures[$haikini['style_texture']];
+		
+		if ( ! file_exists(UPLOAD_DIR.basename($texture_path)))
+		{
+			copy($texture_path, UPLOAD_DIR.basename($texture_path));
+		}
+		
+		if ($haikini['style_texture'] == 'rainbow')
+		{
+			$texture_repeat = 'cover';
+		}
+	}
 
 	foreach ($files as $file)
 	{
@@ -77,11 +222,22 @@ function plugin_app_config_eyecatch_move_()
 		{
 			$eyecatch_str = '';
 
+			// 背景画像の取得
+			$background_image = '';
+			if ($meta['background'] != 'false' && isset($meta['background']['image']) && $meta['background']['image'] != '' && $meta['background']['image'] != 'none')
+			{
+				$background_image = basename($meta['background']['image']);
+			}
+			
+			
+
+
 			// ! eyecatchプラグインの仕様に変更する
 			if (count($meta['images']) > 1)
 			{
 				// eyecatchが複数 → スライド
 				$slides = array();
+				
 				foreach ($meta['images'] as $data)
 				{
 					$title = $data['title'];
@@ -94,10 +250,15 @@ function plugin_app_config_eyecatch_move_()
 					{
 						$image = basename($data['image']);
 					}
-					else if ($meta['background'] != 'false' && isset($meta['background']['image']) && $meta['background']['image'] != '' && $meta['background']['image'] != 'none')
+					else if ($background_image != '')
 					{
-						$image = basename($meta['background']['image']);
+						$image = $background_image;
 					}
+					else if ($texture_path != '')
+					{
+						$image = basename($texture_path);
+					}
+					
 					$slides[] = "{$image},{$title},{$content}";
 				}
 				
@@ -116,7 +277,7 @@ function plugin_app_config_eyecatch_move_()
 				$slides = join("\n", $slides);
 				$options = join(',', $options);
 
-				$slides = "#slide({$height}){{\n".$slides."\n}}\n";
+				$slides = "#slide({$height},noindicator){{\n".$slides."\n}}\n";
 				$eyecatch_str = "#eyecatch({$options}){{{\n{$slides}\n}}}\n";
 			}
 			else
@@ -168,10 +329,14 @@ function plugin_app_config_eyecatch_move_()
 				{
 					$options[] = basename($data['image']);
 				}
-				else if ($meta['background'] != 'false' && isset($meta['background']['image']) && $meta['background']['image'] != '' && $meta['background']['image'] != 'none')
+				else if ($background_image != '')
 				{
-					$options[] = basename($meta['background']['image']);
-				
+					$options[] = $background_image;
+				}
+				else if ($texture_path != '')
+				{
+					$options[] = basename($texture_path);
+					$options[] = $texture_repeat;
 				}
 				
 				// height
@@ -204,10 +369,15 @@ function plugin_app_config_eyecatch_move_()
 			meta_write($page, $conf, NULL, FALSE);
 		}
 	}
-
-	set_flash_msg('アイキャッチを移行しました。');
-	$redirect = isset($vars['refer']) ? $vars['refer'] : $script;
-	redirect($redirect);
+	
+	//移行完了フラグを設定
+	plugin_app_config_eyecatch_set_converted();
+	
+	$json = array();
+	
+	$json['message'] = __('アイキャッチを移行しました。<br>下記の「<strong>アイキャッチを設置しているページ</strong>」の表示を確認して、問題があれば編集してください。<br><br><a href="#" class="btn btn-info" target="_blank">新しいアイキャッチについての解説はこちら <i class="glyphicon glyphicon-chevron-right"></i></a>');
+	
+	print_json($json);
 	exit;
 }
 
@@ -240,6 +410,14 @@ function plugin_app_config_eyecatch_get_bgoption($meta)
 
 	return $options;
 }
+
+function plugin_app_config_eyecatch_set_converted()
+{
+		// インストーラーを続けるため。。。
+		$conf = array('eyecatch_converted' => 1);
+		orgm_ini_write($conf);
+}
+
 
 /* End of file app_config_design.inc.php */
 /* Location: /haik-contents/plugin/app_config_design.inc.php */

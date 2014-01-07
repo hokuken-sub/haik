@@ -87,6 +87,11 @@ if ($is_editor OR ss_admin_check())
 	$qt->setjsv('page', $vars['page']);
 	$qt->setjsv('pageDigest', md5(get_source($_page, TRUE, TRUE)));
 	
+	
+	// アイキャッチの移行
+	if (exist_plugin('app_config_eyecatch'))
+		plugin_app_config_eyecatch_set_body();
+	
 
 	if (exist_plugin('filer'))
 		plugin_filer_set_iframe();

@@ -1,29 +1,53 @@
-<div class="container">
-	
-	<div class="page-header">
-		<h2><?php echo h($title) ?></h2>
+<div id="orgm_eyecatch_converter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eyecatch convert dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4><?php echo h($title) ?></h4>
+			</div>
+		
+			<div class="modal-body">
+
+				<div class="alert alert-info">
+					<div><b>注意事項</b></div>
+					<p>アイキャッチの移行を行う前に、必ずバックアップをしてください。</p>
+					<p>アイキャッチの移行プログラムでは、「ページメタデータ」を変更します。<br>「ページメタデータ」は必ずバックアップするようにしてください。</p>
+					<div>
+						<a href="<?php echo h($script).'?cmd=dump' ?>" class="btn btn-link" target="backup">&gt;&gt; バックアップへ</a>
+					</div>
+				</div>
+
+				<p class="proceed-notice">以下のページのアイキャッチの移行処理を行います。</p>
+
+				<table class="table eyecatch-page-list">
+					<thead>
+						<tr>
+							<th><?php _e('アイキャッチを設置しているページ'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($pages as $page) :?>
+						<tr>
+							<td>
+								<?php echo h($page)?>
+								<a href="<?php echo h(get_page_url($page))?>" class="btn btn-info btn-xs pull-right" target="page"><?php _e('確認')?></a>
+							</td>
+						</tr>
+						<?php endforeach;?>
+					</tbody>
+				</table>
+				
+			</div>
+		
+			<div class="modal-footer">
+				<form id="app_config_eyecatch_proceed" action="<?php echo h($script)?>" method="POST">
+					<input type="hidden" name="phase" value="move">
+					<input type="hidden" name="cmd" value="app_config_eyecatch">
+					<button class="btn btn-default" data-dismiss="modal"><?php _e('閉じる') ?></button>
+					<input type="submit" class="btn btn-primary" value="<?php _e('移行する') ?>">
+				</form>
+			</div>
+		</div>
 	</div>
 
-	<div>
-		<p>アイキャッチの移行処理を行います。</p>
-		<form action="<?php echo h($script)?>">
-			<input type="hidden" name="phase" value="move">
-			<input type="hidden" name="cmd" value="app_config_eyecatch">
-			<input type="submit" class="btn btn-primary" value="<?php _e('移行する') ?>">
-		</form>
-	</div>
-
-	<br>
-	<table class="table">
-		<thead>
-			<tr>
-				<th><?php _e('アイキャッチを設置しているページ'); ?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach($pages as $page) :?>
-			<tr><td><?php echo h($page)?></td></tr>
-			<?php endforeach;?>
-		</tbody>
-	</table>
 </div>
