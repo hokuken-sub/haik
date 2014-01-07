@@ -8,13 +8,10 @@
 	
 	<!-- Le styles -->
 	#{$bootstrap_css}
-
-
 	#{$style_css}
 	
 	#{$head_tag}
 	#{$plugin_head}
-	#{$user_head}
 	<link rel="stylesheet" type="text/css" title="" href="#{$style_path}css/dialogue.css">
                             
 </head>
@@ -46,7 +43,6 @@
 #{$admin_script}
 
 #{$plugin_script}
-#{$user_script}
 
 </body>
 </html>
