@@ -34,7 +34,7 @@ function plugin_section_convert()
 	$style    = 'default';//primary|info|success|warning|danger
 	$fullpage =  FALSE;//full height section; fit window size
 	
-	$relative  = FALSE;//position: relative
+	$relative  = TRUE;//position: relative
 	$container = TRUE;//FALSE to enable 'fit' option
 
 	$background_image = FALSE;
@@ -94,9 +94,9 @@ function plugin_section_convert()
 		{
 			$background_fix = TRUE;
 		}
-		else if ($arg === 'relative')
+		else if ($arg === 'static')
 		{
-			$relative = TRUE;
+			$relative = FALSE;
 		}
 		// eyecatch プラグインからの呼び出し時に自動的に付けられるオプション
 		else if ($arg === 'eyecatch')
