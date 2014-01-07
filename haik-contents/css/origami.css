@@ -523,6 +523,39 @@ select.form-control {
 	text-align: center;
 }
 
+.haik-section.haik-section-info {
+	background-color: #5BC0DE;
+	color: #fff;
+}
+.haik-section.haik-section-primary {
+	background-color: #428BCA;
+	color: #fff;
+}
+.haik-section.haik-section-success {
+	background-color: #5CB85C;
+	color: #fff;
+}
+.haik-section.haik-section-warning {
+	background-color: #F0AD4E;
+	color: #fff;
+}
+.haik-section.haik-section-danger {
+	background-color: #D9534F;
+	color: #fff;
+}
+
+#orgm_body .haik-section.haik-section-info h1,
+#orgm_body .haik-section.haik-section-primary h1,
+#orgm_body .haik-section.haik-section-success h1,
+#orgm_body .haik-section.haik-section-warning h1,
+#orgm_body .haik-section.haik-section-danger h1,
+#orgm_eyecatch .haik-section.haik-section-info h1,
+#orgm_eyecatch .haik-section.haik-section-primary h1,
+#orgm_eyecatch .haik-section.haik-section-success h1,
+#orgm_eyecatch .haik-section.haik-section-warning h1,
+#orgm_eyecatch .haik-section.haik-section-danger h1 {
+	color: #fff;
+}
 
 @-webkit-keyframes text-pulse {
 	from {
