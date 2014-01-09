@@ -82,7 +82,7 @@ function plugin_section_convert()
 		}
 		else if (preg_match('/\Aclass=(.+)\z/', $arg, $mts))
 		{
-			$additional_class .= $mts[1];
+			$additional_class .= ' ' . $mts[1];
 		}
 		else if (preg_match('/\Acolor=(.+)\z/', $arg, $mts))
 		{
@@ -182,8 +182,10 @@ function plugin_section_convert()
 
 	$html = <<< EOH
 <div {$attr_string}>
-	<div class="{$container_class}">
-		{$body}
+	<div>
+		<div class="{$container_class}">
+			{$body}
+		</div>
 	</div>
 </div>
 EOH;
