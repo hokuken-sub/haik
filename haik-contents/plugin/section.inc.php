@@ -37,6 +37,8 @@ function plugin_section_convert()
 	$relative  = TRUE;//position: relative
 	$container = TRUE;//FALSE to enable 'fit' option
 
+	$color = FALSE;//inherit
+	
 	$background_image = FALSE;
 	$background_fix   = FALSE;
 	$background_color = FALSE;//transparent
@@ -84,6 +86,10 @@ function plugin_section_convert()
 		}
 		else if (preg_match('/\Acolor=(.+)\z/', $arg, $mts))
 		{
+			$color = $mts[1];
+		}
+		else if (preg_match('/\Abgcolor=(.+)\z/', $arg, $mts))
+		{
 			$background_color = $mts[1];
 		}
 		else if ($arg === 'fit')
@@ -115,9 +121,13 @@ function plugin_section_convert()
 		$attrs['style'] .= 'position:relative;';
 	}
 	
+	if ($color)
+	{
+		$attrs['style'] .= 'color: ' . h($color) . ';';
+	}
 	if ($background_color)
 	{
-		$attrs['style'] .= 'background-color: ' . $background_color . ';';
+		$attrs['style'] .= 'background-color: ' . h($background_color) . ';';
 	}
 	if ($background_image)
 	{
