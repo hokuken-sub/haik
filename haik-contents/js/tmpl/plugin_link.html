@@ -1,0 +1,67 @@
+<div class="conainer">
+	<form action="" class="form-horizontal">
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">リンク先<br /></label>
+			<div class="col-sm-9">
+				<input type="text" name="linkto" placeholder="ページ名、またはURL" autocomplete="off" class="typeahead form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">リンク文字</label>
+			<div class="col-sm-9">
+				<input type="text" name="alias" placeholder="リンク文字を変更できます。" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">リンクの種類</label>
+			<div class="col-sm-9">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="radio-inline">
+							<input type="radio" name="type" value="link" checked><button type="button" class="btn btn-link btn-sm">リンク文字</button>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="type" value="primary"> <button type="button" class="btn btn-primary btn-sm">リンク文字</button>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="type" value="info"> <button type="button" class="btn btn-info btn-sm">リンク文字</button>
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="radio-inline">
+							<input type="radio" name="type" value="success"> <button type="button" class="btn btn-success btn-sm">リンク文字</button>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="type" value="danger"> <button type="button" class="btn btn-danger btn-sm">リンク文字</button>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="type" value="warning"> <button type="button" class="btn btn-warning btn-sm">リンク文字</button>
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="radio-inline">
+							<input type="radio" name="type" value="default"> <button type="button" class="btn btn-default btn-sm">リンク文字</button>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="type" value="theme"> <button type="button" class="btn btn-default btn-theme btn-sm" data-toggle="tooltip" title="このボタンは、デザイン毎に色が変わります">リンク文字</button>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group newwin">
+			<label for="" class="col-sm-3"></label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="newwin"> 新しいウィンドウで開く
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

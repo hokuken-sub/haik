@@ -1,0 +1,64 @@
+<div class="row">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">住所</label>
+			<div class="col-sm-9">
+				<input type="text" name="address" class="form-control input-sm" value="東京駅" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">タイトル</label>
+			<div class="col-sm-9">
+				<input type="text" name="label" value="東京駅" class="form-control input-sm" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">説明</label>
+			<div class="col-sm-9">
+				<input type="text" name="content" value="とても人が多いです。" class="form-control input-sm" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">横幅 x 高さ</label>
+			<div class="col-sm-9">
+				<div class="row">
+					<div class="input-group col-sm-5">
+						<span class="input-group-addon input-sm">横幅</span><input type="text" name="width" class="form-control input-sm" value="" placeholder="100%"><span class="input-group-addon input-sm">px</span>
+					</div>
+					<div class="form-group col-sm-1">x</div>
+					<div class="input-group col-sm-5">
+						<span class="input-group-addon input-sm">高さ</span><input type="text" name="height" class="form-control input-sm" value="" placeholder="300"><span class="input-group-addon input-sm">px</span>
+					</div>
+				</div>
+			<span class="help-block">※指定しない場合は、高さは300px、横幅は100%で表示されます。</span>
+		</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">リストの表示</label>
+			<div class="col-sm-9">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="list" value="list" checked />リストを表示する
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<hr>
+
+<div class="orgm-gmap">
+	<div id ="map_canvas" data-map-width="" data-map-height="170" data-map-zoom=""></div>
+	<div class="gmap-markers">
+		<ul>
+			<li data-mapping="m_1" data-lat="" data-lng="">
+				<div class="info-box">
+					<h5></h5>
+					<p></p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

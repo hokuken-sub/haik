@@ -109,6 +109,7 @@ if ($is_editor OR ss_admin_check())
 
 	$qt->setjsv('unloadConfirm', $unload_confirm? TRUE: FALSE);
 	$qt->setjsv('pluginCategories', get_plugin_list());
+	$qt->setjsv('pluginTemplateDir', JS_DIR . 'tmpl/');
 	
 	$toolbuttons = get_qhm_toolbuttons();
 	if ($vars['page'] !== $site_nav)

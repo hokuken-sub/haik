@@ -1,0 +1,66 @@
+<div class="container">
+	<p>表示設定</p>
+	<form action="" class="form-horizontal">
+		<div class="form-group">
+			<label for="" class="col-sm-4 control-label">高さ</label>
+			<div class="col-sm-8">
+				<div class="radio">
+					<label>
+						<input type="radio" name="height_type" value="auto" /> 自動
+					</label>
+				</div>
+				<div class="radio row">
+					<label class="col-sm-3">
+						<input type="radio" name="height_type" value="custom" checked> 固定する　
+					</label>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<input type="text" name="height" class="form-control input-sm" value="450"><span class="input-group-addon input-sm">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-4 control-label">横幅</label>
+			<div class="col-sm-8">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="fit" value="fit" checked /> 横幅いっぱいに表示にする
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">スライドボタン</label>
+			<div class="col-sm-8">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="slidebutton" value="slidebutton" checked /> 表示する
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<hr>
+
+<div class="container">
+	<p>スライド画像　<button type="button" class="btn btn-default btn-sm" data-slides-add>追加</button></p>
+	<div class="slidelist">
+		<div class="thumbnails row"></div>
+	</div>
+</div>
+
+<div class="partial-template" style="display:none">
+	<div class="col-sm-4">
+		<div class="thumbnail">
+			<a href="#" class="image" data-image>クリックで画像選択</a>
+			<div class="caption">
+				<span class="span-label"><input type="text" name="label" class="form-control" placeholder="タイトル" /></span>
+				<textarea rows="3" class="form-control" placeholder="画像の説明"></textarea>
+			</div>
+		</div>
+	</div>	
+</div>

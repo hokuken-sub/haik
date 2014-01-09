@@ -7,7 +7,7 @@
  *   http://hokuken.com/
  *   
  *   created  : 12/10/23
- *   modified : 13/06/20
+ *   modified : 14/01/08 add external template
  *   
  *   Description
  *   
@@ -50,7 +50,7 @@
 			var helper = new QHMPluginHelper(options.name, options);
 			helper.exec();
 		}
-	};	
+	};
 	
 	//Lorem Ipsum
 	QHMPluginHelper.lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -286,6 +286,18 @@
 		
 		disabled: false,
 		
+		getDialogTemplate: function(){
+			if (this.dialog && this.dialog.substr(0,9) === "external:") {
+				var helper = this;
+				return $.get(ORGM.pluginTemplateDir + this.dialog.substr(9), function(template){
+					helper.dialog = template;
+				});
+			}
+			else {
+				return $.Deferred().reject();
+			}
+		},
+		
 		showDialog: function() {
 			var helper = this;
 			this.onDialogShow();
@@ -299,7 +311,7 @@
 				"aria-hidden": "true"
 			});
 			this.dialogElement = $modal.get(0);
-
+			
 			$modal.addClass("modal orgm-plugin-modal")
 			.on("shown.bs.modal", function(){
 				if (typeof helper.focus === "string" && helper.focus.length > 0) {
@@ -313,17 +325,23 @@
 					.find("h3").text(this.label)
 				.end()
 			.end()
-				.find("div.modal-body")//.css("text-align", "left")
-				.append(this.dialog)
-			.end()
 				.find("div.modal-footer")
 				.append('<a href="#" class="btn btn-default modal-close"></a>')
 				.append('<a href="#" class="btn btn-primary modal-complete"></a>')
 					.find("a.modal-close").text(this.cancelCallback ? this.cancelLabel : this.closeLabel).click(function(e){e.preventDefault()})
 						.next().text(this.completeLabel).click(function(e){e.preventDefault()});
 			
-			this.onDialogOpen();
-			$modal.appendTo("body").modal();
+			var dialog = this.dialog;
+
+			this.getDialogTemplate()
+			.then(function(template){
+				dialog = template;
+			})
+			.always(function(){
+				$modal.find("div.modal-body").append(dialog);
+				helper.onDialogOpen();
+				$modal.appendTo("body").modal();
+			});
 			
 			$modal
 			.on("click", ".modal-close", function(){
@@ -374,10 +392,12 @@
 		exec: function() {
 			if (this.disabled) return;
 			
+			var helper = this;
 			if (this.dialog !== false) {
-				if (this.onStart() === false) return;
-		
-				this.showDialog();
+				$.when(this.onStart())
+				.done(function(res){
+					helper.showDialog();
+				});
 			}
 			else {
 				if (this.addable) {

@@ -1,0 +1,225 @@
+<div class="container">
+	<form action="" class="form-horizontal"> 
+
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">タイトル</label>
+			<div class="col-sm-9">
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="text" name="title" class="form-control input-sm">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">サブタイトル</label>
+			<div class="col-sm-9">
+				<div class="row">
+					<div class="col-sm-12">
+						<textarea name="subtitle" rows="2" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label">レイアウト</label>
+			<div class="col-sm-9">
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-default">
+						<input type="radio" name="align" value="left"><span class="glyphicon glyphicon-align-left"></span>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" name="align" value="center"><span class="glyphicon glyphicon-align-center"></span>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" name="align" value="right"><span class="glyphicon glyphicon-align-right"></span>
+					</label>
+				</div>
+		
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-default">
+						<input type="radio" name="valign" value="top" />
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar transparent"></span>
+						<span class="icon-bar transparent"></span>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" name="valign" value="middle" />
+						<span class="icon-bar transparent"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar transparent"></span>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" name="valign" value="bottom" />
+						<span class="icon-bar transparent"></span>
+						<span class="icon-bar transparent"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">高さ</label>
+			<div class="col-sm-9">
+				<div class="radio">
+					<div class="row">
+						<div class="col-sm-5">
+							<label><input type="radio" name="heighttype" value="height">高さを指定する</label>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<span class="input-group-addon">高さ</span>
+								<input type="text" name="height" class="form-control input-sm" placeholder="320px">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9">
+				<div class="radio">
+					<label><input type="radio" name="heighttype" value="page">縦幅を画面の高さにする</label>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">背景画像</label>
+			<div class="col-sm-9">
+				<div class="row">
+					<div class="col-sm-6">
+						<a href="#" class="image thumbnail text-center" data-image style="height:100px;line-height:100px;">クリックで画像選択</a>
+						<input type="hidden" name="image" value="" />
+					</div>
+					<div class="col-sm-6">
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input type="radio" name="bgtype" value="cover" />cover
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="bgtype" value="repeat" />repeat
+							</label>
+						</div>
+		
+						<div class="checkbox">
+							<label><input type="checkbox" name="fix" value="fix">画像を固定する</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">色設定</label>
+			<div class="col-sm-9">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="radio">
+							<label>
+								<input type="radio" name="colortype" value="custom" />自分で指定する
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="input-group">
+								<span class="input-group-addon">文字の色</span>
+								<input type="text" name="color" class="form-control input-sm">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<span class="input-group-addon">背景の色</span>
+								<input type="text" name="bgcolor" class="form-control input-sm">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="radio">
+							<label>
+								<input type="radio" name="colortype" value="theme" />テーマカラーを使う
+							</label>
+						</div>
+					</div>
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-primary">
+							<input type="radio" name="style" value="primary" />あお
+						</label>
+						<label class="btn btn-danger">
+							<input type="radio" name="style" value="danger" />あか
+						</label>
+						<label class="btn btn-success">
+							<input type="radio" name="style" value="success" />みどり
+						</label>
+						<label class="btn btn-warning">
+							<input type="radio" name="style" value="warning" />きいろ
+						</label>
+						<label class="btn btn-info">
+							<input type="radio" name="style" value="info" />みずいろ
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<hr>
+		
+		<div class="text-center">
+			<a href="#" data-toggle="collapse" data-target="#plugin_eyecatch_tec"><i class="glyphicon glyphicon-plus"></i> 高度な設定</a>
+		</div>
+
+		<div id="plugin_eyecatch_tec" class="collapse">
+			
+			<hr>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">カスタムクラス</label>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="text" name="classname" class="form-control input-sm">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-3 control-label">その他</label>
+				<div class="col-sm-9">
+					<div class="checkbox">
+						<label><input type="checkbox" name="fit" value="fit">横幅に余白を含めない</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-9">
+					<div class="checkbox">
+						<label><input type="checkbox" name="static" value="static">position: static</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<form>
+</div>

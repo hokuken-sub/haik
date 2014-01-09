@@ -1,0 +1,52 @@
+<div class="row" id="orgm_plugin_modal" data-plugin="video">
+	<form action="" class="form-horizontal">
+		<div class="form-group">
+			<div class="col-sm-12">
+				<div class="radio">
+					<label class="col-sm-5">
+						<input type="radio" name="type" value="myfile" checked> 自分の動画
+					</label>
+					<div class="col-sm-7">
+						<div class="input-group">
+							<span class="input-group-addon input-sm">動画ファイル</span>
+							<input type="text" name="file" class="form-control input-sm" placeholder="クリックして動画選択" class="form-control input-sm">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon input-sm">ポスター画像</span>
+							<input type="text" name="poster" placeholder="クリックして画像を選択" class="form-control input-sm">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<div class="radio">
+					<label class="col-sm-5">
+						<input type="radio" name="type" value="embed"> YouTubeまたはVimeo
+					</label>
+					<div class="col-sm-7">
+						<input type="text" name="embedurl" class="form-control input-sm" placeholder="YouTubeまたはVimeoのURL">
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="form-group col-sm-12">
+			<label class="col-sm-3 control-label">横幅 × 高さ</label>
+			<div class="col-sm-9">
+				<div class="input-group col-sm-5">
+					<span class="input-group-addon input-sm">横幅</span>
+					<input type="text" name="width" class="form-control input-sm" value="500">
+					<span class="input-group-addon input-sm">px</span>
+				</div>
+				<div class="col-sm-1 form-group">×</div>
+				<div class="input-group col-sm-5">
+					<span class="input-group-addon input-sm">高さ</span>
+					<input type="text" name="height" class="form-control input-sm" value="281">
+					<span class="input-group-addon input-sm">px</span>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

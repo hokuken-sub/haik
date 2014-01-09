@@ -3,23 +3,21 @@
  *   -------------------------------------------
  *   js/qhm_plugins.js
  *   
- *   Copyright (c) 2012 hokuken
+ *   Copyright (c) 2014 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 12/10/25
- *   modified :
+ *   modified : 14/01/09
  */
 
 if (typeof ORGM == "undefined") {
 	ORGM = {};
 }
 
-
 // !plugin を全て初期化
 ORGM.plugins = {
 	
 	// ! cols シリーズ
-	
 	cols: {
 		label: "段組み",
 		format: "#cols{{{{\n{text}\n}}}}\n",
@@ -75,14 +73,7 @@ ORGM.plugins = {
 				}
 			}
 		},
-		dialog: '<div class="row"><form action="" class="form-horizontal"><div class="form-group"><div class="col-sm-10 col-sm-offset-1">' + 
-				'<label class="radio-inline"><input type="radio" name="type" value="equal" checked> 均等</label></div></div>' +
-				'<div class="form-group"><div class="col-sm-2 col-sm-offset-1"><label class="radio-inline"><input type="radio" name="type" value="custom"> 指定</label></div>' +
-				'<div class="col-sm-9"><input type="text" name="leftcol" class="col-sm-12 slider"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10 col-sm-offset-1">' + 
-				'<label class="checkbox-inline"><input type="checkbox" name="template" value="1" checked> 詳細な見本を挿入</label></div></div>'+
-				'</form>'+
-				'<hr><div class="container previewarea"></div></div>',
+		dialog: 'external:plugin_cols2.html',
 
 		onStart: function(){
 		},
@@ -173,11 +164,7 @@ ORGM.plugins = {
 				text: "\n{dummy1}\n* 見出し\n本文\n\n//↓ ==== は段組みの区切り線です。消さないでください。\n====\n\n{dummy2}\n* 見出し\n本文\n\n====\n\n{dummy3}\n* 見出し\n本文\n"
 			}
 		},
-		dialog: '<div class="row"><form action="" class="form-horizontal">' +
-				'<div class="row"><div class="col-sm-10 col-sm-offset-1">' + 
-				'<label class="checkbox inline"><input type="checkbox" name="template" value="1" checked> 詳細な見本を挿入</label></div></div>'+
-				'</form>'+
-				'<hr><div class="container previewarea"></div></div>',
+		dialog: 'external:plugin_cols3.html',
 		onStart: function(){
 		},
 		onDialogOpen: function(){
@@ -235,11 +222,7 @@ ORGM.plugins = {
 				text: "\n{dummy1}\n* 見出し\n本文\n\n//↓ ==== は段組みの区切り線です。消さないでください。\n====\n\n{dummy2}\n* 見出し\n本文\n\n====\n\n{dummy3}\n* 見出し\n本文\n\n====\n\n{dummy4}\n* 見出し\n本文\n"
 			}
 		},
-		dialog: '<div class="row"><form action="" class="form-horizontal">' +
-				'<div class="row"><div class="col-sm-10 col-sm-offset-1">' + 
-				'<label class="checkbox inline"><input type="checkbox" name="template" value="1" checked> 詳細な見本を挿入</label></div></div>'+
-				'</form>'+
-				'<hr><div class="container previewarea"></div></div>',
+		dialog: 'external:plugin_cols4.html',
 		onStart: function(){
 		},
 		onDialogOpen: function(){
@@ -289,7 +272,8 @@ ORGM.plugins = {
 			
 		}
 
-	},	colsGolden: {
+	},
+	colsGolden: {
 		label: "黄金比段組み",
 		format: "#cols(7,5){{{{\n{text}\n}}}}\n",
 		options: {defval: "\n====\n"},
@@ -305,7 +289,179 @@ ORGM.plugins = {
 			return ORGM.plugins.cols.onStart.call(this);
 		},
 	},
-	
+	// !アイキャッチ
+	eyecatch: {
+		label: "アイキャッチ",
+		format: "${br}#eyecatch(${options}){{{${br}${title}${br}${subtitle}${br}}}}${br}",
+		options: {
+			filer: {
+				options: {search_word: ":image", select_mode: "exclusive"}
+			}
+		},
+		focus: false,
+		dialog: "external:plugin_eyecatch.html",
+		onStart: function(){},
+		onDialogOpen: function(){
+			var $dialog = $(this.dialogElement)
+				,exnote = $(this.textarea).data("exnote")
+				,$filer = $("#orgm_filer_selector")
+				,self = this;
+			
+			var text = exnote.getSelectedText().replace(/^\s+|\s+$/, ""),
+				lines = text.split("\n"),
+				title = lines[0].replace(/^#(.+?)\{{2,}$/, "$1").replace(/^&h1\{(.*)\};$/, "$1"),
+				subtitle = lines.join("\n");
+			
+			$dialog.on('click', '[data-image]', function(){
+				$image = $(this);
+				
+				$filer.find("iframe").data(self.options.filer.options);
+
+				$filer
+				.on("show.bs.modal", function(){
+					$(document).on("selectFiles.pluginEyecatch", function(e, selectedFiles){
+						if (selectedFiles.length > 0) {
+							$image.css('background-image', 'url('+selectedFiles[0].filepath+')');
+							$('input[name=image]',$dialog).val(selectedFiles[0].filename);
+							if (! $('input[name=bgtype]:checked').length ||
+									$('input[name=bgtype]:checked').val() == 'cover') {
+								$('input[name=bgtype][value=cover]').click();
+							}
+							$filer.modal("hide");
+						}
+					});
+				})
+				.on("hidden.bs.modal", function(){
+					$(document).off("selectFiles.pluginEyecatch");
+				});
+
+				$filer.data("footer", "").modal();
+			})
+			.on('change', 'input[name=bgtype]', function(){
+				var $image = $('[data-image]');
+
+				if ($(this).val() == 'cover') {
+					$image.css('background-size', 'cover');
+					$image.css('background-repeat', 'no-repeat');
+				}
+				else {
+					$image.css('background-size', '20px 20px');
+					$image.css('background-repeat', 'repeat');
+				}
+			})
+			.on('change', 'input[name=colortype]', function(){
+
+				if ($(this).val() == 'theme') {
+					$('input[name=style]', $dialog).prop('disabled', false).parent().removeClass('disabled');
+					$('input[name$=color]', $dialog).prop('disabled', true);
+				}
+				else {
+					$('input[name=style]', $dialog).prop('disabled', true).parent().addClass('disabled');
+					$('input[name$=color]', $dialog).prop('disabled', false);
+				}
+			});
+
+			$("input:text[name=title]", $dialog).val(title);
+			$("textarea[name=subtitle]", $dialog).val(subtitle)
+			.exnote({
+				css: {
+					height: "3.5em",
+					fontSize: "14px"
+				}
+			});
+			
+			$("input:text[name$=color]", $dialog).colorpalette();
+			
+			setTimeout(function(){
+				$("input[name=heighttype][value=height]", $dialog).click();
+				$("input[name=colortype][value=custom]", $dialog).click();
+			}, 25);
+
+
+		},
+		onComplete: function(){
+			var $dialog = $(this.dialogElement)
+				,exnote = $(this.textarea).data("exnote")
+				,data = {br: "\n"}, options = {};
+			
+			var formdata = $dialog.find('form').serializeArray();
+			console.log(formdata);
+			
+			$(formdata).each(function(i, option){
+				var key = option.name,
+					value = option.value;
+
+				switch(key) {
+					case 'title':
+						data[key] = (value.length > 0) ? value : '';
+						if (data[key].length > 0) {
+							data[key] = '&h1{'+ data[key] +'};'
+						}
+						break;
+					case 'subtitle':
+						data[key] = (value.length > 0) ? value : '';
+						break;
+					case 'color':
+					case 'bgcolor':
+						if (value.length > 0) {
+							options[key] = key+'='+value;
+						}
+						break;
+					case 'height':
+					case 'image':
+						if (value.length > 0) {
+							options[key] = value;
+						}
+						break;
+					case 'classname':
+						if (value.length > 0) {
+							options[key] = 'class='+value;
+						}
+						break;
+					default:
+						options[key] = value;
+						break;
+				}
+			});
+			console.log(options);
+			
+			if (typeof options.heighttype != 'undefined') {
+				if (options.heighttype != 'page'){
+					delete options.heighttype;
+				}
+			}
+			if (typeof options.colortype != 'undefined') {
+				delete options.colortype;
+			}
+			
+			if (typeof options.image != "undefined") {
+				if (typeof options.bgtype != 'undefined') {
+					if (options.bgtype != 'repeat') {
+						delete options.bgtype;
+					}
+				}
+			}
+			else {
+				if (typeof options.bgtype != 'undefined') {
+					delete options.bgtype;
+				}
+				if (typeof options.fix != 'undefined') {
+					delete options.fix;
+				}
+			}
+			
+			
+			data.options = $.map(options, function(value){
+				return value;
+			}).join(",");
+
+			var value = $.tmpl(this.format, data).text();
+
+			exnote.moveToNextLine();			
+			this.insert(value);
+
+		}
+	},
 	// !見出し
 	h1: {
 		label: "#h1(先頭見出し)",
@@ -322,8 +478,6 @@ ORGM.plugins = {
 				length: this.value.length - 6
 			};
 		}
-
-	
 	},
 	header: {
 		label: "見出し",
@@ -399,7 +553,7 @@ ORGM.plugins = {
 	contents: {
 		label: "目次",
 		value: "#contents\n",
-		dialog: '<p>例）</p><div class="orgm-toc" data-level="2" data-selector="h2,h3,h4" data-target="#orgm_body" data-flat="0"><ul><li><a href="#content_1_0">はじめまして</a><ul><li><a href="#content_1_1">お店の紹介</a></li><li><a href="#content_1_2">お店の地図</a></li><li><a href="#content_1_3">連絡先</a></li></ul></li></ul></div><p>※ もくじは見出しを基に作られます。</p>',
+		dialog: 'external:plugin_contents.html',
 		onStart: function(){
 		},
 		onDialogOpen: function(){
@@ -415,7 +569,7 @@ ORGM.plugins = {
 	comment: {
 		label: "コメント欄",
 		value: "#comment\n",
-		dialog: '<div class="container orgm-comment"><p>以下のようなコメント欄を設置します</p><form class="form-dummy"><div class="panel"><div class="comment-body"><textarea type="text" rows="3" name="msg" class="form-control" placeholder="コメントをどうぞ"></textarea></div><div class="panel-footer comment-footer form-inline"><input type="text" name="name" class="form-control input-sm pull-left" value="" placeholder="お名前" style="width:auto"><span>認証コード(7318)</span>&nbsp;<input type="text" name="authcode" class="form-control input-sm" value="" size="4" style="width:auto;">&nbsp;&nbsp;<input type="button" name="comment" class="btn btn-primary btn-sm" value="コメントの挿入"></div></div></form></div>',
+		dialog: 'external:plugin_comment.html',
 		onStart: function(){
 			
 		},
@@ -430,42 +584,6 @@ ORGM.plugins = {
 			this.insert(this.value);
 		}
 	},
-
-	// !RSSの読込み
-	showrss: {
-		label: "RSSの読込み",
-		format: "\n#showrss({url})\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">RSSのURL</label><div class="controls"><input type="text" name="url" placeholder="" /></div></div>' + 
-				'</form>',
-		onDialogOpen: function(){},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var url = $modal.find("[name=url]").val();
-			var value = this.format.replace("{url}", url);
-			this.insert(value);
-		}
-	},	
-	// !関連ページ
-	related: {
-		label: "関連ページ",
-		value: "#related\n",
-		onStart: function(){
-			var exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-		}
-	},
-	// !ブログの更新情報
-	qblog_list: {
-		label: "ブログの更新情報",
-		value: "#qblog_list(line,10)\n",
-		onStart: function(){
-			var exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-		}
-	},
-	
-	
 	// !フォーム
 	form: {
 		label: "フォーム",
@@ -501,7 +619,7 @@ ORGM.plugins = {
 			lineNum: 3
 		},
 		focus: ".modal-complete",
-		dialog:'<div class="container"><p>例）</p><ul class="list1"><li>箇条書き</li><li>箇条書き</li><li>箇条書き</li></ul><p class="muted">※ 箇条書きの色や形は、お使いのデザインによって異なります</p></div>',
+		dialog:'external:plugin_ul.html',
 		onComplete :function(){
 			var self = this;
 			var $dialog = $(this.dialogElement),
@@ -534,75 +652,12 @@ ORGM.plugins = {
 	ol: {
 		label: "番号付き箇条書き",
 		format: "- {text}",
-		dialog:'<div class="row"><p>例）</p><ol class="list1"><li>箇条書き</li><li>箇条書き</li><li>箇条書き</li></ol><p class="muted">※ 箇条書きの色や形は、お使いのデザインによって異なります</p></div>',
+		dialog:'external:plugin_ol.html',
 		onStart: function(){
 			this.options = ORGM.plugins.ul.options;
 			this.onComplete = ORGM.plugins.ul.onComplete;
 		}
 	},
-	// !ブレット
-	bullet: {
-		label: "ブレット",
-		format: "\n:>>|{text}\n",
-		onStart: function(){
-			var exnote, text, value = "", caret;
-			exnote = $(this.textarea).data("exnote");
-			text = exnote.getSelectedText();
-			if (text.length == 0) {
-				text = "ここにブレットを書く。";
-				value = this.format.replace("{text}", text);
-			} else if (/\n/.test(text)) {
-				var lines = text.split("\n");
-				for (var i in lines) {
-					var line = lines[i];
-					line = line.replace(/^\s+|\s+$/, "");
-					if (line.length > 0) {
-						value += this.format.replace("{text}", line);
-					}
-				}
-				value = value.replace(/\n\n/g, "\n");
-			}
-			else {
-				value = this.format.replace("{text}", text);
-				caret = {
-					offset: -1 - text.length,
-					length: text.length
-				};
-			}
-
-			exnote.insert(value, caret);
-			return false;
-		}
-	},
-	// !チェックマーク
-	check: {
-		label: "レ注目",
-		format: "&check;",
-		onStart: function(){
-			var exnote = $(this.textarea).data("exnote"),
-				text = exnote.getSelectedText();
-			
-			this.value = this.format;
-			if (text.length == 0) {
-				return;
-			}
-			else if (/\n/.test(text)) {
-				exnote.moveToLinehead();
-				text = exnote.getSelectedText();
-				var lines = text.split("\n"), values = [];
-				
-				for (var i = 0; i < lines.length; i++) {
-					values.push(this.format + lines[i]);
-				}
-				this.value = values.join("\n");
-			}
-			else {
-				return;
-			}
-		}
-	},
-
-	
 	// !改行
 	br: {
 		label: "改行",
@@ -770,140 +825,7 @@ ORGM.plugins = {
 			this.value = this.format.replace("{text}", text);
 		}
 	},
-	
-	// !文字サイズ
-	size: {
-		label: "文字サイズ変更",
-		format: "&size({size}){{text}};",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group"><label class="control-label">文字サイズ</label><div class="controls"><input type="text" name="size" placeholder="18" data-revert="18" /></div></div><div class="alert alert-warning hide">半角整数で指定してください。</div></form>',
-		onDialogOpen: function(){
-			var $modal = $(this.dialogElement),
-				$alert = $("div.alert", $modal);
-			
-			$("input:text", $modal)
-			.on("keyup", function(){
-				var $$ = $(this),
-					revert = $$.data("revert"),
-					value = $$.val();
-				if ( ! /^\d+$/.test(value)) {
-					$$.val(revert);
-					$alert.show();
-				} else {
-					if (revert != value) {
-						$$.data("revert", value);
-						$alert.hide();
-					}
-				}
-			});
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var size = $modal.find("input:text[name=size]").val();
-			var text = $(this.textarea).data("exnote").getSelectedText();
-			var value = "", values = [], caret = {offset: 0, length: 0};
-			
-			if (text.length > 0) {
-				if (/\n/.test(text)) {
-					var lines = text.split("\n");
-					for (var i in lines) {
-						values.push(this.format.replace("{size}", size).replace("{text}", lines[i]));
-					}
-					value = values.join("\n");
-				} else {
-					caret.offset = -(text.length + 2);
-					caret.length = text.length;
-					value = this.format.replace("{size}", size).replace("{text}", text);
-				}
-				
-			}
-			else {
-				value = this.format.replace("{size}", size).replace("{text}", text);
-				caret.offset = -2;
-			}
-			this.insert(value, caret);
-		}
-	},
 
-	// !文字装飾プリセット
-	penset: {
-		label: "蛍光ペン・白抜き文字",
-		format: "&deco({b},{color},{bgcolor}){{text}};",
-		options: {
-			pens: [
-				{name: "蛍光ペン（黄）", b: "b", color: "", bgcolor: "yellow", help: "黄色の蛍光ペンを引きます。"},
-				{name: "蛍光ペン（ピンク）", b: "b", color: "", bgcolor: "pink", help: "ピンク色の蛍光ペンを引きます。"},
-				{name: "蛍光ペン（青）", b: "b", color: "", bgcolor: "paleturquoise", help: "青色の蛍光ペンを引きます。"},
-				{name: "蛍光ペン（緑）", b: "b", color: "", bgcolor: "palegreen", help: "緑色の蛍光ペンを引きます。"},
-				{name: "白抜き文字（赤）", b: "", color: "white", bgcolor: "red", help: "背景を赤色に文字を白色にします。"},
-				{name: "白抜き文字（黒）", b: "", color: "white", bgcolor: "black", help: "背景を黒色に文字を白色にします。"}
-			],
-			templates: {button: '<li class="row" style="text-align:left"><a class="colorbtn" class="col-sm-12"></a></li>', help: '<span class="pull-right"></span>'}
-		},
-		dialog: '<div><ul class="nav nav-tabs nav-stacked"></ul></div>',
-		onDialogOpen: function(){
-			var self = this;
-			var $modal = $(this.dialogElement),
-				$pens = $modal.find("div.modal-body ul.nav");
-				
-			$modal.find("a.modal-close").hide();
-
-			for (var i = 0; i < this.options.pens.length; i++) {
-				var color = this.options.pens[i],
-					$btn = $(this.options.templates.button);
-				$btn
-				.css({cursor: "pointer"})
-					.find("a").text(color.name).data("color", color)
-					.append(this.options.templates.help)
-						.children().text(color.help)
-						.css({color: color.color.length>0 ? color.color : "inherit", backgroundColor: color.bgcolor, fontWeight: color.b.length>0 ? "bold": ""});
-				
-				$pens.append($btn);
-			}
-
-			
-			$modal.find("a.colorbtn")
-			.on("click", function(){
-				
-				$(this).addClass("active");
-				
-				self.complete();
-				
-			});
-			
-		},
-		onComplete: function(){
-
-			var $modal = $(this.dialogElement);
-			var size = $modal.find("input:text[name=size]").val();
-			var text = $(this.textarea).data("exnote").getSelectedText();
-			var value = "", values = [], caret = {offset: 0, length: 0};
-			var data = $modal.find("a.colorbtn.active").data("color");
-			data.text = text;
-			
-			if (text.length > 0) {
-				if (/\n/.test(text)) {
-					var lines = text.split("\n");
-					for (var i in lines) {
-						data.text = lines[i];
-						values.push(this.replaceFormat(data));
-					}
-					value = values.join("\n");
-				} else {
-					caret.offset = -(text.length + 2);
-					caret.length = text.length;
-					value = this.replaceFormat(data);
-				}
-				
-			}
-			else {
-				value = this.replaceFormat(data);
-				caret.offset = -2;
-			}
-			this.insert(value, caret);
-		}
-	},
-	
-	
 	// !取り消し線
 	strike: {
 		label: "取り消し線",
@@ -934,27 +856,35 @@ ORGM.plugins = {
 		format: "&deco({options}){{text}};",
 		options: {sizePresets: ["12", "14", "18", "24", "small", "medium", "large"]},
 		focus: "input:checkbox:first",
-		dialog: '<div class=""><form action="" class="form-horizontal">'+
-			'<div class="form-group"><label class="col-sm-3 control-label">装飾</label><div class="col-sm-9 checkbox"><label class="checkbox-inline" style="font-weight:bold;"><input type="checkbox" name="bold" /> 太字</label><label class="checkbox-inline" style="font-style:italic;"><input type="checkbox" name="italic" /> 斜体</label><label class="checkbox-inline" style="text-decoration:underline;"><input type="checkbox" name="underline" /> 下線</label></div></div>'+
-			'<div class="form-group"><label class="col-sm-3 control-label">文字色</label><div class="col-sm-3"><input type="text" name="color" class="form-control input-sm" /></div></div>'+
-			'<div class="form-group"><label class="col-sm-3 control-label">背景色</label><div class="col-sm-3"><input type="text" name="bgcolor" class="form-control input-sm" /></div></div>'+
-			'<div class="form-group"><label class="col-sm-3 control-label">大きさ</label><div class="col-sm-3"><input type="text" name="size" class="form-control input-sm" data-revert="14" value="14" placeholder="14" autocomplete="off" class="typeahead"></div></div>'+
-			'</form>'+
-			'<div class="previewarea panel"><span>サンプルです。<br>Hello, world!<br>3.14159265</span></div></div>',
+		init: false,
+		dialog: 'external:plugin_deco.html',
 		onStart: function(){
-			var $modal = $(this.dialog);
-			$("div.previewarea", $modal).css({
-				marginTop: 10,
-				marginBottom: 10
+			if (this.init) return;
+			
+			var dfd = $.Deferred(),
+				helper = this;
+			
+			helper.getDialogTemplate().then(function(template){
+
+				var $modal = $(template);
+				$("div.previewarea", $modal).css({
+					marginTop: 10,
+					marginBottom: 10
+				});
+				
+				$("input:checkbox", $modal).parent().css({
+					display: "inline-block",
+					marginRight: 10,
+					cursor: "pointer"
+				});
+				
+				helper.dialog = $modal.wrap("<div></div>").parent().html();
+				helper.init = true;
+				
+				return dfd.resolve();
 			});
 			
-			$("input:checkbox", $modal).parent().css({
-				display: "inline-block",
-				marginRight: 10,
-				cursor: "pointer"
-			});
-			
-			this.dialog = $modal.wrap("<div></div>").parent().html();
+			return dfd;
 		},
 		onDialogOpen: function(){
 			var $modal = $(this.dialogElement),
@@ -1060,28 +990,7 @@ ORGM.plugins = {
 		format: "{align}:\n",
 		init: false,
 		focus: "input:radio:first",
-		dialog: '<div class="row plugin-align">' +
-'<ul class="thumbnails">' +
-'  <li class="col-sm-4 selected" data-align>' +
-'    <label><div class="thumbnail" tabindex="8">' +
-'    	<p class="muted" style="text-align:left">Lorem ipsum augue<br>arcu pulvinar urna luctus<br>imperdiet mattis cubilia.</p>' +
-'    </div>' +
-'	<div class="title"><input type="radio" name="align" value="LEFT" checked> 左揃え</div></label>' +
-'  </li>' +
-'  <li class="col-sm-4" data-align>' +
-'    <label><div class="thumbnail" tabindex="9">' +
-'    	<p class="muted" style="text-align:center">Lorem ipsum augue<br>arcu pulvinar urna luctus<br>imperdiet mattis cubilia.</p>' +
-'    </div>' +
-'	<div class="title"><input type="radio" name="align" value="CENTER"> 中央</div></label>' +
-'  </li>' +
-'  <li class="col-sm-4" data-align>' +
-'    <label><div class="thumbnail" tabindex="10">' +
-'    	<p class="muted" style="text-align:right">Lorem ipsum augue<br>arcu pulvinar urna luctus<br>imperdiet mattis cubilia</p>' +
-'    </div>' +
-'	<div class="title"><input type="radio" name="align" value="RIGHT"> 右揃え</div></label>' +
-'  </li>' +
-'</ul>' +
-'</div>',
+		dialog: 'external:plugin_align.html',
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement);
 			
@@ -1144,34 +1053,44 @@ ORGM.plugins = {
 		label: "表を挿入",
 		options: {rows: 4, cols: 7},
 		init: false,
-		dialog: '<div style="margin: 0 auto;text-align:left;width: 300px;"><div class="cells" style="margin-bottom: 10px;"><table><tbody></tbody></table></div><div class="form-group row"><div class="col-sm-5"><div class="input-group"><span class="input-group-addon input-sm">行</span><input type="text" name="rows" class="form-control input-sm"></div></div><div class="col-sm-5"><div class="input-group"><span class="input-group-addon input-sm">列</span><input type="text" name="cols" class="form-control input-sm"></div></div></div> <div class="form-group"><div class="checkbox"><label><input type="checkbox" name="header"> 1行目をヘッダー（タイトル行）にする</label></div></div></div>',
+		dialog: 'external:plugin_table.html',
 		onStart: function(){
 		
 			if (this.init) {
 				return;
 			}
-			this.init = true;
 			
-			var $modal = $(this.dialog),
-				$cells = $modal.find("div.cells > table > tbody");
-			for (var i = 0; i < this.options.rows; i++) {
-				var $tr = $("<tr></tr>");
-				for (var j = 0; j < this.options.cols; j++) {
-					$tr.append('<td data-x="'+(j+1)+'" data-y="'+(i+1)+'">&nbsp;</td>');
+			var helper = this,
+				dfd = $.Deferred();
+			
+			helper.getDialogTemplate().then(function(template){
+	
+				helper.init = true;
+				
+				var $modal = $(template),
+					$cells = $modal.find("div.cells > table > tbody");
+				
+				for (var i = 0; i < helper.options.rows; i++) {
+					var $tr = $("<tr></tr>");
+					for (var j = 0; j < helper.options.cols; j++) {
+						$tr.append('<td data-x="'+(j+1)+'" data-y="'+(i+1)+'">&nbsp;</td>');
+					}
+					$cells.append($tr);
 				}
-				$cells.append($tr);
-			}
-			
-			
-			$("td", $cells).css({
-				minHeight: 25,
-				minWidth: 25,
-				border: "2px solid #999",
-				cursor: "pointer"
+				
+				$("td", $cells).css({
+					minHeight: 25,
+					minWidth: 25,
+					border: "2px solid #999",
+					cursor: "pointer"
+				});
+				
+				helper.dialog = $modal.wrap("<div></div>").parent().html();				
+				
+				dfd.resolve();
 			});
-
 			
-			this.dialog = $modal.wrap("<div></div>").parent().html();
+			return dfd.promise();
 			
 		},
 		onDialogOpen: function(){
@@ -1365,32 +1284,6 @@ ORGM.plugins = {
 			this.insert(this.format.replace("{html}", html));
 		}
 	},
-	// !1行HTML挿入
-	html2: {
-		label: "1行HTML挿入",
-		format: "#html2({html})\n",
-		dialog: "挿入したいHTMLを入力してください。<br><textarea name=\"html\"></textarea>",
-		onDialogOpen: function(){
-			var $dialog = $(this.dialogElement);
-			$dialog.find("textarea[name=html]").exnote();
-
-			var exnote = $(this.textarea).data("exnote"),
-				text = exnote.getSelectedText();
-
-			if (text.length > 0) {
-				var $modal = $(this.dialogElement);
-				text = text.replace(/\n|\r/g,'');
-				$modal.find("[name=html]").val(text);
-			}
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var html = $dialog.find("textarea[name=html]").val();
-			html = html.replace(/\n|\r/g,'');
-			$(this.textarea).data("exnote").moveToNextLine();
-			this.insert(this.format.replace("{html}", html));
-		}
-	},
 	// !beforescript: その他のタグ
 	beforescript: {
 		label: "その他のタグ",
@@ -1443,28 +1336,20 @@ ORGM.plugins = {
 			]
 		},
 		focus: false,
-		dialog: '<div class="container"><form action="" class="form-horizontal">' + 
-
-				'<div class="form-group">' +
-				'<label for="" class="col-sm-3 control-label">横幅</label>'+
-				'<div class="col-sm-9"><select name="width" id="" class="form-control"></select></div></div>' +
-				
-				'<div class="form-group">'+
-				'<label for="" class="col-sm-3 control-label">タイプ</label>'+
-				'<div class="col-sm-9"><div class="row box-type"></div><input type="hidden" name="type" value="" data-class=""></div></div>' +
-
-				'<div class="form-group">' +
-				'<label for="" class="col-sm-3 control-label">高さ</label>'+
-				'<div class="col-sm-9"><div class="row"><div class="col-sm-3"><input type="text" name="height" class="form-control input-sm" /></div></div><span class="help-block muted">スクロール付きのボックスにしたい時は指定してください。</span></div></div></form>'+
-				'<hr><div class="cotainer plugin-box"><div class="previewarea"><h5>サンプル</h5><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div></div></div>',
+		init: false,
+		dialog: 'external:plugin_box.html',
 
 		onStart: function(){
 			var helper = this;
-			if (typeof this.init == "undefined") {
-				this.init = true;
-				
-				//make dialog
-				var $dialog = $(this.dialog)
+			
+			if (helper.init) return;
+			
+			var dfd = $.Deferred();
+			
+			//make dialog
+			this.getDialogTemplate().then(function(template){
+
+				var $dialog = $(template)
 					.find("select").each(function(){
 						var $this = $(this);
 						var options = helper.options[$this.attr("name")];
@@ -1475,20 +1360,27 @@ ORGM.plugins = {
 								.val(option.value)
 								.text(option.label);
 						}
-					}).end()
+					}).end();
 				
-				for (var i in this.options.type) {
+				for (var i in helper.options.type) {
 					$('.box-type', $dialog).append('<div class="col-sm-3"></div>')
 					.find('div:last').append('<div></div>').find('div')
-					.addClass(this.options.type[i].class)
-					.attr("style", this.options.type[i].style)
+					.addClass(helper.options.type[i].class)
+					.attr("style", helper.options.type[i].style)
 					.text('サンプル')
-					.data("type", this.options.type[i].value)
-					.attr("data-type", this.options.type[i].value);
+					.data("type", helper.options.type[i].value)
+					.attr("data-type", helper.options.type[i].value);
 				}
 				
-				this.dialog = $dialog.wrap("<div></div>").parent().html();
-			}
+				$dialog.find(".previewarea p").append(helper.getLorem());
+				
+				helper.dialog = $dialog.wrap("<div></div>").parent().html();
+				helper.init = true;
+				
+				dfd.resolve();
+			});
+
+			return dfd.promise();
 		},
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement);
@@ -1502,7 +1394,7 @@ ORGM.plugins = {
 					var name = values[i].name,
 						value = values[i].value;
 						
-					switch(name) {
+					switch (name) {
 						case 'type' :
 							var $input = $("input[name="+name+"]");
 							$prevarea.addClass($input.attr("data-class"));
@@ -1558,82 +1450,6 @@ ORGM.plugins = {
 			this.insert(value);
 
 		}
-	},
-	
-
-	// !コンバージョン計測
-	conversion: {
-		label: "コンバージョン計測",
-		format: "#conversion({step},{group})\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">ステップ番号</label><div class="controls"><input type="text" name="step" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">グループ名</label><div class="controls"><input type="text" name="group" placeholder="" /></div></div>' + 
-				'</form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var step = $modal.find("[name=step]").val(),
-				group = $modal.find("[name=group]").val();
-			var value = this.format.replace("{step}", step).replace("{group}", group);
-			this.insert(value);
-		}
-	},
-	// !コンバージョン計測：外部リンク
-	conversion_inline: {
-		label: "コンバージョン計測：外部リンク",
-		format: "&conversion({step},{group},{title},{url}){{text}};",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">ステップ番号</label><div class="controls"><input type="text" name="step" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">グループ名</label><div class="controls"><input type="text" name="group" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">結果表示名</label><div class="controls"><input type="text" name="title" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">リンク先URL</label><div class="controls"><input type="text" name="url" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">表示文字</label><div class="controls"><input type="text" name="text" placeholder="" /></div></div>' + 
-				'</form>',
-		onDialogOpen: function(){
-			var exnote = $(this.textarea).data("exnote"),
-				text = exnote.getSelectedText();
-
-			if (text.length > 0) {
-				var $modal = $(this.dialogElement);
-				text = text.replace(/\n|\r/g, '&br;');
-				$modal.find("[name=text]").val(text);
-			}
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var step = $modal.find("[name=step]").val(),
-				group = $modal.find("[name=group]").val(),
-				title = $modal.find("[name=title]").val(),
-				url = $modal.find("[name=url]").val(),
-				text = $modal.find("[name=text]").val();
-			var value = this.format.replace("{step}", step).replace("{group}", group).replace("{title}", title).replace("{url}", url).replace("{text}", text);
-			this.insert(value);
-		}
-	},
-	// !ABスプリット
-	absplit2: {
-		label: "ABスプリットテスト",
-		format: "\n#absplit2({pagenameA},{pagenameB})\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">パターンAのページ名<br /></label><div class="controls"><input type="text" name="pagenameA" placeholder="ページ名" class="typeahead" autocomplete="off"></div></div>' +
-				'<div class="form-group"><label for="" class="control-label">パターンBのページ名<br /></label><div class="controls"><input type="text" name="pagenameB" placeholder="ページ名" class="typeahead" autocomplete="off"></div></div>' +
-				'</form>',
-		onDialogOpen: function(){
-			//オートコンプリート
-			var $dialog = $(this.dialogElement);
-			$.when(ORGM.getPages()).done(function(){
-				$dialog.find("input[name=linkto]").data("source", ORGM.pages);
-			}).fail(function(){});
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-			var pagenameA = $dialog.find("input[name=pagenameA]").val(),
-				pagenameB = $dialog.find("input[name=pagenameB]").val();
-			var value = this.format.replace("{pagenameA}", pagenameA).replace("{pagenameB}", pagenameB);
-			this.insert(value);
-		}
-
 	},
 
 	// !レイアウト
@@ -1698,86 +1514,6 @@ ORGM.plugins = {
 		}
 	},
 	
-	// !段組み
-	style2: {
-		label:"段組み",
-		format: "#style2(L){{\n{textL}\n}}\n#style2(R){{\n{textR}\n}}\n",
-		dialog: "<div class=\"row\"><div class=\"col-sm-6\">左側の情報<br /><textarea rows=\"5\" name=\"textL\"></textarea></div><div class=\"col-sm-6\">右側の情報<br /><textarea rows=\"5\" name=\"textR\"></textarea></div></div>",
-		onDialogOpen: function(){
-			var $dialog = $(this.dialogElement);
-			$dialog.find("textarea").exnote();
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var textL = $dialog.find("textarea[name=textL]").val();
-			var textR = $dialog.find("textarea[name=textR]").val();
-			$(this.textarea).data("exnote").moveToNextLine();
-			this.insert(this.format.replace("{textL}", textL).replace("{textR}", textR));
-		}
-	},
-	scrollbox: {
-		label: "スクロール付きの枠",
-		format: "#scrollbox({width},{height}){{\n{text}\n}}\n",
-		options: {minHeight: 0, maxHeight: 1000},
-		dialog: '<div><div class="infoarea"></div>横幅：<input type="text" name="width" class="input-sm" placeholder="px / %" /> 高さ：<input type="text" name="height" value="70" class="input-sm" /><br /><div class="previewarea">入力した高さがプレビューできます。<br />現在：<span class="heightholder"></span>px </div></div>',
-		onStart: function(){
-			if (this.init) return;
-			this.init = true;
-			
-			var $modal = $(this.dialog);
-			var contentWidth = $("#body").width();
-			if (contentWidth) {
-				$("div.infoarea", $modal).html("本文部分の横幅は <strong>" + contentWidth + "px</strong> です。").addClass("alert alert-info");
-			}
-			$("div.previewarea", $modal).addClass("well");
-			
-			this.dialog = $modal.wrap("<div></div>").parent().html();
-			
-		},
-		onDialogOpen: function(){
-			var helper = this;
-			var $modal = $(this.dialogElement);
-			
-			$("input:text[name=height]").on("keyup", function(){
-				var height = parseInt($(this).val(), 10);
-				
-				if (height > helper.options.minHeight && height < helper.options.maxHeight) {
-					$("div.previewarea", $modal)
-					.height(height)
-						.find("span.heightholder").text(height);
-				}
-				
-			}).triggerHandler("keyup");
-			
-			
-			
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote"),
-				value="";
-			
-			var width = $("input:text[name=width]", $modal).val(),
-				height = $("input:text[name=height]", $modal).val();
-			//add unit
-			width = /px|%/.test(width) ? width : width.toString() + "px";
-			height = /px/.test(height) ? height: height.toString() + "px";
-			
-			exnote.adjustSelection();
-			var text = exnote.getSelectedText();
-			var caret = {offset: -4, length: 0};
-
-			if (text.length > 0) {
-				exnote.moveToLinehead();
-				caret.offset -= text.length;
-				caret.length = text.length;
-			}
-			
-			value = this.format.replace("{width}", width).replace("{height}", height).replace("{text}", text);
-			
-			this.insert(value);
-		}
-	},
 	// !アコーディオン
 	accordion: {
 		label: "アコーディオン",
@@ -1821,116 +1557,11 @@ ORGM.plugins = {
 		}
 	},
 
-	// !要素置き換え
-	// !メニューを変更する
-	menu: {
-		label: "メニューを変更する",
-		format: "#menu({pagename})\n",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">メニュー用ページ名<br /></label>' +
-				'<div class="controls"><input type="text" name="pagename" placeholder="ページ名" class="typeahead" autocomplete="off"></div>' +
-				'</div></form>',
-		onDialogOpen: function(){
-			//オートコンプリート
-			var $dialog = $(this.dialogElement);
-			$.when(ORGM.getPages()).done(function(){
-				$dialog.find("input[name=linkto]").data("source", ORGM.pages);
-			}).fail(function(){});
-			
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-			var pagename = $dialog.find("input[name=pagename]").val();
-			
-			this.insert(this.format.replace("{pagename}", pagename));
-		}
-	},
-
-	// !メニュー2を変更する
-	menu2: {
-		label: "メニュー2を変更する",
-		format: "#menu2({pagename})\n",
-		onStart: function(){
-			this.dialog = ORGM.plugins.menu.dialog;
-		},
-		onDialogOpen: function(){
-			ORGM.plugins.menu.onDialogOpen.call(this);
-		},
-		onComplete: function(){
-			ORGM.plugins.menu.onComplete.call(this);
-		}
-	},
-	
-	include_skin: {
-		label: "デザインを変更する",
-		format: "#include_skin({skin})\n",
-		init: false,
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">デザイン名<br /></label>' +
-				'<div class="controls"><select name="skin"></select></div>' +
-				'</div></form>',
-		onStart: function(){
-			if (this.init) return;
-			this.init = true;
-			
-			var current = $("head > link[href*='main.css']:eq(0)").attr("href");
-			
-			var $modal = $(this.dialog),
-				$select = $("select", $modal);
-			for (var i = 0; i < ORGM.designs.length; i++) {
-				var design = ORGM.designs[i];
-				var disabled = current.indexOf(design) >= 0;
-				$select.append("<option"+ (disabled ? "disabled" : "") +"></option>")
-					.find("option:last")
-					.text(design).val(design);
-			}
-			
-			this.dialog = $modal.wrap("<div></div>").parent().html();
-		},
-		onDialogOpen: function(){
-			
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-			var skin = $modal.find("select[name=skin]").val();
-			
-			this.insert(this.format.replace("{skin}", skin));
-		}
-	},
-	// !メインビジュアル
-	// !ダイアログにするか検討
-	main_visual: {
-		label: "メインビジュアル",
-		value: "\n#main_visual(画像ファイルのパス,画像の説明,表示位置)\n",
-		onStart: function(){
-			var exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-		}
-	},
-	// !ロゴ画像の切替
-	// !ダイアログにするか検討
-	logo_image: {
-		label: "ロゴ画像の切替",
-		value: "#logo_image(画像ファイル名)\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	
 	// !iframe
 	iframe: {
 		label: "iframe設置",
 		format: "#iframe({url}{options})",
-		dialog: '<form action="" class="form-horizontal">' +
-			'<div class="form-group"><label for="" class="control-label">読み込むURL</label>' +
-			'<div class="controls"><input type="text" name="url" placeholder="" /></div></div>' +
-			'<div class="form-group"><label for="" class="control-label">サイズ</label>' +
-			'<div class="controls">横幅：<input type="text" name="width" class="input-sm" /> 高さ：<input type="text" name="height" class="input-sm" /></div>' +
-			'</div></form>',
+		dialog: 'external:plugin_iframe.html',
 		onComplete: function(){
 			var $modal = $(this.dialogElement);
 			var value = "";
@@ -1957,8 +1588,8 @@ ORGM.plugins = {
 				options: {search_word: "", select_mode: "exclusive"}
 			}
 		},
-		dialog: '<div class="row"><form action="" class="form-horizontal"><div class="form-group"><label for="" class="col-sm-3 control-label">ファイル</label><div class="col-sm-9"><input type="text" name="file" placeholder="クリックしてファイル選択" class="form-control input-sm"></div></div><div class="form-group"><label for="" class="col-sm-3 control-label">ボタンの種類</label><div class="col-sm-9"><div class="form-group"><div class="col-sm-12"><label class="radio-inline"><input type="radio" name="type" value="" checked> <button type="button" class="btn btn-default btn-sm">ダウンロード</button></label><label class="radio-inline"><input type="radio" name="type" value="primary"> <button type="button" class="btn btn-primary btn-sm">ダウンロード</button></label><label class="radio-inline"><input type="radio" name="type" value="info"> <button type="button" class="btn btn-info btn-sm">ダウンロード</button></label></div></div><div class="form-group"><div class="col-sm-12"><label class="radio-inline"><input type="radio" name="type" value="success"> <button type="button" class="btn btn-success btn-sm">ダウンロード</button></label><label class="radio-inline"><input type="radio" name="type" value="danger"> <button type="button" class="btn btn-danger btn-sm">ダウンロード</button></label><label class="radio-inline"><input type="radio" name="type" value="warning"> <button type="button" class="btn btn-warning btn-sm">ダウンロード</button></label></div></div><div class="form-group"><div class="col-sm-12"><label class="radio-inline"><input type="radio" name="type" value="theme"> <button type="button" class="btn btn-default btn-theme btn-sm" data-toggle="tooltip" title="このボタンは、デザイン毎に色が変わります">ダウンロード</button></label><label class="radio-inline"><input type="radio" name="type" value="link"><button type="button" class="btn btn-link btn-sm">ダウンロード</button></label></div></div></div><div class="form-group notify"><label for="" class="col-sm-3 control-label"></label><div class="col-sm-9"><div class="checkbox"><label><input type="checkbox" name="notify" value="1" /> ダウンロードを通知する</label></div></div></div></form></div>',
-		onStart: function(){},
+		focus: false,
+		dialog: 'external:plugin_download.html',
 		onDialogOpen: function(){
 			var self = this
 			  , $modal = $(this.dialogElement)
@@ -2007,17 +1638,6 @@ ORGM.plugins = {
 		}
 	},
 
-	// !TODO:ファイル選択ダイアログを検討
-	dlbutton: {
-		label: "ダウンロードボタン",
-		value: "&dlbutton(ファイルパス);"
-	},
-	// !TODO:ファイル選択ダイアログを検討
-	dllink: {
-		label: "ダウンロードリンク",
-		value: "&dllink(ファイルパス);"
-	},
-	
 	// !マルチメディア
 	show: {
 		label: "画像",
@@ -2141,7 +1761,7 @@ ORGM.plugins = {
 				}
 			}
 		},
-		dialog: '<div class="row" id="orgm_plugin_modal" data-plugin="video"><form action="" class="form-horizontal"><div class="form-group"><div class="col-sm-12"><div class="radio"><label class="col-sm-5"><input type="radio" name="type" value="myfile" checked> 自分の動画</label><div class="col-sm-7"><div class="input-group"><span class="input-group-addon input-sm">動画ファイル</span><input type="text" name="file" class="form-control input-sm" placeholder="クリックして動画選択" class="form-control input-sm"></div><div class="input-group"><span class="input-group-addon input-sm">ポスター画像</span><input type="text" name="poster" placeholder="クリックして画像を選択" class="form-control input-sm"></div></div></div></div></div><div class="form-group"><div class="col-sm-12"><div class="radio"><label class="col-sm-5"><input type="radio" name="type" value="embed"> YouTubeまたはVimeo</label><div class="col-sm-7"><input type="text" name="embedurl" class="form-control input-sm" placeholder="YouTubeまたはVimeoのURL"></div></div></div></div><hr><div class="form-group col-sm-12"><label class="col-sm-3 control-label">横幅 × 高さ</label><div class="col-sm-9"><div class="input-group col-sm-5"><span class="input-group-addon input-sm">横幅</span><input type="text" name="width" class="form-control input-sm" value="500"><span class="input-group-addon input-sm">px</span></div><div class="col-sm-1 form-group">×</div><div class="input-group col-sm-5"><span class="input-group-addon input-sm">高さ</span><input type="text" name="height" class="form-control input-sm" value="281"><span class="input-group-addon input-sm">px</span></div></div></div></form></div>',
+		dialog: 'external:plugin_video.html',
 		onStart: function(){},
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement)
@@ -2208,47 +1828,8 @@ ORGM.plugins = {
 			this.insert(value);
 		}
 	},
-	playvideo: {
-		label: "ビデオ再生",
-		format: "\n#playvideo({movie},{width},{height})\n",
-		dialog: '<form action="" class="form-horizontal">' +
-			'<div class="form-group"><label for="" class="control-label">動画ファイルパス</label>' +
-			'<div class="controls"><input type="text" name="movie" placeholder="" /></div></div>' +
-			'<div class="form-group"><label for="" class="control-label">サイズ</label>' +
-			'<div class="controls">横幅：<input type="text" name="width" class="input-sm" /> 高さ：<input type="text" name="height" class="input-sm" /></div>' +
-			'</div></form>',
-		onDialogOpen: function(){
-			var $modal = $(this.dialogElement);
-			$modal.find("[name=width]").val(300);
-			$modal.find("[name=height]").val(300);
-			
-			
-			
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var value = "";
-			var movie = $modal.find("[name=movie]").val(),
-				width = parseInt($modal.find("[name=width]").val(), 10),
-				height = parseInt($modal.find("[name=height]").val(), 10);
-			if (isNaN(width)) width = String('');
-			if (isNaN(height)) height = String('');
-			value = this.format.replace("{movie}", movie).replace("{width}", width).replace("{height}", height);
-			this.insert(value);
-		}
-	},
-	// !Vimeo
-	vimeo: {
-		label: "Vimeo動画",
-		format: "\n#vimeo({vimeoId})\n",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group"><label for="" class="control-label">Vimeo動画ID</label><div class="controls"><input type="text" name="vimeoid" placeholder="" /></div></div></div></form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var vimeoid = $modal.find("[name=vimeoid]").val();
-			var value = this.format.replace("{vimeoId}", vimeoid);
-			this.insert(value);
-		}
-	},
+
+
 	// !Jplayer
 	jplayer: {
 		label: "音楽再生",
@@ -2261,20 +1842,20 @@ ORGM.plugins = {
 				}
 			}
 		},
-		template: '<div class="col-sm-4"><div class="thumbnail"><a href="#" class="audio" data-audio>クリックで音楽選択</a><div class="caption"><input type="text" name="label" class="form-control input-sm" placeholder="タイトル" /></div></div></li>',
-		dialog: '<div class="container"><p>音楽選択　<button type="button" class="btn btn-default btn-sm" data-audio-add>追加</button></p><div class="audiolist row"><div class="thumbnails"></div></div></div>',
+		dialog: 'external:plugin_jplayer.html',
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement)
 				,self = this
 				,$div =	$('div.thumbnails', $dialog)
-				,$filer = $("#orgm_filer_selector");
+				,$filer = $("#orgm_filer_selector")
+				,template = $dialog.find(".partial-template").html();
 
 			$dialog
 			.on('shown.bs.modal', function(){
-				$div.append(self.template);
+				$div.append(template);
 			})
 			.on('click', '[data-audio-add]', function(){
-				$div.append(self.template);
+				$div.append(template);
 			})
 			.on('click', '[data-audio]', function(){
 				$audio = $(this);
@@ -2330,20 +1911,20 @@ ORGM.plugins = {
 				options: {search_word: ":image", select_mode: "exclusive"}
 			}
 		},
-		template: '<div class="col-sm-4"><div class="thumbnail"><a href="#" class="image col-sm-12" data-image>クリックで画像選択</a><div class="caption"><span class="span-label"><input type="text" name="label" class="form-control" placeholder="タイトル" /></span><textarea rows="3" class="form-control" placeholder="画像の説明"></textarea></div></div></div>',
-		dialog: '<div class="container"><p>表示設定</p><form action="" class="form-horizontal"><div class="form-group"><label for="" class="col-sm-4 control-label">高さ</label><div class="col-sm-8"><div class="radio"><label><input type="radio" name="height_type" value="auto" /> 自動</label></div><div class="radio row"><label class="col-sm-3"><input type="radio" name="height_type" value="custom" checked> 固定する　</label><div class="col-sm-4"><div class="input-group"><input type="text" name="height" class="form-control input-sm" value="450"><span class="input-group-addon input-sm">px</span></div></div></div></div></div><div class="form-group"><label for="" class="col-sm-4 control-label">横幅</label><div class="col-sm-8"><div class="checkbox"><label><input type="checkbox" name="fit" value="fit" checked /> 横幅いっぱいに表示にする</label></div></div></div><div class="form-group"><label class="col-sm-4 control-label">スライドボタン</label><div class="col-sm-8"><div class="checkbox"><label><input type="checkbox" name="slidebutton" value="slidebutton" checked /> 表示する</label></div></div></div></form></div><hr><div class="container"><p>スライド画像　<button type="button" class="btn btn-default btn-sm" data-slides-add>追加</button></p><div class="slidelist"><div class="thumbnails row"></div></div></div>',
+		dialog: 'external:plugin_slide.html',
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement)
 				,self = this
 				,$div =	$('div.thumbnails', $dialog)
-				,$filer = $("#orgm_filer_selector");
+				,$filer = $("#orgm_filer_selector")
+				,template = $dialog.find(".partial-template").html();
 			
 			$dialog
 			.on('shown.bs.modal', function(){
-				$div.append(self.template);
+				$div.append(template);
 			})
 			.on('click', '[data-slides-add]', function(){
-				$div.append(self.template);
+				$div.append(template);
 			})
 			.on('click', '[data-image]', function(){
 				$image = $(this);
@@ -2409,30 +1990,6 @@ ORGM.plugins = {
 			this.insert(value);
 		}
 	},
-	// !スライドショー
-	// !TODO: 画像の選択を要検討
-	slideshow: {
-		label: "スライドショー",
-		format: "\n#slideshow({height}){{\n{url1},画像の説明1\n{url2},画像の説明2\n}}\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">高さ</label><div class="controls"><input type="text" name="height" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">画像1のURL</label><div class="controls"><input type="text" name="url1" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">画像2のURL</label><div class="controls"><input type="text" name="url2" placeholder="" /></div></div>' + 
-				'</form>',
-		onDialogOpen: function(){
-			var $modal = $(this.dialogElement);
-			$modal.find("[name=height]").val(100);
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var height = parseInt($modal.find("[name=height]").val(), 10),
-				url1 = $modal.find("[name=url1]").val(),
-				url2 = $modal.find("[name=url2]").val();
-			if (isNaN(height)) height = 300;
-			var value = this.format.replace("{height}", height).replace("{url1}", url1).replace("{url2}", url2);
-			this.insert(value);
-		}
-	},
 
 	// !マルチメディア
 	file: {
@@ -2482,38 +2039,6 @@ ORGM.plugins = {
 		}
 	},
 
-	// !グレーボックス
-	greybox: {
-		label: "グレーボックス",
-		format: "&greybox({url},{description},{group}){{text}};",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">画像またはサイトのURL</label><div class="controls"><input type="text" name="url" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">画像またはサイトの説明</label><div class="controls"><input type="text" name="description" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">グループ名</label><div class="controls"><input type="text" name="group" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">表示</label><div class="controls"><input type="text" name="display" placeholder="" /></div></div>' + 
-				'</form>',
-		onDialogOpen: function(){
-			var exnote = $(this.textarea).data("exnote");
-			var text = exnote.getSelectedText();
-
-			var value = '';
-			if (text.length > 0) {
-				value = text;
-			}
-			var $modal = $(this.dialogElement);
-			$modal.find("[name=display]").val(value);
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var url = $modal.find("[name=url]").val(),
-				description = $modal.find("[name=description]").val(),
-				group = $modal.find("[name=group]").val(),
-				display = $modal.find("[name=display]").val();
-
-			var value = this.format.replace("{url}", url).replace("{description}", description).replace("{group}", group).replace("{text}", display);
-			this.insert(value);
-		}
-	},
 
 	// !Googleマップ
 	gmap: {
@@ -2529,8 +2054,7 @@ ORGM.plugins = {
 			}
 		},
 		format: "#gmap(${size},${list},${zoom}){{${br}${address},${label},${content}${br}}}${br}",
-		dialog: '<div class="row"><form class="form-horizontal"><div class="form-group"><label for="" class="col-sm-3 control-label">住所</label><div class="col-sm-9"><input type="text" name="address" class="form-control input-sm" value="東京駅" /></div></div><div class="form-group"><label for="" class="col-sm-3 control-label">タイトル</label><div class="col-sm-9"><input type="text" name="label" value="東京駅" class="form-control input-sm" /></div></div><div class="form-group"><label for="" class="col-sm-3 control-label">説明</label><div class="col-sm-9"><input type="text" name="content" value="とても人が多いです。" class="form-control input-sm" /></div></div><div class="form-group"><label for="" class="col-sm-3 control-label">横幅 x 高さ</label><div class="col-sm-9"><div class="row"><div class="input-group col-sm-5"><span class="input-group-addon input-sm">横幅</span><input type="text" name="width" class="form-control input-sm" value="" placeholder="100%"><span class="input-group-addon input-sm">px</span></div><div class="form-group col-sm-1">x</div><div class="input-group col-sm-5"><span class="input-group-addon input-sm">高さ</span><input type="text" name="height" class="form-control input-sm" value="" placeholder="300"><span class="input-group-addon input-sm">px</span></div></div><span class="help-block">※指定しない場合は、高さは300px、横幅は100%で表示されます。<span></div></div><div class="form-group"><label for="" class="col-sm-3 control-label">リストの表示</label><div class="col-sm-9"><div class="checkbox"><label><input type="checkbox" name="list" value="list" checked />リストを表示する</label></div></div></div></form></div><hr><div class="orgm-gmap"><div id ="map_canvas" data-map-width="" data-map-height="170" data-map-zoom=""></div><div class="gmap-markers"><ul><li data-mapping="m_1" data-lat="" data-lng=""><div class="info-box"><h5></h5><p></p></div></li></ul></div></div>',
-		onStart: function(){},
+		dialog: 'external:plugin_gmap.html',
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement)
 				,self = this;
@@ -2645,126 +2169,10 @@ ORGM.plugins = {
 		}
 	},
 	
-	gmapfun: {
-		label: "Googleマップ",
-		format: "\n#gmapfun{{\n{address},{title}\n}}\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">住所</label><div class="controls"><input type="text" name="address" placeholder="" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">タイトル</label><div class="controls"><input type="text" name="title" placeholder="" /></div></div>' + 
-				'</form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var address = $modal.find("[name=address]").val(),
-				title = $modal.find("[name=title]").val();
-
-			var value = this.format.replace("{address}", address).replace("{title}", title);
-			this.insert(value);
-		}
-	},
-	
-	// !アクセス制御
-	secret: {
-		label: "認証ページ",
-		format: "\n#secret({pass})\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">パスワード</label><div class="controls"><input type="text" name="pass" placeholder="" /></div></div>' + 
-				'</form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var pass = $modal.find("[name=pass]").val();
-			var value = this.format.replace("{pass}", pass);
-			this.insert(value);
-		}
-	},
-	// !閉鎖
-	close: {
-		label: "閉鎖",
-		value: "#close\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	// !有効期限設定
-	autoclose: {
-		label: "有効期限設定",
-		format: "\n#autoclose({date},{url})\n",
-		focus: false,
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">日付</label><div class="controls"><input type="text" name="date" placeholder="" id="dp1" size="16" value=""  data-date=""  data-date-format="yyyy-mm-dd" /></div></div>' + 
-				'<div class="form-group"><label for="" class="control-label">転送先</label><div class="controls"><input type="text" name="url" placeholder="" /></div></div>' + 
-				'</form>',
-		onDialogOpen: function(){
-			var dt = new Date();
-			var y = dt.getFullYear(),
-				m = dt.getMonth()+1,
-				d = dt.getDate();
-				
-			if (m < 10) { m = '0' + m; }
-			if (d < 10) { d = '0' + d; }
-				
-			var	nowdate = y+'-'+m+'-'+d;
-
-			var $modal = $(this.dialogElement);
-			$modal.find("[name=date]").attr('data-date', nowdate).val(nowdate);
-
-			$("#dp1").datepicker({language: "japanese"});
-			$(".datepicker").css({zIndex: 1100});
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var date = $modal.find("[name=date]").val(),
-				url = $modal.find("[name=url]").val();
-			var value = this.format.replace("{date}", date).replace("{url}", url);
-			this.insert(value);
-		}
-	},
-	// !転送
-	redirect: {
-		label: "転送",
-		format: "\n#redirect({url})\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">転送先</label><div class="controls"><input type="text" name="url" placeholder="ページ名、またはURL" /></div></div>' + 
-				'</form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var url = $modal.find("[name=url]").val();
-			var value = this.format.replace("{url}", url);
-			this.insert(value);
-		}
-	},
-	
-	// !Facebook
-	fb_page: {
-		label: "Facebookタブ",
-		value: "#fb_page\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	fb_likegate: {
-		label: "Facebookいいね切替タブ",
-		format: "\n#fb_likegate({pagename})\n",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">いいね前のページ名</label><div class="controls"><input type="text" name="pagename" placeholder="" /></div></div>' + 
-				'</form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var pagename = $modal.find("[name=pagename]").val();
-			var value = this.format.replace("{pagename}", pagename);
-			this.insert(value);
-		}
-	},
-
 	// !ナビの項目追加
 	addnav: {
 		label: "ナビの追加",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label class="col-sm-3 control-label">リンク先</label>' +
-				'<div class="col-sm-9"><input type="text" name="linkto" placeholder="ページ名、またはURL" class="typeahead form-control" autocomplete="off"></div>' +
-				'</div><div class="form-group">' +
-				'<label class="col-sm-3 control-label">リンク文字</label>'+
-				'<div class="col-sm-9"><input type="text" name="alias" placeholder="リンク文字を変更できます。" class="form-control"></div></div>' +
-				'</form>',
+		dialog: 'external:plugin_addnav.html',
 		onStart: function(){
 			this.options = ORGM.plugins.link.options;
 		},
@@ -2826,15 +2234,7 @@ ORGM.plugins = {
 				newwin: "&openwin(_blank){${alias}};"
 			}
 		},
-		dialog: '<div class="conainer"><form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="col-sm-3 control-label">リンク先<br /></label>' +
-				'<div class="col-sm-9"><input type="text" name="linkto" placeholder="ページ名、またはURL" autocomplete="off" class="typeahead form-control"></div>' +
-				'</div><div class="form-group">' +
-				'<label for="" class="col-sm-3 control-label">リンク文字</label>'+
-				'<div class="col-sm-9"><input type="text" name="alias" placeholder="リンク文字を変更できます。" class="form-control"></div></div>' +
-				'<div class="form-group"><label for="" class="col-sm-3 control-label">リンクの種類</label><div class="col-sm-9"><div class="form-group"><div class="col-sm-12"><label class="radio-inline"><input type="radio" name="type" value="link" checked><button type="button" class="btn btn-link btn-sm">リンク文字</button></label><label class="radio-inline"><input type="radio" name="type" value="primary"> <button type="button" class="btn btn-primary btn-sm">リンク文字</button></label><label class="radio-inline"><input type="radio" name="type" value="info"> <button type="button" class="btn btn-info btn-sm">リンク文字</button></label></div></div><div class="form-group"><div class="col-sm-12"><label class="radio-inline"><input type="radio" name="type" value="success"> <button type="button" class="btn btn-success btn-sm">リンク文字</button></label><label class="radio-inline"><input type="radio" name="type" value="danger"> <button type="button" class="btn btn-danger btn-sm">リンク文字</button></label><label class="radio-inline"><input type="radio" name="type" value="warning"> <button type="button" class="btn btn-warning btn-sm">リンク文字</button></label></div></div><div class="form-group"><div class="col-sm-12"><label class="radio-inline"><input type="radio" name="type" value="default"> <button type="button" class="btn btn-default btn-sm">リンク文字</button></label><label class="radio-inline"><input type="radio" name="type" value="theme"> <button type="button" class="btn btn-default btn-theme btn-sm" data-toggle="tooltip" title="このボタンは、デザイン毎に色が変わります">リンク文字</button></label></div></div></div></div>' +
-				'<div class="form-group newwin"><label for="" class="col-sm-3"></label><div class="col-sm-9"><div class="checkbox"><label ><input type="checkbox" name="newwin" /> 新しいウィンドウで開く</label></div></div></div>' +
-				'</form></div>',
+		dialog: 'external:plugin_link.html',
 		focus: false,
 		onDialogOpen: function(){
 			var self = this, exnote = $(this.textarea).data("exnote");
@@ -2899,314 +2299,13 @@ ORGM.plugins = {
 			this.insert(link_str);
 		}
 	},
-	// !別ウィンドウ
-	otherwin: {
-		label: "別ウィンドウ",
-		format: "&otherwin({url}){{text}};",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">URL<br /></label>' +
-				'<div class="controls"><input type="text" name="url" placeholder="リンク先のURL" /></div>' +
-				'</div><div class="form-group">' +
-				'<label for="" class="control-label">表示文字</label>'+
-				'<div class="controls"><input type="text" name="text" placeholder="" /></div></div></form>',
-		onDialogOpen: function(){
-			var exnote = $(this.textarea).data("exnote"),
-				text = exnote.getSelectedText();
 
-			if (text.length > 0) {
-				var $modal = $(this.dialogElement);
-				text = text.replace(/\n|\r/g, '&br;');
-				$modal.find("[name=text]").val(text);
-			}
-		},
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var url = $modal.find("[name=url]").val(),
-				text = $modal.find("[name=text]").val();
-			var value = this.format.replace("{url}", url).replace("{text}", text);
-			this.insert(value);
-		}
-	},
-	// !アンカー
-	aname: {
-		label:"アンカー",
-		format: "&aname({aname});",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">アンカー名<br /></label>' +
-				'<div class="controls"><input type="text" name="aname" placeholder="" /></div>' +
-				'</div></form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var aname = $modal.find("[name=aname]").val();
-			var value = this.format.replace("{aname}", aname);
-			this.insert(value);
-		}
-	},
-	// !戻る
-	back: {
-		label: "戻る",
-		format: "\n#back({text},{align},{hr},{url})\n",
-		options: {
-			align: [
-				{label: "左", value: "left"},
-				{label: "中央", value: "center"},
-				{label: "右", value: "right"}
-			],
-			hr: [
-				{label: "表示する", value: "1"},
-				{label: "表示しない", value: "0"}
-			]
-		},
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">表示文字<br /></label>' +
-				'<div class="controls"><input type="text" name="text" /></div>' +
-				'</div><div class="form-group">' +
-				'<label for="" class="control-label">表示位置<br /></label>' +
-				'<div class="controls"><input type="radio" name="align" /></div></div>' +
-				'</div><div class="form-group">' +
-				'<label for="" class="control-label">水平線<br /></label>' +
-				'<div class="controls"><input type="radio" name="hr" /></div></div>' +
-				'</div><div class="form-group">' +
-				'<label for="" class="control-label">戻り先<br /></label>' +
-				'<div class="controls"><input type="text" name="url"  placeholder="ページ名、またはURL" /></div>' +
-				'</div></form>',
-		onStart: function(){
-			var helper = this;
-			if (typeof this.init == "undefined") {
-				this.init = true;
-
-				// make dialog
-				var $dialog = $(this.dialog);
-				$dialog.find("input:radio").each(function(){
-					var $this = $(this);
-					var name = $(this).attr("name");
-					
-					var options = helper.options[name];
-					for (var i in options) {
-						var option = options[i];
-						$this.parent().append('<label class="radio inline"><input type="radio" name="'+name+'" /></label>')
-							.find("label:last-child")
-							.css({cursor: "pointer", marginLeft: "20px"})
-								.find("input").val(option.value)
-								.after("<span></span>")
-									.next().text(' '+option.label);
-					}
-				}).remove();
-
-				this.dialog = $dialog.wrap("<div></div>").parent().html();
-			}
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote");
-
-			var data = {}, text, value = this.format;
-			
-			$dialog.find("input:radio").each(function(){
-				var name = $(this).attr("name");
-				data[name] = $(this).val();
-			});
-
-			$dialog.find("input:text").each(function(){
-				var name = $(this).attr("name");
-				data[name] = $(this).val();
-			});
-
-			for (var key in data) {
-				var val = data[key];
-				value = value.replace("{"+key+"}", val);
-			}
-			exnote.insert(value);
-		}
-	},
-	// !タグ
-	tag: {
-		label: "タグ",
-		format: "&tag({tag});",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">タグ<br /></label>' +
-				'<div class="controls"><input type="text" name="tag" placeholder="タグ名を「,（カンマ）」区切りで指定します" /></div>' +
-				'</div></form>',
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var tag = $dialog.find("input[name=tag]").val();
-			tag = tag.replace(/、/g, ",");
-			var value = this.format.replace("{tag}", tag);
-			this.insert(value);
-		}
-	},
-	// !タグリスト
-	taglist: {
-		label: "タグ付きページのリスト",
-		value: "#taglist\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	// !タグクラウド
-	tagcloud: {
-		label: "タグのリスト",
-		value: "#tagcloud\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	
-	// !ページ情報
-	title: {
-		label: "ページタイトル",
-		value: "TITLE: ここにタイトルを入れる\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	// !自動リンク無効
-	noautolink: {
-		label: "自動リンク無効",
-		value: "NOAUTOLINK:\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	// !キーワード
-	keywords: {
-		label: "キーワードの変更",
-		format: "\n#keywords({keys})\n",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">キーワード<br /></label>' +
-				'<div class="controls"><input type="text" name="keys" placeholder="キーワードを「,（カンマ）」区切りで指定します" /></div>' +
-				'</div></form>',
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var keys = $dialog.find("input[name=keys]").val();
-			keys = keys.replace(/、/g, ",");
-			var value = this.format.replace("{keys}", keys);
-			this.insert(value);
-		}
-	},
-	// !サイトの説明
-	description: {
-		label: "サイトの説明の変更",
-		format: "\n#description({text})\n",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">サイトの説明<br /></label>' +
-				'<div class="controls"><input type="text" name="text" placeholder="サイトの説明" /></div>' +
-				'</div></form>',
-		onDialogOpen: function(){
-			var exnote = $(this.textarea).data("exnote"),
-				text = exnote.getSelectedText();
-
-			if (text.length > 0) {
-				var $modal = $(this.dialogElement);
-				text = text.replace(/\n|\r/g, '');
-				$modal.find("[name=text]").val(text);
-			}
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var text = $dialog.find("input[name=text]").val();
-			text = text.replace(/、/g, ",");
-			var value = this.format.replace("{text}", text);
-			this.insert(value);
-		}
-	},
-	// !フリータイトル
-	freetitle: {
-		label: "フリータイトル",
-		value: "FREETITLE: ここにタイトルを入れる\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	// !ヘッドコピー
-	headcopy: {
-		label: "ヘッドコピー",
-		value: "HEAD:ここにヘッドコピーを書く\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
 	// !クロール禁止
 	noindex: {
 		label: "クロール禁止",
-		value: "NOINDEX:\n",
+		value: "#noindex\n",
 		onStart: function(){
 			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
-	// !サイトマップURL
-	sitemap: {
-		label: "サイトマップのURL",
-		value: "",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">URL<br /></label>' +
-				'<div class="controls"><input type="text" name="url" placeholder="" readonly /></div>' +
-				'</div></form>' +
-				'<span class="help">コピーしてご利用ください</span>',
-		onDialogOpen: function(){
-			var $modal = $(this.dialogElement);
-			var url = ORGM.baseUrl + '?cmd=sitemap';
-			$modal.find("[name=url]").val(url).css({cursor:"pointer",backgroundColor:"#fff"}).click(function(){
-				$(this).focus().select();
-			});
-			$modal.find(".modal-complete").hide();
-			this.addToRecent();
-		}
-	},
-	// !RSS
-	rss: {
-		label: "RSS",
-		value: "",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">URL<br /></label>' +
-				'<div class="controls"><input type="text" name="url" placeholder="" readonly /></div>' +
-				'</div></form>' +
-				'<span class="help">コピーしてご利用ください</span>',
-		onDialogOpen: function(){
-			var $modal = $(this.dialogElement);
-			var url = ORGM.baseUrl + '?cmd=rss';
-			$modal.find("[name=url]").val(url).css({cursor:"pointer",backgroundColor:"#fff"}).click(function(){
-				$(this).focus().select();
-			});
-			$modal.find(".modal-complete").hide();
-			this.addToRecent();
-		}
-	},
-
-	// !PayPal カートを見るボタン
-	pp_cart: {
-		label: "カートを見るボタン",
-		format: "&pp_cart({account});",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">アカウント<br /></label>' +
-				'<div class="controls"><input type="text" name="account" placeholder="PayPalアカウント（メールアドレス）を入力します" /></div>' +
-				'</div></form>',
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var account = $dialog.find("input[name=account]").val();
-			var value = this.format.replace("{account}", account);
-			this.insert(value);
-		}
-	},
-	// !PayPal カートに追加ボタン
-	pp_button: {
-		label: "カートに追加ボタン",
-		format: "&pp_button({account},{product},{price});",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">アカウント</label><div class="controls"><input type="text" name="account" placeholder="PayPalアカウント（メールアドレス）を入力します" /></div></div>' +
-				'<div class="form-group"><label for="" class="control-label">商品名</label><div class="controls"><input type="text" name="product" placeholder="" /></div></div>' +
-				'<div class="form-group"><label for="" class="control-label">価格</label><div class="input-prepend"><span class="add-on">¥</span><input type="text" name="price" placeholder="" class="col-sm-2" /></div></div>' +
-				'</form>',
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var data = {};
-			$dialog.find("div.form-group input:text").each(function(){
-				var name = $(this).attr("name");
-				data[name] = $(this).val();
-			});
-			data.price = data.price.replace(',', '').replace('¥', '');
-			var value = this.replaceFormat(data);
-			this.insert(value);
 		}
 	},
 	
@@ -3218,14 +2317,7 @@ ORGM.plugins = {
 			$(this.textarea).data("exnote").moveToNextLine();
 		}
 	},
-	// !検索窓（メニュー）
-	search_menu: {
-		label: "検索窓（メニュー）",
-		value: "#search_menu\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
+
 	// !Google検索窓
 	gsearch: {
 		label: "Google検索窓",
@@ -3237,86 +2329,9 @@ ORGM.plugins = {
 			return false;
 		}
 	},
-	
-	// !お気に入り
-	addfavorite: {
-		label: "お気に入りに登録",
-		format: "&addfavorite({title});",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">サイト名<br /></label>' +
-				'<div class="controls"><input type="text" name="title" placeholder="サイト名" /></div>' +
-				'</div></form>',
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var title = $dialog.find("input[name=title]").val();
-			this.insert(this.format.replace("{title}", title));
-		}
-	},
-	// !Yahooブックマーク
-	yahoobookmark: {
-		label: "Yahoo!ブックマーク",
-		format: "&yahoobookmark({title});",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">サイト名<br /></label>' +
-				'<div class="controls"><input type="text" name="title" placeholder="サイト名" /></div>' +
-				'</div></form>',
-		onComplete: function(){
-			var $dialog = $(this.dialogElement);
-			var title = $dialog.find("input[name=title]").val();
-			this.insert(this.format.replace("{title}", title));
-		}
-	},
-	// !Googleリーダー
-	addgoogle: {
-		label: "Googleリーダー",
-		value: "&addgoogle;"
-	},
-	
+		
 	// !サイト情報
-	// !最終更新日
-	lastmod: {
-		label:"最終更新日",
-		format: "&lastmod({pagename});",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">ページ名<br /></label>' +
-				'<div class="controls"><input type="text" name="pagename" placeholder="ページ名" autocomplete="off" class="typeahead"></div>' +
-				'</div></form>',
-		onDialogOpen: function(){
-			//オートコンプリート
-			var $dialog = $(this.dialogElement);
-			$.when(ORGM.getPagesForTypeahead()).done(function(){
-				$dialog.find("input[name=pagename]").typeahead({
-					local: ORGM.pagesForTypeahead,
-					engine: ORGM.tmpl,
-					template: ORGM.pageSuggestionTemplateForTypeahead,
-				});
-			}).fail(function(){});
-			
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-			var pagename = $dialog.find("input[name=pagename]").val();
-			
-			this.insert(this.format.replace("{pagename}", pagename));
-		}
-	},
-	// !人気の○件
-	popular: {
-		label: "人気の○件",
-		value: "\n#popular(5)\n",
-		onStart: function(){
-			var exnote, value = "", caret;
-			exnote = $(this.textarea).data("exnote");
-			caret = {
-					offset: -3,
-					length: 1
-			};
-			exnote.insert(this.value, caret);
-			return false;
-		}
-	},
+
 	// !更新の○件
 	recent: {
 		label: "最新の○件",
@@ -3325,57 +2340,13 @@ ORGM.plugins = {
 			return ORGM.plugins.popular.onStart.call(this);
 		}
 	},
-	// !QRコード
-	qr: {
-		label: "QRコード",
-		format: "&qr({url});",
-		dialog: '<form action="" class="form-horizontal">' + 
-				'<div class="form-group"><label for="" class="control-label">URL</label><div class="controls"><input type="text" name="url" placeholder="" /></div></div>' + 
-				'</form>',
-		onComplete: function(){
-			var $modal = $(this.dialogElement);
-			var url = $modal.find("[name=url]").val();
-			var value = this.format.replace("{url}", url);
-			this.insert(value);
-		}
-	},
-	// Newマーク
-	newmark: {
-		label: "Newマーク",
-		format: "&new({pagename},nolink);",
-		dialog: '<form action="" class="form-horizontal"><div class="form-group">' + 
-				'<label for="" class="control-label">対象ページ<br /></label>' +
-				'<div class="controls"><input type="text" name="pagename" placeholder="対象のページ名を指定" autocomplete="off" class="typeahead"></div>' +
-				'</div></form>',
-		onDialogOpen: function(){
-			//オートコンプリート
-			var $dialog = $(this.dialogElement);
-			$.when(ORGM.getPagesForTypeahead()).done(function(){
-				$dialog.find("input[name=pagename]").typeahead({
-					local: ORGM.pagesForTypeahead,
-					engine: ORGM.tmpl,
-					template: ORGM.pageSuggestionTemplateForTypeahead,
-				});
-			}).fail(function(){});
-			
-		},
-		onComplete: function(){
-			var $dialog = $(this.dialogElement),
-				exnote = $(this.textarea).data("exnote");
-			exnote.moveToNextLine();
-			var pagename = $dialog.find("input[name=pagename]").val();
-			
-			this.insert(this.format.replace("{pagename}", pagename));
-		}
-	},
-	
-	
+
 	// !ソーシャルプラグイン
 	// !複数のソーシャルボタン
 	share_buttons:{
 		label: "シェアボタン",
 		format: "\n#share_buttons({buttons})\n",
-		dialog: '<div class="share_buttons"><ul class="nav nav-pills"><li><a href="#" data-name="facebook" class="facebook active"><i class="orgm-icon orgm-icon-facebook-2"></i></a></li><li><a href="#" data-name="twitter" class="twitter active"><i class="orgm-icon orgm-icon-twitter-2"></i></a></li><li><a href="#" class="google-plus active" data-name="google-plus"><i class="orgm-icon orgm-icon-google-plus-2"></i></a></li></ul></div><p>※ クリックでオンオフを切り替えれます</p>',
+		dialog: 'external:plugin_share_buttons.html',
 		onStart: function(){},
 		onDialogOpen: function(){
 			
@@ -3416,13 +2387,6 @@ ORGM.plugins = {
 			this.insert(this.format.replace('{buttons}', buttons));
 		}
 	},
-	social_buttons: {
-		label: "複数のソーシャルボタン"	,
-		value: "\n#social_buttons\n",
-		onStart: function(){
-			$(this.textarea).data("exnote").moveToNextLine();
-		}
-	},
 	// !Facebook いいねボタン
 	fb_likebutton: {
 		label: "Facebook いいねボタン",
@@ -3435,7 +2399,7 @@ ORGM.plugins = {
 	fb_likebox: {
 		label: "Facebook いいねボックス",
 		format: "#fb_likebox(${url},${options})\n",
-		dialog: '<div class="row"><div class="col-sm-6"><form class=""><div class="form-group"><label for="" class="control-label">FacebookページのURL</label><div class="controls"><input type="text" name="url" value="http://www.facebook.com/hokuken" class="form-control input-sm" /></div></div><div class="form-group"><label for="" class="control-label">横幅 × 高さ</label><div class="controls row"><div class="col-sm-5"><input type="text" name="width" value="240" class="form-control input-sm" /></div><div class="col-sm-1"> × </div><div class="col-sm-5"><input type="text" name="height" placeholder="自動" class="form-control input-sm" /></div></div></div><div class="form-group"><label for="" class="control-label">色合い</label><div class="controls"><label class="radio-inline"><input type="radio" name="color_scheme" value="light" checked /> 明</label><label class="radio-inline"><input type="radio" name="color_scheme" value="dark" /> 暗</label></div></div></form><hr><form class=""><div class="row"><label for="" class="col-sm-6">表示設定</label></div><div class="row"><label for="" class="col-sm-7">枠線</label><div class="col-sm-5"><input type="hidden" name="show_border" value="false"><div class="checkbox"><label><input type="checkbox" name="show_border" value="true" checked /> 表示する</label></div></div></div><div class="row"><label for="" class="col-sm-7">プロフィール写真</label><div class="col-sm-5"><input type="hidden" name="show_faces" value="false"><div class="checkbox"><label><input type="checkbox" name="show_faces" value="true" checked /> 表示する</label></div></div></div><div class="row"><label for="" class="col-sm-7">投稿内容</label><div class="col-sm-5"><input type="hidden" name="stream" value="false"><div class="checkbox"><label><input type="checkbox" name="stream" value="true" checked /> 表示する</label></div></div></div><div class="row"><label for="" class="col-sm-7">ヘッダー</label><div class="col-sm-5"><input type="hidden" name="header" value="false"><div class="checkbox"><label><input type="checkbox" name="header" value="true" checked> 表示する</label></div></div></div></form></div><div class="col-sm-6"><p>例）</p><div class="previewarea"></div></div></div>',
+		dialog: 'external:plugin_fb_likebox.html',
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement)
 				,self = this;
@@ -3552,7 +2516,7 @@ ORGM.plugins = {
 	fb_comments: {
 		label: "Facebook コメント欄",
 		format: "#fb_comments(${url},${options})\n",
-		dialog: '<div class="row"><div class="col-sm-6"><form action="" class=""><div class="form-group"><label for="" class="control-label">URL</label><div class="controls"><input type="text" name="url" placeholder="指定なしで現在のページ" class="form-control input-sm"></div></div><div class="form-group"><label for="" class="control-label">横幅</label><div class="row"><div class="input-group col-sm-5"><input type="text" name="width" value="550" class="form-control input-sm" placeholder="" /><span class="input-group-addon input-sm">px</span></div></div></div><div class="form-group"><label for="" class="control-label">表示コメント数</label><div class="controls row"><div class="col-sm-4"><input type="text" name="num_posts" value="2" class="form-control input-sm" placeholder="" /></div></div></div><div class="form-group"><label for="" class="control-label">色合い</label><div class="controls"><label class="radio-inline"><input type="radio" name="color_scheme" value="light" checked /> 明</label><label class="radio-inline"><input type="radio" name="color_scheme" value="dark" /> 暗</label></div></div></form></div><div class="col-sm-6"><p>例）</p><div class="previewarea"></div></div></div>',
+		dialog: 'external:plugin_fb_comments.html',
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement)
 				,self = this;

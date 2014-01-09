@@ -1,0 +1,91 @@
+<div class="row">
+	<div class="col-sm-6">
+		<form class="">
+			<div class="form-group">
+				<label for="" class="control-label">FacebookページのURL</label>
+				<div class="controls">
+					<input type="text" name="url" value="http://www.facebook.com/hokuken" class="form-control input-sm" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label">横幅 × 高さ</label>
+				<div class="controls row">
+					<div class="col-sm-5">
+						<input type="text" name="width" value="240" class="form-control input-sm" />
+					</div>
+					<div class="col-sm-1"> × </div>
+					<div class="col-sm-5">
+						<input type="text" name="height" placeholder="自動" class="form-control input-sm" />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label">色合い</label>
+				<div class="controls">
+					<label class="radio-inline">
+						<input type="radio" name="color_scheme" value="light" checked /> 明
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="color_scheme" value="dark" /> 暗
+					</label>
+				</div>
+			</div>
+		</form>
+		
+		<hr>
+		
+		<form class="">
+			<div class="row">
+				<label for="" class="col-sm-6">表示設定</label>
+			</div>
+			<div class="row">
+				<label for="" class="col-sm-7">枠線</label>
+				<div class="col-sm-5">
+					<input type="hidden" name="show_border" value="false">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="show_border" value="true" checked /> 表示する
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label for="" class="col-sm-7">プロフィール写真</label>
+				<div class="col-sm-5">
+					<input type="hidden" name="show_faces" value="false">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="show_faces" value="true" checked /> 表示する
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label for="" class="col-sm-7">投稿内容</label>
+				<div class="col-sm-5">
+					<input type="hidden" name="stream" value="false">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="stream" value="true" checked /> 表示する
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label for="" class="col-sm-7">ヘッダー</label>
+				<div class="col-sm-5">
+					<input type="hidden" name="header" value="false">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="header" value="true" checked> 表示する
+						</label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-sm-6">
+		<p>例）</p>
+		<div class="previewarea"></div>
+	</div>
+</div>
