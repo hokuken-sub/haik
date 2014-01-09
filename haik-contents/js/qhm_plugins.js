@@ -292,7 +292,7 @@ ORGM.plugins = {
 	// !アイキャッチ
 	eyecatch: {
 		label: "アイキャッチ",
-		format: "${br}#eyecatch(${options}){{{${br}${title}${br}${subtitle}${br}}}}${br}",
+		format: "${br}#eyecatch(${options}){{{${br}${title}${br}${br}${subtitle}${br}}}}${br}",
 		options: {
 			filer: {
 				options: {search_word: ":image", select_mode: "exclusive"}
