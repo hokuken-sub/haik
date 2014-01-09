@@ -486,11 +486,6 @@ select.form-control {
 	background-size: auto;
 	background-repeat: repeat;
 }
-
-.haik-section > div > div {
-	width: 100%;
-}
-
 .haik-section[data-horizontal-align=left] > div {
 	text-align: left;
 }
@@ -828,3 +823,19 @@ ul.thumbnails {
 	background-color: transparent;
 }
 */
+
+.icon-bar {
+    display: block;
+    width: 22px;
+    height: 3px;
+    border-radius: 1px;
+    background-color: #222;
+}
+.icon-bar+.icon-bar {
+    margin-top: 2px;
+}
+.icon-bar.transparent{
+    background-color: transparent;
+}
+
+

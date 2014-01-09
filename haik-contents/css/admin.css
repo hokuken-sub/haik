@@ -1096,3 +1096,11 @@ ul.orgm-page-list li.nav-header{
 	margin-right: 15px;
 	font-weight: normal;
 }
+
+[data-plugin=eyecatch] .icon-bar {
+	width: 14px;
+}
+
+[data-plugin=eyecatch] .plugin_eyecatch-style div {
+	padding: 15px;
+}

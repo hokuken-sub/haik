@@ -2161,6 +2161,7 @@ function get_plugin_list()
 				'cols2',
 				'cols3',
 				'cols4',
+				'eyecatch',
 			)
 		),
 		array(
