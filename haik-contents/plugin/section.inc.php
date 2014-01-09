@@ -29,13 +29,14 @@ function plugin_section_convert()
 	
 	$h_align  = 'center';//left|center|right
 	$v_align  = 'middle';//top|middle|bottom
-	$height   = '300px';
+	$height   = '320px';//awesome!
 	$type     = 'cover';//cover|repeat
 	$style    = 'default';//primary|info|success|warning|danger
 	$fullpage =  FALSE;//full height section; fit window size
 	
 	$relative  = TRUE;//position: relative
 	$container = TRUE;//FALSE to enable 'fit' option
+	$jumbotron = FALSE;//FALSE to remove .jumbotron
 
 	$color = FALSE;//inherit
 	
@@ -95,6 +96,7 @@ function plugin_section_convert()
 		else if ($arg === 'fit')
 		{
 			$container = FALSE;
+			$attrs['style'] .= 'padding: 0;';
 		}
 		else if ($arg === 'fix')
 		{
@@ -104,14 +106,28 @@ function plugin_section_convert()
 		{
 			$relative = FALSE;
 		}
+		else if ($arg === 'jumbotron')
+		{
+			$jumbotron = TRUE;
+		}
+		else if ($arg === 'nojumbotron')
+		{
+			$jumbotron = FALSE;
+		}
 		// eyecatch プラグインからの呼び出し時に自動的に付けられるオプション
 		else if ($arg === 'eyecatch')
 		{
 			$additional_class .= ' haik-eyecatch';
+			$jumbotron = TRUE;
 		}
 	}
 	
 	// !set attributes
+
+	if ($jumbotron)
+	{
+		$attrs['class'] = 'jumbotron ' . $attrs['class'];
+	}
 	
 	//set base class
 	$attrs['class'] .= ' haik-section-' . $style;
@@ -148,6 +164,7 @@ function plugin_section_convert()
 		$attrs['data-background-image'] = $background_image;
 		$attrs['data-background-type'] = $type;
 	}
+	
 	
 	if ($fullpage)
 	{
