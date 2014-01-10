@@ -2133,7 +2133,7 @@ function get_qhm_toolbuttons()
 		),
 		array(
 			'name'=>'show',
-			'children' => array('showdummy')
+			'children' => array('showdummy', 'file')
 		),
 		'link',
 		'br',
@@ -2150,24 +2150,15 @@ function get_plugin_list()
 			'plugins' => array(
 				'deco',
 				'ul',
-				'align'
-			)
-		),
-		array(
-			'name' => 'レイアウト',
-			'plugins' => array(
-				'box',
-				'table',
-				'cols2',
-				'cols3',
-				'cols4',
-				'eyecatch',
+				'align',
 			)
 		),
 		array(
 			'name' => '挿入',
 			'plugins' => array(
+				'eyecatch',
 				'contents',
+				'box',
 				'hr',
 				'slide',
 				'html',
@@ -2177,6 +2168,15 @@ function get_plugin_list()
 				'download',
 				'file',
 			),
+		),
+		array(
+			'name' => 'レイアウト',
+			'plugins' => array(
+				'table',
+				'cols2',
+				'cols3',
+				'cols4',
+			)
 		),
 		array(
 			'name' => 'コンタクト',
