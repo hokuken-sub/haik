@@ -545,6 +545,7 @@ ul.orgm-page-list li.nav-header{
 	background-color:#eee;
 	margin-bottom: 5px;
 	font-size: 12px;
+	overflow: hidden;
 }
 
 #orgm_plugin_modal[data-plugin=slide] a.image img{
