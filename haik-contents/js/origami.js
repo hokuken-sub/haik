@@ -231,7 +231,7 @@
 			
 			var resizeSection = function resizeSection() {
 				var windowHeight = $(window).height() - ORGM.navbarHTotal;
-				$sections.height(windowHeight);
+				$sections.innerHeight(windowHeight);
 			};
 			resizeSection();
 			$(window).on("resize", resizeSection);

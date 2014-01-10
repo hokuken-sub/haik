@@ -136,8 +136,8 @@ if ($is_editor OR ss_admin_check())
     $admin_script = <<< EOS
 <script src="{$js_dir}jquery.exnote.js"></script>
 <script src="{$js_dir}jquery.colorpalette.js"></script>
-<script src="{$js_dir}jquery.qhm_plugin_helper.js"></script>
-<script src="{$js_dir}qhm_plugins.js"></script>
+<script src="{$js_dir}jquery.haik_plugin_helper.js"></script>
+<script src="{$js_dir}haik_plugins.js"></script>
 <script src="{$js_dir}admin.js"></script>
 <script src="{$js_dir}jquery.ui.widget.js"></script>
 <script src="{$js_dir}upload/js/jquery.iframe-transport.js"></script>

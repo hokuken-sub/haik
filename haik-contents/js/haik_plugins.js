@@ -1,13 +1,13 @@
 /**
- *   QHM Plugins
+ *   Haik Plugins
  *   -------------------------------------------
- *   js/qhm_plugins.js
+ *   js/haik_plugins.js
  *   
  *   Copyright (c) 2014 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 12/10/25
- *   modified : 14/01/09
+ *   modified : 14/01/10
  */
 
 if (typeof ORGM == "undefined") {
@@ -323,9 +323,9 @@ ORGM.plugins = {
 						if (selectedFiles.length > 0) {
 							$image.css('background-image', 'url('+selectedFiles[0].filepath+')');
 							$('input[name=image]',$dialog).val(selectedFiles[0].filename);
-							if (! $('input[name=bgtype]:checked').length ||
-									$('input[name=bgtype]:checked').val() == 'cover') {
-								$('input[name=bgtype][value=cover]').click();
+							if (! $('input[name=bgimagetype]:checked').length ||
+									$('input[name=bgimagetype]:checked').val() == 'cover') {
+								$('input[name=bgimagetype][value=cover]').click();
 							}
 							$filer.modal("hide");
 						}
@@ -337,7 +337,7 @@ ORGM.plugins = {
 
 				$filer.data("footer", "").modal();
 			})
-			.on('change', 'input[name=bgtype]', function(){
+			.on('change', 'input[name=bgimagetype]', function(){
 				var $image = $('[data-image]');
 
 				if ($(this).val() == 'cover') {
@@ -435,15 +435,15 @@ ORGM.plugins = {
 			}
 			
 			if (typeof options.image != "undefined") {
-				if (typeof options.bgtype != 'undefined') {
-					if (options.bgtype != 'repeat') {
-						delete options.bgtype;
+				if (typeof options.bgimagetype != 'undefined') {
+					if (options.bgimagetype != 'repeat') {
+						delete options.bgimagetype;
 					}
 				}
 			}
 			else {
-				if (typeof options.bgtype != 'undefined') {
-					delete options.bgtype;
+				if (typeof options.bgimagetype != 'undefined') {
+					delete options.bgimagetype;
 				}
 				if (typeof options.fix != 'undefined') {
 					delete options.fix;
@@ -1994,6 +1994,7 @@ ORGM.plugins = {
 	// !マルチメディア
 	file: {
 		label: "ファイル名",
+		style: {},
 		options: {
 			formats: {
 				normal: '&show({name},,{title});',
@@ -2599,7 +2600,7 @@ ORGM.plugins = {
 		label: ">>",
 		addable: false,
 		onStart: function(){
-			QHMPluginHelper.openList();
+			ORGM.HaikPluginHelper.openList();
 			return false;
 		}
 	},

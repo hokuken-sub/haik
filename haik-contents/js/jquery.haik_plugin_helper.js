@@ -1,13 +1,13 @@
 /**
- *   QHM Plugin Helper
+ *   Haik Plugin Helper
  *   -------------------------------------------
- *   js/jquery.qhm_plugins.js
+ *   js/jquery.haik_plugin_helper.js
  *   
- *   Copyright (c) 2013 hokuken
+ *   Copyright (c) 2014 hokuken
  *   http://hokuken.com/
  *   
  *   created  : 12/10/23
- *   modified : 14/01/08 add external template
+ *   modified : 14/01/10
  *   
  *   Description
  *   
@@ -18,7 +18,7 @@
 !function($){
 
 	/** PluginHelper Class definition */
-	QHMPluginHelper = function(name, options){
+	var HaikPluginHelper = function(name, options){
 		var helper = this;
 		
 		for (var key in options) {
@@ -35,63 +35,63 @@
 		this.name = name;
 	};
 	
-	QHMPluginHelper.init = function(element){
+	HaikPluginHelper.init = function(element){
 		var options = $(element).data();
 		options = $.extend(ORGM.plugins[options.name], options);
 		if (options) {
 			options.element = element;
-			var helper = new QHMPluginHelper(options.name, options);
-			$(options.element).data("qhmPluginHelper", helper);
+			var helper = new HaikPluginHelper(options.name, options);
+			$(options.element).data("HaikPluginHelper", helper);
 		}
 	};
-	QHMPluginHelper.directCall = function(options){
+	HaikPluginHelper.directCall = function(options){
 		if (options) {
 			options = $.extend(ORGM.plugins[options.name], options);
-			var helper = new QHMPluginHelper(options.name, options);
+			var helper = new HaikPluginHelper(options.name, options);
 			helper.exec();
 		}
 	};
 	
 	//Lorem Ipsum
-	QHMPluginHelper.lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+	HaikPluginHelper.lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 	
 	/** Plugin List */
-	QHMPluginHelper.maxFavorites = 0;//0: infinity
-	QHMPluginHelper.favorites = [];// Array or false
-	QHMPluginHelper.maxRecent = 10;
-	QHMPluginHelper.recent = [];//Array or false
+	HaikPluginHelper.maxFavorites = 0;//0: infinity
+	HaikPluginHelper.favorites = [];// Array or false
+	HaikPluginHelper.maxRecent = 10;
+	HaikPluginHelper.recent = [];//Array or false
 	
-	QHMPluginHelper.saveList = function(target, list){
-		if (typeof QHMPluginHelper[target] !== "undefined")
+	HaikPluginHelper.saveList = function(target, list){
+		if (typeof HaikPluginHelper[target] !== "undefined")
 			localStorage.setItem($.camelCase("qhm-plugin-helper-" + target), JSON.stringify(list));
 	};
-	QHMPluginHelper.readList = function(target){
+	HaikPluginHelper.readList = function(target){
 		if (typeof localStorage.getItem($.camelCase("qhm-plugin-helper-" + target)) !== "undefined") {
 			var list = JSON.parse(localStorage.getItem($.camelCase("qhm-plugin-helper-" + target)));
 			if ($.isArray(list)) {
-				if (typeof QHMPluginHelper[target] !== "undefined")
-					QHMPluginHelper[target] = list;
+				if (typeof HaikPluginHelper[target] !== "undefined")
+					HaikPluginHelper[target] = list;
 			}
 			else {
-				QHMPluginHelper.saveList(target, []);
-				QHMPluginHelper[target] = [];
+				HaikPluginHelper.saveList(target, []);
+				HaikPluginHelper[target] = [];
 			}
 		}
 	};
 	
-	QHMPluginHelper.addToList = function(target, name){
+	HaikPluginHelper.addToList = function(target, name){
 	
 	
 		if (typeof ORGM.plugins !== "undefined" &&
 			typeof ORGM.plugins[name] !== "undefined" &&
-			typeof QHMPluginHelper[target] !== "undefined" &&
-			QHMPluginHelper[target] !== false) {
+			typeof HaikPluginHelper[target] !== "undefined" &&
+			HaikPluginHelper[target] !== false) {
 
 			// ない
-			var idx = QHMPluginHelper[target].indexOf(name);
+			var idx = HaikPluginHelper[target].indexOf(name);
 			if (idx < 0) {
-				var list = QHMPluginHelper[target],
-					max = QHMPluginHelper[$.camelCase("max-" + target)];
+				var list = HaikPluginHelper[target],
+					max = HaikPluginHelper[$.camelCase("max-" + target)];
 				list.unshift(name);
 				if (max > 0 && list.length > max) {
 					list.splice(max, list.length - max);
@@ -99,12 +99,12 @@
 			}
 			//ある
 			else {
-				var list = QHMPluginHelper[target];
+				var list = HaikPluginHelper[target];
 				list.splice(idx, 1);
 				list.unshift(name);
 			}
 			//update localstorage
-			QHMPluginHelper.saveList(target, list);
+			HaikPluginHelper.saveList(target, list);
 			return true;
 		}
 		
@@ -112,12 +112,12 @@
 		
 	};
 	
-	QHMPluginHelper.removeOfList = function(target, name){
+	HaikPluginHelper.removeOfList = function(target, name){
 		if (typeof ORGM.plugins !== "undefined" &&
 			typeof ORGM.plugins[name] !== "undefined" &&
-			typeof QHMPluginHelper[target] !== "undefined" &&
-			QHMPluginHelper[target] !== false) {
-			var list = QHMPluginHelper[target];
+			typeof HaikPluginHelper[target] !== "undefined" &&
+			HaikPluginHelper[target] !== false) {
+			var list = HaikPluginHelper[target];
 			
 			var idx = list.indexOf(name);
 			
@@ -125,15 +125,15 @@
 				list.splice(idx, 1);
 			}
 			//update localstorage
-			QHMPluginHelper.saveList(target, list);
+			HaikPluginHelper.saveList(target, list);
 			return true;
 		}
 		return false;
 	}
 	
-	QHMPluginHelper.listElement = null;
-	QHMPluginHelper.initList = function(){
-		if (QHMPluginHelper.listElement !== null) return;
+	HaikPluginHelper.listElement = null;
+	HaikPluginHelper.initList = function(){
+		if (HaikPluginHelper.listElement !== null) return;
 		if (typeof ORGM.pluginCategories === "undefined") return;
 		
 		var html = "";
@@ -176,18 +176,18 @@
 		.on("show.bs.modal", function(){
 
 			//set list
-			if (QHMPluginHelper.favorites !== false) {
+			if (HaikPluginHelper.favorites !== false) {
 				
 				
 			}
-			if (QHMPluginHelper.recent !== false) {
+			if (HaikPluginHelper.recent !== false) {
 				var $helperRecent = $modal.find("div.modal-header div.plugin-helper-recent");
 				if ($helperRecent.length > 0) {
 					var $ul = $helperRecent.find("ul.dropdown-menu").empty();
 					
 					var list = [];
 					
-					_.forEach(QHMPluginHelper.recent, function(name, i){
+					_.forEach(HaikPluginHelper.recent, function(name, i){
 						if (typeof ORGM.plugins[name] === "undefined") {
 							return;
 						}
@@ -222,22 +222,22 @@
 					textarea: "#msg"
 			    };
 
-			if (typeof $a.data("qhmPluginHelper") === "undefined") {
-				QHMPluginHelper.init(this);
-				$a.data("qhmPluginHelper").setCancelCallback(callback).exec();
+			if (typeof $a.data("HaikPluginHelper") === "undefined") {
+				HaikPluginHelper.init(this);
+				$a.data("HaikPluginHelper").setCancelCallback(callback).exec();
 			}
 			else {
-				$a.data("qhmPluginHelper").setCancelCallback(callback);
+				$a.data("HaikPluginHelper").setCancelCallback(callback);
 			}
 		});
 
 		
 		//init list
-		if (QHMPluginHelper.favorites !== false) {
+		if (HaikPluginHelper.favorites !== false) {
 			
 			
 		}
-		if (QHMPluginHelper.recent !== false) {
+		if (HaikPluginHelper.recent !== false) {
 			
 			var $dropdown = $('<div class="btn-group pull-right plugin-helper-recent"><a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="orgm-icon orgm-icon-time"></i> {action} <span class="caret"></span></a><ul class="dropdown-menu"></ul></div>'.replace("{action}", "履歴"));
 
@@ -245,17 +245,17 @@
 		}
 				
 		$modal.appendTo("body");
-		QHMPluginHelper.listElement = $modal.get(0);
+		HaikPluginHelper.listElement = $modal.get(0);
 
 	};
-	QHMPluginHelper.openList = function(){
-		if (QHMPluginHelper.listElement === null) return;
-		$(QHMPluginHelper.listElement).modal();
+	HaikPluginHelper.openList = function(){
+		if (HaikPluginHelper.listElement === null) return;
+		$(HaikPluginHelper.listElement).modal();
 	};
 	
-	QHMPluginHelper.prototype = {
+	HaikPluginHelper.prototype = {
 	
-		constructor: QHMPluginHelper,
+		constructor: HaikPluginHelper,
 		
 		name: "",
 		label: "",
@@ -355,13 +355,13 @@
 			})
 			.on("complete", function(){
 				helper.cancelCallback = false;
-				QHMPluginHelper.addToList("recent", helper.name);
+				HaikPluginHelper.addToList("recent", helper.name);
 				helper.onComplete();
 				$modal.modal("hide");
 			})
 			.on("hide.bs.modal", function(){
 				if (helper.cancelCallback !== false) {
-					QHMPluginHelper.directCall(helper.cancelCallback);
+					HaikPluginHelper.directCall(helper.cancelCallback);
 					helper.cancelCallback = false;
 				}
 			})
@@ -401,7 +401,7 @@
 			}
 			else {
 				if (this.addable) {
-					QHMPluginHelper.addToList("recent", this.name);
+					HaikPluginHelper.addToList("recent", this.name);
 				}
 				this.cancelCallback = false;
 				if (this.onStart() === false) return;
@@ -432,10 +432,10 @@
 		},
 		
 		addToRecent: function(){
-			QHMPluginHelper.addToList("recent", this.name);
+			HaikPluginHelper.addToList("recent", this.name);
 		},
 		addToFavorites: function(){
-			QHMPluginHelper.addToList("favorites", this.name);
+			HaikPluginHelper.addToList("favorites", this.name);
 		},
 		
 		replaceFormat: function(key, rpl){
@@ -462,23 +462,24 @@
 		
 		getLorem: function(length){
 			if (length)
-				return QHMPluginHelper.lorem.substr(0, length);
+				return HaikPluginHelper.lorem.substr(0, length);
 			else
-				return QHMPluginHelper.lorem;
+				return HaikPluginHelper.lorem;
 		}
 		
 	};
 
+	ORGM.HaikPluginHelper = HaikPluginHelper;
 	
 	// !on ready
 	$(function(){
 		if (typeof ORGM != "undefined" && typeof ORGM.plugins != "undefined") {
 			$("[data-qhm-plugin]").each(function(){
-				QHMPluginHelper.init(this);
+				HaikPluginHelper.init(this);
 			});
 
-			QHMPluginHelper.readList("recent");
-//			QHMPluginHelper.readList("favorites");
+			HaikPluginHelper.readList("recent");
+//			HaikPluginHelper.readList("favorites");
 		}
 	});
 		

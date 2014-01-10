@@ -106,7 +106,7 @@ $(document).ready(function(){
 					if (typeof ORGM.plugins[name].style != "undefined") {
 						$btn.css(ORGM.plugins[name].style);
 					}
-					QHMPluginHelper.init($btn);
+					ORGM.HaikPluginHelper.init($btn);
 					$group.append($btn);
 					
 					if (typeof btn.children != "undefined" && btn.children.length > 0) {
@@ -125,7 +125,7 @@ $(document).ready(function(){
 								var $li = $('<li><a href="#"></a></li>').children("a").attr("data-name", name).attr("data-textarea", "#msg").text(ORGM.plugins[name].label).css(ORGM.plugins[name].style).end();
 								$ul.append($li);
 								
-								QHMPluginHelper.init($li.children("a"));
+								ORGM.HaikPluginHelper.init($li.children("a"));
 
 
 							}
@@ -146,7 +146,7 @@ $(document).ready(function(){
 			$box.addClass("affix").attr("data-spy", "affix").attr("data-offset-top", offsetTop).css({top: $("#toolbar_upper").height()});
 
 			//plugins
-			QHMPluginHelper.initList();
+			ORGM.HaikPluginHelper.initList();
 			
 		}
 		
@@ -423,12 +423,12 @@ $(document).ready(function(){
 		else if (((isWin && e.ctrlKey) || (! isWin && e.metaKey)) && e.keyCode >= 48 && e.keyCode <= 57) {
 			e.preventDefault();
 			var num = ((e.keyCode - 48) + 9) % 10;
-			if (typeof QHMPluginHelper.recent[num] !== "undefined") {
-				QHMPluginHelper.directCall({name: QHMPluginHelper.recent[num], textarea: "#msg"});
+			if (typeof ORGM.HaikPluginHelper.recent[num] !== "undefined") {
+				ORGM.HaikPluginHelper.directCall({name: ORGM.HaikPluginHelper.recent[num], textarea: "#msg"});
 			}
 		}
 		else if (((isWin && e.ctrlKey) || (! isWin && e.metaKey)) && e.shiftKey && e.keyCode == 80) {
-			QHMPluginHelper.directCall({name: "allPlugin", textarea: "#msg"});
+			ORGM.HaikPluginHelper.directCall({name: "allPlugin", textarea: "#msg"});
 		}
 		//Save [Ctrl + S] [Command + S]
 		else if (((isWin && e.ctrlKey) || (! isWin && e.metaKey)) && e.keyCode == 83) {
