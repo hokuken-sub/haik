@@ -1,11 +1,18 @@
 <?php
-//-------------------------------------------------
-// QHM Initialization program for skin (output)
-// This file is required lib/html.php
-//
-// QHMの編集モードで使う変数などを初期化、設定
-// 最後に、ヘッダーの出力までを担当する
-//
+/**
+ *   Haik Initialization script for admin/edit
+ *   -------------------------------------------
+ *   /haik-contents/lib/orgm_admin_init.php
+ *   
+ *   Copyright (c) 2014 hokuken
+ *   http://hokuken.com/
+ *   
+ *   created  : 2014/01/14
+ *   modified :
+ *   
+ *   haik の編集モードで使う変数などを初期化、設定
+ *   
+ */
 
 //---- Prohibit direct access
 if (! defined('UI_LANG')) die('UI_LANG is not set');
@@ -617,5 +624,5 @@ if (exist_plugin('intro'))
 	plugin_intro_set();
 }
 
-/* End of file qhm_init.php */
-/* Location: ./lib/qhm_init.php */
+/* End of file orgm_admin_init.php */
+/* Location: /haik-contents/lib/orgm_admin_init.php */
