@@ -13,7 +13,7 @@
  *   Show guide-tour of this APP
  *   
  *   Usage :
- *     orgm_admin_init 内で plugin_intro_set を呼び出す。
+ *     haik_admin_init 内で plugin_intro_set を呼び出す。
  *   
  */
 

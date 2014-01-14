@@ -2,7 +2,7 @@
 /**
  *   Haik Initialization script for admin/edit
  *   -------------------------------------------
- *   /haik-contents/lib/orgm_admin_init.php
+ *   /haik-contents/lib/haik_admin_init.php
  *   
  *   Copyright (c) 2014 hokuken
  *   http://hokuken.com/
@@ -624,5 +624,5 @@ if (exist_plugin('intro'))
 	plugin_intro_set();
 }
 
-/* End of file orgm_admin_init.php */
-/* Location: /haik-contents/lib/orgm_admin_init.php */
+/* End of file haik_admin_init.php */
+/* Location: /haik-contents/lib/haik_admin_init.php */
