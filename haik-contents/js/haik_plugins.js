@@ -292,16 +292,21 @@ ORGM.plugins = {
 	// !アイキャッチ
 	eyecatch: {
 		label: "アイキャッチ",
-		format: "${br}#eyecatch(${options}){{{${br}${title}${br}${br}${subtitle}${br}}}}${br}",
+		format: "//${comment}${br}#eyecatch(${options}){{{${br}${title}${br}${br}${subtitle}${br}}}}${br}",
 		options: {
 			filer: {
 				options: {search_word: ":image", select_mode: "exclusive"}
-			}
+			},
+			defaultHeight: "320px",
+			imageDir: "eyecatch/",
+			images: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"],
+			comment: "アイキャッチ -- 高さ（320px）を調整しましょう。"
 		},
 		focus: false,
 		dialog: "external:plugin_eyecatch.html",
 		onStart: function(){},
 		onDialogOpen: function(){
+			var helper = this;
 			var $dialog = $(this.dialogElement)
 				,exnote = $(this.textarea).data("exnote")
 				,$filer = $("#orgm_filer_selector")
@@ -312,6 +317,17 @@ ORGM.plugins = {
 				title = lines[0].replace(/^#(.+?)\{{2,}$/, "$1").replace(/^&h1\{(.*)\};$/, "$1"),
 				subtitle = lines.join("\n");
 			
+			var $thumbs = $dialog.find(".thumbnails"),
+				tmpl = $dialog.find(".partial-template").html().replace(/^\s+|\s+$/, "");
+			$.each(helper.options.images.reverse(), function(i, image){
+				$(tmpl)
+					.find("a").css({
+						backgroundImage: "url(" + ORGM.imageDir + helper.options.imageDir + "thumbnail/" + image + ")",
+						backgroundSize: "cover"
+					}).data("image", helper.options.imageDir + image)
+				.end().prependTo($thumbs);
+			});
+			
 			$dialog.on('click', '[data-image]', function(){
 				$image = $(this);
 				
@@ -321,7 +337,7 @@ ORGM.plugins = {
 				.on("show.bs.modal", function(){
 					$(document).on("selectFiles.pluginEyecatch", function(e, selectedFiles){
 						if (selectedFiles.length > 0) {
-							$image.css('background-image', 'url('+selectedFiles[0].filepath+')');
+							$image.css('background-image', 'url('+selectedFiles[0].thumbnail+')');
 							$('input[name=image]',$dialog).val(selectedFiles[0].filename);
 							if (! $('input[name=bgimagetype]:checked').length ||
 									$('input[name=bgimagetype]:checked').val() == 'cover') {
@@ -337,29 +353,42 @@ ORGM.plugins = {
 
 				$filer.data("footer", "").modal();
 			})
+			.on("click", "a.thumbnail", function(e){
+				e.preventDefault();
+				var $self = $(this),
+					image = $self.data("image");
+				
+				$self.parent().addClass("active").siblings().removeClass("active");
+				
+				$("input[name=image]", $dialog).val(image);
+				
+				$("input[name=bgtype][value=image]", $dialog).click();
+			})
+			.on("focus change", "input[name=bgcolor]", function(){
+				$("input[name=bgtype][value=color]", $dialog).click();
+			})
 			.on('change', 'input[name=bgimagetype]', function(){
-				var $image = $('[data-image]');
+				//TODO: checkbox になったので、対応
+				var checked = $(this).is(":checked");
+				var $image = $('[data-image]', $dialog);
 
-				if ($(this).val() == 'cover') {
-					$image.css('background-size', 'cover');
-					$image.css('background-repeat', 'no-repeat');
-				}
-				else {
+				if (checked) {
 					$image.css('background-size', '20px 20px');
 					$image.css('background-repeat', 'repeat');
 				}
-			})
-			.on('change', 'input[name=colortype]', function(){
-
-				if ($(this).val() == 'theme') {
-					$('input[name=style]', $dialog).prop('disabled', false).parent().removeClass('disabled');
-					$('input[name$=color]', $dialog).prop('disabled', true);
-				}
 				else {
-					$('input[name=style]', $dialog).prop('disabled', true).parent().addClass('disabled');
-					$('input[name$=color]', $dialog).prop('disabled', false);
+					$image.css('background-size', 'cover');
+					$image.css('background-repeat', 'no-repeat');
 				}
+			})
+			.on("change", "input[name=classnameflg]", function(){
+				var checked = $(this).is(":checked");
+				$("input[name=classname]", $dialog).prop("disabled", !checked);
+			})
+			.on("focus change", "input[name=height]", function(){
+				$("input[name=heighttype][value=height]", $dialog).click();
 			});
+
 
 			$("input:text[name=title]", $dialog).val(title);
 			$("textarea[name=subtitle]", $dialog).val(subtitle)
@@ -375,17 +404,20 @@ ORGM.plugins = {
 			setTimeout(function(){
 				$("input[name=heighttype][value=height]", $dialog).click();
 				$("input[name=colortype][value=custom]", $dialog).click();
+				$("input[name=align][value=center]", $dialog).parent().button("toggle");
+				$("input[name=valign][value=middle]", $dialog).parent().button("toggle");
+				$("input[name=classname]", $dialog).prop("disabled", true);
 			}, 25);
 
 
 		},
 		onComplete: function(){
 			var $dialog = $(this.dialogElement)
+				,helper = this
 				,exnote = $(this.textarea).data("exnote")
-				,data = {br: "\n"}, options = {};
+				,data = {br: "\n", comment: this.options.comment}, options = {};
 			
 			var formdata = $dialog.find('form').serializeArray();
-			console.log(formdata);
 			
 			$(formdata).each(function(i, option){
 				var key = option.name,
@@ -408,6 +440,9 @@ ORGM.plugins = {
 						}
 						break;
 					case 'height':
+						if (value.length === 0) {
+							options[key] = helper.options.defaultHeight;
+						}
 					case 'image':
 						if (value.length > 0) {
 							options[key] = value;
@@ -418,12 +453,21 @@ ORGM.plugins = {
 							options[key] = 'class='+value;
 						}
 						break;
+					case 'align':
+						if (value !== "center") {
+							options[key] = value;
+						}
+						break;
+					case 'valign':
+						if (value !== "middle") {
+							options[key] = value;
+						}
+						break;
 					default:
 						options[key] = value;
 						break;
 				}
 			});
-			console.log(options);
 			
 			if (typeof options.heighttype != 'undefined') {
 				if (options.heighttype != 'page'){
@@ -450,6 +494,9 @@ ORGM.plugins = {
 				}
 			}
 			
+			if (typeof options.bgtype != "undefined") {
+				delete options.bgtype;
+			}
 			
 			data.options = $.map(options, function(value){
 				return value;

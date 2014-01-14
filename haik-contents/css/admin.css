@@ -469,6 +469,18 @@ ul.orgm-page-list li.nav-header{
 	height: 120px;
 	overflow-y: hidden;	
 }
+#orgm_plugin_modal[data-plugin=eyecatch] .sample-cut a {
+	width: 50px;
+	height: 50px;
+}
+#orgm_plugin_modal[data-plugin=eyecatch] .sample-cut a.select-image {
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+#orgm_plugin_modal[data-plugin=eyecatch] .sample-cut.active .thumbnail {
+	box-shadow: 0 0 10px #91bd09;
+	-webkit-box-shadow: 0 0 10px #91bd09;	
+}
 #orgm_plugin_modal[data-plugin=video] .control-label {
 	text-align: left;
 }
