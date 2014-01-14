@@ -106,7 +106,7 @@ $(document).ready(function(){
 					if (typeof ORGM.plugins[name].style != "undefined") {
 						$btn.css(ORGM.plugins[name].style);
 					}
-					ORGM.HaikPluginHelper.init($btn);
+					ORGM.PluginHelper.init($btn);
 					$group.append($btn);
 					
 					if (typeof btn.children != "undefined" && btn.children.length > 0) {
@@ -125,7 +125,7 @@ $(document).ready(function(){
 								var $li = $('<li><a href="#"></a></li>').children("a").attr("data-name", name).attr("data-textarea", "#msg").text(ORGM.plugins[name].label).css(ORGM.plugins[name].style).end();
 								$ul.append($li);
 								
-								ORGM.HaikPluginHelper.init($li.children("a"));
+								ORGM.PluginHelper.init($li.children("a"));
 
 
 							}
@@ -146,7 +146,7 @@ $(document).ready(function(){
 			$box.addClass("affix").attr("data-spy", "affix").attr("data-offset-top", offsetTop).css({top: $("#toolbar_upper").height()});
 
 			//plugins
-			ORGM.HaikPluginHelper.initList();
+			ORGM.PluginHelper.initList();
 			
 		}
 		
@@ -423,12 +423,12 @@ $(document).ready(function(){
 		else if (((isWin && e.ctrlKey) || (! isWin && e.metaKey)) && e.keyCode >= 48 && e.keyCode <= 57) {
 			e.preventDefault();
 			var num = ((e.keyCode - 48) + 9) % 10;
-			if (typeof ORGM.HaikPluginHelper.recent[num] !== "undefined") {
-				ORGM.HaikPluginHelper.directCall({name: ORGM.HaikPluginHelper.recent[num], textarea: "#msg"});
+			if (typeof ORGM.PluginHelper.recent[num] !== "undefined") {
+				ORGM.PluginHelper.directCall({name: ORGM.PluginHelper.recent[num], textarea: "#msg"});
 			}
 		}
 		else if (((isWin && e.ctrlKey) || (! isWin && e.metaKey)) && e.shiftKey && e.keyCode == 80) {
-			ORGM.HaikPluginHelper.directCall({name: "allPlugin", textarea: "#msg"});
+			ORGM.PluginHelper.directCall({name: "allPlugin", textarea: "#msg"});
 		}
 		//Save [Ctrl + S] [Command + S]
 		else if (((isWin && e.ctrlKey) || (! isWin && e.metaKey)) && e.keyCode == 83) {
@@ -685,12 +685,11 @@ $(document).ready(function(){
 						options : $self.data("options"),
 						digest  : ORGM.pageDigest
 			    	},
-//			    	console.log(data);
 			    	
 			    	data.submit();
 			    },
 		        fail: function(e){
-//			        console.log(e);
+
 		        },
 		    	done: function(e, data){
 					if (data.result.error) {

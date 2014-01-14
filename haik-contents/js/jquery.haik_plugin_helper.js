@@ -469,7 +469,7 @@
 		
 	};
 
-	ORGM.HaikPluginHelper = HaikPluginHelper;
+	ORGM.PluginHelper = HaikPluginHelper;
 	
 	// !on ready
 	$(function(){

@@ -2647,7 +2647,7 @@ ORGM.plugins = {
 		label: ">>",
 		addable: false,
 		onStart: function(){
-			ORGM.HaikPluginHelper.openList();
+			ORGM.PluginHelper.openList();
 			return false;
 		}
 	},
