@@ -1,4 +1,4 @@
-#eyecatch(danger){{
+#eyecatch(eyecatch/1.jpg,color=#fff,bgcolor=#666){{
 &h1{ようこそ、haikへ};
 }}
 
