@@ -1303,6 +1303,10 @@ function get_file_path($filename)
 	{
 		return UPLOAD_DIR . $filename;
 	}
+	else if (file_exists(IMAGE_DIR . $filename))
+	{
+		return IMAGE_DIR . $filename;
+	}
 	
 	return $filename;
 
