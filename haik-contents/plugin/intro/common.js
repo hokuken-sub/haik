@@ -110,7 +110,7 @@
 				$("body").removeClass("orgm-intro-root-admin").removeAttr("data-intro-step");
 
 				if (ORGM.intro.current === 'nav') {
-					$target.data("qhmPluginHelper").enable();
+					$target.data("haikPluginHelper").enable();
 				}
 
 				doneStep();
@@ -129,7 +129,7 @@
 			setTimeout(function(){
 				if (ORGM.intro.current === 'nav') {
 					$target = $(".introjs-showElement a");
-					$target.data("qhmPluginHelper").disable();
+					$target.data("haikPluginHelper").disable();
 				}
 				else if (ORGM.intro.current === 'admin') {
 					$("#admin_nav").on("mouseover", function(){

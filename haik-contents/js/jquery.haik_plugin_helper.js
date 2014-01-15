@@ -63,11 +63,11 @@
 	
 	HaikPluginHelper.saveList = function(target, list){
 		if (typeof HaikPluginHelper[target] !== "undefined")
-			localStorage.setItem($.camelCase("qhm-plugin-helper-" + target), JSON.stringify(list));
+			localStorage.setItem($.camelCase("haik-plugin-helper-" + target), JSON.stringify(list));
 	};
 	HaikPluginHelper.readList = function(target){
-		if (typeof localStorage.getItem($.camelCase("qhm-plugin-helper-" + target)) !== "undefined") {
-			var list = JSON.parse(localStorage.getItem($.camelCase("qhm-plugin-helper-" + target)));
+		if (typeof localStorage.getItem($.camelCase("haik-plugin-helper-" + target)) !== "undefined") {
+			var list = JSON.parse(localStorage.getItem($.camelCase("haik-plugin-helper-" + target)));
 			if ($.isArray(list)) {
 				if (typeof HaikPluginHelper[target] !== "undefined")
 					HaikPluginHelper[target] = list;
