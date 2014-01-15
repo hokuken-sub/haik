@@ -44,6 +44,7 @@ function plugin_section_convert()
 	$background_fix   = FALSE;
 	$background_color = FALSE;//transparent
 	$additional_class = $container_class = '';
+	$additional_style = '';
 	
 	$attrs = array(
 		'id' => 'haik_section_' . ++$cnt,
@@ -84,6 +85,10 @@ function plugin_section_convert()
 		else if (preg_match('/\Aclass=(.+)\z/', $arg, $mts))
 		{
 			$additional_class .= ' ' . $mts[1];
+		}
+		else if (preg_match('/\Astyle=(.+)\z/', $arg, $mts))
+		{
+			$additional_style .= $mts[1];
 		}
 		else if (preg_match('/\Acolor=(.+)\z/', $arg, $mts))
 		{
@@ -181,6 +186,8 @@ function plugin_section_convert()
 	$attrs['data-vertical-align'] = $v_align;
 	
 	$attrs['class'] .= ' ' . $additional_class;
+	
+	$attrs['style'] .= $additional_style;
 	
 	$attr_string = '';
 	foreach ($attrs as $name => $value)
