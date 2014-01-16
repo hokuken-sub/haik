@@ -21,11 +21,25 @@ function plugin_icon_inline()
 	$args = func_get_args();
 	
 	$class = '';
-	if (count($args) > 0)
+	$icon_base = 'orgm-icon';
+	$icon_prefix = $icon_base . '-';
+	$icon_name = '';
+	
+	foreach ($args as $arg)
 	{
-		$class = "orgm-icon orgm-icon-".trim($args[0]);
+		if ($arg === 'glyphicon')
+		{
+			$icon_base = 'glyphicon';
+			$icon_prefix = $icon_base . '-';
+		}
+		else if ($arg !== '')
+		{
+			$icon_name = $arg;
+		}
 	}
 	
-	$format = '<i class="%s"></i>';
-	return sprintf($format, h($class));
+	$icon_name = $icon_prefix.$icon_name;
+	
+	$format = '<i class="%s %s"></i>';
+	return sprintf($format, h($icon_base), h($icon_name));
 }
