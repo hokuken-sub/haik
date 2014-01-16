@@ -1,0 +1,56 @@
+	<div class="heading">
+		<div class="branding"></div>
+		<h1><?php echo h($title) ?></h1>
+		<h2><?php echo __('おめでとうございます') ?></h2>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12 content-wrapper" role="main">
+			<!-- BODYCONTENTS START -->
+			<div id="orgm_body" style="max-width:624px;">
+				<div style="margin:32px;">
+
+					<p>
+						<?php _('最後に、発信したい事を簡潔に書くだけで<br>あっと驚く、"あなただけのサイト"になります！')?>
+					</p>
+
+					<form method="post" action="<?php echo h($script . '?cmd=app_start') ?>" class="">
+						<?php if ($errmsg != '') : ?>
+						<div class="alert alert-danger"><?php echo h($errmsg); ?></div>
+						<?php endif; ?>
+
+						<input type="hidden" name="mode" value="set_info">
+						
+						<div class="form-group">
+							<label class="control-label"><?php _e('キャッチコピー：')?></label>
+							<div class="row">
+								<div class="col-sm-12">
+										<input type="text" name="maincopy" value="<?php echo h($vars['maincopy']) ?>" class="form-control" id="">
+								</div>
+							</div>
+						</div>
+				
+						<div class="form-group">
+							<label for="" class="control-label"><?php _e('詳しい説明：')?></label>
+							<div class="row">
+								<div class="col-sm-12">
+									<textarea name="subcopy" class="form-control" id=""></textarea>
+								</div>
+							</div>
+						</div>
+				
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary btn-lg btn-block" value="<?php _e('今すぐ、アイデアを世界へ発信する') ?>">
+
+							<div class="help-block" style="margin-top: 30px;">
+								<?php _e(sprintf("詳細を %s にお送りしましたのでご確認ください", $username)) ?><br>
+								<?php _e("メールが届かない場合は、迷惑メールフォルダもご確認ください。") ?>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+			</div>
+			<!-- BODYCONTENTS END -->
+		</div>
+	</div>

@@ -203,7 +203,6 @@ function plugin_app_start_init_()
 	
 	$fs = new QHM_FS($config);
 	
-
 	if (isset($vars['username']) && isset($vars['passwd']))
 	{
 
@@ -234,26 +233,53 @@ function plugin_app_start_init_()
 		{
 			//init
 			plugin_app_start_copy_skel($fs);
-			
+
 			//permission
 			plugin_app_start_set_permission($fs);
 			
 			//save username and passwd
 			plugin_app_start_save_auth($vars['username'], $vars['passwd']);
-			
+
 			//Complete
 			return plugin_app_start_complete_();
 			
 		}
-	
 	}
-
+	
 	$vars['app_start_set_auth_err'] = $errmsg;
 
 	return plugin_app_start_set_auth_();
 	
 
 }
+
+function plugin_app_start_set_sitecopy()
+{
+	global $vars, $defaultpage;
+	
+	$config = orgm_ini_read();
+
+	$main_copy = isset($vars['maincopy']) ? $vars['maincopy'] : $config['site_title'];
+	$sub_copy = isset($vars['subcopy']) ? $vars['subcopy'] : '';
+
+	$ptns = array(
+		'/^\/\/ MAIN_COPY$/',
+		'/^\/\/ SUB_COPY$/'
+	);
+	$rpls = array(
+		'&h1{' . $main_copy . '};',
+		$sub_copy
+	);
+	
+	$lines = get_source($defaultpage);
+
+	$lines = preg_replace($ptns, $rpls, $lines);
+	
+	$source = join('', $lines);
+	
+	file_put_contents(get_filename($defaultpage), $source, LOCK_EX);
+
+}	
 
 function plugin_app_start_ftp_connect_()
 {
@@ -366,6 +392,19 @@ function plugin_app_start_ftp_connect_()
 
 }
 
+function plugin_app_start_set_info_()
+{
+	global $script;
+	
+	$conf = array('app_start' => 0);
+	orgm_ini_write($conf);
+	
+	plugin_app_start_set_sitecopy();
+
+	redirect($script);
+	exit;
+}
+
 function plugin_app_start_complete_()
 {
 	global $script;
@@ -374,16 +413,11 @@ function plugin_app_start_complete_()
 	$config = orgm_ini_read();
 	$username = $config['username'];
 
-	// インストーラーを続けるため。。。
-	$conf = array('app_start' => 0);
-	orgm_ini_write($conf);
-
-
 	$title = sprintf(__('ようこそ %s へ！'), APP_NAME);
 	
 	plugin_app_start_send_mail();
 	
-	$tmpl_file = PLUGIN_DIR . 'app_start/complete.html';
+	$tmpl_file = PLUGIN_DIR . 'app_start/info.html';
 	ob_start();
 	include($tmpl_file);
 	$body = ob_get_clean();

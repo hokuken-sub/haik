@@ -36,6 +36,7 @@ $config = array (
   'mail_encode' => 'ISO-2022-JP',
   'tracking_script' => '',
   'disqus_shortname' => '',
+  'app_start' => 1,
   'intro_flags' => 
   array (
     'start' => 1,
