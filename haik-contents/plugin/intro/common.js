@@ -36,7 +36,7 @@
 		if (ORGM.intro.current == 'start') {
 
 			$('body')
-			.on("click", ".editpane", function(e){
+			.on("click", "a.btn.btn-info.btn-lg", function(e){
 				e.preventDefault();
 				
 				intro.setOptions({
