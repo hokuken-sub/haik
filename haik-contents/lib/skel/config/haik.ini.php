@@ -1,6 +1,6 @@
 <?php
 $config = array (
-  'style_name' => 'kumo',
+  'style_name' => 'kawaz',
   'style_color' => '',
   'style_texture' => '',
   'style_custom_bg' => array(),
