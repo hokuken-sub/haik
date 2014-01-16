@@ -462,6 +462,10 @@ select.form-control {
 	opacity: 0.25;
 }
 
+.haik-eyecatch {
+	background-color: transparent;
+}
+
 .haik-section {
 
 }
