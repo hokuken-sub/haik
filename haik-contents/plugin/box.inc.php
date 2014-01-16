@@ -37,6 +37,7 @@ function plugin_box_convert()
 	$height = FALSE;
 	$cols = 12;//full width
 	$offset = 0;
+	$style = '';
 	
 	foreach ($args as $arg)
 	{
@@ -105,6 +106,10 @@ function plugin_box_convert()
 					$height = $mts[1];
 					if (is_numeric($height)) $height .= 'px';
 				}
+				else if (preg_match('/\Astyle=(.+)\z/', $arg, $mts))
+				{
+					$style .= $mts[1];
+				}
 		}
 	}
 	
@@ -118,7 +123,8 @@ function plugin_box_convert()
 	
 	$close = $close ? '<button type="button" class="close" data-dismiss="alert">&times;</button>' : '';
 	
-	$scroll_style = $height ? 'style="max-height:'.h($height).';overflow-y:scroll;"' : '';
+	$scroll_style = $height ? 'max-height:'.h($height).';overflow-y:scroll;' : '';
+	$scroll_style = $scroll_style.$style;
 	
     $body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
     $lines = explode("\n", $body);
@@ -126,7 +132,7 @@ function plugin_box_convert()
 	
 	$html = <<<EOD
 {$outer[0]}
-	<div class="{$type} orgm-box-block" {$scroll_style}>
+	<div class="{$type} orgm-box-block" style="{$scroll_style}">
 		{$wrapper[0]}
 		{$close}
 		{$body}
