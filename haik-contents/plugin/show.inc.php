@@ -249,13 +249,10 @@ function plugin_show_body($args)
 	}
 
 	if( !$is_url ){
-		$file = $name;
+		$file = get_file_path($name);
 		if( !is_file($file) ){			
-			$file = UPLOAD_DIR.$file;
-			if( !is_file($file) ){
-				$params['_error'] = sprintf(__("ファイルが見つかりません。：''%s''"), h($name));
-				return $params;
-			}
+			$params['_error'] = sprintf(__("ファイルが見つかりません。：''%s''"), h($name));
+			return $params;
 		}
 	}
 
