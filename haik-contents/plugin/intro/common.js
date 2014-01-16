@@ -34,6 +34,20 @@
 		
 
 		if (ORGM.intro.current == 'start') {
+
+			$('body')
+			.on("click", ".editpane", function(e){
+				e.preventDefault();
+				
+				intro.setOptions({
+					steps: ORGM.intro.steps,
+//					tooltipClass: "orgm-intro-no-controls orgm-intro-top-center"
+				});
+				intro.start();
+				
+			});
+
+/*
 			$('body').append(ORGM.intro.steps[0].html);
 			
 			$(ORGM.intro.steps[0].selector)
@@ -73,6 +87,7 @@
 				
 			})
 			.modal();
+*/
 			
 			// ログインリンククリックでフラグをオフ
 			$("#orgm_login").on("click", function(e){
@@ -94,7 +109,8 @@
 				tooltipClass: "orgm-intro-no-controls orgm-intro-login"
 			});
 
-			intro.goToStep(3).start();
+//			intro.goToStep(3).start();
+			intro.goToStep(2).start();
 			
 			//input:text フォーカスで消す
 			$("input:text").on("keydown", function(){

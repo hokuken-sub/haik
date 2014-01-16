@@ -115,10 +115,12 @@ function plugin_intro_step_start()
 	$step_1_html = ob_get_clean();
 	
 	$steps = array(
+/*
 		array(
 			'html' => $step_1_html,
 			'selector' => '#haik_intro_start_modal',
 		),
+*/
 		array(
 			'selector' => '#orgm_login',
 			'intro' => sprintf(__('%s をクリック'), APP_NAME),
@@ -140,8 +142,10 @@ function plugin_intro_step_login()
 	$step_name = 'login';
 	
 	$steps = array(
+/*
 		array(
 		),
+*/
 		array(
 		),
 		array(
