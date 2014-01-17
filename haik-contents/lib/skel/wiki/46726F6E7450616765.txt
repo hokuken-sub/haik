@@ -11,8 +11,9 @@
 //　　　（「>>ボタン」→「挿入」→「アイキャッチ」）
 #eyecatch(color=#fff,eyecatch/5.jpg,page,fix){{{
 
-#h1(toiee café)
-巨人の肩に乗せる
+// MAIN_COPY
+
+// SUB_COPY
 
 }}}
 
