@@ -720,8 +720,8 @@ ORGM.plugins = {
 		}
 	},
 	ol: {
-		label: "番号付き箇条書き",
-		format: "- {text}",
+		label: "番号付き",
+		format: "+ {text}",
 		dialog:'external:plugin_ol.html',
 		onStart: function(){
 			this.options = ORGM.plugins.ul.options;
@@ -1120,7 +1120,7 @@ ORGM.plugins = {
 	},
 	// !表組み
 	table: {
-		label: "表を挿入",
+		label: "表（テーブル）",
 		options: {rows: 4, cols: 7},
 		init: false,
 		dialog: 'external:plugin_table.html',
@@ -1327,7 +1327,7 @@ ORGM.plugins = {
 	// !HTML挿入
 	// !TODO:再編集用に選択コードの読み込みを検討
 	html: {
-		label: "HTML挿入",
+		label: "HTMLを挿入",
 		format: "#html{{\n{html}\n}}\n",
 		dialog: "<p>ここにHTMLソースを入力してください。</p><textarea name=\"html\" class=\"form-control\"></textarea>",
 		onDialogOpen: function(){
@@ -1355,10 +1355,10 @@ ORGM.plugins = {
 		}
 	},
 	// !beforescript: その他のタグ
-	beforescript: {
-		label: "その他のタグ",
-		format: "#beforescript{{\n{html}\n}}\n",
-		dialog: "挿入したいメタタグ等を入力してください。<br /><textarea name=\"html\"></textarea>",
+	user_script: {
+		label: "スクリプトの挿入",
+		format: "#user_script{{\n{html}\n}}\n",
+		dialog: "挿入したいスクリプト等を入力してください。<br /><textarea name=\"html\"></textarea>",
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement);
 			$dialog.find("textarea[name=html]").exnote();
@@ -1382,7 +1382,7 @@ ORGM.plugins = {
 	
 	// !枠
 	box: {
-		label: "枠",
+		label: "枠（ボックス）",
 		format: "${br}#box(${width},${type},${height}){{${br}${text}${br}}}${br}",
 		options: {
 			width: [
@@ -1792,6 +1792,16 @@ ORGM.plugins = {
 			
 		}
 	},
+	show2: {
+		label: "画像の貼り付け",
+		style: {},
+		init: false,
+		onStart: function(){
+			this.options = ORGM.plugins.show.options;
+			ORGM.plugins.show.onStart.call(this);
+			this.insertFiles = ORGM.plugins.show.insertFiles;
+		}
+	},
 
 	// !ダミー画像
 	showdummy: {
@@ -2063,7 +2073,7 @@ ORGM.plugins = {
 
 	// !マルチメディア
 	file: {
-		label: "ファイル名",
+		label: "ファイル名を挿入",
 		style: {},
 		options: {
 			formats: {
