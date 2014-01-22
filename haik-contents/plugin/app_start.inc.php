@@ -47,11 +47,58 @@ function plugin_app_start_action()
 <script type="text/javascript" src="'.JS_DIR.'jquery.passwdcheck.js"></script>
 <script type="text/javascript">
 $(function(){
-			$("input[name=passwd]").passwdcheck($.extend({}, ORGM.passwdcheck.options, {placeholderClass:"col-sm-5"}));
+	$("input[name=passwd]").passwdcheck($.extend({}, ORGM.passwdcheck.options, {placeholderClass:"col-sm-5"}))
+	.on("changeScore", function(e, score){
+		var $form = $(this).closest("form");
+
+		if (score > 0) {
+			$(this).closest(".form-group").removeClass("has-error");
+			$("input:submit", $form).prop("disabled", false);
+			return;
+		}
+		$(this).closest(".form-group").addClass("has-error");
+		$("input:submit", $form).prop("disabled", true);
+	});
+	
+	
+	$("input[name=username]").on("blur", function(){
+		var mail = $(this).val();
+		if(mail == "") {
+			$(this).closest(".form-group").addClass("has-error");
+		}
+		else if(!mail.match( /^[^@]+@.+$/)) {  
+			$(this).closest(".form-group").addClass("has-error");
+		}
+		else {
+			$(this).closest(".form-group").removeClass("has-error");
+		}
+	});
+	
+	$("input[name=password-visible]").change(function(){
+		if ($(this).is(":checked")) {
+			$("input[name=passwd]").attr("type", "text");
+		} else {
+			$("input[name=passwd]").attr("type", "password");
+		}
+	});
+	
 });
 </script>
 ';
+
+	$include_css = '
+<style>
+	.has-error input[type="text"],
+	.has-error input[type="password"]{
+		color: #a94442;
+		background-color: #f2dede;
+	}
+</style>
+';
+
 	$qt->prependv_once('plugin_app_start_script', 'plugin_script', $include_script);
+	$qt->prependv_once('plugin_app_start_css', 'plugin_head', $include_css);
+
 	$qt->setjsv('passwdcheck', array(
 		'options' => $passwdcheck_options
 	));
@@ -73,7 +120,7 @@ $(function(){
 		return plugin_app_start_set_auth();
 	}
 	
-	$mode = isset($vars['mode']) ? $vars['mode'] : '';
+	$mode = isset($vars['mode']) ? $vars['mode'] : 'set_auth';
 
 	$func_name = 'plugin_app_start_' . $mode . '_';
 	if (function_exists($func_name))
@@ -416,7 +463,53 @@ function plugin_app_start_complete_()
 	$title = sprintf(__('ようこそ %s へ！'), APP_NAME);
 	
 	plugin_app_start_send_mail();
+
+
+	$include_script = '
+<script type="text/javascript" src="'.JS_DIR.'jquery.exnote.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("textarea[name=subcopy]").exnote({css:{height:"3.5em"}});
+});
+</script>
+';
+
+	$include_css = '
+<style>
+.exnote-agwrapper {
+    position:relative;
+}
+
+.exnote-agwrapper textarea{
+    width:100%;
+    min-height:100%;
+    display:block;
+    position:absolute;
+    font-size:14px;
+    line-height: 1.5em;
+    padding: 4px 6px;
+    resize: none;
+    height:100px;
+    box-sizing: border-box;
+}
+
+.exnote-agwrapper pre.exnote-agshadow{
+    padding: 4px 6px;
+    display:block;
+    min-height: 100px;
+    font-size:14px;
+    line-height: 1.5em;
+    padding-top: 2em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+</style>
+';
+	$qt = get_qt();
 	
+	$qt->appendv_once('plugin_app_start_complete_script', 'plugin_script', $include_script);
+	$qt->appendv_once('plugin_app_start_complete_css', 'plugin_head', $include_css);
+
 	$tmpl_file = PLUGIN_DIR . 'app_start/info.html';
 	ob_start();
 	include($tmpl_file);

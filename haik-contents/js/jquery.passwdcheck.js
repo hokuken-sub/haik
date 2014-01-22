@@ -30,11 +30,11 @@
 		this.options = $.extend({}, this.options, options);
 		
 		this.init();
-		
+
 		this.check();
-		
+
 	};
-	
+		
 	PasswdCheck.prototype = {
 		constructor: PasswdCheck,
 		
@@ -178,11 +178,15 @@
 		},
 		
 		check: function(){
-			
+			var self = this;
 			this.value = this.$element.val();
 
 			this.evaluate(this.value);
 			
+			setTimeout(function(){
+				self.$element.trigger('changeScore', [self.score]);
+			}, 100);
+
 			this.setRank();
 			
 			this.update();
@@ -203,6 +207,7 @@
 			
 			// 0文字の場合は評価しない
 			if (len <= 0) {
+				this.tooShortError = true;
 				return;
 			}
 			
@@ -378,10 +383,7 @@
 			}
 			data.rankStack = this.rankStack;
 			$.tmpl(this.template, data).appendTo(this.$placeholder.empty());
-		},
-		
-		
-		
+		}
 	};
 	
 	
