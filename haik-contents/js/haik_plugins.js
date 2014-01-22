@@ -530,35 +530,57 @@ ORGM.plugins = {
 	header: {
 		label: "見出し",
 		format: "* {header}\n",
-		options: {defval: "大見出し"},
+		options: {defval: "テキスト", maxRepeat: 3},
 		onStart: function(){
-			var exnote = $(this.textarea).data("exnote"), value = this.options.defval, text = exnote.getSelectedText();
-			if (text.length > 0) {
-				exnote.adjustSelection();
-				text = exnote.getSelectedText();
-				//multi line
-				if (/\n/.test(text)) {
-					var lines = text.split("\n"), values = [];
-					for (var i = 0; i < lines.length; i++) {
-						var line = lines[i];
-						if (line.replace(/^\s+|\s+$/g, "").length === 0) continue;
-						values.push(this.format.replace("{header}", line));
-					}
-					this.value = values.join("\n");
-					return;
-				}
+			var exnote = $(this.textarea).data("exnote"),
+				value = this.options.defval,
+				text = exnote.getSelectedText(),
+				multiLine = false, newLines = "",
+				values, self = this;
+			
+			exnote.adjustSelection();
+			text = exnote.getSelectedText();
 
-				value = text;
+			if (/\n/.test(text)) {
+				multiLine = true;
+				values = text.replace(/(\n+)$/g, "").split("\n");
+				newLines = RegExp.$1;
 			}
 			else {
-				exnote.moveToNextLine();
+				values = [text];
 			}
 			
-			this.caret = {
-				offset: - (value.length + 1),
-				length: value.length
-			};
-			this.value = this.format.replace("{header}", value);
+			values = $.map(values, function(value, i){
+				value = value.replace(/^\s+|\s+$/g, "");
+				if (value.length === 0) {
+					if (multiLine) {
+						return "";
+					}
+					value = "* " + self.options.defval;
+				}
+				else {
+					value = "*" + value.replace(/^(\*+|) */, "$1 ");
+					value = value.replace(/^\*{4,} (.*)$/, "*** $1");
+				}
+				return value;
+			});
+			
+			this.value = values.join("\n");
+
+			if (multiLine) {
+				this.value += newLines;
+				this.caret = {
+					offset: - (this.value.length),
+					length: this.value.length - newLines.length
+				};
+			}
+			else {
+				text = this.value.match(/^\*{1,3} ?(.*)$/) ? RegExp.$1 : "";
+				this.caret = {
+					offset: - (text.length),
+					length: text.length
+				};
+			}
 		}
 	},
 	header1: {
