@@ -63,6 +63,8 @@ if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 	// extract: $style_name, $style_color, $style_texture
 	extract($_SESSION['preview_skin']);
 	$style_config = style_config_read($style_name);
+	
+	set_notify_msg('デザインのプレビュー中です', 'info', 6);
 }
 
 // テンプレートの取得

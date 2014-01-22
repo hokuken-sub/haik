@@ -1719,7 +1719,7 @@ function get_admin_tools($page)
 
 	$tools = array(
 		'applyskinlink' => array(
-			'name'   => __('デザイン確定'),
+			'name'   => __('確定'),
 			'link'   => $_LINK['apply_preview_skin'],
 			'style'  => 'margin-right:5px;',
 			'class'  => '',
@@ -1729,7 +1729,7 @@ function get_admin_tools($page)
 			'sub'    => array()
 		),
 		'changeskinlink' => array(
-			'name'   => __('デザイン変更'),
+			'name'   => __('変更'),
 			'link'   => '#orgm_designer',
 			'style'  => 'margin-right:5px;',
 			'class'  => '',
@@ -1741,7 +1741,7 @@ function get_admin_tools($page)
 			)
 		),
 		'previewcancellink' => array(
-			'name'   => __('プレビュー解除'),
+			'name'   => __('キャンセル'),
 			'link'   => $_LINK['cancel_preview_skin'],
 			'style'  => '',
 			'class'  => '',
