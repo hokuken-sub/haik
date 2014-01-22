@@ -138,7 +138,7 @@ ORGM.plugins = {
 			
 			if ($("input[name=template]:checked").length > 0) {
 				var dummy1 = ORGM.plugins.showdummy.getDummy()
-				  , dummy2 = dummy1.replace(".hdummy", "0.hdummy");
+				  , dummy2 = ORGM.plugins.showdummy.getDummy();
 				text = this.options.templates.text.replace("{dummy1}", dummy1).replace("{dummy2}", dummy2);
 				
 			}
@@ -194,8 +194,8 @@ ORGM.plugins = {
 			
 			if ($("input[name=template]:checked").length > 0) {
 				var dummy1 = ORGM.plugins.showdummy.getDummy()
-				  , dummy2 = dummy1.replace(".hdummy", "0.hdummy")
-				  , dummy3 = dummy1.replace(".hdummy", "00.hdummy");
+				  , dummy2 = ORGM.plugins.showdummy.getDummy()
+				  , dummy3 = ORGM.plugins.showdummy.getDummy();
 				text = this.options.templates.text.replace("{dummy1}", dummy1).replace("{dummy2}", dummy2).replace("{dummy3}", dummy3);
 				
 			}
@@ -253,9 +253,9 @@ ORGM.plugins = {
 			
 			if ($("input[name=template]:checked").length > 0) {
 				var dummy1 = ORGM.plugins.showdummy.getDummy()
-				  , dummy2 = dummy1.replace(".hdummy", "0.hdummy")
-				  , dummy3 = dummy1.replace(".hdummy", "00.hdummy")
-				  , dummy4 = dummy1.replace(".hdummy", "000.hdummy");
+				  , dummy2 = ORGM.plugins.showdummy.getDummy()
+				  , dummy3 = ORGM.plugins.showdummy.getDummy()
+				  , dummy4 = ORGM.plugins.showdummy.getDummy();
 				  text = this.options.templates.text.replace("{dummy1}", dummy1).replace("{dummy2}", dummy2).replace("{dummy3}", dummy3).replace("{dummy4}", dummy4);
 				
 			}
@@ -1808,8 +1808,8 @@ ORGM.plugins = {
 		label: "後で画像を指定",
 		format: "&show({dummy});",
 		style: {},
+		options: {width: 300, height: 200, ext: "dmy"},
 		onStart: function(){
-
 			var exnote = $(this.textarea).data("exnote")
 				,value = this.format
 				,$dialog = $(this.dialogElement);
@@ -1819,7 +1819,17 @@ ORGM.plugins = {
 			return;
 		},
 		getDummy: function(){
-			return this.format.replace("{dummy}", new Date().getTime() + '.hdummy');
+			// {width}x{height}-{randStr}.dmy
+			return this.format.replace("{dummy}", this.options.width + "x" + this.options.height + '-' + this.getRandom() + '.' + this.options.ext);
+		},
+		getRandom: function(length){
+			length = length || 4;
+			var seed = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			var str = "";
+			for (var i = 0; i < length; i++) {
+				str += seed.substr(Math.floor(Math.random() * seed.length), 1);
+			}
+			return str;
 		}
 	},
 

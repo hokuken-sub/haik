@@ -115,7 +115,7 @@ function plugin_show_inline()
     //添付用のリンクを表示
     if ( ! is_url($args[0]) && ! file_exists(get_file_path($args[0])))
     {
-    	if (pathinfo($args[0], PATHINFO_EXTENSION) === 'hdummy')
+    	if (pathinfo($args[0], PATHINFO_EXTENSION) === 'dmy')
     	{
 	    	return plugin_show_put_dummy($args[0], $args);
     	}
@@ -702,7 +702,19 @@ function plugin_show_put_dummy($dummy_id, $args)
 		'select_mode' => 'exclusive'
 	));
 
+	$width = FALSE;
+	$height = FALSE;
+	if (preg_match('/^(\d+)x(\d+)-[0-9a-zA-Z]+\.dmy$/', $dummy_id, $mts))
+	{
+		$width = $mts[1];
+		$height = $mts[2];
+	}
+
 	$label = $is_preview ? __('仮画像') : __('クリックして画像を選択');
+	if ($width && $height)
+	{
+		//TODO: 横幅と高さを変更できるようにする。
+	}
     $ret = '
 <div class="img-polaroid img-dummy">
 	<a href="#" data-dummy="'. h($dummy_id) .'" data-options="'.h($s_args).'" data-filer-options="'. h($filer_options) .'">'.$label.'</a>
