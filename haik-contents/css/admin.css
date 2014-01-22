@@ -481,6 +481,29 @@ ul.orgm-page-list li.nav-header{
 	box-shadow: 0 0 10px #91bd09;
 	-webkit-box-shadow: 0 0 10px #91bd09;	
 }
+
+#orgm_plugin_modal[data-plugin=eyecatch] .btn-white {
+	color: #fff;
+	background-color: #000;
+	border-color: #333;
+}
+
+#orgm_plugin_modal[data-plugin=eyecatch] .btn-white:hover,
+#orgm_plugin_modal[data-plugin=eyecatch] .btn-white:focus,
+#orgm_plugin_modal[data-plugin=eyecatch] .btn-white:active,
+#orgm_plugin_modal[data-plugin=eyecatch] .open .dropdown-toggle.btn-white {
+	color: #fff;
+	background-color: #444;
+	border-color: #333;
+}
+
+#orgm_plugin_modal[data-plugin=eyecatch] .btn-white.active {
+	-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,0.8);
+	box-shadow: inset 0 3px 5px rgba(0,0,0,0.8);
+	background-color: #555;
+	border-color: #333;
+}
+
 #orgm_plugin_modal[data-plugin=video] .control-label {
 	text-align: left;
 }
