@@ -518,8 +518,6 @@ select.form-control {
 }
 .haik-section[data-height=page] > div {
 	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
 }
 
 .haik-section.haik-section-info {
