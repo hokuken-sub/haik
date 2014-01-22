@@ -102,7 +102,16 @@ $(document).ready(function(){
 				
 				if (typeof ORGM.plugins[name] != "undefined") {
 					
-					var $btn = $('<a></a>').addClass("btn btn-default btn-sm").attr("data-name", name).attr("data-textarea", "#msg").text(ORGM.plugins[name].label);
+					var $btn = $('<a></a>').addClass("btn btn-default btn-sm")
+								.attr("data-name", name).attr("data-textarea", "#msg").text(ORGM.plugins[name].label);
+
+					if (typeof ORGM.plugins[name].labelPrefix != "undefined") {
+						$btn.prepend(ORGM.plugins[name].labelPrefix);
+					}
+					if (typeof ORGM.plugins[name].labelSuffix != "undefined") {
+						$btn.append(ORGM.plugins[name].labelSuffix);
+					}
+
 					if (typeof ORGM.plugins[name].style != "undefined") {
 						$btn.css(ORGM.plugins[name].style);
 					}
@@ -122,7 +131,10 @@ $(document).ready(function(){
 							}
 							
 							if (typeof ORGM.plugins[name] != "undefined") {
-								var $li = $('<li><a href="#"></a></li>').children("a").attr("data-name", name).attr("data-textarea", "#msg").text(ORGM.plugins[name].label).css(ORGM.plugins[name].style).end();
+								var $li = $('<li><a href="#"></a></li>')
+									.children("a").attr("data-name", name).attr("data-textarea", "#msg")
+									.text(ORGM.plugins[name].label).css(ORGM.plugins[name].style)
+								.end();
 								$ul.append($li);
 								
 								ORGM.PluginHelper.init($li.children("a"));

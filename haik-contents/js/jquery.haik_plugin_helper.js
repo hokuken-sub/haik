@@ -239,7 +239,7 @@
 		}
 		if (HaikPluginHelper.recent !== false) {
 			
-			var $dropdown = $('<div class="btn-group pull-right plugin-helper-recent"><a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="orgm-icon orgm-icon-time"></i> {action} <span class="caret"></span></a><ul class="dropdown-menu"></ul></div>'.replace("{action}", "履歴"));
+			var $dropdown = $('<div class="btn-group pull-right plugin-helper-recent"><a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="orgm-icon orgm-icon-clock"></i> {action} <span class="caret"></span></a><ul class="dropdown-menu"></ul></div>'.replace("{action}", "履歴"));
 
 			$modal.find("div.modal-header button.close").after($dropdown);
 		}

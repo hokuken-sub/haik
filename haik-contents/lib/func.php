@@ -2141,7 +2141,8 @@ function get_qhm_toolbuttons()
 		),
 		'link',
 		'br',
-		'allPlugin'
+		'recentPlugins',
+		'allPlugin',
 	);
 	return $buttons;
 }

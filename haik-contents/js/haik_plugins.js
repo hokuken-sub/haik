@@ -2652,6 +2652,61 @@ ORGM.plugins = {
 			return false;
 		}
 	},
+	recentPlugins: {
+		label: "履歴",
+		labelPrefix: '<span><i class="orgm-icon orgm-icon-clock"></i> </span>',
+		labelSuffix: '<span> <span class="caret"></span></span>',
+		addable: false,
+		init: false,
+		onStart: function(){
+			var self = this,
+				$element = $(self.element);
+			if ( ! self.init) {
+				$element
+				.attr("data-toggle", "dropdown")
+				self.init = true;
+			}
+			$element.nextAll('.dropdown-menu').remove();
+			
+			if (ORGM.PluginHelper.recent !== false) {
+				var $ul = $('<ul/>', {"class": "dropdown-menu"});
+				
+				var list = [];
+				
+				_.forEach(ORGM.PluginHelper.recent, function(name, i){
+					if (typeof ORGM.plugins[name] === "undefined") {
+						return;
+					}
+					
+					var num = (i + 1);
+					num = "0" + num.toString();
+					num = num.substr(num.length - 2);
+					list.push('<li><a href="#" data-name="'+name+'" data-textarea="#msg">'+ num + ". " + _.escape(ORGM.plugins[name].label) +'</a></li>');
+				});
+				$ul.append(list.join(""))
+				.on("click", "a[data-name]", function(e){
+					e.preventDefault();
+					
+					if (typeof $(this).data("HaikPluginHelper") === "undefined") {
+						ORGM.PluginHelper.init(this);
+						$(this).data("HaikPluginHelper").exec();
+					}
+				});
+				
+				$(self.element).after($ul);
+
+			}
+
+			return false;
+		}
+	},
+	favoritePlugins: {
+		label: "お気に入り",
+		addable: false,
+		onStart: function(){
+			return false;
+		}
+	},
 	// !行コメント
 	commentout: {
 		label: "行コメント",
