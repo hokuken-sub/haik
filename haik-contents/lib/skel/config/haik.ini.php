@@ -42,8 +42,8 @@ $config = array (
     'start' => 1,
     'login' => 1,
     'admin' => 1,
-    'nav' => 0,
-    'menu' => 0,
+    'nav' => 1,
+    'menu' => 1,
   ),
   'eyecatch_converted' => 1,
 );
