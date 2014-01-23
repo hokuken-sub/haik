@@ -1717,8 +1717,8 @@ ORGM.plugins = {
 			},
 			formats: {
 				normal: '&show({name},,{title});',
-				float: '#show({name},aroundr,{title})\n{text}\n#clear\n',
-				popup: '&show({name},popup,{title});'
+				popup: '&show({name},popup,lighter,{title});',
+				pola: '&show({name},pola,{title});'
 			},
 			filer: {
 				options: {
@@ -1728,8 +1728,8 @@ ORGM.plugins = {
 				footer: '\
 					<div class="btn-group" data-toggle="buttons">\
 						<label class="btn btn-default active"><input type="radio" name="type" id="" value="normal" checked> 通常</label>\
-						<label class="btn btn-default"><input type="radio" name="type" id="" value="float"> 回り込み</label>\
 						<label class="btn btn-default"><input type="radio" name="type" id="" value="popup"> ポップアップ</label>\
+						<label class="btn btn-default"><input type="radio" name="type" id="" value="pola"> 枠付き</label>\
 					</div>\
 					<button type="button" data-submit class="btn btn-primary">貼り付け</button>\
 					<button type="button" data-dismiss="modal" class="btn btn-default">キャンセル</button>\
@@ -1770,11 +1770,6 @@ ORGM.plugins = {
 			  , type = $filer.find("div.modal-footer input:radio:checked").val()
 			  , text = self.options.defval.text;
 			  
-			if (type === "float") {
-				exnote.adjustSelection();
-				text = exnote.getSelectedText();
-			}
-			
 			if (files.length > 0) {
 				var value = [];
 				for (var i = 0; i < files.length; i++) {
@@ -1783,8 +1778,6 @@ ORGM.plugins = {
 					text = self.options.defval.text;//選択テキストを使うのは1度だけ
 				}
 				value = value.join("\n");
-				
-				if (type === "float") exnote.moveToNextLine();
 				
 				var caret = {offset: -value.length, length: value.length};
 				self.insert(value, caret);
