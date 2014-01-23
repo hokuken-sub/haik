@@ -1,0 +1,49 @@
+<div id="admin_slider" style="display:none">
+<div class="haik-admin-slider">
+	
+  <form action="<?php echo h($data['search']['search_link']['link'])?>">
+    <div class="form-group">
+      <input type="hidden" name="cmd" value="search">
+      <input type="text" name="word" value="<?php echo h(isset($vars['word']) ? $vars['word']: '')?>" placeholder="検索" class="form-control" id="orgm_nav_search">
+    </div>
+  </form>
+    
+  <div class="list-group">
+  <?php foreach ($data['edit'] as $link): ?>
+    <a href="<?php echo h($link['link'])?>" class="list-group-item "><?php echo $link['name']?></a>
+  <?php endforeach ?>
+  </div>
+  
+  <div class="list-group">
+  <?php foreach ($data['page'] as $link) : ?>
+  	<?php if (isset($link['modal']) && $link['modal']):?>
+      <a href="<?php echo h($link['link'])?>" class="list-group-item" data-toggle="modal"><?php echo $link['name']?></a>
+    <?php else: ?>
+      <a href="<?php echo h($link['link'])?>" class="list-group-item"><?php echo $link['name']?></a>
+    <?php endif ?>
+  <?php endforeach ?>
+  </div>
+  
+  <div class="list-group">
+  <?php foreach ($data['misc'] as $link):?>
+    <a href="<?php echo h($link['link'])?>" class="list-group-item"><?php echo $link['name']?></a>
+  <?php endforeach ?>
+  </div>
+  
+  <div class="list-group">
+  <?php foreach ($data['config'] as $link):?>
+  	<?php if (isset($link['modal']) && $link['modal']):?>
+      <a href="<?php echo h($link['link'])?>" class="list-group-item" data-toggle="modal"><?php echo $link['name']?></a>
+    <?php else: ?>
+      <a href="<?php echo h($link['link'])?>" class="list-group-item"><?php echo $link['name']?></a>
+    <?php endif ?>
+  <?php endforeach ?>
+  </div>
+  
+  <div class="list-group">
+  <?php foreach ($data['haik'] as $link):?>
+    <a href="<?php echo h($link['link'])?>" class="list-group-item"><?php echo $link['name']?></a>
+  <?php endforeach ?>
+  </div>
+	
+</div></div>

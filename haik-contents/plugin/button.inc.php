@@ -22,7 +22,7 @@ function plugin_button_inline()
 	
 	$args   = func_get_args();
 	$text   = strip_autolink(array_pop($args));
-	
+
 	if (count($args) > 0)
 	{
 		$href = array_shift($args);

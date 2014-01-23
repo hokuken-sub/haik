@@ -1140,3 +1140,49 @@ ul.orgm-page-list li.nav-header{
 [data-plugin=eyecatch] .plugin_eyecatch-style div {
 	padding: 15px;
 }
+
+.admin-slider-link a {
+	padding: 9px 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	background-color: transparent;
+	border-color: #333;
+}
+.admin-slider-link a .icon-bar {
+	background-color: #fff;
+}
+
+.admin-slider-link a:hover {
+	padding: 9px 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	background-color: #333;
+	border-color: #333;
+}
+
+.haik-admin-slider {
+	padding-top: 10px;
+}
+
+.haik-admin-slider .list-group a {
+	background-color: transparent;
+	border-style: none;
+	border-radius: 0;
+	color: #777;
+}
+.haik-admin-slider .list-group a:hover {
+	color: #aaa;
+}
+
+.haik-admin-slider .list-group .list-group-item {
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.haik-admin-slider .hr {
+	border-color: #666;
+}
+
+.haik-admin-slider .input-group-addon {
+	background-color: #333;
+}

@@ -1710,13 +1710,8 @@ function create_password($length = 8)
 function get_admin_tools($page)
 {
 	global $script, $_LINK;
-	global $qblog_defaultpage, $qblog_menubar;
 	global $username;
 	
-	$token = get_onetime_token();
-	
-	$qm = get_qm();
-
 	$tools = array(
 		'applyskinlink' => array(
 			'name'   => __('確定'),
@@ -1759,210 +1754,17 @@ function get_admin_tools($page)
 			'button' => 'btn btn-default haik-btn-primary navbar-btn',
 			'visible'=> TRUE,
 			'right'  => TRUE,
-			'sub'    => array(
-				'pageinfolink' => array(
-					'name'   => __('ページの詳細設定'),
-					'link'   => '#orgm_meta_customizer',
-					'style'  => '',
-					'class'  => '',
-					'modal'  => TRUE,
-					'visible'=> TRUE
-				),
-				'deletelink' => array(
-					'name'   => __('ページの削除'),
-					'link'   => $_LINK['delete'].'#contents',
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'SiteNavigatorLink' => array(
-					'name'   => __('ナビ編集'), 
-					'link'   => $_LINK['edit_nav'], 
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'MenuBarLink' => array(
-					'name'   => __('メニュー編集'),
-					'link'   => $_LINK['edit_menu'],
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'MenuBar2Link' => array(
-					'name'   => __('メニュー2編集'),
-					'link'   => $_LINK['edit_menu2'],
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'SiteFooterLink' => array(
-					'name'   => __('フッター編集'),
-					'link'   => $_LINK['edit_footer'],
-					'style'  => '',
-					'visible'=> TRUE
-				),
-			)
+			'sub'    => array(),
 		),
-		'sitelink' => array(
-			'name'   => __('サイト'),
-			'link'   => '',
-			'style'  => '',
-			'class'  => '',
-			'visible'=> TRUE,
-			'right'  => TRUE,
-			'sub'    => array(
-				'searchlink' => array(
-					'search' => TRUE,
-					'name'   => __('検索'),
-					'link'   => $_LINK['search'], 
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'toplink'    => array(
-					'name'   => __('トップへ移動'),
-					'link'   => $script,
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE,
-				),
-				'pagelistlink' => array(
-					'name'   => __('ページ一覧'),
-					'link'   => $_LINK['filelist'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider3'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'newlink' => array(
-					'name'   => __('ページの追加'),
-					'link'   => $_LINK['new'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider2'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-/*
-				'bloglink' => array(
-					'name'   => 'ブログ',
-					'link'   => $script.'?cmd=qblog',
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider2'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-*/
-/*
-				'whatnewlink' => array(
-					'name'   => $qm->m['qhm_init']['whatnewlink_name'],
-					'link'   => $_LINK['recent'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-*/
-				'filerlink' => array(
-					'name'   => __('ファイル管理'),
-					'link'   => $_LINK['filer'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider5'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'designlink' => array(
-					'name'   => __('デザイン変更'),
-					'link'   => '#orgm_designer',
-					'style'  => '',
-					'class'  => '',
-					'modal'  => TRUE,
-					'visible'=> TRUE
-				),
-				'configlink' => array(
-					'name'   => __('設定'),
-					'link'   => $_LINK['config'],
-					'style'  => '',
-					'visible'=> TRUE,
-					'sub'    => array()
-				),
-				'toplink2'    => array(
-					'name'   => __('トップ'),
-					'link'   => $script,
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE,
-				),
-			)
-		),
-		'systemlink'   => array(
-			'name'   => APP_NAME,
-			'link'   => '',
-			'style'  => '',
-			'class'  => '',
-			'visible'=> TRUE,
-			'right'  => TRUE,
-			'sub'    => array(
-				'updatelink' => array(
-					'name'   => __('アップデート'),
-					'link'   => $_LINK['system_update'],
-					'style'  => '',
-					'visible'=> TRUE,
-				),
-				'skinupdatelink' => array(
-					'name'   => __('デザインアップデート'),
-					'link'   => $_LINK['skin_update'],
-					'style'  => '',
-					'class'  => 'hide',
-					'visible'=> TRUE,
-				),
-				'helplink' => array(
-					'name'   => __('ヘルプ'),
-					'link'   => $_LINK['help_site'],
-					'style'  => '',
-					'visible'=> TRUE,
-					'target' => 'help',
-				),
-				'divider4'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'logoutlink'   => array(
-					'name'   => __('ログアウト'),
-					'link'   => $_LINK['logout'],
-					'style'  => '',
-					'visible'=> TRUE
-				)
-			),
+		'admin_slider_link' => array(
+			'name' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
+			'link' => '#admin_slider',
+			'style' => 'margin-left:5px;',
+			'class' => 'admin-slider-link',
+			'button' => 'btn btn-default navbar-btn',
+			'visible' => TRUE,
+			'right' => TRUE,
+			'sub' => array()
 		),
 		'finishlink' => array(
 			'name'   => __('完了'),
