@@ -2314,7 +2314,7 @@ ORGM.plugins = {
 			formats: {
 				normal: "[[${linkto}]]",
 				alias: "[[${alias}>${linkto}]]",
-				button: "&button(${linkto},${type}){${alias}};",
+				button: "&button(${linkto},${type},${size}){${alias}};",
 				newwin: "&openwin(_blank){${alias}};"
 			}
 		},
@@ -2327,6 +2327,11 @@ ORGM.plugins = {
 			$("input[name=type]+button", $dialog).on("click", function(){
 				$(this).closest("label").click();
 			});
+
+			$("input[name=size]+button", $dialog).on("click", function(){
+				$(this).closest("label").click();
+			});
+			
 
 			$.when(ORGM.getPagesForTypeahead()).done(function(){
 				
@@ -2342,9 +2347,44 @@ ORGM.plugins = {
 			});
 			
 			var text = exnote.getSelectedText();
+
 			$("input[name=alias]", $dialog).val(text);
+
+			$("input[name=alias], input[name=linkto]", $dialog)
+			.on("blur", function(){
+				var alias = $("input[name=alias]", $dialog).val();
+				var linkto = $("input[name=linkto]", $dialog).val();
+			
+				if (alias == '')
+				{
+					$("input[name=size]+button", $dialog).text(linkto);
+				}
+				else {
+					$("input[name=size]+button", $dialog).text(alias);	
+				}
+			
+			});
+			$("input[name=alias]", $dialog).val(text)
+				
 			
 			$('.btn-theme').tooltip({placement:'bottom'});
+
+
+			$("input[name=type]", $dialog).on('change', function() {
+				var $button = $("input[name=size]+button");
+				$button.removeClass($button.attr("data-btn-class"));
+				
+				if ($("+button", this).hasClass("btn-link")) {
+					$('.form-group.btnsize', $dialog).addClass("hide");
+				}
+				else {
+					var btnclass = 'btn-' + $(this).val();
+					$button.attr("data-btn-class", btnclass);
+					$button.addClass(btnclass);
+					$('.form-group.btnsize', $dialog).removeClass("hide");
+				}
+			});
+
 			
 		},
 		onComplete: function(){
@@ -2355,6 +2395,7 @@ ORGM.plugins = {
 			var link_str = "";
 			
 			var type = $("input[name=type]:checked", $dialog).val();
+			var size = $("input[name=size]:checked", $dialog).val();
 			
 			if (newwin) {
 				if (type === "link") {
@@ -2363,14 +2404,14 @@ ORGM.plugins = {
 				}
 				else {
 					alias = (alias.length > 0) ? alias : linkto;
-					alias = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type}).text();
+					alias = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type, size:size}).text();
 				}
 				link_str = $.tmpl(this.options.formats.newwin, {alias:alias}).text();
 			}
 			else {
 				if (type != 'link') {
 					alias = (alias.length > 0) ? alias : linkto;
-					link_str = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type}).text();
+					link_str = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type, size:size}).text();
 				}
 				else {
 					if (alias === "") {
