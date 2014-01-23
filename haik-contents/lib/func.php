@@ -2122,22 +2122,123 @@ function get_admin_tools_html($tools)
 	return $tools_str . $tools_right_str;
 }
 
+function get_admin_slider_data()
+{
+	global $script, $_LINK;
+	
+	$data = array(
+		'search' => array(
+			'search_link' => array(
+				'search' => TRUE,
+				'name'   => __('検索'),
+				'link'   => $_LINK['search'], 
+				'visible'=> TRUE
+			),
+		),
+		'edit' => array(
+			'SiteNavigator_link' => array(
+				'name'   => __('ナビ編集'), 
+				'link'   => $_LINK['edit_nav'], 
+				'visible'=> TRUE
+			),
+			'MenuBar_link' => array(
+				'name'   => __('メニュー編集'),
+				'link'   => $_LINK['edit_menu'],
+				'visible'=> TRUE
+			),
+			'MenuBar2_link' => array(
+				'name'   => __('メニュー2編集'),
+				'link'   => $_LINK['edit_menu2'],
+				'visible'=> TRUE
+			),
+			'SiteFooter_link' => array(
+				'name'   => __('フッター編集'),
+				'link'   => $_LINK['edit_footer'],
+				'visible'=> TRUE
+			),
+		),
+		'page' => array(
+			'pageinfo_link' => array(
+				'name'   => __('ページの詳細設定'),
+				'link'   => '#orgm_meta_customizer',
+				'modal'  => TRUE,
+				'visible'=> TRUE
+			),
+			'new_link' => array(
+				'name'   => __('ページの追加'),
+				'link'   => $_LINK['new'],
+				'visible'=> TRUE
+			),
+			'delete_link' => array(
+				'name'   => __('ページの削除'),
+				'link'   => $_LINK['delete'].'#contents',
+				'visible'=> TRUE
+			),
+		),
+		'misc' => array(
+			'pagelist_link' => array(
+				'name'   => __('ページ一覧'),
+				'link'   => $_LINK['filelist'],
+				'visible'=> TRUE
+			),
+			'filer_link' => array(
+				'name'   => __('ファイル管理'),
+				'link'   => $_LINK['filer'],
+				'visible'=> TRUE
+			),
+		),
+		'config' => array(
+			'design_link' => array(
+				'name'   => __('デザイン変更'),
+				'link'   => '#orgm_designer',
+				'modal'  => TRUE,
+				'visible'=> TRUE
+			),
+			'config_link' => array(
+				'name'   => __('設定'),
+				'link'   => $_LINK['config'],
+				'visible'=> TRUE,
+			),
+		),
+		'haik' => array(
+			'help_link' => array(
+				'name'   => __('ヘルプ'),
+				'link'   => $_LINK['help_site'],
+				'visible'=> TRUE,
+				'target' => 'help',
+			),
+			'logout_link'   => array(
+				'name'   => __('ログアウト'),
+				'link'   => $_LINK['logout'],
+				'visible'=> TRUE
+			),
+		),
+	);
+
+	return $data;
+
+}
+
+function get_admin_slider_html($data)
+{
+	ob_start();
+	include(LIB_DIR . 'tmpl/admin_slider.html');
+	$html = ob_get_clean();
+
+	return $html;
+}
+
+
 function get_qhm_toolbuttons()
 {
 
 	$buttons = array(
 		'addnav',
-		array(
-			'name' => 'header',
-			'children' => array('h1', 'header1', 'header2', 'header3')
-		),
-		array(
-			'name' => 'strong',
-			'children' => array('strong1', 'strong2', 'strong3')
-		),
+		'header',
+		'strong',
 		array(
 			'name'=>'show',
-			'children' => array('showdummy', 'file')
+			'children' => array('show2', 'showdummy', 'file')
 		),
 		'link',
 		'br',
@@ -2155,33 +2256,35 @@ function get_plugin_list()
 			'plugins' => array(
 				'deco',
 				'ul',
+				'ol',
 				'align',
+			)
+		),
+		array(
+			'name' => 'レイアウト',
+			'plugins' => array(
+				'eyecatch',
+				'hr',
+				'cols2',
+				'cols3',
+				'cols4',
+				'box',
+				'section',
 			)
 		),
 		array(
 			'name' => '挿入',
 			'plugins' => array(
-				'eyecatch',
 				'contents',
-				'box',
-				'hr',
-				'slide',
-				'html',
+				'table',
 				'gmap',
+				'slide',
 				'video',
 				'jplayer',
 				'download',
 				'file',
+				'html',
 			),
-		),
-		array(
-			'name' => 'レイアウト',
-			'plugins' => array(
-				'table',
-				'cols2',
-				'cols3',
-				'cols4',
-			)
 		),
 		array(
 			'name' => 'コンタクト',
