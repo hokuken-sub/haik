@@ -1,11 +1,18 @@
 <?php
-//-------------------------------------------------
-// QHM Initialization program for skin (output)
-// This file is required lib/html.php
-//
-// QHMの編集モードで使う変数などを初期化、設定
-// 最後に、ヘッダーの出力までを担当する
-//
+/**
+ *   Haik Initialization script for admin/edit
+ *   -------------------------------------------
+ *   /haik-contents/lib/haik_admin_init.php
+ *   
+ *   Copyright (c) 2014 hokuken
+ *   http://hokuken.com/
+ *   
+ *   created  : 2014/01/14
+ *   modified :
+ *   
+ *   haik の編集モードで使う変数などを初期化、設定
+ *   
+ */
 
 //---- Prohibit direct access
 if (! defined('UI_LANG')) die('UI_LANG is not set');
@@ -150,17 +157,20 @@ if ($is_editor OR ss_admin_check())
 <script src="{$js_dir}upload/js/jquery.fileupload-fp.js"></script>
 <script src="{$js_dir}upload/js/jquery.fileupload-ui.js"></script>
 <script src="{$js_dir}bootstrap-slider.js"></script>
+<script src="{$js_dir}jquery.sidr.js"></script>
 
 EOS;
 	$admin_css = <<< EOS
 	<link rel="stylesheet" href="{$css_dir}slider.css">
 	<link rel="stylesheet" href="{$css_dir}admin.css">
+	<link rel="stylesheet" href="{$css_dir}jquery.sidr.dark.css">
 EOS;
 	$qt->appendv('admin_script', $admin_script);
 	$qt->appendv('head_tag', $admin_css);
 
 	// !admin_nav
 	$tools = get_admin_tools($_page);
+	$slides = get_admin_slider_data();
 
 	// -----------------------------------
 	// ! admin_nav のセット
@@ -172,7 +182,7 @@ EOS;
 	$prevdiv = '';
 	if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 	{
-		unset($tools['editlink'], $tools['sitelink'], $tools['systemlink']);
+		unset($tools['editlink'], $tools['admin_slider_link']);
 	}
 	else
 	{
@@ -182,7 +192,7 @@ EOS;
 	
 	if ( ! $is_page OR PKWK_READONLY)
 	{
-		unset($tools['editlink'], $tools['sitelink'], $tools['systemlink']);
+		unset($tools['editlink'], $tools['admin_slider_link']);
 
 		if (isset($vars['refer']) && is_page($vars['refer']))
 		{
@@ -194,42 +204,19 @@ EOS;
 		unset($tools['finishlink']);
 	}
 
-/*
-	if( ! ss_admin_check())
-	{
-		if (isset($tools['pagelink'])) unset($tools['pagelink']);
-		if (isset($tools['sitelink'])) unset($tools['sitelink']);
-		if (isset($tools['toollink'])) unset($tools['toollink']);
-		if (isset($tools['configlink'])) unset($tools['configlink']);
-		if (isset($tools['helplink'])) unset($tools['helplink']);
-	}
-	else {
-		if (isset($tools['passwordlink'])) unset($tools['passwordlink']);
-	}
-*/
 	
-	if ( ! $is_update)
+	if ($is_update)
 	{
-//		unset($tools['userlink']['sub']['updatelink'], $tools['userlink']['sub']['divider']);
+		// ! TODO: 設定に updateの表示をする
+
 	}
-	
-/*
-	if (is_qblog())
-	{
-		if (isset($tools['pagelink']['sub']['renamelink'])) unset($tools['pagelink']['sub']['renamelink']);
-	}
-	if ( ! is_page($qblog_defaultpage))
-	{
-		if (isset($tools['qbloglink'])) unset($tools['qbloglink']);
-	}
-*/
 	
 	// レイアウトページがなければレイアウトページの編集リンクを出さない
 	foreach ($layout_pages as $k => $val)
 	{
 		if ( ! in_array($k, $style_config['templates'][$template_name]['layouts']))
 		{
-			unset($tools['editlink']['sub'][$k.'Link']);
+			unset($slides['edit'][$k.'Link']);
 		}
 	}
 	if (isset($style_config['templates'][$template_name]['elements']))
@@ -237,25 +224,23 @@ EOS;
 		$subitems = array();
 		foreach ($style_config['templates'][$template_name]['elements'] as $element)
 		{
-			$subitems[strtolower($element) . 'link'] = array(
-				'name' => sprintf(__('%sの編集'), $element),
-				'link' => $script . '?cmd=edit&page=' . rawurlencode($element),
-			);
+			if ( ! array_key_exists($slides, $element.'_link')) {
+				$slides['edit'][$element.'_link'] = array(
+					'name' => sprintf(__('%sの編集'), $element),
+					'link' => $script . '?cmd=edit&page=' . rawurlencode($element),
+				);
+			}
 		}
-		
-		$tools['editlink']['sub'] = array_merge(array_slice($tools['editlink']['sub'], 0, 4), $subitems, array_slice($tools['editlink']['sub'], 4));
 	}
+
 	if ($_page === $defaultpage) {
-		unset($tools['editlink']['sub']['deletelink']);
+		unset($slides['page']['delete_link']);
 	}
 
 	// ! 編集・プレビューにはボタンを表示
 	if ($vars['cmd'] == 'edit' OR $vars['cmd'] == 'secedit')
 	{
-		unset($tools['editlink'], $tools['sitelink']);
-		
-		//モバイルでは表示しない
-		unset($tools['systemlink']);
+		unset($tools['editlink'], $tools['admin_slider_link']);
 		
 		$tools_buttons = '
 			<div class="btn-toolbar">
@@ -337,16 +322,19 @@ EOS;
 	// -----------------------------------	
 	$app_name = '<a href="" class="navbar-brand">'.APP_NAME.'</a>';
 	$tools_str = get_admin_tools_html($tools);
+	$slides_str = get_admin_slider_html($slides);
 
 	$admin_nav = '
 <div id="admin_nav" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
+		<a class="navbar-brand" href="'.h($script).'"><img src="'.IMAGE_DIR.'haiklogo.jpg" width="50" height="50"></a>
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="pull-right">
 		'.(isset($tools_buttons) ? $tools_buttons : '').'
 		</div>
 	</div>
 </div>
+'.$slides_str.'
 ';
 
 	$qt->appendv('admin_nav', $admin_nav);
@@ -617,5 +605,5 @@ if (exist_plugin('intro'))
 	plugin_intro_set();
 }
 
-/* End of file qhm_init.php */
-/* Location: ./lib/qhm_init.php */
+/* End of file haik_admin_init.php */
+/* Location: /haik-contents/lib/haik_admin_init.php */

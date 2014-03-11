@@ -138,7 +138,7 @@ ORGM.plugins = {
 			
 			if ($("input[name=template]:checked").length > 0) {
 				var dummy1 = ORGM.plugins.showdummy.getDummy()
-				  , dummy2 = dummy1.replace(".hdummy", "0.hdummy");
+				  , dummy2 = ORGM.plugins.showdummy.getDummy();
 				text = this.options.templates.text.replace("{dummy1}", dummy1).replace("{dummy2}", dummy2);
 				
 			}
@@ -194,8 +194,8 @@ ORGM.plugins = {
 			
 			if ($("input[name=template]:checked").length > 0) {
 				var dummy1 = ORGM.plugins.showdummy.getDummy()
-				  , dummy2 = dummy1.replace(".hdummy", "0.hdummy")
-				  , dummy3 = dummy1.replace(".hdummy", "00.hdummy");
+				  , dummy2 = ORGM.plugins.showdummy.getDummy()
+				  , dummy3 = ORGM.plugins.showdummy.getDummy();
 				text = this.options.templates.text.replace("{dummy1}", dummy1).replace("{dummy2}", dummy2).replace("{dummy3}", dummy3);
 				
 			}
@@ -253,9 +253,9 @@ ORGM.plugins = {
 			
 			if ($("input[name=template]:checked").length > 0) {
 				var dummy1 = ORGM.plugins.showdummy.getDummy()
-				  , dummy2 = dummy1.replace(".hdummy", "0.hdummy")
-				  , dummy3 = dummy1.replace(".hdummy", "00.hdummy")
-				  , dummy4 = dummy1.replace(".hdummy", "000.hdummy");
+				  , dummy2 = ORGM.plugins.showdummy.getDummy()
+				  , dummy3 = ORGM.plugins.showdummy.getDummy()
+				  , dummy4 = ORGM.plugins.showdummy.getDummy();
 				  text = this.options.templates.text.replace("{dummy1}", dummy1).replace("{dummy2}", dummy2).replace("{dummy3}", dummy3).replace("{dummy4}", dummy4);
 				
 			}
@@ -530,35 +530,57 @@ ORGM.plugins = {
 	header: {
 		label: "見出し",
 		format: "* {header}\n",
-		options: {defval: "大見出し"},
+		options: {defval: "テキスト", maxRepeat: 3},
 		onStart: function(){
-			var exnote = $(this.textarea).data("exnote"), value = this.options.defval, text = exnote.getSelectedText();
-			if (text.length > 0) {
-				exnote.adjustSelection();
-				text = exnote.getSelectedText();
-				//multi line
-				if (/\n/.test(text)) {
-					var lines = text.split("\n"), values = [];
-					for (var i = 0; i < lines.length; i++) {
-						var line = lines[i];
-						if (line.replace(/^\s+|\s+$/g, "").length === 0) continue;
-						values.push(this.format.replace("{header}", line));
-					}
-					this.value = values.join("\n");
-					return;
-				}
+			var exnote = $(this.textarea).data("exnote"),
+				value = this.options.defval,
+				text = exnote.getSelectedText(),
+				multiLine = false, newLines = "",
+				values, self = this;
+			
+			exnote.adjustSelection();
+			text = exnote.getSelectedText();
 
-				value = text;
+			if (/\n/.test(text)) {
+				multiLine = true;
+				values = text.replace(/(\n+)$/g, "").split("\n");
+				newLines = RegExp.$1;
 			}
 			else {
-				exnote.moveToNextLine();
+				values = [text];
 			}
 			
-			this.caret = {
-				offset: - (value.length + 1),
-				length: value.length
-			};
-			this.value = this.format.replace("{header}", value);
+			values = $.map(values, function(value, i){
+				value = value.replace(/^\s+|\s+$/g, "");
+				if (value.length === 0) {
+					if (multiLine) {
+						return "";
+					}
+					value = "* " + self.options.defval;
+				}
+				else {
+					value = "*" + value.replace(/^(\*+|) */, "$1 ");
+					value = value.replace(/^\*{4,} (.*)$/, "*** $1");
+				}
+				return value;
+			});
+			
+			this.value = values.join("\n");
+
+			if (multiLine) {
+				this.value += newLines;
+				this.caret = {
+					offset: - (this.value.length),
+					length: this.value.length - newLines.length
+				};
+			}
+			else {
+				text = this.value.match(/^\*{1,3} ?(.*)$/) ? RegExp.$1 : "";
+				this.caret = {
+					offset: - (text.length),
+					length: text.length
+				};
+			}
 		}
 	},
 	header1: {
@@ -698,8 +720,8 @@ ORGM.plugins = {
 		}
 	},
 	ol: {
-		label: "番号付き箇条書き",
-		format: "- {text}",
+		label: "番号付き",
+		format: "+ {text}",
 		dialog:'external:plugin_ol.html',
 		onStart: function(){
 			this.options = ORGM.plugins.ul.options;
@@ -1098,7 +1120,7 @@ ORGM.plugins = {
 	},
 	// !表組み
 	table: {
-		label: "表を挿入",
+		label: "表（テーブル）",
 		options: {rows: 4, cols: 7},
 		init: false,
 		dialog: 'external:plugin_table.html',
@@ -1305,7 +1327,7 @@ ORGM.plugins = {
 	// !HTML挿入
 	// !TODO:再編集用に選択コードの読み込みを検討
 	html: {
-		label: "HTML挿入",
+		label: "HTMLを挿入",
 		format: "#html{{\n{html}\n}}\n",
 		dialog: "<p>ここにHTMLソースを入力してください。</p><textarea name=\"html\" class=\"form-control\"></textarea>",
 		onDialogOpen: function(){
@@ -1333,10 +1355,10 @@ ORGM.plugins = {
 		}
 	},
 	// !beforescript: その他のタグ
-	beforescript: {
-		label: "その他のタグ",
-		format: "#beforescript{{\n{html}\n}}\n",
-		dialog: "挿入したいメタタグ等を入力してください。<br /><textarea name=\"html\"></textarea>",
+	user_script: {
+		label: "スクリプトの挿入",
+		format: "#user_script{{\n{html}\n}}\n",
+		dialog: "挿入したいスクリプト等を入力してください。<br /><textarea name=\"html\"></textarea>",
 		onDialogOpen: function(){
 			var $dialog = $(this.dialogElement);
 			$dialog.find("textarea[name=html]").exnote();
@@ -1360,7 +1382,7 @@ ORGM.plugins = {
 	
 	// !枠
 	box: {
-		label: "枠",
+		label: "枠（ボックス）",
 		format: "${br}#box(${width},${type},${height}){{${br}${text}${br}}}${br}",
 		options: {
 			width: [
@@ -1629,7 +1651,7 @@ ORGM.plugins = {
 	// !ダウンロード
 	download: {
 		label: "ダウンロード",
-		format: "&download(${file},${notify},${type}){${text}};",
+		format: "&download(${file},${notify},${type},${size}){${text}};",
 		options: {
 			defval: "ダウンロード",
 			filer: {
@@ -1660,10 +1682,20 @@ ORGM.plugins = {
 				$filer.find("iframe").data(self.options.filer.options);
 				$filer.data("footer", "").modal();
 			});
-			$("input[name=type]+button", $modal).on("click", function(){
+
+			$("input[name=type]+button, input[name=size]+button", $modal).on("click", function(){
 				$(this).closest("label").click();
 			});
-			
+
+			$("input[name=type]", $modal).on('change', function() {
+				var $button = $("input[name=size]+button", $modal);
+				$button.removeClass($button.attr("data-type-class"));
+				
+				var btnclass = 'btn-' + $(this).val();
+				$button.attr("data-type-class", btnclass);
+				$button.addClass(btnclass);
+			});
+
 			$('.btn-theme').tooltip({placement:'bottom'});
 
 		},
@@ -1680,6 +1712,7 @@ ORGM.plugins = {
 			data.notify = $("input[name=notify]").is(":checked") ? "notify" : "";
 			data.type = $("input[name=type]:checked").val();
 			data.text = text;
+			data.size = $("input[name=size]:checked").val();
 			value = $.tmpl(this.format, data).text();
 			
 			this.insert(value);
@@ -1695,8 +1728,8 @@ ORGM.plugins = {
 			},
 			formats: {
 				normal: '&show({name},,{title});',
-				float: '#show({name},aroundr,{title})\n{text}\n#clear\n',
-				popup: '&show({name},popup,{title});'
+				popup: '&show({name},popup,lighter,{title});',
+				pola: '&show({name},pola,{title});'
 			},
 			filer: {
 				options: {
@@ -1706,8 +1739,8 @@ ORGM.plugins = {
 				footer: '\
 					<div class="btn-group" data-toggle="buttons">\
 						<label class="btn btn-default active"><input type="radio" name="type" id="" value="normal" checked> 通常</label>\
-						<label class="btn btn-default"><input type="radio" name="type" id="" value="float"> 回り込み</label>\
 						<label class="btn btn-default"><input type="radio" name="type" id="" value="popup"> ポップアップ</label>\
+						<label class="btn btn-default"><input type="radio" name="type" id="" value="pola"> 枠付き</label>\
 					</div>\
 					<button type="button" data-submit class="btn btn-primary">貼り付け</button>\
 					<button type="button" data-dismiss="modal" class="btn btn-default">キャンセル</button>\
@@ -1748,11 +1781,6 @@ ORGM.plugins = {
 			  , type = $filer.find("div.modal-footer input:radio:checked").val()
 			  , text = self.options.defval.text;
 			  
-			if (type === "float") {
-				exnote.adjustSelection();
-				text = exnote.getSelectedText();
-			}
-			
 			if (files.length > 0) {
 				var value = [];
 				for (var i = 0; i < files.length; i++) {
@@ -1762,12 +1790,20 @@ ORGM.plugins = {
 				}
 				value = value.join("\n");
 				
-				if (type === "float") exnote.moveToNextLine();
-				
 				var caret = {offset: -value.length, length: value.length};
 				self.insert(value, caret);
 			}
 			
+		}
+	},
+	show2: {
+		label: "画像の貼り付け",
+		style: {},
+		init: false,
+		onStart: function(){
+			this.options = ORGM.plugins.show.options;
+			ORGM.plugins.show.onStart.call(this);
+			this.insertFiles = ORGM.plugins.show.insertFiles;
 		}
 	},
 
@@ -1776,8 +1812,8 @@ ORGM.plugins = {
 		label: "後で画像を指定",
 		format: "&show({dummy});",
 		style: {},
+		options: {width: 300, height: 200, ext: "dmy"},
 		onStart: function(){
-
 			var exnote = $(this.textarea).data("exnote")
 				,value = this.format
 				,$dialog = $(this.dialogElement);
@@ -1787,7 +1823,17 @@ ORGM.plugins = {
 			return;
 		},
 		getDummy: function(){
-			return this.format.replace("{dummy}", new Date().getTime() + '.hdummy');
+			// {width}x{height}-{randStr}.dmy
+			return this.format.replace("{dummy}", this.options.width + "x" + this.options.height + '-' + this.getRandom() + '.' + this.options.ext);
+		},
+		getRandom: function(length){
+			length = length || 4;
+			var seed = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			var str = "";
+			for (var i = 0; i < length; i++) {
+				str += seed.substr(Math.floor(Math.random() * seed.length), 1);
+			}
+			return str;
 		}
 	},
 
@@ -2041,7 +2087,7 @@ ORGM.plugins = {
 
 	// !マルチメディア
 	file: {
-		label: "ファイル名",
+		label: "ファイル名を挿入",
 		style: {},
 		options: {
 			formats: {
@@ -2279,7 +2325,7 @@ ORGM.plugins = {
 			formats: {
 				normal: "[[${linkto}]]",
 				alias: "[[${alias}>${linkto}]]",
-				button: "&button(${linkto},${type}){${alias}};",
+				button: "&button(${linkto},${type},${size}){${alias}};",
 				newwin: "&openwin(_blank){${alias}};"
 			}
 		},
@@ -2293,23 +2339,68 @@ ORGM.plugins = {
 				$(this).closest("label").click();
 			});
 
+			$("input[name=size]+button", $dialog).on("click", function(){
+				$(this).closest("label").click();
+			});
+			
+			var text = exnote.getSelectedText();
+			$("input[name=alias]", $dialog).val(text);
+
+
 			$.when(ORGM.getPagesForTypeahead()).done(function(){
 				
 				$dialog.find("input[name=linkto]").typeahead({
 					local: ORGM.pagesForTypeahead,
 					engine: ORGM.tmpl,
 					template: ORGM.pageSuggestionTemplateForTypeahead,
+				}).on('typeahead:selected', function (object, datum) {
+					if (text == '') {
+						$("input[name=alias]", $dialog).val(datum.title);
+					}
 				});
+
 			}).always(function(){
 				setTimeout(function(){
 					$("input:text[name=linkto]", $dialog).focus().select();
 				}, 25);
 			});
 			
-			var text = exnote.getSelectedText();
-			$("input[name=alias]", $dialog).val(text);
+
+			$("input[name=alias], input[name=linkto]", $dialog)
+			.on("blur", function(){
+				var alias = $("input[name=alias]", $dialog).val();
+				var linkto = $("input[name=linkto]", $dialog).val();
+			
+				if (alias == '')
+				{
+					$("input[name=size]+button", $dialog).text(linkto);
+				}
+				else {
+					$("input[name=size]+button", $dialog).text(alias);	
+				}
+			
+			});
+			$("input[name=alias]", $dialog).val(text)
+				
 			
 			$('.btn-theme').tooltip({placement:'bottom'});
+
+
+			$("input[name=type]", $dialog).on('change', function() {
+				var $button = $("input[name=size]+button", $dialog);
+				$button.removeClass($button.attr("data-type-class"));
+				
+				if ($("+button", this).hasClass("btn-link")) {
+					$('.form-group.btnsize', $dialog).addClass("hide");
+				}
+				else {
+					var btnclass = 'btn-' + $(this).val();
+					$button.attr("data-type-class", btnclass);
+					$button.addClass(btnclass);
+					$('.form-group.btnsize', $dialog).removeClass("hide");
+				}
+			});
+
 			
 		},
 		onComplete: function(){
@@ -2320,6 +2411,7 @@ ORGM.plugins = {
 			var link_str = "";
 			
 			var type = $("input[name=type]:checked", $dialog).val();
+			var size = $("input[name=size]:checked", $dialog).val();
 			
 			if (newwin) {
 				if (type === "link") {
@@ -2328,14 +2420,14 @@ ORGM.plugins = {
 				}
 				else {
 					alias = (alias.length > 0) ? alias : linkto;
-					alias = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type}).text();
+					alias = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type, size:size}).text();
 				}
 				link_str = $.tmpl(this.options.formats.newwin, {alias:alias}).text();
 			}
 			else {
 				if (type != 'link') {
 					alias = (alias.length > 0) ? alias : linkto;
-					link_str = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type}).text();
+					link_str = $.tmpl(this.options.formats.button, {alias:alias, linkto:linkto, type:type, size:size}).text();
 				}
 				else {
 					if (alias === "") {

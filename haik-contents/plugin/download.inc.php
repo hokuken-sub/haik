@@ -26,25 +26,62 @@ function plugin_download_inline()
     $r_page = rawurlencode($page);
     
     $args   = func_get_args();
-    
     $label = array_pop($args);
-    $args_num = count($args);
-    
-    if ($args_num < 1 OR 3 < $args_num)
-    {
-    	return __('error: &amp;download(file[[,notify],type]){label};');
-    }
-    
-    list($filename, $notify, $type) = array_pad($args, 3, '');
 
-	$filepath = is_url($filename) ? $filename : get_file_path($filename);
-	
-    //param check
-    if ( ! is_url($filepath) && ! file_exists($filepath))
-    {
-    	return __('ファイルがみつかりません');
-    }
-    
+	$filename = '';
+	$type = ' btn-default';
+	$size = '';
+	$notify = 0;
+	$class = '';
+
+	if (count($args) > 0)
+	{
+		$filename = array_shift($args);
+		$filepath = is_url($filename) ? $filename : get_file_path($filename);
+		
+	    //param check
+	    if ( ! is_url($filepath) && ! file_exists($filepath))
+	    {
+	    	return __('ファイルがみつかりません');
+	    }
+
+		foreach($args as $arg)
+		{
+			switch($arg){
+				case 'primary':
+				case 'info':
+				case 'success':
+				case 'warning':
+				case 'danger':
+				case 'link':
+				case 'default':
+					$type = ' btn-'.$arg;
+					break;
+				case 'theme':
+					$type = ' btn-'.$arg;
+					break;
+				case 'large':
+				case 'lg':
+					$size = ' btn-lg';
+					break;
+				case 'small':
+				case 'sm':
+					$size = ' btn-sm';
+					break;
+				case 'mini':
+				case 'xs':
+					$size = ' btn-xs';
+					break;
+				case 'block':
+					$size = ' btn-'.$arg;
+					break;
+				case 'notify':
+					$notify = 1;
+				default:
+					$class .= ' '.$arg;
+			}
+		}
+	}    
     
     if ($label === '')
     {
@@ -55,10 +92,6 @@ function plugin_download_inline()
 	    $label = preg_replace('/:([\w-]+):/', '<i class="icon-$1"></i>', $label);
     }
 
-    $notify = ($notify == 'notify') ? 1 : 0;
-    
-    $class_str = get_bs_style(($type === '') ? 'default' : $type);
-
     //url decode
 	$filename = rawurlencode(rawurlencode($filename));
     
@@ -66,7 +99,7 @@ function plugin_download_inline()
     $md5 = md5(file_get_contents($app_ini_path).filemtime(get_filename($page)));
     $dlurl = $script .'?cmd=download&refer='.$r_page.'&filename='.$filename.'&key='.$md5.'&notify='.$notify;
     
-    $btn = '<a href="'. h($dlurl) .'" class="'. h($class_str) .'">'. $label .'</a>';
+    $btn = '<a href="'. h($dlurl) .'" class="btn ' . h($type) . h($size). h($class).'">'. $label .'</a>';
     
     return $btn;
 }

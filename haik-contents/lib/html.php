@@ -175,8 +175,8 @@ function catbody($title, $page, $body)
 
 	//----------------- 携帯の場合の処理 --------------------------------------
 	if( preg_match('/keitai.skin.php$/', SKIN_FILE) ){
-		require(LIB_DIR.'orgm_admin_init.php');
-		require(LIB_DIR.'orgm_init.php');
+		require(LIB_DIR.'haik_admin_init.php');
+		require(LIB_DIR.'haik_init.php');
 		require(SKIN_FILE);
 		return;
 	}
@@ -188,7 +188,7 @@ function catbody($title, $page, $body)
 	//
 	
 	//common setting
-	require(LIB_DIR . 'orgm_admin_init.php');
+	require(LIB_DIR . 'haik_admin_init.php');
 
 	// encoding
 	$output_encode = CONTENT_CHARSET;
@@ -209,7 +209,7 @@ function catbody($title, $page, $body)
 	}
 	$style_config = style_config_read();
 
-	require(LIB_DIR.'orgm_init.php');
+	require(LIB_DIR.'haik_init.php');
 
 	
 	//独自のテンプレートファイルをチェック

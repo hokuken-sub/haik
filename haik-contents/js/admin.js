@@ -495,6 +495,33 @@ $(document).ready(function(){
 	    	}
 	    }, 300);
     });
+
+	// ! admin slider
+	$("#admin_slider_link").sidr({
+		name: "slider-right",
+		source: "#admin_slider",
+		side: "right",
+		renaming: false,
+		onOpen: function(){
+			$(document).on("click.adminSlider keydown.adminSlider", "*", function(e){
+				
+				e.stopPropagation();
+				
+				if ( ! $(e.target).is("[data-toggle=modal]") && $(e.target).closest(".haik-admin-slider").length > 0) return;
+				
+				$.sidr('close', 'slider-right');
+			});
+
+			$(".haik-admin-slider .close").on('click', function(){
+				$.sidr('close', 'slider-right');
+			});
+
+		},
+		onClose: function(){
+			$(document).off(".adminSlider");
+		}
+	});
+
     
 /*
     // ! #admin_nav 以外の .btn-navbar クリックで #admin_nav を開けないようにする

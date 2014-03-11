@@ -1710,13 +1710,8 @@ function create_password($length = 8)
 function get_admin_tools($page)
 {
 	global $script, $_LINK;
-	global $qblog_defaultpage, $qblog_menubar;
 	global $username;
 	
-	$token = get_onetime_token();
-	
-	$qm = get_qm();
-
 	$tools = array(
 		'applyskinlink' => array(
 			'name'   => __('確定'),
@@ -1759,210 +1754,17 @@ function get_admin_tools($page)
 			'button' => 'btn btn-default haik-btn-primary navbar-btn',
 			'visible'=> TRUE,
 			'right'  => TRUE,
-			'sub'    => array(
-				'pageinfolink' => array(
-					'name'   => __('ページの詳細設定'),
-					'link'   => '#orgm_meta_customizer',
-					'style'  => '',
-					'class'  => '',
-					'modal'  => TRUE,
-					'visible'=> TRUE
-				),
-				'deletelink' => array(
-					'name'   => __('ページの削除'),
-					'link'   => $_LINK['delete'].'#contents',
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'SiteNavigatorLink' => array(
-					'name'   => __('ナビ編集'), 
-					'link'   => $_LINK['edit_nav'], 
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'MenuBarLink' => array(
-					'name'   => __('メニュー編集'),
-					'link'   => $_LINK['edit_menu'],
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'MenuBar2Link' => array(
-					'name'   => __('メニュー2編集'),
-					'link'   => $_LINK['edit_menu2'],
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'SiteFooterLink' => array(
-					'name'   => __('フッター編集'),
-					'link'   => $_LINK['edit_footer'],
-					'style'  => '',
-					'visible'=> TRUE
-				),
-			)
+			'sub'    => array(),
 		),
-		'sitelink' => array(
-			'name'   => __('サイト'),
-			'link'   => '',
-			'style'  => '',
-			'class'  => '',
-			'visible'=> TRUE,
-			'right'  => TRUE,
-			'sub'    => array(
-				'searchlink' => array(
-					'search' => TRUE,
-					'name'   => __('検索'),
-					'link'   => $_LINK['search'], 
-					'style'  => '',
-					'visible'=> TRUE
-				),
-				'toplink'    => array(
-					'name'   => __('トップへ移動'),
-					'link'   => $script,
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE,
-				),
-				'pagelistlink' => array(
-					'name'   => __('ページ一覧'),
-					'link'   => $_LINK['filelist'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider3'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'newlink' => array(
-					'name'   => __('ページの追加'),
-					'link'   => $_LINK['new'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider2'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-/*
-				'bloglink' => array(
-					'name'   => 'ブログ',
-					'link'   => $script.'?cmd=qblog',
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider2'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-*/
-/*
-				'whatnewlink' => array(
-					'name'   => $qm->m['qhm_init']['whatnewlink_name'],
-					'link'   => $_LINK['recent'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-*/
-				'filerlink' => array(
-					'name'   => __('ファイル管理'),
-					'link'   => $_LINK['filer'],
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE
-				),
-				'divider5'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'designlink' => array(
-					'name'   => __('デザイン変更'),
-					'link'   => '#orgm_designer',
-					'style'  => '',
-					'class'  => '',
-					'modal'  => TRUE,
-					'visible'=> TRUE
-				),
-				'configlink' => array(
-					'name'   => __('設定'),
-					'link'   => $_LINK['config'],
-					'style'  => '',
-					'visible'=> TRUE,
-					'sub'    => array()
-				),
-				'toplink2'    => array(
-					'name'   => __('トップ'),
-					'link'   => $script,
-					'style'  => '',
-					'class'  => '',
-					'visible'=> TRUE,
-				),
-			)
-		),
-		'systemlink'   => array(
-			'name'   => APP_NAME,
-			'link'   => '',
-			'style'  => '',
-			'class'  => '',
-			'visible'=> TRUE,
-			'right'  => TRUE,
-			'sub'    => array(
-				'updatelink' => array(
-					'name'   => __('アップデート'),
-					'link'   => $_LINK['system_update'],
-					'style'  => '',
-					'visible'=> TRUE,
-				),
-				'skinupdatelink' => array(
-					'name'   => __('デザインアップデート'),
-					'link'   => $_LINK['skin_update'],
-					'style'  => '',
-					'class'  => 'hide',
-					'visible'=> TRUE,
-				),
-				'helplink' => array(
-					'name'   => __('ヘルプ'),
-					'link'   => $_LINK['help_site'],
-					'style'  => '',
-					'visible'=> TRUE,
-					'target' => 'help',
-				),
-				'divider4'    => array(
-					'name'   =>'',
-					'link'   =>'',
-					'style'  =>'',
-					'class'  =>'divider',
-					'visible'=>TRUE
-				),
-				'logoutlink'   => array(
-					'name'   => __('ログアウト'),
-					'link'   => $_LINK['logout'],
-					'style'  => '',
-					'visible'=> TRUE
-				)
-			),
+		'admin_slider_link' => array(
+			'name' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
+			'link' => '#admin_slider',
+			'style' => 'margin-left:5px;',
+			'class' => 'admin-slider-link',
+			'button' => 'btn btn-default navbar-btn',
+			'visible' => TRUE,
+			'right' => TRUE,
+			'sub' => array()
 		),
 		'finishlink' => array(
 			'name'   => __('完了'),
@@ -2122,22 +1924,123 @@ function get_admin_tools_html($tools)
 	return $tools_str . $tools_right_str;
 }
 
+function get_admin_slider_data()
+{
+	global $script, $_LINK;
+	
+	$data = array(
+		'search' => array(
+			'search_link' => array(
+				'search' => TRUE,
+				'name'   => __('検索'),
+				'link'   => $_LINK['search'], 
+				'visible'=> TRUE
+			),
+		),
+		'edit' => array(
+			'SiteNavigator_link' => array(
+				'name'   => __('ナビ編集'), 
+				'link'   => $_LINK['edit_nav'], 
+				'visible'=> TRUE
+			),
+			'MenuBar_link' => array(
+				'name'   => __('メニュー編集'),
+				'link'   => $_LINK['edit_menu'],
+				'visible'=> TRUE
+			),
+			'MenuBar2_link' => array(
+				'name'   => __('メニュー2編集'),
+				'link'   => $_LINK['edit_menu2'],
+				'visible'=> TRUE
+			),
+			'SiteFooter_link' => array(
+				'name'   => __('フッター編集'),
+				'link'   => $_LINK['edit_footer'],
+				'visible'=> TRUE
+			),
+		),
+		'page' => array(
+			'pageinfo_link' => array(
+				'name'   => __('ページの詳細設定'),
+				'link'   => '#orgm_meta_customizer',
+				'modal'  => TRUE,
+				'visible'=> TRUE
+			),
+			'new_link' => array(
+				'name'   => __('ページの追加'),
+				'link'   => $_LINK['new'],
+				'visible'=> TRUE
+			),
+			'delete_link' => array(
+				'name'   => __('ページの削除'),
+				'link'   => $_LINK['delete'].'#contents',
+				'visible'=> TRUE
+			),
+		),
+		'misc' => array(
+			'pagelist_link' => array(
+				'name'   => __('ページ一覧'),
+				'link'   => $_LINK['filelist'],
+				'visible'=> TRUE
+			),
+			'filer_link' => array(
+				'name'   => __('ファイル管理'),
+				'link'   => $_LINK['filer'],
+				'visible'=> TRUE
+			),
+		),
+		'config' => array(
+			'design_link' => array(
+				'name'   => __('デザイン変更'),
+				'link'   => '#orgm_designer',
+				'modal'  => TRUE,
+				'visible'=> TRUE
+			),
+			'config_link' => array(
+				'name'   => __('設定'),
+				'link'   => $_LINK['config'],
+				'visible'=> TRUE,
+			),
+		),
+		'haik' => array(
+			'help_link' => array(
+				'name'   => __('ヘルプ'),
+				'link'   => $_LINK['help_site'],
+				'visible'=> TRUE,
+				'target' => 'help',
+			),
+			'logout_link'   => array(
+				'name'   => __('ログアウト'),
+				'link'   => $_LINK['logout'],
+				'visible'=> TRUE
+			),
+		),
+	);
+
+	return $data;
+
+}
+
+function get_admin_slider_html($data)
+{
+	ob_start();
+	include(LIB_DIR . 'tmpl/admin_slider.html');
+	$html = ob_get_clean();
+
+	return $html;
+}
+
+
 function get_qhm_toolbuttons()
 {
 
 	$buttons = array(
 		'addnav',
-		array(
-			'name' => 'header',
-			'children' => array('h1', 'header1', 'header2', 'header3')
-		),
-		array(
-			'name' => 'strong',
-			'children' => array('strong1', 'strong2', 'strong3')
-		),
+		'header',
+		'strong',
 		array(
 			'name'=>'show',
-			'children' => array('showdummy', 'file')
+			'children' => array('show2', 'showdummy', 'file')
 		),
 		'link',
 		'br',
@@ -2155,33 +2058,35 @@ function get_plugin_list()
 			'plugins' => array(
 				'deco',
 				'ul',
+				'ol',
 				'align',
+			)
+		),
+		array(
+			'name' => 'レイアウト',
+			'plugins' => array(
+				'eyecatch',
+				'hr',
+				'cols2',
+				'cols3',
+				'cols4',
+				'box',
+				'section',
 			)
 		),
 		array(
 			'name' => '挿入',
 			'plugins' => array(
-				'eyecatch',
 				'contents',
-				'box',
-				'hr',
-				'slide',
-				'html',
+				'table',
 				'gmap',
+				'slide',
 				'video',
 				'jplayer',
 				'download',
 				'file',
+				'html',
 			),
-		),
-		array(
-			'name' => 'レイアウト',
-			'plugins' => array(
-				'table',
-				'cols2',
-				'cols3',
-				'cols4',
-			)
 		),
 		array(
 			'name' => 'コンタクト',
