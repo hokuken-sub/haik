@@ -997,6 +997,12 @@ ul.orgm-page-list li.nav-header{
 	
 }
 
+#admin_nav .navbar-brand {
+	padding-top: 0;
+	padding-bottom: 0;
+	box-sizing: border-box;
+}
+
 @media (max-width: 767px) {
 	
 	.modal .orgm-filer-nav {
@@ -1171,18 +1177,27 @@ ul.orgm-page-list li.nav-header{
 	color: #777;
 }
 .haik-admin-slider .list-group a:hover {
-	color: #aaa;
+	color: #bbb;
 }
 
 .haik-admin-slider .list-group .list-group-item {
-	padding-top: 7px;
-	padding-bottom: 7px;
+	padding-top: 6px;
+	padding-bottom: 6px;
 }
 
-.haik-admin-slider .hr {
-	border-color: #666;
+.haik-admin-slider hr {
+	border-color: #333;
 }
 
 .haik-admin-slider .input-group-addon {
-	background-color: #333;
+	color: #555;
+}
+
+.haik-admin-slider button.close {
+	color: #555;
+	font-size: 30px;
+	float:none;
+	text-shadow: none;
+	opacity: .9;
+	margin-right:15px;
 }

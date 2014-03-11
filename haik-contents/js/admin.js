@@ -511,6 +511,11 @@ $(document).ready(function(){
 				
 				$.sidr('close', 'slider-right');
 			});
+
+			$(".haik-admin-slider .close").on('click', function(){
+				$.sidr('close', 'slider-right');
+			});
+
 		},
 		onClose: function(){
 			$(document).off(".adminSlider");

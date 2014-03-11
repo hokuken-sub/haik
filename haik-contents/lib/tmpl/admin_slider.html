@@ -1,10 +1,17 @@
 <div id="admin_slider" style="display:none">
 <div class="haik-admin-slider">
+
+  <div class="list-group text-right">
+    <button type="button" class="close" aria-hidden="true">×</button>
+  </div>
 	
   <form action="<?php echo h($data['search']['search_link']['link'])?>">
+    <input type="hidden" name="cmd" value="search">
     <div class="form-group">
-      <input type="hidden" name="cmd" value="search">
-      <input type="text" name="word" value="<?php echo h(isset($vars['word']) ? $vars['word']: '')?>" placeholder="検索" class="form-control" id="orgm_nav_search">
+      <div class="input-group input-group-sm">
+        <span class="input-group-addon"><i class="orgm-icon orgm-icon-search"></i></span>
+        <input type="text" name="word" value="<?php echo h(isset($vars['word']) ? $vars['word']: '')?>" placeholder="検索" class="form-control" id="orgm_nav_search">
+      </div>
     </div>
   </form>
     
@@ -13,6 +20,8 @@
     <a href="<?php echo h($link['link'])?>" class="list-group-item "><?php echo $link['name']?></a>
   <?php endforeach ?>
   </div>
+  
+  <hr>
   
   <div class="list-group">
   <?php foreach ($data['page'] as $link) : ?>
@@ -23,12 +32,16 @@
     <?php endif ?>
   <?php endforeach ?>
   </div>
+
+  <hr>
   
   <div class="list-group">
   <?php foreach ($data['misc'] as $link):?>
     <a href="<?php echo h($link['link'])?>" class="list-group-item"><?php echo $link['name']?></a>
   <?php endforeach ?>
   </div>
+
+  <hr>
   
   <div class="list-group">
   <?php foreach ($data['config'] as $link):?>
@@ -39,6 +52,8 @@
     <?php endif ?>
   <?php endforeach ?>
   </div>
+
+  <hr>
   
   <div class="list-group">
   <?php foreach ($data['haik'] as $link):?>
