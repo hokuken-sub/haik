@@ -327,6 +327,7 @@ EOS;
 	$admin_nav = '
 <div id="admin_nav" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
+		<a class="navbar-brand" href="'.h($script).'"><img src="'.IMAGE_DIR.'haiklogo.jpg" width="50" height="50"></a>
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="pull-right">
 		'.(isset($tools_buttons) ? $tools_buttons : '').'
