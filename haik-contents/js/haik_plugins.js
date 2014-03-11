@@ -1651,7 +1651,7 @@ ORGM.plugins = {
 	// !ダウンロード
 	download: {
 		label: "ダウンロード",
-		format: "&download(${file},${notify},${type}){${text}};",
+		format: "&download(${file},${notify},${type},${size}){${text}};",
 		options: {
 			defval: "ダウンロード",
 			filer: {
@@ -1682,10 +1682,20 @@ ORGM.plugins = {
 				$filer.find("iframe").data(self.options.filer.options);
 				$filer.data("footer", "").modal();
 			});
-			$("input[name=type]+button", $modal).on("click", function(){
+
+			$("input[name=type]+button, input[name=size]+button", $modal).on("click", function(){
 				$(this).closest("label").click();
 			});
-			
+
+			$("input[name=type]", $modal).on('change', function() {
+				var $button = $("input[name=size]+button", $modal);
+				$button.removeClass($button.attr("data-type-class"));
+				
+				var btnclass = 'btn-' + $(this).val();
+				$button.attr("data-type-class", btnclass);
+				$button.addClass(btnclass);
+			});
+
 			$('.btn-theme').tooltip({placement:'bottom'});
 
 		},
@@ -1702,6 +1712,7 @@ ORGM.plugins = {
 			data.notify = $("input[name=notify]").is(":checked") ? "notify" : "";
 			data.type = $("input[name=type]:checked").val();
 			data.text = text;
+			data.size = $("input[name=size]:checked").val();
 			value = $.tmpl(this.format, data).text();
 			
 			this.insert(value);
@@ -2332,6 +2343,9 @@ ORGM.plugins = {
 				$(this).closest("label").click();
 			});
 			
+			var text = exnote.getSelectedText();
+			$("input[name=alias]", $dialog).val(text);
+
 
 			$.when(ORGM.getPagesForTypeahead()).done(function(){
 				
@@ -2339,16 +2353,18 @@ ORGM.plugins = {
 					local: ORGM.pagesForTypeahead,
 					engine: ORGM.tmpl,
 					template: ORGM.pageSuggestionTemplateForTypeahead,
+				}).on('typeahead:selected', function (object, datum) {
+					if (text == '') {
+						$("input[name=alias]", $dialog).val(datum.title);
+					}
 				});
+
 			}).always(function(){
 				setTimeout(function(){
 					$("input:text[name=linkto]", $dialog).focus().select();
 				}, 25);
 			});
 			
-			var text = exnote.getSelectedText();
-
-			$("input[name=alias]", $dialog).val(text);
 
 			$("input[name=alias], input[name=linkto]", $dialog)
 			.on("blur", function(){
@@ -2371,15 +2387,15 @@ ORGM.plugins = {
 
 
 			$("input[name=type]", $dialog).on('change', function() {
-				var $button = $("input[name=size]+button");
-				$button.removeClass($button.attr("data-btn-class"));
+				var $button = $("input[name=size]+button", $dialog);
+				$button.removeClass($button.attr("data-type-class"));
 				
 				if ($("+button", this).hasClass("btn-link")) {
 					$('.form-group.btnsize', $dialog).addClass("hide");
 				}
 				else {
 					var btnclass = 'btn-' + $(this).val();
-					$button.attr("data-btn-class", btnclass);
+					$button.attr("data-type-class", btnclass);
 					$button.addClass(btnclass);
 					$('.form-group.btnsize', $dialog).removeClass("hide");
 				}
