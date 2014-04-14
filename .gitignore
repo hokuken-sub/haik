@@ -1,6 +1,8 @@
 
 /.htaccess
 
+/vendor
+
 haik-contents/config/haik.ini.php
 haik-contents/config/form_*
 haik-contents/config/*.sqlite
