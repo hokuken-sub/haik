@@ -1,6 +1,7 @@
 module.exports = function(grunt){
   var pkg = grunt.file.readJSON('package.json');
 
+  // for compile less files
   var lessConfig = {
       development: {
         options: {
@@ -22,9 +23,15 @@ module.exports = function(grunt){
         ]
       }
   };
-  
+
+  // for copy bower bootstrap files
+  var copyBootstrapConfig = {
+    files: []
+  };
 
   var themeDirs = grunt.file.glob.sync('./haik-contents/skin/*/');
+
+  // create less config
   for (var i in themeDirs) {
     var dir = themeDirs[i];
     
@@ -34,15 +41,36 @@ module.exports = function(grunt){
 
     lessConfig.development.files.push({
         src: themeLess,
-        dest: './haik-contents/skin/' + dir + '/css/bootstrap-custom.css'
+        dest: dir + '/css/bootstrap-custom.css'
+    });
+  }
+
+  // create copy:bootstrap config
+  for (var i in themeDirs) {
+    var dir = themeDirs[i];
+
+    copyBootstrapConfig.files.push({
+        expand: true,
+        cwd: './bower_components/bootstrap/dist/',
+        src: '**/*',
+        dest: dir
+    });
+    copyBootstrapConfig.files.push({
+        expand: true,
+        cwd: './bower_components/bootstrap/',
+        src: 'less/**/*',
+        dest: dir
     });
   }
 
 
-//console.log(lessConfig.development.files);return;
-
   grunt.initConfig({
     less: lessConfig,
+
+    copy: {
+      bootstrap: copyBootstrapConfig
+    },
+
 	watch: {
       less: {
         files: [

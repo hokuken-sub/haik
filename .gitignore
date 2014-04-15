@@ -5,6 +5,8 @@
 
 node_modules
 
+bower_components
+
 haik-contents/config/haik.ini.php
 haik-contents/config/form_*
 haik-contents/config/*.sqlite
