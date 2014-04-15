@@ -35,7 +35,7 @@ if (! defined('DATA_HOME')) define('DATA_HOME', '');
 
 if (! defined('LIB_DIR')) define('LIB_DIR', '');
 
-
+require(APP_HOME . 'vendor/autoload.php');
 
 require(LIB_DIR . 'func.php');
 require(LIB_DIR . 'file.php');
@@ -43,7 +43,8 @@ require(LIB_DIR . 'plugin.php');
 require(LIB_DIR . 'html.php');
 require(LIB_DIR . 'backup.php');
 
-require(LIB_DIR . 'convert_html.php');
+require(LIB_DIR . 'markdown_parser.php');
+//require(LIB_DIR . 'convert_html.php');
 require(LIB_DIR . 'make_link.php');
 require(LIB_DIR . 'diff.php');
 require(LIB_DIR . 'config.php');
