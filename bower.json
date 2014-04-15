@@ -1,0 +1,21 @@
+{
+  "name": "haik",
+  "version": "0.15.0",
+  "homepage": "https://github.com/toiee/haik",
+  "authors": [
+    "Hokuken <customer@hokuken.com>"
+  ],
+  "main": "index.php",
+  "license": "GPL v2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.3"
+  }
+}
