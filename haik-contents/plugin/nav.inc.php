@@ -16,68 +16,70 @@
 
 function plugin_nav_convert()
 {
-
-	$page = func_get_arg(0);
-	
-	plugin_nav_page($page);
-	
-	return '';
+    $page = func_get_arg(0);
+    plugin_nav_page($page);
+    
+    return '';
 }
 
 function plugin_nav_page($page = NULL, $reset = FALSE)
 {
-	global $site_nav;
-	static $navpage = NULL;
-	
-	if ($navpage === NULL OR $reset OR ! is_page($page))
-	{
-		return $site_nav;
-	}
-	else
-	{
-		$navpage = $page;
-		return $navpage;
-	}
-	
+    global $site_nav;
+    static $navpage = NULL;
+    
+    if ($navpage === NULL OR $reset OR ! is_page($page))
+    {
+        return $site_nav;
+    }
+    else
+    {
+        $navpage = $page;
+        return $navpage;
+    }    
 }
 
 function plugin_nav_create($style = '')
 {
-	global $site_nav, $vars, $script;
-	
-	$navpage = plugin_nav_page();
-	
-	$qt = get_qt();
-	
-	$navtype_class = '';
+    global $site_nav, $vars, $script;
+    
+    $navpage = plugin_nav_page();
+    $qt = get_qt();
+    
+    $navtype_class = '';
+    
+    if ($style !== '')
+    {
+        switch(trim($style))
+        {
+            case "fixed":
+                $navtype_class = " navbar-fixed-top";
+                break;
+            case "none":
+                break;
+            case "full":
+                $navtype_class = " navbar-static-top";
+                break;
+        }
+    
+        if ($navtype_class != '')
+        {
+            $qt->appendv('navbar_class', $navtype_class);
+        }
+    }
 
-	if ($style !== '')
-	{
-		switch(trim($style))
-		{
-			case "fixed":
-				$navtype_class = " navbar-fixed-top";
-				break;
-			case "none":
-				break;
-			case "full":
-				$navtype_class = " navbar-static-top";
-				break;
-		}
-
-		if ($navtype_class != '')
-		{
-			$qt->appendv('navbar_class', $navtype_class);
-		}
-	}
-
-	$preview = (isset($vars['preview']) && $vars['preview'] && isset($vars['page']) && $vars['page'] === $site_nav);
-
-	$body = $preview ? $vars['msg'] : get_source($navpage, TRUE, TRUE);
+    $preview = (isset($vars['preview']) && $vars['preview'] && isset($vars['page']) && $vars['page'] === $site_nav);
+    
+    $body = $preview ? $vars['msg'] : get_source($navpage, TRUE, TRUE);
     $body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
-    $lines = explode("\n", $body);
-    $body = convert_html($lines, TRUE);
-
+    $body = convert_html($body, TRUE);
+    
+    $regx = array(
+        '/<ul/',
+    );
+    $replace = array(
+        '<ul class="nav navbar-nav"',
+    );
+/*
     $regx = array(
     	'/<ul class="list1"/',
     	'/<ul class="list2"/',
@@ -86,28 +88,29 @@ function plugin_nav_create($style = '')
     	'<ul class="list1 nav navbar-nav "',
     	'<ul class="list2 dropdown-menu notyet-drop"',
     );
+*/
     $body = preg_replace($regx, $replace, $body);
-    
+
     if ($preview)
     {
-		$body = '<div class="preview_highlight" data-target="#orgm_nav ul">'. $body .'</div>';
+        $body = '<div class="preview_highlight" data-target="#haik_nav ul">'. $body .'</div>';
     }
     else
     {
-    	$url = preg_quote(get_page_url($vars['page']), '|');
-    	
-		$ptn = '|<li>(.+href="('.$url.')".+)?</li>|';
-		$body = preg_replace($ptn, '<li class="active">$1</li>', $body);
-    }
-    
-    // !insert mark
-	if ( ! $qt->getv('SiteNavigatorInsertMark'))
-	{
-		$body = "\n<!-- SITENAVIGATOR CONTENTS START -->\n<div id=\"orgm_nav\">\n" . $body . "\n</div>\n<!-- SITENAVIGATOR CONTENTS END -->\n";
-		$qt->setv('SiteNavigatorInsertMark', TRUE);
-	}
+        $url = preg_quote(get_page_url($vars['page']), '|');
 
-	return $body;
+        $ptn = '|<li>(.+href="('.$url.')".+)?</li>|';
+        $body = preg_replace($ptn, '<li class="active">$1</li>', $body);
+    }
+
+    // !insert mark
+    if ( ! $qt->getv('SiteNavigatorInsertMark'))
+    {
+        $body = "\n<!-- SITENAVIGATOR CONTENTS START -->\n<div id=\"haik_nav\">\n" . $body . "\n</div>\n<!-- SITENAVIGATOR CONTENTS END -->\n";
+        $qt->setv('SiteNavigatorInsertMark', TRUE);
+    }
+
+    return $body;
 }
 
 /* End of file nav.inc.php */
