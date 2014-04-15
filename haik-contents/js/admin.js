@@ -862,7 +862,7 @@ $(document).ready(function(){
 	
 	// !特定のリンクにホバーで強調
 	var links = {
-		SiteNavigatorLink: "#orgm_nav ul",
+		SiteNavigatorLink: "#haik_nav ul",
 		SiteFooterLink: "#orgm_footer",
 		MenuBarLink: "#orgm_menu"
 	};
