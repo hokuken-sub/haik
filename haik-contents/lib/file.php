@@ -1211,6 +1211,42 @@ function local_is_writable()
 	return $is_w;
 }
 
+function yaml_read($filepath, $key = NULL)
+{
+	if ( ! file_exists($filepath))
+	{
+		throw new FileNotFoundException();
+	}
+
+  $yaml = new Symfony\Component\Yaml\Yaml();
+  $inidata = $yaml->parse($filepath); 
+
+	if ($inidata === FALSE)
+	{
+		throw new Exception('ファイルの形式が正しくありません：' . $filepath);
+	}
+	
+	if ( ! is_null($key) && is_string($key))
+	{
+		$keys = explode('.', $key);
+		foreach ($keys as $i => $key)
+		{
+			if (is_array($inidata) && isset($inidata[$key]))
+			{
+				$inidata = $inidata[$key];
+			}
+			else
+			{
+				return NULL;
+			}
+		}
+		return $inidata;
+	}
+	
+	return $inidata;
+}
+
+
 
 function ini_read($filepath, $key = NULL)
 {
@@ -1477,10 +1513,14 @@ function style_config_read($style = '', $key = NULL)
 	global $style_name;
 	
 	$style = ($style == '') ? $style_name : $style;
-	
-	$conf_file = SKIN_DIR . $style . '/config.php';
 
+	$yaml_file = SKIN_DIR . $style . '/theme.yml';
+	return _style_config_read($yaml_file, $key);
+
+/*	
+	$conf_file = SKIN_DIR . $style . '/config.php';
 	return _style_config_read($conf_file, $key);
+*/
 }
 
 /**
@@ -1491,7 +1531,8 @@ function _style_config_read($conf_file, $key = NULL)
 	$config = array();
 	try
 	{
-		$config = ini_read($conf_file, $key);
+      $config = yaml_read($conf_file);
+/* 		$config = ini_read($conf_file, $key); */
 	}
 	catch (FileNotFoundException $e)
 	{
