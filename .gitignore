@@ -3,11 +3,15 @@
 
 /vendor
 
+node_modules
+
 haik-contents/config/haik.ini.php
 haik-contents/config/form_*
 haik-contents/config/*.sqlite
 
 haik-contents/css/custom_style.css
+haik-contents/css/haik.css
+haik-contents/css/admin.css
 
 haik-contents/wiki/*.txt
 
