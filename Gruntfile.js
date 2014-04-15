@@ -41,7 +41,7 @@ module.exports = function(grunt){
 
     lessConfig.development.files.push({
         src: themeLess,
-        dest: dir + '/css/bootstrap-custom.css'
+        dest: dir + 'css/bootstrap-custom.css'
     });
   }
 
