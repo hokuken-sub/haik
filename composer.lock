@@ -3,11 +3,11 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f03db3a29fafd56d342ff40eebae709b",
+    "hash": "0fc4c28a9675909240a196c42a87e433",
     "packages": [
         {
             "name": "illuminate/support",
-            "version": "v4.1.25",
+            "version": "v4.1.26",
             "target-dir": "Illuminate/Support",
             "source": {
                 "type": "git",
@@ -164,23 +164,73 @@
             "time": "2014-03-01 17:35:04"
         },
         {
+            "name": "symfony/yaml",
+            "version": "v2.4.3",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml.git",
+                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
+                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-03-12 18:29:58"
+        },
+        {
             "name": "toiee/haik-markdown",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/toiee/haik-markdown.git",
-                "reference": "62cee2f20987519ed3ef3d93ef0e5bac54b37c80"
+                "reference": "529b75af80b9f40e8bec4e124a881d48d239f722"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/62cee2f20987519ed3ef3d93ef0e5bac54b37c80",
-                "reference": "62cee2f20987519ed3ef3d93ef0e5bac54b37c80",
+                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/529b75af80b9f40e8bec4e124a881d48d239f722",
+                "reference": "529b75af80b9f40e8bec4e124a881d48d239f722",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "~4.1",
                 "michelf/php-markdown": "1.4.0",
-                "php": ">=5.3.3"
+                "php": ">=5.3.3",
+                "symfony/yaml": "~2.4.3"
             },
             "require-dev": {
                 "mockery/mockery": "dev-master",
@@ -201,7 +251,7 @@
                 "haik",
                 "markdown"
             ],
-            "time": "2014-04-03 09:27:37"
+            "time": "2014-04-16 08:49:37"
         }
     ],
     "packages-dev": [
@@ -637,55 +687,6 @@
                 "xunit"
             ],
             "time": "2013-01-13 10:24:48"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v2.4.3",
-            "target-dir": "Symfony/Component/Yaml",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Yaml\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-03-12 18:29:58"
         }
     ],
     "aliases": [
