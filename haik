@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+include 'vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Hokuken\haik\Console\Command\ServeCommand;
+
+$console = new Application('haik', '0.15.0');
+
+$console->add(new ServeCommand());
+$console->run();
+
