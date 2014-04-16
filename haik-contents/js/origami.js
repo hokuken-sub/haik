@@ -105,35 +105,35 @@
 				
 		// for admin adjust body
 /*
-		if ($("#orgm_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
+		if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
 		{
-			$("#orgm_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
+			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
 		}
 */
 /*
-		if ($("#orgm_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
+		if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
 		{
 			(function(){
-				var $navbar = $("#orgm_nav").closest(".navbar");
+				var $navbar = $("#haik_nav").closest(".navbar");
 				$("#admin_nav").insertBefore($navbar);
 				$navbar.css({top: $("#admin_nav").height()});
 				
 			})();
-//			$("#orgm_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
+//			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
 		}
 */
 
 	    var adjustStyleForNavbar = function(){
 	    
 	
-			if ($("#orgm_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
+			if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
 			{
 				(function(){
-					var $navbar = $("#orgm_nav").closest(".navbar");
+					var $navbar = $("#haik_nav").closest(".navbar");
 					$("#admin_nav").insertBefore($navbar);
 					$navbar.css({top: $("#admin_nav").height()});
 				})();
-	//			$("#orgm_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
+	//			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
 			}
 
 
@@ -339,21 +339,21 @@
 		
 		
 		// ! search
-		if ($("#orgm_nav .orgm-search").length)
+		if ($("#haik_nav .orgm-search").length)
 		{
-			var $search = $("#orgm_nav .orgm-search");
+			var $search = $("#haik_nav .orgm-search");
 			var $form = $search.find("form");
 
 			$form.find(".input-group-btn").remove();
 			$form.find(".input-group").attr("class", "form-group");
 			
-			if ($search.closest("#orgm_navbar").length) {
+			if ($search.closest("#haik_navbar").length) {
 				$form.addClass("navbar-form navbar-left");
 			}
 			else {
-				if ($("#orgm_nav ul").css("float") == 'right') {
+				if ($("#haik_nav ul").css("float") == 'right') {
 					$form.addClass("navbar-form navbar-right");
-					$search.prependTo("#orgm_nav");
+					$search.prependTo("#haik_nav");
 				}
 				else {
 					$form.addClass("navbar-form navbar-left");
@@ -362,8 +362,8 @@
 		}
 		
 		// ! Share buttons
-		if ($("#orgm_nav .share_buttons").length) {
-			var $share_buttons = $("#orgm_nav .share_buttons");
+		if ($("#haik_nav .share_buttons").length) {
+			var $share_buttons = $("#haik_nav .share_buttons");
 			
 			$share_buttons.find(".orgm-icon-facebook-2").removeClass("orgm-icon-facebook-2").addClass("orgm-icon-facebook");
 			$share_buttons.find(".orgm-icon-twitter-2").removeClass("orgm-icon-twitter-2").addClass("orgm-icon-twitter");
@@ -371,8 +371,8 @@
 			
 			if ($share_buttons.hasClass("right")) {
 				$share_buttons.addClass("navbar-right");
-				if ($("#orgm_nav > ul").css("float") == "right") {
-					$share_buttons.prependTo("#orgm_nav");
+				if ($("#haik_nav > ul").css("float") == "right") {
+					$share_buttons.prependTo("#haik_nav");
 				}
 			}
 			else {

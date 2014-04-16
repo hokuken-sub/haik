@@ -9,7 +9,8 @@
     ],
     "require": {
         "toiee/haik-markdown": "dev-master",
-        "symfony/console": "~2.4.3"
+        "symfony/console": "~2.4.3",
+        "symfony/yaml": "~2.4.3"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
