@@ -3,11 +3,11 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0fc4c28a9675909240a196c42a87e433",
+    "hash": "b52f1b794dec491545b2a5939f3af859",
     "packages": [
         {
             "name": "illuminate/support",
-            "version": "v4.1.26",
+            "version": "v4.1.27",
             "target-dir": "Illuminate/Support",
             "source": {
                 "type": "git",
@@ -218,12 +218,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/toiee/haik-markdown.git",
-                "reference": "e3284f26250a83824466530135727d291bdbdf82"
+                "reference": "a19f2c43e7bd56a9ad5b30245768c4d81e37003b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/e3284f26250a83824466530135727d291bdbdf82",
-                "reference": "e3284f26250a83824466530135727d291bdbdf82",
+                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/a19f2c43e7bd56a9ad5b30245768c4d81e37003b",
+                "reference": "a19f2c43e7bd56a9ad5b30245768c4d81e37003b",
                 "shasum": ""
             },
             "require": {
@@ -251,7 +251,7 @@
                 "haik",
                 "markdown"
             ],
-            "time": "2014-04-16 09:24:42"
+            "time": "2014-04-17 04:50:38"
         }
     ],
     "packages-dev": [
