@@ -218,12 +218,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/toiee/haik-markdown.git",
-                "reference": "529b75af80b9f40e8bec4e124a881d48d239f722"
+                "reference": "e3284f26250a83824466530135727d291bdbdf82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/529b75af80b9f40e8bec4e124a881d48d239f722",
-                "reference": "529b75af80b9f40e8bec4e124a881d48d239f722",
+                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/e3284f26250a83824466530135727d291bdbdf82",
+                "reference": "e3284f26250a83824466530135727d291bdbdf82",
                 "shasum": ""
             },
             "require": {
@@ -251,7 +251,7 @@
                 "haik",
                 "markdown"
             ],
-            "time": "2014-04-16 08:49:37"
+            "time": "2014-04-16 09:24:42"
         }
     ],
     "packages-dev": [
