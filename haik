@@ -4,10 +4,14 @@
 include 'vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use Hokuken\Haik\Foundation\Application as Haik;
 use Hokuken\Haik\Console\Command\ServeCommand;
+use Hokuken\Haik\Console\Command\InitCommand;
 
-$console = new Application('haik', '0.15.0');
+$app = new Haik();
+$console = new Application('haik', Haik::VERSION);
 
 $console->add(new ServeCommand());
-$console->run();
+$console->add(new InitCommand());
 
+$console->run();
