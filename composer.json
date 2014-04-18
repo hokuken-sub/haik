@@ -18,8 +18,7 @@
     },
     "autoload": {
         "classmap": [
-            "haik-app/console",
-			"haik-app/plugin"
+            "haik-app"
         ]
     }
 }
