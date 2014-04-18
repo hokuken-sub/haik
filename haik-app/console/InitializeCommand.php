@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InitCommand extends Command {
+class InitializeCommand extends Command {
 
     /** @var InputInterface */
     protected $input;
@@ -31,7 +31,7 @@ class InitCommand extends Command {
 
     protected function configure()
     {
-        $this->setName('init')
+        $this->setName('initialize')
              ->setDescription('Init haik data')
              ->addOption(
                 'force',
