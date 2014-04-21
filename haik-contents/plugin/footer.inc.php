@@ -26,8 +26,13 @@ function plugin_footer_page($page = NULL, $reset = FALSE)
 {
   	global $site_footer;
   	static $footerpage = NULL;
-  	
-  	if ($footerpage === NULL OR $reset OR ! is_page($page))
+
+  	if ($footerpage !== NULL)
+  	{
+        return $footerpage;	
+  	}
+
+  	if (! is_page($page) OR $reset)
   	{
         return $site_footer;
   	}

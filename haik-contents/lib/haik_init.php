@@ -310,15 +310,17 @@ EOD;
 	}
 }
 
-if (in_array($site_footer, $style_config['templates'][$template_name]['layouts']))
+if (exist_plugin('footer'))
 {
-	$vars['page_alt'] = $site_footer;
-	if (exist_plugin('footer'))
-	{
-		$footer = plugin_footer_create();
-		$qt->setv('site_footer', $footer);
-	}
-	unset($vars['page_alt']);
+    $footerpage = plugin_footer_page();
+
+    if (in_array($footerpage, $style_config['templates'][$template_name]['layouts']))
+    {
+      $vars['page_alt'] = $footerpage;
+      $footer = plugin_footer_create();
+      $qt->setv('site_footer', $footer);
+      unset($vars['page_alt']);
+    }
 }
 
 //------------------------------------------------
