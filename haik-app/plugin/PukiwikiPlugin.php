@@ -1,7 +1,7 @@
 <?php
 namespace Hokuken\Haik\Plugin;
 
-use Toiee\HaikMarkdown\Plugin\PluginInterface;
+use Hokuken\HaikMarkdown\Plugin\PluginInterface;
 
 class PukiwikiPlugin implements PluginInterface {
 

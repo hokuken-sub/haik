@@ -29,7 +29,7 @@ class PukiwikiPluginRepositoryTest extends PHPUnit_Framework_TestCase {
     public function testLoadPluginInterface()
     {
         $plugin = $this->repository->load('deco');
-        $this->assertInstanceOf('Toiee\HaikMarkdown\Plugin\PluginInterface', $plugin);
+        $this->assertInstanceOf('Hokuken\HaikMarkdown\Plugin\PluginInterface', $plugin);
     }
 
     public function testGetAll()
