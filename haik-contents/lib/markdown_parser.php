@@ -1,8 +1,8 @@
 <?php
 
-use Toiee\HaikMarkdown\HaikMarkdown;
-use Toiee\HaikMarkdown\Plugin\Basic\PluginRepository as BasicPluginRepository;
-use Toiee\HaikMarkdown\Plugin\Bootstrap\PluginRepository as BootstrapPluginRepository;
+use Hokuken\HaikMarkdown\HaikMarkdown;
+use Hokuken\HaikMarkdown\Plugin\Basic\PluginRepository as BasicPluginRepository;
+use Hokuken\HaikMarkdown\Plugin\Bootstrap\PluginRepository as BootstrapPluginRepository;
 use Hokuken\Haik\Plugin\Repositories\PukiwikiPluginRepository;
 
 if ( ! function_exists('convert_html'))

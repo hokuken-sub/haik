@@ -1,7 +1,7 @@
 <?php
 namespace Hokuken\Haik\Plugin\Repositories;
 
-use Toiee\HaikMarkdown\Plugin\Repositories\PluginRepositoryInterface;
+use Hokuken\HaikMarkdown\Plugin\Repositories\PluginRepositoryInterface;
 use Hokuken\Haik\Plugin\PukiwikiPlugin;
 
 class PukiwikiPluginRepository implements PluginRepositoryInterface {
@@ -20,7 +20,7 @@ class PukiwikiPluginRepository implements PluginRepositoryInterface {
     /**
      * load Plugin by id
      * @params string $id plugin id
-     * @return \Toiee\HaikMarkdown\Plugin\PluginInterface The Plugin
+     * @return \Hokuken\HaikMarkdown\Plugin\PluginInterface The Plugin
      * @throws InvalidArgumentException when $id was not exist
      */
     public function load($id)

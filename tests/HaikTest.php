@@ -1,8 +1,8 @@
 <?php
 
-use Toiee\HaikMarkdown\HaikMarkdown;
-use Toiee\HaikMarkdown\Plugin\Basic\PluginRepository as BasicPluginRepository;
-use Toiee\HaikMarkdown\Plugin\Bootstrap\PluginRepository as BootstrapPluginRepository;
+use Hokuken\HaikMarkdown\HaikMarkdown;
+use Hokuken\HaikMarkdown\Plugin\Basic\PluginRepository as BasicPluginRepository;
+use Hokuken\HaikMarkdown\Plugin\Bootstrap\PluginRepository as BootstrapPluginRepository;
 use Hokuken\Haik\Plugin\Repositories\PukiwikiPluginRepository;
 
 class HaikTest extends PHPUnit_Framework_TestCase {
@@ -30,11 +30,11 @@ class HaikTest extends PHPUnit_Framework_TestCase {
     public function testPriorityOfSameNamePlugin()
     {
         $plugin_name = 'section';
-        $expected = 'Toiee\HaikMarkdown\Plugin\Bootstrap\Section\SectionPlugin';
+        $expected = 'Hokuken\HaikMarkdown\Plugin\Bootstrap\Section\SectionPlugin';
         $this->assertInstanceOf($expected, $this->parser->loadPlugin($plugin_name));
 
         $plugin_name = 'deco';
-        $expected = 'Toiee\HaikMarkdown\Plugin\Basic\Deco\DecoPlugin';
+        $expected = 'Hokuken\HaikMarkdown\Plugin\Basic\Deco\DecoPlugin';
         $this->assertInstanceOf($expected, $this->parser->loadPlugin($plugin_name));
 
         $plugin_name = 'box';
