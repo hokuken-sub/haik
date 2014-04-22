@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+define('APP_HOME', dirname(__FILE__) . '/');
 
 include 'vendor/autoload.php';
 
@@ -7,11 +8,13 @@ use Symfony\Component\Console\Application;
 use Hokuken\Haik\Foundation\Application as Haik;
 use Hokuken\Haik\Console\Command\ServeCommand;
 use Hokuken\Haik\Console\Command\InitializeCommand;
+use Hokuken\Haik\Console\Command\ChmodCommand;
 
 $app = new Haik();
 $console = new Application('haik', Haik::VERSION);
 
 $console->add(new ServeCommand());
 $console->add(new InitializeCommand());
+$console->add(new ChmodCommand());
 
 $console->run();
