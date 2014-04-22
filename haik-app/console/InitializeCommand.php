@@ -5,6 +5,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class InitializeCommand extends Command {
 
@@ -29,6 +30,9 @@ class InitializeCommand extends Command {
     /** @var boolean skip dialog*/
     protected $skipDialog;
 
+    /** @var integer mode mask */
+    protected $modeMask = 0777;
+
     protected function configure()
     {
         $this->setName('initialize')
@@ -44,6 +48,13 @@ class InitializeCommand extends Command {
                 null,
                 InputOption::VALUE_NONE,
                 'Skip asking dialogs and set dummy data.'
+             )
+             ->addOption(
+                'mode-mask',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Set file mode modifying mask.',
+                0777
              );
         $this->siteConfig = [];
         $this->mainCopy = $this->subCopy = '';
@@ -57,7 +68,12 @@ class InitializeCommand extends Command {
 
         $this->forceMode = $input->getOption('force');
         $this->skipDialog = $input->getOption('skip-dialog');
-        
+
+        if ($input->hasOption('mode-mask'))
+        {
+            $this->modeMask = intval($input->getOption('mode-mask'), 0);
+        }
+
         if ( ! $this->forceMode)
         {
             if ($this->isInitialized())
@@ -237,8 +253,13 @@ class InitializeCommand extends Command {
     protected function setFilePermission()
     {
         // !TODO: change mode
-        $this->output->writeln('<comment>changing mode site contents...</comment>');
-        $this->output->writeln('');
+        $command = $this->getApplication()->find('chmod');
+        $arguments = array(
+            'command' => 'chmod',
+            '--mask'  => $this->modeMask,
+        );
+        $input = new ArrayInput($arguments);
+        $returnCode = $command->run($input, $this->output);
     }
 
 
