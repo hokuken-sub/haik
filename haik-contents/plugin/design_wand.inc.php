@@ -76,7 +76,7 @@ function plugin_design_wand_check_update()
 	$update_dirs = array();
 	while ($entry = $skin_path->read())
 	{
-		if(is_dir(SKIN_DIR.$entry) && ($entry!='.') && ($entry!='..') && (file_exists(SKIN_DIR.$entry.'/config.php')))
+		if(is_dir(SKIN_DIR.$entry) && ($entry!='.') && ($entry!='..') && (file_exists(SKIN_DIR.$entry.'/theme.yml')))
 		{
 			if ($admin_style_name === $entry)
 			{

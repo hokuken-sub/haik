@@ -202,7 +202,7 @@ function plugin_app_config_design_action()
 	$skin_dirs = array();
 	while ($entry = $obj->read())
 	{
-		if(is_dir(SKIN_DIR.$entry) && ($entry!='.') && ($entry!='..') && (file_exists(SKIN_DIR.$entry.'/config.php')))
+		if(is_dir(SKIN_DIR.$entry) && ($entry!='.') && ($entry!='..') && (file_exists(SKIN_DIR.$entry.'/theme.yml')))
 		{
 			if ($admin_style_name === $entry)
 			{
@@ -295,7 +295,7 @@ function plugin_app_config_design_set_body()
 	$skin_dirs = array();
 	while ($entry = $obj->read())
 	{
-		if(is_dir(SKIN_DIR.$entry) && ($entry!='.') && ($entry!='..') && (file_exists(SKIN_DIR.$entry.'/config.php')))
+		if(is_dir(SKIN_DIR.$entry) && ($entry!='.') && ($entry!='..') && (file_exists(SKIN_DIR.$entry.'/theme.yml')))
 		{
 			if ($admin_style_name === $entry)
 			{
