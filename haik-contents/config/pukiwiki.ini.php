@@ -18,28 +18,28 @@ $defines = array(
 // PKWK_OPTIMISE - Ignore verbose but understandable checking and warning
 //   If you end testing this PukiWiki, set '1'.
 //   If you feel in trouble about this PukiWiki, set '0'.
-	'PKWK_OPTIMISE' => 0,
+    'PKWK_OPTIMISE' => 0,
 
 /////////////////////////////////////////////////
 // Security settings
 
 // PKWK_READONLY - Prohibits editing and maintain via WWW
 //   NOTE: Counter-related functions will work now (counter, attach count, etc)
-	'PKWK_READONLY' => 0, // 0 or 1
+    'PKWK_READONLY' => 0, // 0 or 1
 
 // PKWK_SAFE_MODE - Prohibits some unsafe(but compatible) functions 
-	'PKWK_SAFE_MODE' => 0,
+    'PKWK_SAFE_MODE' => 0,
 
 // PKWK_DISABLE_INLINE_IMAGE_FROM_URI - Disallow using inline-image-tag for URIs
 //   Inline-image-tag for URIs may allow leakage of Wiki readers' information
 //   (in short, 'Web bug') or external malicious CGI (looks like an image's URL)
 //   attack to Wiki readers, but easy way to show images.
-	'PKWK_DISABLE_INLINE_IMAGE_FROM_URI' => 0,
+    'PKWK_DISABLE_INLINE_IMAGE_FROM_URI' => 0,
 
 // PKWK_QUERY_STRING_MAX
 //   Max length of GET method, prohibits some worm attack ASAP
 //   NOTE: Keep (page-name + attach-file-name) <= PKWK_QUERY_STRING_MAX
-	'PKWK_QUERY_STRING_MAX' => 640, // Bytes, 0 = OFF
+    'PKWK_QUERY_STRING_MAX' => 640, // Bytes, 0 = OFF
 
 /////////////////////////////////////////////////
 // Experimental features
@@ -53,24 +53,24 @@ $defines = array(
 //   argsN+1
 //   }}
 //   #memo(This makes '#memo(foo)' to this)
-	'PKWKEXP_DISABLE_MULTILINE_PLUGIN_HACK' => 0, // 1 = Disabled
+    'PKWKEXP_DISABLE_MULTILINE_PLUGIN_HACK' => 0, // 1 = Disabled
 
 /////////////////////////////////////////////////
 // Directory settings I (ended with '/', permission '777')
 
 // You may hide these directories (from web browsers)
 // by setting DATA_HOME at index.php.
-	'DATA_DIR'        =>  DATA_HOME . 'wiki/',      // Latest wiki texts
-	'DIFF_DIR'        =>  DATA_HOME . 'diff/',      // Latest diffs
-	'BACKUP_DIR'      =>  DATA_HOME . 'backup/',    // Backups
-	'CACHE_DIR'		  =>  DATA_HOME . 'cache/',     // Some sort of caches
-	'PLUGIN_DIR'	  =>  DATA_HOME . 'plugin/',    // Plugin directory
-	'META_DIR'        =>  DATA_HOME . 'meta/',      // Page meta directory 
+    'DATA_DIR'        =>  DATA_HOME . 'md/',      // Latest md texts
+    'DIFF_DIR'        =>  DATA_HOME . 'diff/',      // Latest diffs
+    'BACKUP_DIR'      =>  DATA_HOME . 'backup/',    // Backups
+    'CACHE_DIR'       =>  DATA_HOME . 'cache/',     // Some sort of caches
+    'PLUGIN_DIR'      =>  DATA_HOME . 'plugin/',    // Plugin directory
+    'META_DIR'        =>  DATA_HOME . 'meta/',      // Page meta directory 
 	
 //for session (Don't change here [related qhmcommu])
-	'APP_SESSION_NAME'=>  strtoupper(APP_NAME).'_SSID', // Plugin directory
-
-	'SKIN_DIR'        =>  DATA_HOME . 'skin/',         //hokuken style directory
+    'APP_SESSION_NAME'=>  strtoupper(APP_NAME).'_SSID', // Plugin directory
+    
+    'SKIN_DIR'        =>  DATA_HOME . 'skin/',         //hokuken style directory
 
 // Skin files (SKIN_DIR/*.skin.php) are needed at
 // ./DATAHOME/SKIN_DIR from index.php, but
@@ -78,27 +78,27 @@ $defines = array(
 // ./SKIN_DIR from index.php.
 
 // Static image files
-	'IMAGE_DIR'        =>  DATA_HOME . 'img/',
-// js dir
-	'JS_DIR'           =>  DATA_HOME . 'js/',
-// css dir
-	'CSS_DIR'          =>  DATA_HOME . 'css/',
+    'IMAGE_DIR'        =>  DATA_HOME . 'img/',
+    // js dir
+    'JS_DIR'           =>  DATA_HOME . 'js/',
+    // css dir
+    'CSS_DIR'          =>  DATA_HOME . 'css/',
 
 // Keep this directory shown via web browsers like
 // ./IMAGE_DIR from index.php.
 
 // to upload
-	'UPLOAD_DIR'       => DATA_HOME . 'upload/',
-
-// store skel
-	'SKEL_DIR'       => LIB_DIR . 'skel/',
-	
-// Splitter of backup data (NOTE: Too dangerous to change)
-	'PKWK_SPLITTER'        =>  '>>>>>>>>>>',
+    'UPLOAD_DIR'       => DATA_HOME . 'upload/',
+    
+    // store skel
+    'SKEL_DIR'       => LIB_DIR . 'skel/',
+    
+    // Splitter of backup data (NOTE: Too dangerous to change)
+    'PKWK_SPLITTER'        =>  '>>>>>>>>>>',
 
 /////////////////////////////////////////////////
 // Command execution per update
-	'PKWK_UPDATE_EXEC'        =>  '',
+    'PKWK_UPDATE_EXEC'        =>  '',
 
 // Sample: Namazu (Search engine)
 //$target     = '/var/www/wiki/';
@@ -113,11 +113,10 @@ $defines = array(
 
 //////////////////////////////////////
 // Do define
-foreach($defines as $key=>$val) {
-	if(! defined($key) )	define($key, $val);
+foreach($defines as $key=>$val)
+{
+    if(! defined($key) )	define($key, $val);
 }
-
-
 
 
 
@@ -261,17 +260,17 @@ $app_ini_path = CONFIG_DIR . 'haik.ini.php';
 
 if (file_exists($app_ini_path))
 {
-	require($app_ini_path);
-	extract($config);
+    require($app_ini_path);
+    extract($config);
 }
 else
 {
-	$app_start = 1;
+    $app_start = 1;
 }
 
 if ( ! $app_start && ($username === '' OR $passwd === ''))
 {
-	$app_start = 2;
+    $app_start = 2;
 }
 
 
@@ -303,11 +302,11 @@ $strip_plugin_inline = '/&(tag)(\(.*?\))?;/';
 
 // pages for layout
 $layout_pages = array(
-	'MenuBar'        => 'メニュー',
-	'MenuBar2'       => 'メニュー2',
-	'QBlogMenuBar'   => 'ブログメニュー',
-	'SiteNavigator'  => 'ナビ',
-	'SiteFooter' => 'フッター',
+    'MenuBar'        => 'メニュー',
+    'MenuBar2'       => 'メニュー2',
+    'QBlogMenuBar'   => 'ブログメニュー',
+    'SiteNavigator'  => 'ナビ',
+    'SiteFooter' => 'フッター',
 );
 
 /////////////////////////////////////////////////
@@ -326,8 +325,8 @@ $proxy_auth_pass = 'password';
 
 // Hosts that proxy server will not be needed
 $no_proxy = array(
-	'localhost',	// localhost
-	'127.0.0.0/8',	// loopback
+    'localhost',	// localhost
+    '127.0.0.0/8',	// loopback
 //	'10.0.0.0/8'	// private class A
 //	'172.16.0.0/12'	// private class B
 //	'192.168.0.0/16'	// private class C
@@ -430,9 +429,9 @@ $pagereading_config_dict = ':config/PageReading/dict';
 $read_auth = 1;
 
 $read_auth_pages = array(
-	// Regex		   Username
-//	'#HogeHoge#'		=> 'hoge',
-//	'#(NETABARE|NetaBare)#'	=> 'foo,bar,hoge',
+    // Regex		   Username
+    //	'#HogeHoge#'		=> 'hoge',
+    //	'#(NETABARE|NetaBare)#'	=> 'foo,bar,hoge',
 );
 
 $auth_method_type	= 'pagename';	// Authentication method (pagename|contents)
@@ -444,7 +443,7 @@ $edit_auth = 1;
 
 // Edit auth regex
 $edit_auth_pages = array(
-	'/^.*$/' => $username,
+    '/^.*$/' => $username,
 );
 
 
@@ -502,7 +501,7 @@ $maxage = 120; // Stock latest N backups
 
 $auto_template_func = 1;
 $auto_template_rules = array(
-	'((.+)\/([^\/]+))' => '\2/template'
+    '((.+)\/([^\/]+))' => '\2/template'
 );
 
 /////////////////////////////////////////////////
@@ -537,145 +536,140 @@ $agents = array(
 // profile: A group of browsers
 
     // iPhone iPod Touch 2.0
-        //iPhone
-        array('pattern'=>'#\b(iPhone+)#', 'profile'=>'default'),
+    //iPhone
+    array('pattern'=>'#\b(iPhone+)#', 'profile'=>'default'),
 
-	// Android
-	array('pattern'=>'#\b(Mobile Safari)#', 'profile'=>'default'),
-
+    // Android
+    array('pattern'=>'#\b(Mobile Safari)#', 'profile'=>'default'),
+    
     // Embedded browsers (Rich-clients for PukiWiki)
-
-	// Windows CE (Microsoft(R) Internet Explorer 5.5 for Windows(R) CE)
-	// Sample: "Mozilla/4.0 (compatible; MSIE 5.5; Windows CE; sigmarion3)" (sigmarion, Hand-held PC)
-	array('pattern'=>'#\b(?:MSIE [5-9]).*\b(Windows CE)\b#', 'profile'=>'default'),
-
-	// ACCESS "NetFront" / "Compact NetFront" and thier OEM, expects to be "Mozilla/4.0"
-	// Sample: "Mozilla/4.0 (PS2; PlayStation BB Navigator 1.0) NetFront/3.0" (PlayStation BB Navigator, for SONY PlayStation 2)
-	// Sample: "Mozilla/4.0 (PDA; PalmOS/sony/model crdb/Revision:1.1.19) NetFront/3.0" (SONY Clie series)
-	// Sample: "Mozilla/4.0 (PDA; SL-A300/1.0,Embedix/Qtopia/1.1.0) NetFront/3.0" (SHARP Zaurus)
-	array('pattern'=>'#^(?:Mozilla/4).*\b(NetFront)/([0-9\.]+)#',	'profile'=>'default'),
-
+    
+    // Windows CE (Microsoft(R) Internet Explorer 5.5 for Windows(R) CE)
+    // Sample: "Mozilla/4.0 (compatible; MSIE 5.5; Windows CE; sigmarion3)" (sigmarion, Hand-held PC)
+    array('pattern'=>'#\b(?:MSIE [5-9]).*\b(Windows CE)\b#', 'profile'=>'default'),
+    
+    // ACCESS "NetFront" / "Compact NetFront" and thier OEM, expects to be "Mozilla/4.0"
+    // Sample: "Mozilla/4.0 (PS2; PlayStation BB Navigator 1.0) NetFront/3.0" (PlayStation BB Navigator, for SONY PlayStation 2)
+    // Sample: "Mozilla/4.0 (PDA; PalmOS/sony/model crdb/Revision:1.1.19) NetFront/3.0" (SONY Clie series)
+    // Sample: "Mozilla/4.0 (PDA; SL-A300/1.0,Embedix/Qtopia/1.1.0) NetFront/3.0" (SHARP Zaurus)
+    array('pattern'=>'#^(?:Mozilla/4).*\b(NetFront)/([0-9\.]+)#',	'profile'=>'default'),
+    
     // Embedded browsers (Non-rich)
-
-	// Windows CE (the others)
-	// Sample: "Mozilla/2.0 (compatible; MSIE 3.02; Windows CE; 240x320 )" (GFORT, NTT DoCoMo)
-	array('pattern'=>'#\b(Windows CE)\b#', 'profile'=>'keitai'),
-
-	// ACCESS "NetFront" / "Compact NetFront" and thier OEM
-	// Sample: "Mozilla/3.0 (AveFront/2.6)" ("SUNTAC OnlineStation", USB-Modem for PlayStation 2)
-	// Sample: "Mozilla/3.0(DDIPOCKET;JRC/AH-J3001V,AH-J3002V/1.0/0100/c50)CNF/2.0" (DDI Pocket: AirH" Phone by JRC)
-	array('pattern'=>'#\b(NetFront)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#\b(CNF)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#\b(AveFront)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#\b(AVE-Front)/([0-9\.]+)#',	'profile'=>'keitai'), // The same?
-
-	// NTT-DoCoMo, i-mode (embeded Compact NetFront) and FOMA (embedded NetFront) phones
-	// Sample: "DoCoMo/1.0/F501i", "DoCoMo/1.0/N504i/c10/TB/serXXXX" // c以降は可変
-	// Sample: "DoCoMo/2.0 MST_v_SH2101V(c100;TB;W22H12;serXXXX;iccxxxx)" // ()の中は可変
-	array('pattern'=>'#^(DoCoMo)/([0-9\.]+)#',	'profile'=>'keitai'),
-
-	// Vodafone's embedded browser
-	// Sample: "J-PHONE/2.0/J-T03"	// 2.0は"ブラウザの"バージョン
-	// Sample: "J-PHONE/4.0/J-SH51/SNxxxx SH/0001a Profile/MIDP-1.0 Configuration/CLDC-1.0 Ext-Profile/JSCL-1.1.0"
-	array('pattern'=>'#^(J-PHONE)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#^(Vodafone)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#^(SoftBank)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#^(MOT-V980)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#^(MOT-C980)/([0-9\.]+)#',	'profile'=>'keitai'),
-
-	// Openwave(R) Mobile Browser (EZweb, WAP phone, etc)
-	// Sample: "OPWV-SDK/62K UP.Browser/6.2.0.5.136 (GUI) MMP/2.0"
-	array('pattern'=>'#\b(UP\.Browser)/([0-9\.]+)#',	'profile'=>'keitai'),
-
-	// Opera, dressing up as other embedded browsers
-	// Sample: "Mozilla/3.0(DDIPOCKET;KYOCERA/AH-K3001V/1.4.1.67.000000/0.1/C100) Opera 7.0" (Like CNF at 'keitai'-mode)
-	array('pattern'=>'#\b(?:DDIPOCKET|WILLCOM)\b.+\b(Opera) ([0-9\.]+)\b#',	'profile'=>'keitai'),
-
-	// Planetweb http://www.planetweb.com/
-	// Sample: "Mozilla/3.0 (Planetweb/v1.07 Build 141; SPS JP)" ("EGBROWSER", Web browser for PlayStation 2)
-	array('pattern'=>'#\b(Planetweb)/v([0-9\.]+)#', 'profile'=>'keitai'),
-
-	// DreamPassport, Web browser for SEGA DreamCast
-	// Sample: "Mozilla/3.0 (DreamPassport/3.0)"
-	array('pattern'=>'#\b(DreamPassport)/([0-9\.]+)#',	'profile'=>'keitai'),
-
-	// Palm "Web Pro" http://www.palmone.com/us/support/accessories/webpro/
-	// Sample: "Mozilla/4.76 [en] (PalmOS; U; WebPro)"
-	array('pattern'=>'#\b(WebPro)\b#',	'profile'=>'keitai'),
-
-	// ilinx "Palmscape" / "Xiino" http://www.ilinx.co.jp/
-	// Sample: "Xiino/2.1SJ [ja] (v. 4.1; 153x130; c16/d)"
-	array('pattern'=>'#^(Palmscape)/([0-9\.]+)#',	'profile'=>'keitai'),
-	array('pattern'=>'#^(Xiino)/([0-9\.]+)#',	'profile'=>'keitai'),
-
-	// SHARP PDA Browser (SHARP Zaurus)
-	// Sample: "sharp pda browser/6.1[ja](MI-E1/1.0) "
-	array('pattern'=>'#^(sharp [a-z]+ browser)/([0-9\.]+)#',	'profile'=>'keitai'),
-
-	// WebTV
-	array('pattern'=>'#^(WebTV)/([0-9\.]+)#',	'profile'=>'keitai'),
-
+    
+    // Windows CE (the others)
+    // Sample: "Mozilla/2.0 (compatible; MSIE 3.02; Windows CE; 240x320 )" (GFORT, NTT DoCoMo)
+    array('pattern'=>'#\b(Windows CE)\b#', 'profile'=>'keitai'),
+    
+    // ACCESS "NetFront" / "Compact NetFront" and thier OEM
+    // Sample: "Mozilla/3.0 (AveFront/2.6)" ("SUNTAC OnlineStation", USB-Modem for PlayStation 2)
+    // Sample: "Mozilla/3.0(DDIPOCKET;JRC/AH-J3001V,AH-J3002V/1.0/0100/c50)CNF/2.0" (DDI Pocket: AirH" Phone by JRC)
+    array('pattern'=>'#\b(NetFront)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#\b(CNF)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#\b(AveFront)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#\b(AVE-Front)/([0-9\.]+)#',	'profile'=>'keitai'), // The same?
+    
+    // NTT-DoCoMo, i-mode (embeded Compact NetFront) and FOMA (embedded NetFront) phones
+    // Sample: "DoCoMo/1.0/F501i", "DoCoMo/1.0/N504i/c10/TB/serXXXX" // c以降は可変
+    // Sample: "DoCoMo/2.0 MST_v_SH2101V(c100;TB;W22H12;serXXXX;iccxxxx)" // ()の中は可変
+    array('pattern'=>'#^(DoCoMo)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
+    // Vodafone's embedded browser
+    // Sample: "J-PHONE/2.0/J-T03"	// 2.0は"ブラウザの"バージョン
+    // Sample: "J-PHONE/4.0/J-SH51/SNxxxx SH/0001a Profile/MIDP-1.0 Configuration/CLDC-1.0 Ext-Profile/JSCL-1.1.0"
+    array('pattern'=>'#^(J-PHONE)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#^(Vodafone)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#^(SoftBank)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#^(MOT-V980)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#^(MOT-C980)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
+    // Openwave(R) Mobile Browser (EZweb, WAP phone, etc)
+    // Sample: "OPWV-SDK/62K UP.Browser/6.2.0.5.136 (GUI) MMP/2.0"
+    array('pattern'=>'#\b(UP\.Browser)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
+    // Opera, dressing up as other embedded browsers
+    // Sample: "Mozilla/3.0(DDIPOCKET;KYOCERA/AH-K3001V/1.4.1.67.000000/0.1/C100) Opera 7.0" (Like CNF at 'keitai'-mode)
+    array('pattern'=>'#\b(?:DDIPOCKET|WILLCOM)\b.+\b(Opera) ([0-9\.]+)\b#',	'profile'=>'keitai'),
+    
+    // Planetweb http://www.planetweb.com/
+    // Sample: "Mozilla/3.0 (Planetweb/v1.07 Build 141; SPS JP)" ("EGBROWSER", Web browser for PlayStation 2)
+    array('pattern'=>'#\b(Planetweb)/v([0-9\.]+)#', 'profile'=>'keitai'),
+    
+    // DreamPassport, Web browser for SEGA DreamCast
+    // Sample: "Mozilla/3.0 (DreamPassport/3.0)"
+    array('pattern'=>'#\b(DreamPassport)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
+    // Palm "Web Pro" http://www.palmone.com/us/support/accessories/webpro/
+    // Sample: "Mozilla/4.76 [en] (PalmOS; U; WebPro)"
+    array('pattern'=>'#\b(WebPro)\b#',	'profile'=>'keitai'),
+    
+    // ilinx "Palmscape" / "Xiino" http://www.ilinx.co.jp/
+    // Sample: "Xiino/2.1SJ [ja] (v. 4.1; 153x130; c16/d)"
+    array('pattern'=>'#^(Palmscape)/([0-9\.]+)#',	'profile'=>'keitai'),
+    array('pattern'=>'#^(Xiino)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
+    // SHARP PDA Browser (SHARP Zaurus)
+    // Sample: "sharp pda browser/6.1[ja](MI-E1/1.0) "
+    array('pattern'=>'#^(sharp [a-z]+ browser)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
+    // WebTV
+    array('pattern'=>'#^(WebTV)/([0-9\.]+)#',	'profile'=>'keitai'),
+    
     // Desktop-PC browsers
-
-	// Opera (for desktop PC, not embedded) -- See BugTrack/743 for detail
-	// NOTE: Keep this pattern above MSIE and Mozilla
-	// Sample: "Opera/7.0 (OS; U)" (not disguise)
-	// Sample: "Mozilla/4.0 (compatible; MSIE 5.0; OS) Opera 6.0" (disguise)
-	array('pattern'=>'#\b(Opera)[/ ]([0-9\.]+)\b#',	'profile'=>'default'),
-
-	// MSIE: Microsoft Internet Explorer (or something disguised as MSIE)
-	// Sample: "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
-	array('pattern'=>'#\b(MSIE) ([0-9\.]+)\b#',	'profile'=>'default'),
-
-	// Mozilla Firefox
-	// NOTE: Keep this pattern above Mozilla
-	// Sample: "Mozilla/5.0 (Windows; U; Windows NT 5.0; ja-JP; rv:1.7) Gecko/20040803 Firefox/0.9.3"
-	array('pattern'=>'#\b(Firefox)/([0-9\.]+)\b#',	'profile'=>'default'),
-
-    	// Loose default: Including something Mozilla
-	array('pattern'=>'#^([a-zA-z0-9 ]+)/([0-9\.]+)\b#',	'profile'=>'default'),
-
-	array('pattern'=>'#^#',	'profile'=>'default'),	// Sentinel
+    
+    // Opera (for desktop PC, not embedded) -- See BugTrack/743 for detail
+    // NOTE: Keep this pattern above MSIE and Mozilla
+    // Sample: "Opera/7.0 (OS; U)" (not disguise)
+    // Sample: "Mozilla/4.0 (compatible; MSIE 5.0; OS) Opera 6.0" (disguise)
+    array('pattern'=>'#\b(Opera)[/ ]([0-9\.]+)\b#',	'profile'=>'default'),
+    
+    // MSIE: Microsoft Internet Explorer (or something disguised as MSIE)
+    // Sample: "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
+    array('pattern'=>'#\b(MSIE) ([0-9\.]+)\b#',	'profile'=>'default'),
+    
+    // Mozilla Firefox
+    // NOTE: Keep this pattern above Mozilla
+    // Sample: "Mozilla/5.0 (Windows; U; Windows NT 5.0; ja-JP; rv:1.7) Gecko/20040803 Firefox/0.9.3"
+    array('pattern'=>'#\b(Firefox)/([0-9\.]+)\b#',	'profile'=>'default'),
+    
+    // Loose default: Including something Mozilla
+    array('pattern'=>'#^([a-zA-z0-9 ]+)/([0-9\.]+)\b#',	'profile'=>'default'),
+    
+    array('pattern'=>'#^#',	'profile'=>'default'),	// Sentinel
 );
 
 
-
-
 // !6. 変数Define ===================================================================================
-
 
 /////////////////////////////////////////////////
 // Language / Encoding settings
 
 // LANG - Internal content encoding ('en', 'ja', or ...)
 if (! defined('LANG'))
-	define('LANG', $default_lang);
+    define('LANG', $default_lang);
 
 // UI_LANG - Content encoding for buttons, menus,  etc
 if (! defined('UI_LANG'))
-	define('UI_LANG', LANG); // 'en' for Internationalized wikisite
+    define('UI_LANG', LANG); // 'en' for Internationalized wikisite
 
 /////////////////////////////////////////////////
 // Local time setting
 
 if ( ! defined('COUNTRY'))
-	define('COUNTRY', $default_country);
+    define('COUNTRY', $default_country);
 
 switch (COUNTRY) { // or specifiy one
-case 'JP':
-	if (! defined('ZONE'))
-		define('ZONE', 'JST');
-	if (! defined('ZONETIME'))
-		define('ZONETIME', 9 * 3600); // JST = GMT + 9
-	break;
-default  :
-	define('ZONE', 'GMT');
-	define('ZONETIME', 0);
-	break;
+    case 'JP':
+        if (! defined('ZONE'))
+            define('ZONE', 'JST');
+        if (! defined('ZONETIME'))
+            define('ZONETIME', 9 * 3600); // JST = GMT + 9
+        break;
+
+    default  :
+        define('ZONE', 'GMT');
+        define('ZONETIME', 0);
+        break;
 }
-
-
-
 
 
 // !7. 変数から生成される変数 ============================================================================
@@ -689,7 +683,7 @@ $cantedit = array( $whatsnew, $whatsdeleted );
 /////////////////////////////////////////////////
 // User definition
 $auth_users = array(                      //QQQ 要変更(ユーザー名とパスワード)
-	$username	=> $passwd, // md5('bar_passwd')
+    $username	=> $passwd, // md5('bar_passwd')
 );
 
 
