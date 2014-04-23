@@ -120,55 +120,59 @@ function plugin_rename_phase1($err = '', $page = '')
 	$ret = array();
 	$ret['msg']  = __('ページ名の変更');
 	$ret['body'] = <<<EOD
-{$msg}
-<div class="panel">
-	<form action="{$script}" method="post">
-		<input type="hidden" name="plugin" value="rename" />
-	
-		<div class="form-group">
-			<div class="radio">
-				<label>
-					<input type="radio" name="method" id="_p_rename_page" value="page"$radio_page /> 変更元ページを指定:
-				</label>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="row">
-				<div class="col-sm-offset-1 col-sm-6">
-					$select_refer
-				</div>
-			</div>
-		</div>
-	
-		<div class="form-group">
-			<div class="radio">
-				<label>
-					<input type="radio"  name="method" id="_p_rename_regex" value="regex"$radio_regex /> 正規表現で置換:
-				</label>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="row">
-				<label for="_p_rename_from" class="col--offset-1 col-sm-1 control-label">From:</label>
-				<div class="col-sm-10">
-					<input type="text" name="src" id="_p_rename_from" size="80" value="$s_src" class="form-control">
-				</div>
-			</div>
-		</div>
-	
-		<div class="form-group">
-			<div class="row form-horizontal">
-				<label for="_p_rename_to" class="col-sm-offset-1 col-sm-1 control-label">To:</label>
-				<div class="col-sm-10">
-					<input type="text" name="dst" id="_p_rename_to" size="80" value="$s_dst" class="form-control">
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<input type="submit" value="実行" class="btn btn-primary">
-		</div>
-	</form>
+<div class="page-header">
+	{$ret['msg']}
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+  	<form action="{$script}" method="post">
+  		<input type="hidden" name="plugin" value="rename" />
+  	
+  		<div class="form-group">
+  			<div class="radio">
+  				<label>
+  					<input type="radio" name="method" id="_p_rename_page" value="page"$radio_page /> 変更元ページを指定:
+  				</label>
+  			</div>
+  		</div>
+  		<div class="form-group">
+  			<div class="row">
+  				<div class="col-sm-offset-1 col-sm-6">
+  					$select_refer
+  				</div>
+  			</div>
+  		</div>
+  	
+  		<div class="form-group">
+  			<div class="radio">
+  				<label>
+  					<input type="radio"  name="method" id="_p_rename_regex" value="regex"$radio_regex /> 正規表現で置換:
+  				</label>
+  			</div>
+  		</div>
+  		<div class="form-group">
+  			<div class="row">
+  				<label for="_p_rename_from" class="col-sm-offset-1 col-sm-1 control-label">From:</label>
+  				<div class="col-sm-10">
+  					<input type="text" name="src" id="_p_rename_from" size="80" value="$s_src" class="form-control">
+  				</div>
+  			</div>
+  		</div>
+  	
+  		<div class="form-group">
+  			<div class="row form-horizontal">
+  				<label for="_p_rename_to" class="col-sm-offset-1 col-sm-1 control-label">To:</label>
+  				<div class="col-sm-10">
+  					<input type="text" name="dst" id="_p_rename_to" size="80" value="$s_dst" class="form-control">
+  				</div>
+  			</div>
+  		</div>
+  		
+  		<div class="form-group">
+  			<input type="submit" value="実行" class="btn btn-primary">
+  		</div>
+  	</form>
+  </div>
 </div>
 EOD;
 	return $ret;
@@ -222,24 +226,26 @@ $msg
 	{$ret['msg']}
 </div>
 <p>{$msg_rename}</p>
-<div class="panel container">
-	<form action="$script" method="post" class="form-horizontal">
-		<input type="hidden" name="plugin" value="rename" />
-		<input type="hidden" name="refer"  value="$s_refer" />
-		<div class="form-gourp">
-			<label for="_p_rename_newname" class="col-sm-3 control-label">新しい名前:</label>
-			<div class="col-sm-9">
-				<input type="text" name="page" id="_p_rename_newname" size="80" value="$s_page" class="form-control">
-			</div>
-		</div>
-		$msg_related
-		<div class="form-gourp">
-			<label for="" class="col-sm-3"></label>
-			<div class="col-sm-9">
-				<input type="submit" value="実行" class="btn btn-primary">
-			</div>
-		</div>
-	</form>
+<div class="panel panel-default">
+  <div class="panel-body">
+  	<form action="$script" method="post" class="form-horizontal">
+  		<input type="hidden" name="plugin" value="rename" />
+  		<input type="hidden" name="refer"  value="$s_refer" />
+  		<div class="form-gourp">
+  			<label for="_p_rename_newname" class="col-sm-3 control-label">新しい名前:</label>
+  			<div class="col-sm-9">
+  				<input type="text" name="page" id="_p_rename_newname" size="80" value="$s_page" class="form-control">
+  			</div>
+  		</div>
+  		$msg_related
+  		<div class="form-gourp">
+  			<label for="" class="col-sm-3"></label>
+  			<div class="col-sm-9">
+  				<input type="submit" value="実行" class="btn btn-primary">
+  			</div>
+  		</div>
+  	</form>
+  </div>
 </div>
 EOD;
 	if (! empty($related)) {
@@ -354,17 +360,19 @@ function plugin_rename_phase3($pages)
 	$ret['body'] = <<<EOD
 <div class="page-header">{$ret['msg']}</div>
 <p>$msg</p>
-<div class="panel container">
-	<form action="$script" method="post">
-		<input type="hidden" name="plugin" value="rename" />
-		$input
-
-		<div class="form-inline">
-			<label for="_p_rename_adminpass" class="control-label">管理者パスワード</label>
-			<input type="password" name="pass" id="_p_rename_adminpass" value="" class="form-control" style="width:auto">
-			<input type="submit" value="実行" class="btn btn-primary">
-		</div>
-	</form>
+<div class="panel panel-default">
+  <div class="panel-body">
+  	<form action="$script" method="post">
+  		<input type="hidden" name="plugin" value="rename" />
+  		$input
+  
+  		<div class="form-inline">
+  			<label for="_p_rename_adminpass" class="control-label">管理者パスワード</label>
+  			<input type="password" name="pass" id="_p_rename_adminpass" value="" class="form-control" style="width:auto">
+  			<input type="submit" value="実行" class="btn btn-primary">
+  		</div>
+  	</form>
+  </div>
 </div>
 <p>以下のファイルをリネームします。</p>
 EOD;

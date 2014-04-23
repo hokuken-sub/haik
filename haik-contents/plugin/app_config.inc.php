@@ -165,7 +165,7 @@ function plugin_app_config_set_footer()
 	$qt = get_qt();
 	
 	$footer = '
-	<div class="container">
+	<div class="container-fluid">
 		<a href="'.h($script).'">'.__('トップ').'</a>&nbsp;&nbsp;&nbsp;
 		<a href="'.h($script.'?cmd=filelist').'">'.__('ページ一覧').'</a>&nbsp;&nbsp;
 		<a href="'.h($script.'?cmd=filer').'">'.__('ファイル管理').'</a>&nbsp;&nbsp;&nbsp;

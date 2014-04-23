@@ -30,7 +30,7 @@
 
 <div class="page-header"><?php echo sprintf(__('フォーム投稿ログ：%s'), $id) ?></div>
 
-<div class="container">
+<div class="container-fluid">
 
 	<a href="<?php echo h($script.'?cmd=form_log_viewer&mode=download&id='.$id.'&lognum='.$lognum) ?>" data-download class="log-download thumbnail"><span>このページを<br>ダウンロード</span></a>
 
@@ -69,7 +69,7 @@
 	</tbody>
 </table>
 
-<div class="container">
+<div class="container-fluid">
 <?php if (count($files) > 1) : ?>
 	<ul class="pagination">
 	<?php foreach ($files as $num => $file) : ?>

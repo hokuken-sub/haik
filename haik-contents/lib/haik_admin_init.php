@@ -406,7 +406,7 @@ if ($display_login > 0)
 $summaryflag_start = '';
 $summaryflag_end = '';
 if( ($notes != '') ||  ($related != '') ){ 
- $summaryflag_start = '<div id="summary" class="container"><!-- ■BEGIN id:summary -->';
+ $summaryflag_start = '<div id="summary" class="container-fluid"><!-- ■BEGIN id:summary -->';
  $summaryflag_end = '</div><!-- □ END id:summary -->';
 }
 

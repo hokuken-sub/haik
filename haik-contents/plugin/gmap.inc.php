@@ -87,7 +87,7 @@ function plugin_gmap_convert()
 	$marker_html .= '</div>';
 
 	$html = '
-<div class="orgm-gmap container">
+<div class="orgm-gmap container-fluid">
 	<div id ="map_canvas" data-map-width="'.$width.'" data-map-height="'.$height.'" data-map-zoom="'.$zoom.'" class="pull-left"></div>
 	<div class="gmap-markers pull-left" data-list-type="'.$list_class.'">
 		'.$marker_html.'

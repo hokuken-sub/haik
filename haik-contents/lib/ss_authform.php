@@ -469,7 +469,7 @@ $(function(){
  		}
  		
  		if (href != '{$script}') {
- 			$("#orgm_login").after('<div id="scripterror" class="alert alert-danger container"><button type="button" class="close" data-dismiss="alert">&times;</button>{$s_err_msg}</div>');
+ 			$("#orgm_login").after('<div id="scripterror" class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>{$s_err_msg}</div>');
 		}
  	}
  	return false;
