@@ -37,8 +37,12 @@ class PukiwikiPlugin implements PluginInterface {
         }
 
         $func = '\plugin_' . $this->pluginId . '_inline';
-        array_push($params, $body);
-        return call_user_func_array($func, $params);
+        if (function_exists($func))
+        {
+            array_push($params, $body);
+            return call_user_func_array($func, $params);
+        }
+        throw new \RuntimeException('plugin id='.$this->pluginId.' does not have inline function.');
     }
 
     /**
@@ -56,8 +60,12 @@ class PukiwikiPlugin implements PluginInterface {
         }
 
         $func = '\plugin_' . $this->pluginId . '_convert';
-        array_push($params, $body);
-        return call_user_func_array($func, $params);
+        if (function_exists($func))
+        {
+            array_push($params, $body);
+            return call_user_func_array($func, $params);
+        }
+        throw new \RuntimeException('plugin id='.$this->pluginId.' does not have inline function.');
     }
 
 }
