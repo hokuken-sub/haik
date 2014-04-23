@@ -447,20 +447,7 @@ $qt->setv('summary', $summarystr);
 $qt->setv('jquery_script', '<script type="text/javascript" src="'.JS_DIR.'jquery.js"></script>
 <script type="text/javascript" src="'.JS_DIR.'jquery.tmpl.min.js"></script>');
 
-$bootstrap = CSS_DIR.'bootstrap.min.css';
-
-if (isset($style_config['bootstrap']) && $style_config['bootstrap'])
-{
-	$bootstrap = $style_config['bootstrap']['core'] ? (SKIN_DIR . $style_name. '/' . $style_config['bootstrap']['core']) : FALSE;
-}
-$bootstrap = $bootstrap ? '<link rel="stylesheet" href="'. $bootstrap .'">' : '';
-
-$qt->setv('bootstrap_css', $bootstrap.'
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-	  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-');
+$qt->setv('bootstrap_css', '');
 $qt->setv('bootstrap_script', '
 <script type="text/javascript" src="'.JS_DIR.'bootstrap.js"></script>
 <script type="text/javascript" src="'.JS_DIR.'typeahead.js"></script>

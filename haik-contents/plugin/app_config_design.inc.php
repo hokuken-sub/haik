@@ -376,7 +376,6 @@ function plugin_app_config_design_set_body()
 	);
 	$qt->setjsv($json);
 
-
 	$tmpl_file = PLUGIN_DIR . 'app_config/design.html';
 	ob_start();
 	include($tmpl_file);
