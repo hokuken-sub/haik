@@ -1501,7 +1501,7 @@ function style_config_read_skel($style = '', $key = NULL)
 	
 	$style = ($style == '') ? $style_name : $style;
 	
-	$conf_file = SKEL_DIR . 'skin/' . $style . '/config.php';
+	$conf_file = SKEL_DIR . 'theme/' . $style . '/config.php';
 	return _style_config_read($conf_file, $key);
 }
 
