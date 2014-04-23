@@ -204,7 +204,7 @@ class InitializeCommand extends Command {
         $dist_dir = './haik-contents/';
         if (is_dir($skel_dir))
         {
-            foreach (['config', 'meta', 'skin', 'wiki'] as $dir)
+            foreach (['config', 'meta', 'skin', 'md'] as $dir)
             {
                 $this->output->writeln('<info>'.$dir . '/ copying...</info>');
 
@@ -308,7 +308,7 @@ class InitializeCommand extends Command {
         $this->output->writeln('<comment>Set site copy...</comment>');
         $this->output->writeln('');
 
-        $front_page_file = './haik-contents/wiki/46726F6E7450616765.txt';
+        $front_page_file = './haik-contents/md/46726F6E7450616765.txt';
         $text = file_get_contents($front_page_file);
         $text = str_replace(['// MAIN_COPY', '// SUB_COPY'], ['# ' . $this->mainCopy, $this->subCopy], $text);
         file_put_contents($front_page_file, $text);
