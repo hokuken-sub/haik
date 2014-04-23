@@ -128,18 +128,19 @@ $app->get('/logout', function() use ($app)
     return $app->redirect('/?cmd=logout');
 });
 
-$app->get('/{pageName}', function($pageName) use ($vars)
+$callback = function($pageName) use ($vars)
 {
     global $defaultpage;
     if ($pageName === '') $pageName = $defaultpage;
     $vars['page'] = $pageName;
     return require LIB_DIR . 'main.php';
-})
-->assert('pageName', '.*');
+};
+$app->get('/{pageName}', $callback)->assert('pageName', '.*');
+$app->post('/{pageName}', $callback)->assert('pageName', '.*');
 
 $app->error(function(\Exception $e, $code)
 {
-    return 'error: ' . $code;
+    return 'error: ' . $code . '<br>' . $e->getMessage();
 });
 
 $app->run();

@@ -42,6 +42,7 @@ if (isset($retvars['msg']) && $retvars['msg'] != '') {
 $page_meta = meta_read($base);
 
 //全体認証
+global $disable_site_auth, $site_close_all;
 if ( ! ss_admin_check() && ! $disable_site_auth)
 {
 	if ($site_close_all)
