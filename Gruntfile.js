@@ -29,7 +29,7 @@ module.exports = function(grunt){
     files: []
   };
 
-  var themeDirs = grunt.file.glob.sync('./haik-contents/skin/*/');
+  var themeDirs = grunt.file.glob.sync('./haik-contents/theme/*/');
 
   // create less config
   for (var i in themeDirs) {
@@ -75,7 +75,7 @@ module.exports = function(grunt){
       less: {
         files: [
           './haik-contents/css/less/*.less',
-          './haik-contents/skin/*/less/*.less'
+          './haik-contents/theme/*/less/*.less'
         ],
         tasks: ['less'],
         options: {

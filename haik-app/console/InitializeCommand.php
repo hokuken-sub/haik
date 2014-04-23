@@ -204,7 +204,7 @@ class InitializeCommand extends Command {
         $dist_dir = './haik-contents/';
         if (is_dir($skel_dir))
         {
-            foreach (['config', 'meta', 'skin', 'wiki'] as $dir)
+            foreach (['config', 'meta', 'theme', 'wiki'] as $dir)
             {
                 $this->output->writeln('<info>'.$dir . '/ copying...</info>');
 
