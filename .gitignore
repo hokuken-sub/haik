@@ -15,7 +15,7 @@ haik-contents/css/custom_style.css
 haik-contents/css/haik.css
 haik-contents/css/admin.css
 
-haik-contents/wiki/*.txt
+haik-contents/md/*.txt
 
 haik-contents/upload/*
 !haik-contents/upload/thumbnail/
