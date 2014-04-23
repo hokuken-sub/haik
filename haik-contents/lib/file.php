@@ -36,7 +36,9 @@ function get_source($page = NULL, $lock = TRUE, $join = FALSE)
 
 		if ($join) {
 			// Returns a value
-			$result = str_replace("\r", '', fread($fp, filesize($path)));
+			$buff_length = filesize($path);
+			$buff_length = $buff_length ? $buff_length : 2048;
+			$result = str_replace("\r", '', fread($fp, $buff_length));
 		} else {
 			// Returns an array
 			// Removing line-feeds: Because file() doesn't remove them.
