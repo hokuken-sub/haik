@@ -90,7 +90,6 @@ require(LIB_DIR. 'qhm_template.php');
 $qm = QHM_Message::get_instance();
 $qt = QHM_Template::get_instance();
 
-
 //キャッシュ有効フラグをQHM Template にセット
 $qt->enable_cache = $enable_cache;
 //ページ名をセット
@@ -120,33 +119,28 @@ $app = new Silex\Application();
 $app['debug'] = true;
 
 
-$app->get('/', function()
+$app->get('/login', function() use ($app)
 {
-    return 'Hello, silex';
+    return $app->redirect('/?cmd=login');
 });
-
-$app->get('/login');
-$app->get('/logout');
-
-
-$app->get('/cmd/{plugin}', function($plugin) use ($vars)
+$app->get('/logout', function() use ($app)
 {
-    $vars['cmd'] = $plugin;
-    return require LIB_DIR . 'main.php';
+    return $app->redirect('/?cmd=logout');
 });
 
 $app->get('/{pageName}', function($pageName) use ($vars)
 {
+    global $defaultpage;
+    if ($pageName === '') $pageName = $defaultpage;
     $vars['page'] = $pageName;
     return require LIB_DIR . 'main.php';
 })
-->assert('pageName', '.+');
+->assert('pageName', '.*');
 
 $app->error(function(\Exception $e, $code)
 {
     return 'error: ' . $code;
 });
+
 $app->run();
 return;
-
-

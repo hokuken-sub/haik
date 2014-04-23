@@ -167,7 +167,10 @@ if ($qt->getv('custom_viewport'))
 {
 	$viewport = $qt->getv('custom_viewport');
 }
-$qt->setv('viewport', sprintf('<meta name="viewport" content="%s">'."\n" , h($viewport)));
+//add base tag
+$viewport_tag = sprintf('<meta name="viewport" content="%s">'."\n" , h($viewport));
+$viewport_tag .= "\t" . '<base href="'. dirname($script) .'">' . "\n";
+$qt->setv('viewport', $viewport_tag);
 
 
 // 自分自身へのリンクを削除する

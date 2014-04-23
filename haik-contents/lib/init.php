@@ -311,14 +311,8 @@ $arg = mb_convert_encoding($arg, SOURCE_ENCODING, 'auto');
 // QUERY_STRINGを分解してコード変換し、$_GET に上書き
 
 // URI を urlencode せずに入力した場合に対処する
-$matches = array();
-foreach (explode('&', $arg) as $key_and_value) {
-	if (preg_match('/^([^=]+)=(.+)/', $key_and_value, $matches) &&
-	    mb_detect_encoding($matches[2]) != 'ASCII') {
-		$_GET[$matches[1]] = $matches[2];
-	}
-}
-unset($matches);
+parse_str($arg, $output);
+$_GET = array_merge($_GET, $output);
 
 /////////////////////////////////////////////////
 // GET, POST, COOKIE
@@ -358,11 +352,9 @@ if (isset($vars['msg'])) {
 	$get['msg'] = $post['msg'] = $vars['msg'] = str_replace("\r", '', $vars['msg']);
 }
 
-
 // cmdもpluginも指定されていない場合は、QUERY_STRINGをページ名かInterWikiNameであるとみなす
 if (! isset($vars['cmd']) && ! isset($vars['plugin']))
 {
-
 	if (isset($vars['go']))
 	{
 		$t = get_tiny_page($vars['go']);

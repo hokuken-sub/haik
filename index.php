@@ -2,7 +2,7 @@
 // Error reporting
 //error_reporting(0); // Nothing
 error_reporting(E_ERROR | E_PARSE); // Avoid E_WARNING, E_NOTICE, etc
-error_reporting(E_ALL); // Debug purpose
+//error_reporting(E_ALL); // Debug purpose
 ini_set('display_errors', 'On');
 
 // Directory definition

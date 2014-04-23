@@ -80,6 +80,7 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 	$body = $retvars['body'];
 } else {
 	if ($base == '' || ! is_page($base)) {
+	    global $defaultpage;
 		$base  = $defaultpage;
 		$title = h(strip_bracket($base));
 		$page  = make_search($base);
