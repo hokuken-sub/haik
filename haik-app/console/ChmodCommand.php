@@ -57,7 +57,7 @@ class ChmodCommand extends Command {
             './haik-contents/md'     => 0777,
             './haik-contents/diff'   => 0777,
             './haik-contents/meta'   => 0777,
-            './haik-contents/skin'   => 0777,
+            './haik-contents/theme'   => 0777,
             './haik-contents/upload' => 0777,
             './haik-contents/css'    => 0755,
             './haik-contents/img'    => 0755,

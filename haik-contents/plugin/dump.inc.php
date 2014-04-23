@@ -102,7 +102,7 @@ $_STORAGE['UPLOAD_DIR']['extract_filter'] = '.+';
 $_STORAGE['BACKUP_DIR']['add_filter']     = '^[0-9A-F]+\.gz';
 $_STORAGE['BACKUP_DIR']['extract_filter'] =  '^((?:[0-9A-F])+)(\.gz){0,1}';
 
-// SKIN_DIR (haik-contents/skin/*)
+// SKIN_DIR (haik-contents/theme/*)
 $_STORAGE['BACKUP_DIR']['add_filter']     = '.+';
 $_STORAGE['BACKUP_DIR']['extract_filter'] =  '.+';
 
@@ -220,7 +220,7 @@ function plugin_dump_download()
 	$bk_backup = isset($vars['backup']);
 	$bk_config = isset($vars['config']);
 	$bk_meta   = isset($vars['meta']);
-	$bk_skin   = isset($vars['skin']);
+	$bk_skin   = isset($vars['theme']);
 
 	$filecount = 0;
 	$zip = new zipfile2();
@@ -536,7 +536,7 @@ function plugin_dump_disp_form()
 			</div>
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="skin">
+					<input type="checkbox" name="theme">
 					{$skindir}<span class="muted">&nbsp;&nbsp;&nbsp;&nbsp; --- デザイン</span>
 				</label>
 			</div>

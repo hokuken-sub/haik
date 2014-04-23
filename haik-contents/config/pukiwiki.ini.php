@@ -70,7 +70,7 @@ $defines = array(
 //for session (Don't change here [related qhmcommu])
     'APP_SESSION_NAME'=>  strtoupper(APP_NAME).'_SSID', // Plugin directory
     
-    'SKIN_DIR'        =>  DATA_HOME . 'skin/',         //hokuken style directory
+    'SKIN_DIR'        =>  DATA_HOME . 'theme/',         //hokuken style directory
 
 // Skin files (SKIN_DIR/*.skin.php) are needed at
 // ./DATAHOME/SKIN_DIR from index.php, but
