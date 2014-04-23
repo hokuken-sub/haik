@@ -50,4 +50,21 @@ class PukiwikiPluginTest extends PHPUnit_Framework_TestCase {
         $this->assertTag($expected, $result);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testThrowExceptionWhenDoesNotHaveInlineMethod()
+    {
+        $plugin = new PukiwikiPlugin('clear');
+        $plugin->inline();
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testThrowExceptionWhenDoesNotHaveConvertMethod()
+    {
+        $plugin = new PukiwikiPlugin('deco');
+        $plugin->convert();
+    }
 }
