@@ -86,9 +86,9 @@ global $_STORAGE;
 $_STORAGE['CONFIG_DIR']['add_filter']     = '^.+\.(php|txt|sqlite)';
 $_STORAGE['CONFIG_DIR']['extract_filter'] = '.+';
 
-// DATA_DIR (haik-contents/wiki/*.txt)
-$_STORAGE['DATA_DIR']['add_filter']     = '^[0-9A-F]+\.txt';
-$_STORAGE['DATA_DIR']['extract_filter'] = '^((?:[0-9A-F])+)(\.txt){0,1}';
+// DATA_DIR (haik-contents/md/*.md)
+$_STORAGE['DATA_DIR']['add_filter']     = '^[0-9A-F]+\.md';
+$_STORAGE['DATA_DIR']['extract_filter'] = '^((?:[0-9A-F])+)(\.md){0,1}';
 
 // META_DIR (haik-contents/meta/*.php)
 $_STORAGE['META_DIR']['add_filter']     = '^[0-9A-F]+\.php';
@@ -186,7 +186,7 @@ function plugin_dump_decodename($name) {
 		// attachファイル名
 		$filename = decode($matches[1]) . '/' . decode($matches[2]);
 	} else {
-		$pattern = '^((?:[0-9A-F]{2})+)((\.txt|\.gz)*)$';
+		$pattern = '^((?:[0-9A-F]{2})+)((\.txt|\.md|\.gz)*)$';
 		if (preg_match("/$pattern/", $filename, $matches)) {
 			$filename = decode($matches[1]) . $matches[2];
 
@@ -269,7 +269,7 @@ function plugin_dump_download_full()
 		DATA_HOME
 	);
 	
-	// バックアップファイル (.txt, .phpすべて)
+	// バックアップファイル (.txt, .md, .phpすべて)
 	$bk_files = array();
 	$hd = opendir('./');
 	while($f = readdir($hd)){

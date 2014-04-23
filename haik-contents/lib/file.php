@@ -61,7 +61,7 @@ function get_filetime($page)
 // Get physical file name of the page
 function get_filename($page)
 {
-	return DATA_DIR . encode($page) . '.txt';
+	return DATA_DIR . encode($page) . '.md';
 }
 
 // Put a data(wiki text) into a physical file(diff, backup, text)
@@ -224,9 +224,15 @@ function file_write($dir, $page, $str, $notimestamp = FALSE)
 
 	if (PKWK_READONLY) return; // Do nothing
 	if ($dir != DATA_DIR && $dir != DIFF_DIR) die($qm->m['file']['err_invalid_dir']);
+  
+  $extension = '.txt';
+  if ($dir === DATA_DIR)
+  {
+      $extension = '.md';
+  }
 
 	$page = strip_bracket($page);
-	$file = $dir . encode($page) . '.txt';
+	$file = $dir . encode($page) . $extension;
 	$file_exists = file_exists($file);
 	
 	app_put_lastmodified();
@@ -624,7 +630,7 @@ function header_lastmod($page = NULL)
 }
 
 // Get a page list of this wiki
-function get_existpages($dir = DATA_DIR, $ext = '.txt')
+function get_existpages($dir = DATA_DIR, $ext = '.md')
 {
 	$aryret = array();
 	$qm = get_qm();
