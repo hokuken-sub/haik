@@ -52,7 +52,7 @@ function plugin_recent_action()
 		}
 
 		$body  = '<div class="page-header">更新履歴</div>';
-		$body .= '<div id="orgm_recent_list" class="container">';
+		$body .= '<div id="orgm_recent_list" class="container-fluid">';
 		$body .= '	<ul class="nav nav-list">';
 		$temp_date = '';
 		foreach($recent_pages as $p)

@@ -473,7 +473,6 @@ EOD;
 		$manual_link = manual_link('StartGuide', '', '<a href="%s" id="haik_edit_manual_link" class="btn btn-default btn-sm" target="_blank">?</a>');
 		
 		$body = '
-<div class="container">
 <div class="row">
 	<div class="edit_form col-sm-offset-1 col-sm-10 col-xs-12">
 	<form action="'.$script.'" method="post" style="margin-bottom:0px;" id="edit_form_main">
@@ -505,7 +504,6 @@ EOD;
 		<textarea name="original" rows="1" cols="1" style="display:none">'.$s_original.'</textarea>
 	</form>
 	</div>
-</div>
 </div>
 ';
 	
