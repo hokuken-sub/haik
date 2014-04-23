@@ -56,6 +56,7 @@ if ( ! ss_admin_check() && ! $disable_site_auth)
 		exit;
 	}
 	//Facebook Login
+	global $fb_auth;
 	if (isset($fb_auth) && $fb_auth)
 	{
 		if ( ! isset($_SESSION['fb_user']) && exist_plugin('facebook_auth'))
@@ -69,6 +70,7 @@ if ( ! ss_admin_check() && ! $disable_site_auth)
 // そこで、SSL通信の場合、$scriptは、https://.. にするために、$script_sslを使うようにする
 // 独自SSLを導入している場合でも、対応できる ( lib/init.php で、$script_ssl を作っているので )
 // 　※ なお、convert_htmlが終わった時点で、元に戻す（このelseブロックの最後を参照）
+global $script, $script_ssl;
 if( is_https() ){
 	$scr_tmp     = $script;
 	$script      = $script_ssl;
@@ -115,7 +117,6 @@ if (isset($retvars['body']) && $retvars['body'] != '') {
 		$qt->enable_cache = false;
 	}
 	
-	global $script;
 	//$scriptが変化している場合、キャッシュの有効期限をリフレッシュ
 	chk_script($script);
 
