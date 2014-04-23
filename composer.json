@@ -9,6 +9,7 @@
     ],
     "require": {
         "toiee/haik-markdown": "dev-master",
+        "silex/silex": "~1.2",
         "symfony/console": "~2.4.3",
         "symfony/yaml": "~2.4.3"
     },
