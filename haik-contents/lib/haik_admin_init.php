@@ -325,7 +325,7 @@ EOS;
 	$slides_str = get_admin_slider_html($slides);
 
 	$admin_nav = '
-<div id="admin_nav" class="navbar navbar-inverse navbar-fixed-top">
+<div id="admin_nav" class="navbar navbar-default navbar-fixed-top haik-admin-navbar">
 	<div class="container">
 		<a class="navbar-brand" href="'.h($script).'"><img src="'.IMAGE_DIR.'haiklogo.jpg" width="50" height="50"></a>
 			'.$tools_str.'
