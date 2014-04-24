@@ -129,7 +129,7 @@ $app->get('/logout', function() use ($app)
     return $app->redirect('/?cmd=logout');
 })->bind('logout');
 
-$callback = function($pageName) use ($vars)
+$callback = function($pageName) use (&$vars)
 {
     global $defaultpage;
     if ($pageName === '') $pageName = $defaultpage;
