@@ -1751,11 +1751,12 @@ function get_admin_tools($page)
 			'link'   => $_LINK['edit'],
 			'style'  => '',
 			'class'  => '',
-			'button' => 'btn btn-default haik-btn-primary navbar-btn',
+			'button' => 'btn btn-default haik-btn-default navbar-btn',
 			'visible'=> TRUE,
 			'right'  => TRUE,
 			'sub'    => array(),
 		),
+/*
 		'admin_slider_link' => array(
 			'name' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
 			'link' => '#admin_slider',
@@ -1766,6 +1767,7 @@ function get_admin_tools($page)
 			'right' => TRUE,
 			'sub' => array()
 		),
+*/
 		'finishlink' => array(
 			'name'   => __('完了'),
 			'link'   => $script,
