@@ -686,24 +686,15 @@ function get_script_uri($init_uri = '')
 		// Set automatically
 		$msg     = 'get_script_uri() failed: Please set $script at INI_FILE manually';
 
-		$script  = (SERVER_PORT == 443 ? 'https://' : 'http://'); // scheme
-		$script .= SERVER_NAME;	// host
-		$script .= ((SERVER_PORT == 80 || SERVER_PORT == 443) ? '' : ':' . SERVER_PORT);  // port
+        $request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
-		// SCRIPT_NAME が'/'で始まっていない場合(cgiなど) REQUEST_URIを使ってみる
-		$path    = SCRIPT_NAME;
-		if ($path{0} != '/') {
-			if (! isset($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI']{0} != '/')
-				die_message($msg);
-
-			// REQUEST_URIをパースし、path部分だけを取り出す
-			$parse_url = parse_url($script . $_SERVER['REQUEST_URI']);
-			if (! isset($parse_url['path']) || $parse_url['path']{0} != '/')
-				die_message($msg);
-
-			$path = $parse_url['path'];
+		$script  = $request->getScheme() . '://';
+		$script .= $request->getHost();	// host
+		if ( ! in_array($request->getPort(), array(80, 443)))
+		{
+            $script .= ':' . $request->getPort();
 		}
-		$script .= $path;
+		$script .= $request->getBaseUrl();
 
 		if (! is_url($script, TRUE) && php_sapi_name() == 'cgi')
 			die_message($msg);
@@ -725,7 +716,6 @@ function get_script_uri($init_uri = '')
 		if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#',
 			$script, $matches)) $script = $matches[1];
 	}
-
 	return $script;
 }
 
@@ -1061,7 +1051,7 @@ function get_page_title($pagename, $lines=10){
 function get_page_url($page)
 {
 	global $script, $defaultpage;
-	
+
 	return $script . ($defaultpage !== $page ? ('?' . rawurlencode($page)) : '');
 }
 

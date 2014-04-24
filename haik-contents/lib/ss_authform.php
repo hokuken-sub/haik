@@ -624,9 +624,12 @@ function secure_session_start()
 			{
 				$domain .= ':'.$vals['port'];
 			}
-			$dir = str_replace('\\', '', dirname( $vals['path'] ));
-			$ckpath = ($dir=='/') ? '/' : $dir.'/';
-						
+			$ckpath = '/';
+			if (isset($vals['path']))
+			{
+                $ckpath = str_replace('\\', '', dirname($vals['path'])) . '/';
+			}
+
 			if( function_exists('ini_set') ){
 				ini_set('session.use_trans_sid',0);
 				ini_set('session.name', APP_SESSION_NAME.strlen($ckpath));
