@@ -1756,18 +1756,6 @@ function get_admin_tools($page)
 			'right'  => TRUE,
 			'sub'    => array(),
 		),
-/*
-		'admin_slider_link' => array(
-			'name' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
-			'link' => '#admin_slider',
-			'style' => 'margin-left:5px;',
-			'class' => 'admin-slider-link',
-			'button' => 'btn btn-default navbar-btn',
-			'visible' => TRUE,
-			'right' => TRUE,
-			'sub' => array()
-		),
-*/
 		'finishlink' => array(
 			'name'   => __('完了'),
 			'link'   => $script,
