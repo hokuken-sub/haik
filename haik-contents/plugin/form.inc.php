@@ -238,7 +238,7 @@ function plugin_form_create_html($form = array(), $parts_only = FALSE)
 	}
 	
 	$html  = '<div class="orgm-form">
-	<form method="post" action="'.h($script).'?'.$r_page.'" class="'.h($form['class']).'"'.($attach ? ' enctype="multipart/form-data"' : '') .'>
+	<form method="post" action="'.h(get_page_url($page)).'" class="'.h($form['class']).'"'.($attach ? ' enctype="multipart/form-data"' : '') .'>
 		'.join("\n", $items).'
 		<div class="form-group form-actions">
 			<div class="'. h($form_only_control_class) .'">
@@ -525,7 +525,7 @@ function plugin_form_get_confirm_html()
 	'.join("", $tr).'
 	</tbody>
 </table>
-<form method="post" action="'.h($script).'?'. $r_page .'" class="'.h($form['class']).'">
+<form method="post" action="'.get_page_url($page) .'" class="'.h($form['class']).'">
 	<div class="form-actions">
 		<input type="submit" class="btn btn-primary" value="' . h($form['button']) . '">
 		<button type="button" class="btn btn-default" onclick="$(\'#orgm_form_confirm_cancel\').submit()">' . __('キャンセル') . '</button>
@@ -536,7 +536,7 @@ function plugin_form_get_confirm_html()
 	<input type="hidden" name="id" value="'.$form['id'].'">
 	<input type="hidden" name="page" value="'.h($page).'" />
 </form>
-<form id="'. h($form_id) .'_cancel" method="post" action="'.h($script).'?'. $r_page .'" class="hide">
+<form id="'. h($form_id) .'_cancel" method="post" action="'.h(get_page_url($page)) .'" class="hide">
 '.$cancel_values.'
 </form>
 </div>
@@ -756,7 +756,7 @@ function plugin_form_log_write($form, $data)
 	global $vars, $script;
 
 	$page = $vars['page'];
-	$url = $script . '?' . rawurlencode($page);
+	$url = get_page_url($page);
 	
 	$id = $form['id'];
 	

@@ -169,7 +169,7 @@ if ($qt->getv('custom_viewport'))
 }
 //add base tag
 $viewport_tag = sprintf('<meta name="viewport" content="%s">'."\n" , h($viewport));
-$viewport_tag .= "\t" . '<base href="'. dirname($script) .'">' . "\n";
+$viewport_tag .= "\t" . '<base href="'. $script .'">' . "\n";
 $qt->setv('viewport', $viewport_tag);
 
 
@@ -283,7 +283,7 @@ if (in_array($menubar2, $style_config['templates'][$template_name]['layouts']))
 	if (exist_plugin_convert('menu2')) {
 		$vars['page_alt'] = $menubar2;
 
-		$ptn = '"'. $script.'?'.rawurlencode($vars['page']).'"';
+		$ptn = '"'. get_page_url($vars['page']).'"';
 		$ptn = '|<(h[2-4][^>]+)>(.+href="('.$scripturi.')".+)?</(h[2-4])>|';
 		$_menubody = preg_replace($ptn, '<$1 class="focus">$2</$4>', do_plugin_convert('menu2'));
 

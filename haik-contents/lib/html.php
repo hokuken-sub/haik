@@ -70,20 +70,20 @@ function catbody($title, $page, $body)
 	$_LINK['edit']     = "$script?cmd=edit&page=$r_page";
 	$_LINK['filelist'] = "$script?cmd=filelist&refer=$r_page";
 	$_LINK['freeze']   = "$script?cmd=freeze&page=$r_page";
-	$_LINK['help']     = "$script?" . rawurlencode('Help');
+	$_LINK['help']     = get_page_url('Help');
 	$_LINK['list']     = "$script?cmd=list";
 	$_LINK['new']      = "$script?plugin=newpage&refer=$r_page";
 	$_LINK['rdf']      = "$script?cmd=rss&ver=1.0";
-	$_LINK['recent']   = "$script?" . rawurlencode($whatsnew);
+	$_LINK['recent']   = get_page_url($whatsnew);
 	$_LINK['refer']    = "$script?plugin=referer&page=$r_page";
-	$_LINK['reload']   = "$script?$r_page";
+	$_LINK['reload']   = get_page_url($_page);
 	$_LINK['rename']   = "$script?plugin=rename&refer=$r_page";
 	$_LINK['delete']   = "$script?cmd=delete&page=$r_page";
 	$_LINK['rss']      = "$script?cmd=rss";
 	$_LINK['rss10']    = "$script?cmd=rss&ver=1.0"; // Same as 'rdf'
 	$_LINK['rss20']    = "$script?cmd=rss&ver=2.0";
 	$_LINK['search']   = "$script?cmd=search";
-	$_LINK['top']      = dirname($script . 'dummy.php'). '/';
+	$_LINK['top']      = $script. '/';
 	
 	$_LINK['apply_preview_skin']  = "$script?cmd=app_config_design&phase=apply_preview_design&refer=$r_page";
 	$_LINK['cancel_preview_skin'] = "$script?cmd=app_config_design&phase=cancel_preview_design&refer=$_page";
@@ -541,9 +541,9 @@ function make_related($page, $tag = '')
 		$s_page = h(get_page_title($page));
 		$passage  = get_passage($lastmod);
 		$_links[] = $tag ?
-			'<a href="' . $script . '?' . $r_page . '" title="' .
+			'<a href="' . get_page_url($page) . '" title="' .
 			$s_page . ' ' . $passage . '">' . $s_page . '</a>' :
-			'<a href="' . $script . '?' . $r_page . '">' .
+			'<a href="' . get_page_url($page) . '">' .
 			$s_page . '</a>' . $passage;
 	}
 	if (empty($_links)) return ''; // Nothing

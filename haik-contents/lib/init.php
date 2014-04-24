@@ -358,7 +358,7 @@ if (! isset($vars['cmd']) && ! isset($vars['plugin']))
 	if (isset($vars['go']))
 	{
 		$t = get_tiny_page($vars['go']);
-		header('Location: '.$script.'?'.rawurlencode($t));
+		header('Location: '.get_page_url($t));
 		exit;
 	}
 

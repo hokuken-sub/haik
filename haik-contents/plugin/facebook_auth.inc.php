@@ -55,7 +55,7 @@ function plugin_facebook_auth_action()
 		//log in
 		$_SESSION['fb_user'] = $fb_users[$user->id];
 		set_flash_msg('Facebook ログインしました。');
-		redirect($script . '?' . $defaultpage);
+		redirect($script);
 	}
 	else
 	{

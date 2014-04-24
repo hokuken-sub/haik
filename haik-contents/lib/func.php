@@ -426,7 +426,7 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 		$href = $script . '?cmd=' . $cmd . '&amp;page=';
 	}
 
-	foreach($pages as $file=>$page)
+	foreach($pages as $file => $page)
 	{
 		$r_page  = rawurlencode($page);
 		$s_page  = h($page, ENT_QUOTES);
@@ -435,8 +435,16 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 		//customized by hokuken.com
 		$t_page = get_page_title($s_page);
 		$t_page = ($t_page == '' || $t_page == $s_page) ? '' : ' ('.$t_page.')';
+		if ($cmd === 'read')
+		{
+    		$href = get_page_url($page);
+		}
+		else
+		{
+    		$href = $script . '?cmd=' . $cmd . '&amp;page=' . $r_page;
+		}
 
-		$str = '   <li><a href="' . $href . $r_page . '">' .
+		$str = '   <li><a href="' . $href . '">' .
 			$s_page . $t_page . '</a>' . $passage;
 
 		if ($withfilename) {
@@ -1129,7 +1137,7 @@ function redirect($url = '', $msg = '', $refresh_sec = 2)
 	}
 	else if (is_page($url))
 	{
-		$url = $script . '?' . $url;
+		$url = get_page_url($url);
 	}
 	//デフォルトページ
 	else
@@ -2181,7 +2189,3 @@ function manual_link($pagename, $hash = '', $tag = TRUE)
 	return sprintf($tag_format, h($url));
 
 }
-
-
-/* End of file func.php */
-/* Location: /haik-contents/lib/func.php */
