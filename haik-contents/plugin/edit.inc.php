@@ -401,7 +401,7 @@ function plugin_edit_write()
 	
 	set_flash_msg('ページを更新しました。');
 	
-	$redirect = $script . '?' . rawurlencode($refer);
+	$redirect = get_page_url($refer);
 
 	header('Location: ' . $redirect);
 
@@ -418,7 +418,7 @@ function plugin_edit_cancel()
 	$refer = isset($vars['refer']) ? $vars['refer'] : $page;
 	$refer = is_page($refer) ? $refer : $defaultpage;
 
-	header('Location: ' . $script . '?' . $refer);
+	header('Location: ' . get_page_url($refer));
 
 
 	exit;

@@ -33,7 +33,7 @@ function plugin_redirect_page()
     
     if (is_page($to))
     {
-	    $url = $script. '?' . rawurlencode($to);
+	    $url = get_page_url($to);
     }
     else
     {
@@ -50,7 +50,7 @@ function plugin_redirect_page()
     }
     
     //自分自身にリダイレクトして、ループする場合は警告する
-    if ($url === $script.'?'.rawurlencode($page))
+    if ($url === get_page_url($page))
     {
         return $qm->m['plg_redirect']['err_self_ref'];
     }

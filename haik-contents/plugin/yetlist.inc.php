@@ -43,8 +43,7 @@ function plugin_yetlist_action()
 			$r_refer = '';
 			$link_refs = array();
 			foreach ($refer as $_refer) {
-				$r_refer = rawurlencode($_refer);
-				$link_refs[] = '<a href="' . $script . '?' . $r_refer . '">' .
+				$link_refs[] = '<a href="' . get_page_url($_refer) . '">' .
 					h($_refer) . '</a>';
 			}
 			$link_ref = join(' ', $link_refs);

@@ -84,7 +84,7 @@ function plugin_notify_get_body()
 	
 	uasort($notices, 'plugin_notify_compare');
 
-	$html = '<div class="orgm-notification container">';
+	$html = '<div class="orgm-notification container-fluid">';
 	
 	foreach ($notices as $notice)
 	{

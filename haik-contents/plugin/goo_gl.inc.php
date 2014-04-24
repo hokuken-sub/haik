@@ -27,16 +27,8 @@ function plugin_goo_gl_inline()
 	
 	$format = '<input type="text" value="%1s" readonly onclick="this.focus();this.select()" class="form-control">';
 
-	if ($vars['page'] === $defaultpage)
-	{
-		$url = $script;
-	}
-	else
-	{
-		$url = $script . '?' . rawurlencode($vars['page']);
-	}
+    get_page_url($vars['page']);
 
-	
 	$args = func_get_args();
 	foreach ($args as $arg)
 	{

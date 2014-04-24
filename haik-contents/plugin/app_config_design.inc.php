@@ -323,6 +323,7 @@ function plugin_app_config_design_set_body()
 
 	//サンプル用スタイルファイルの読み込み
 	$style_config = style_config_read($style_name);
+	$sample_style_file = FALSE;
 	if ($use_less)
 	{
 		$sample_style_file = SKIN_DIR . $style_name . '/less/' . basename($style_config['sample_style_file'], '.css') . '.less';
@@ -336,7 +337,7 @@ function plugin_app_config_design_set_body()
 			$sample_style_file = FALSE;
 		}
 	}
-	else
+	else if (isset($style_config['sample_style_file']))
 	{
 		$sample_style_file = SKIN_DIR . $style_name . '/' . $style_config['sample_style_file'];
 		$rel = 'stylesheet';
@@ -374,7 +375,6 @@ function plugin_app_config_design_set_body()
 		)
 	);
 	$qt->setjsv($json);
-
 
 	$tmpl_file = PLUGIN_DIR . 'app_config/design.html';
 	ob_start();

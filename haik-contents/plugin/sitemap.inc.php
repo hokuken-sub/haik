@@ -70,8 +70,7 @@ function plugin_sitemap_action() {
 		$count = PLUGIN_SITEMAP_MAXSHOW;
 		foreach ($pages as $page=>$time) {
 			if($count > 0) {
-				$r_page = rawurlencode($page);
-				$link = $script . '?' . $r_page;
+				$link = get_page_url($page);
 				$date = gmdate('Y-m-d\TH:i:s', $time + ZONETIME) . '+00:00';
 				$priority   = '';
 				$changefreq = '';

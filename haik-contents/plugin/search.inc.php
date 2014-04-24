@@ -304,7 +304,7 @@ function plugin_search2_do_search($word, $type = 'AND', $non_format = FALSE, $ba
 
 	arsort($pages);
 
-	$retval = '<div class="container"><ul class="nav nav-list">' . "\n";
+	$retval = '<div class="container-fluid"><ul class="nav nav-list">' . "\n";
 	foreach ($pages as $page=>$v) {
 		$s_page  = h($titles[$page]);
 		

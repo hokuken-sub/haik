@@ -68,7 +68,7 @@ function plugin_recent_action()
             {
                 $title = '　<small class="muted">'.h($p['title']).'</small>';
             }
-            $body .= '<a href="'.h($script.'?'.rawurlencode($p['name'])).'"><strong>　'.h($p['name']).'</strong>'.$title.'</a></li>';
+            $body .= '<a href="'.h(get_page_url($p['name'])).'"><strong>　'.h($p['name']).'</strong>'.$title.'</a></li>';
             $body .= '</li>';
         }
         $body .= '    </ul>';
@@ -152,7 +152,7 @@ function plugin_recent_convert()
         } else {
             $r_page = rawurlencode($page);
             $passage = $show_passage ? ' ' . get_passage($time) : '';
-            $items .= ' <li><a href="' . $script . '?' . $r_page . '"' . 
+            $items .= ' <li><a href="' . get_page_url($page) . '"' . 
                 ' title="' . $s_page . $passage . '">' . $s_page . '</a></li>' . "\n";
         }
     }

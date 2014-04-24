@@ -110,6 +110,7 @@ if ($is_editor OR ss_admin_check())
 	{
 		if (exist_plugin('former'))
 			plugin_former_set_iframe();
+
 		if (exist_plugin('gmap'))
 			plugin_gmap_set_js();
 	}
@@ -188,9 +189,8 @@ EOS;
 	{
 		unset($tools['applyskinlink'], $tools['changeskinlink'], $tools['previewcancellink']);
 	}
-	
-	
-	if ( ! $is_page OR PKWK_READONLY)
+
+	if ($is_plugin_page OR PKWK_READONLY)
 	{
 		unset($tools['editlink'], $tools['admin_slider_link']);
 
@@ -406,7 +406,7 @@ if ($display_login > 0)
 $summaryflag_start = '';
 $summaryflag_end = '';
 if( ($notes != '') ||  ($related != '') ){ 
- $summaryflag_start = '<div id="summary" class="container"><!-- ■BEGIN id:summary -->';
+ $summaryflag_start = '<div id="summary" class="container-fluid"><!-- ■BEGIN id:summary -->';
  $summaryflag_end = '</div><!-- □ END id:summary -->';
 }
 
@@ -447,20 +447,7 @@ $qt->setv('summary', $summarystr);
 $qt->setv('jquery_script', '<script type="text/javascript" src="'.JS_DIR.'jquery.js"></script>
 <script type="text/javascript" src="'.JS_DIR.'jquery.tmpl.min.js"></script>');
 
-$bootstrap = CSS_DIR.'bootstrap.min.css';
-
-if (isset($style_config['bootstrap']) && $style_config['bootstrap'])
-{
-	$bootstrap = $style_config['bootstrap']['core'] ? (SKIN_DIR . $style_name. '/' . $style_config['bootstrap']['core']) : FALSE;
-}
-$bootstrap = $bootstrap ? '<link rel="stylesheet" href="'. $bootstrap .'">' : '';
-
-$qt->setv('bootstrap_css', $bootstrap.'
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-	  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-');
+$qt->setv('bootstrap_css', '');
 $qt->setv('bootstrap_script', '
 <script type="text/javascript" src="'.JS_DIR.'bootstrap.js"></script>
 <script type="text/javascript" src="'.JS_DIR.'typeahead.js"></script>

@@ -426,7 +426,7 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 		$href = $script . '?cmd=' . $cmd . '&amp;page=';
 	}
 
-	foreach($pages as $file=>$page)
+	foreach($pages as $file => $page)
 	{
 		$r_page  = rawurlencode($page);
 		$s_page  = h($page, ENT_QUOTES);
@@ -435,8 +435,16 @@ function page_list($pages, $cmd = 'read', $withfilename = FALSE)
 		//customized by hokuken.com
 		$t_page = get_page_title($s_page);
 		$t_page = ($t_page == '' || $t_page == $s_page) ? '' : ' ('.$t_page.')';
+		if ($cmd === 'read')
+		{
+    		$href = get_page_url($page);
+		}
+		else
+		{
+    		$href = $script . '?cmd=' . $cmd . '&amp;page=' . $r_page;
+		}
 
-		$str = '   <li><a href="' . $href . $r_page . '">' .
+		$str = '   <li><a href="' . $href . '">' .
 			$s_page . $t_page . '</a>' . $passage;
 
 		if ($withfilename) {
@@ -686,24 +694,15 @@ function get_script_uri($init_uri = '')
 		// Set automatically
 		$msg     = 'get_script_uri() failed: Please set $script at INI_FILE manually';
 
-		$script  = (SERVER_PORT == 443 ? 'https://' : 'http://'); // scheme
-		$script .= SERVER_NAME;	// host
-		$script .= ((SERVER_PORT == 80 || SERVER_PORT == 443) ? '' : ':' . SERVER_PORT);  // port
+        $request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
-		// SCRIPT_NAME が'/'で始まっていない場合(cgiなど) REQUEST_URIを使ってみる
-		$path    = SCRIPT_NAME;
-		if ($path{0} != '/') {
-			if (! isset($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI']{0} != '/')
-				die_message($msg);
-
-			// REQUEST_URIをパースし、path部分だけを取り出す
-			$parse_url = parse_url($script . $_SERVER['REQUEST_URI']);
-			if (! isset($parse_url['path']) || $parse_url['path']{0} != '/')
-				die_message($msg);
-
-			$path = $parse_url['path'];
+		$script  = $request->getScheme() . '://';
+		$script .= $request->getHost();	// host
+		if ( ! in_array($request->getPort(), array(80, 443)))
+		{
+            $script .= ':' . $request->getPort();
 		}
-		$script .= $path;
+		$script .= $request->getBaseUrl();
 
 		if (! is_url($script, TRUE) && php_sapi_name() == 'cgi')
 			die_message($msg);
@@ -725,7 +724,6 @@ function get_script_uri($init_uri = '')
 		if (preg_match('#^(.+/)' . preg_quote($script_directory_index, '#') . '$#',
 			$script, $matches)) $script = $matches[1];
 	}
-
 	return $script;
 }
 
@@ -1060,9 +1058,10 @@ function get_page_title($pagename, $lines=10){
 
 function get_page_url($page)
 {
-	global $script, $defaultpage;
-	
-	return $script . ($defaultpage !== $page ? ('?' . rawurlencode($page)) : '');
+	global $script, $defaultpage, $app;
+
+    if ($page === $defaultpage) return $script;
+	return $app['url_generator']->generate('showPage', array('pageName'=>$page));
 }
 
 function create_page_description($page, $length = 120, $source = NULL)
@@ -1138,7 +1137,7 @@ function redirect($url = '', $msg = '', $refresh_sec = 2)
 	}
 	else if (is_page($url))
 	{
-		$url = $script . '?' . $url;
+		$url = get_page_url($url);
 	}
 	//デフォルトページ
 	else
@@ -2190,7 +2189,3 @@ function manual_link($pagename, $hash = '', $tag = TRUE)
 	return sprintf($tag_format, h($url));
 
 }
-
-
-/* End of file func.php */
-/* Location: /haik-contents/lib/func.php */

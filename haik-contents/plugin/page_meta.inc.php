@@ -134,7 +134,7 @@ function plugin_page_meta_action()
 		
 		$json = array(
 			'success' => 1,
-			'redirect' => $script. '?' . rawurlencode($page),
+			'redirect' => get_page_url($page),
 		);
 		
 		print_json($json);

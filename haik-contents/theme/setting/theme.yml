@@ -31,4 +31,4 @@ templates:
     filename: narrow.skin.php
     layouts: []
 
-content: top
+default_template: content

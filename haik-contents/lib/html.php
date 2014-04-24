@@ -24,21 +24,22 @@ function catbody($title, $page, $body)
     global $noindex, $accesstag_moved; //for skin by hokuken
     global $display_login;	// Site administration menu 20 JUN 2007
     global $adcode;			// AD code (exp. Google Adwords, Analytics ... )  25 JLY 2007 by hokuken.com
-	global $include_skin_file_path; //orignal skin setting
-	global $unload_confirm, $check_login;
-	global $other_plugins, $other_plugin_categories;
-	global $default_script, $init_scripts;
-	global $is_update;
-	global $layout_pages;
-	global $qblog_defaultpage, $qblog_menubar, $qblog_title;
-	global $shiftjis; //Shift-JIS converter
-	global $eucjp; //EUC-JP converter
-	global $non_list, $whatsnew, $change_timestamp;
-	global $page_meta; // page meta info
-	global $template_name, $viewport;
-	global $user_head, $ga_tracking_id, $tracking_script;
-	global $style_color, $style_texture, $style_custom_bg, $use_less, $app_start; // style color
-	global $site_nav, $menubar, $menubar2, $site_footer;
+    global $include_skin_file_path; //orignal skin setting
+    global $unload_confirm, $check_login;
+    global $other_plugins, $other_plugin_categories;
+    global $default_script, $init_scripts;
+    global $is_update;
+    global $layout_pages;
+    global $qblog_defaultpage, $qblog_menubar, $qblog_title;
+    global $shiftjis; //Shift-JIS converter
+    global $eucjp; //EUC-JP converter
+    global $non_list, $whatsnew, $change_timestamp;
+    global $page_meta; // page meta info
+    global $template_name, $viewport;
+    global $user_head, $ga_tracking_id, $tracking_script;
+    global $style_color, $style_texture, $style_custom_bg, $use_less, $app_start; // style color
+    global $site_nav, $menubar, $menubar2, $site_footer;
+    global $is_plugin_page;
 
 
 	// body部分以外は、元々の$script を使う（通常のリンク設定）を使う
@@ -70,20 +71,20 @@ function catbody($title, $page, $body)
 	$_LINK['edit']     = "$script?cmd=edit&page=$r_page";
 	$_LINK['filelist'] = "$script?cmd=filelist&refer=$r_page";
 	$_LINK['freeze']   = "$script?cmd=freeze&page=$r_page";
-	$_LINK['help']     = "$script?" . rawurlencode('Help');
+	$_LINK['help']     = get_page_url('Help');
 	$_LINK['list']     = "$script?cmd=list";
 	$_LINK['new']      = "$script?plugin=newpage&refer=$r_page";
 	$_LINK['rdf']      = "$script?cmd=rss&ver=1.0";
-	$_LINK['recent']   = "$script?" . rawurlencode($whatsnew);
+	$_LINK['recent']   = get_page_url($whatsnew);
 	$_LINK['refer']    = "$script?plugin=referer&page=$r_page";
-	$_LINK['reload']   = "$script?$r_page";
+	$_LINK['reload']   = get_page_url($_page);
 	$_LINK['rename']   = "$script?plugin=rename&refer=$r_page";
 	$_LINK['delete']   = "$script?cmd=delete&page=$r_page";
 	$_LINK['rss']      = "$script?cmd=rss";
 	$_LINK['rss10']    = "$script?cmd=rss&ver=1.0"; // Same as 'rdf'
 	$_LINK['rss20']    = "$script?cmd=rss&ver=2.0";
 	$_LINK['search']   = "$script?cmd=search";
-	$_LINK['top']      = dirname($script . 'dummy.php'). '/';
+	$_LINK['top']      = $script. '/';
 	
 	$_LINK['apply_preview_skin']  = "$script?cmd=app_config_design&phase=apply_preview_design&refer=$r_page";
 	$_LINK['cancel_preview_skin'] = "$script?cmd=app_config_design&phase=cancel_preview_design&refer=$_page";
@@ -115,6 +116,7 @@ function catbody($title, $page, $body)
 
 	// Init flags
 	$is_page = (is_pagename($_page) && $_page != $whatsnew);
+
 	$is_read = (arg_check('read') && is_page($_page));
 	$has_temp_skin = (isset($_SESSION['temp_skin']) && strlen($_SESSION['temp_skin']) > 0);
 	$is_update =  isset($_COOKIE['APP_VERSION']) && $_COOKIE['APP_VERSION'] > APP_VERSION;
@@ -473,7 +475,6 @@ EOD;
 		$manual_link = manual_link('StartGuide', '', '<a href="%s" id="haik_edit_manual_link" class="btn btn-default btn-sm" target="_blank">?</a>');
 		
 		$body = '
-<div class="container">
 <div class="row">
 	<div class="edit_form col-sm-offset-1 col-sm-10 col-xs-12">
 	<form action="'.$script.'" method="post" style="margin-bottom:0px;" id="edit_form_main">
@@ -505,7 +506,6 @@ EOD;
 		<textarea name="original" rows="1" cols="1" style="display:none">'.$s_original.'</textarea>
 	</form>
 	</div>
-</div>
 </div>
 ';
 	
@@ -543,9 +543,9 @@ function make_related($page, $tag = '')
 		$s_page = h(get_page_title($page));
 		$passage  = get_passage($lastmod);
 		$_links[] = $tag ?
-			'<a href="' . $script . '?' . $r_page . '" title="' .
+			'<a href="' . get_page_url($page) . '" title="' .
 			$s_page . ' ' . $passage . '">' . $s_page . '</a>' :
-			'<a href="' . $script . '?' . $r_page . '">' .
+			'<a href="' . get_page_url($page) . '">' .
 			$s_page . '</a>' . $passage;
 	}
 	if (empty($_links)) return ''; // Nothing
