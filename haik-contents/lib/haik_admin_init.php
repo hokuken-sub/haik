@@ -85,7 +85,7 @@ if ( ! isset($style_config['templates'][$template_name])
 }
 
 $qt->setv('admin_nav', '');
-
+$hide_slider = false;
 
 if ($is_editor OR ss_admin_check())
 {
@@ -182,7 +182,8 @@ EOS;
 	$prevdiv = '';
 	if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 	{
-		unset($tools['editlink'], $tools['admin_slider_link']);
+	  $hide_slider = true;
+		unset($tools['editlink']);
 	}
 	else
 	{
@@ -192,7 +193,8 @@ EOS;
 	
 	if ( ! $is_page OR PKWK_READONLY)
 	{
-		unset($tools['editlink'], $tools['admin_slider_link']);
+	  $hide_slider = true;
+		unset($tools['editlink']);
 
 		if (isset($vars['refer']) && is_page($vars['refer']))
 		{
@@ -240,7 +242,8 @@ EOS;
 	// ! 編集・プレビューにはボタンを表示
 	if ($vars['cmd'] == 'edit' OR $vars['cmd'] == 'secedit')
 	{
-		unset($tools['editlink'], $tools['admin_slider_link']);
+		unset($tools['editlink']);
+		$hide_slider = true;
 		
 		$tools_buttons = '<div class="btn-toolbar">';
 
@@ -336,11 +339,12 @@ EOS;
 	$app_name = '<a href="" class="navbar-brand">'.APP_NAME.'</a>';
 	$tools_str = get_admin_tools_html($tools);
 	$slides_str = get_admin_slider_html($slides);
+	$hide_slider_class = $hide_slider ? ' hide' : '';
 
 	$admin_nav = '
 <div id="admin_nav" class="navbar navbar-default navbar-fixed-top haik-admin-navbar">
 	<div class="container">
-  	<a class="navbar-brand pull-right" href="#admin_slider" id="admin_slider_link"><img src="'.IMAGE_DIR.'haiklogo.jpg" width="50" height="50"></a>
+  	<a class="navbar-brand pull-right' . $hide_slider_class . '" href="#admin_slider" id="admin_slider_link"><img src="'.IMAGE_DIR.'haiklogo.jpg" width="50" height="50"></a>
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="navbar-header navbar-right">
 		'.(isset($tools_buttons) ? $tools_buttons : '').'
