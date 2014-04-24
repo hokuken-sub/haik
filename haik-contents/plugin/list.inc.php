@@ -101,9 +101,9 @@ function plugin_list_getlist($withfilename = FALSE)
 		$menu .= '<li class="nav-header">'.__('最近編集したページ').'</li>';
 		foreach($recent_pages as $p)
 		{
-			$menu .= '<li><a href="'.h($script.'?'.rawurlencode($p['name'])).'">'.h($p['title']).'</a></li>';
+			$menu .= '<li><a href="'.h(get_page_url($p['name'])).'">'.h($p['title']).'</a></li>';
 		}
-		$menu .= '<li><a href="'.$script.'?'.$whatsnew.'" class="muted pull-right">&gt;&gt; すべて表示　</a></li>';
+		$menu .= '<li><a href="'.get_page_url($whatsnew).'" class="muted pull-right">&gt;&gt; すべて表示　</a></li>';
 		$menu .= '</ul>';
 		$qt->setv('menu', $menu);
 
@@ -232,7 +232,7 @@ function plugin_list_create_html($pages_data,  $withfilename = FALSE)
 			$html .= '
 	<tr class="plugin_list_pagerow">
 	<td class="'.$class_admin.'">
-		<div class="plugin_list_pagename"><a href="'. h($script. '?'. $data['urlencoded']). '">' . $data['sanitized'] . $data['title'] . '</a></div>
+		<div class="plugin_list_pagename"><a href="'. h(get_page_url($page)). '">' . $data['sanitized'] . $data['title'] . '</a></div>
 		<div class="plugin_list_commands">';
 		
 			$cmds = array();

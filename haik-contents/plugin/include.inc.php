@@ -83,7 +83,7 @@ function plugin_include_convert()
 
 	$s_page = h($page);
 	$r_page = rawurlencode($page);
-	$link = '<a href="' . $script . '?' . $r_page . '">' . $s_page . '</a>'; // Read link
+	$link = '<a href="' . get_page_url($page) . '">' . $s_page . '</a>'; // Read link
 
 	// I'm stuffed
 	if (isset($included[$page])) {
@@ -110,7 +110,7 @@ function plugin_include_convert()
 
 	// Put a title-with-edit-link, before including document
 	if ($with_title) {
-		$link = '<a href="' . h($script . '?' . $r_page) .	'">' . $s_page . '</a>';
+		$link = '<a href="' . get_page_url($page) .	'">' . $s_page . '</a>';
 		if ($page == $menubar) {
 			$body = '<span align="center"><h5 class="side_label">' .
 				$link . '</h5></span><small>' . $body . '</small>';
@@ -123,7 +123,7 @@ function plugin_include_convert()
 	if (check_editable($vars['page'], false, false))
 	{
 		$goto_page = '読込ページへ移動';
-		$goto_url  = $script . '?' . $r_page;
+		$goto_url  = get_page_url($page);
 		$html  = '<div class="orgm-include-wrapper">';
 		$html .= '<a href="'. h($goto_url) .'" class="orgm-include">'. h($goto_page). '</a>';
 		$html .= $body . '<div class="orgm-include-wrapper-hover"></div></div>';
