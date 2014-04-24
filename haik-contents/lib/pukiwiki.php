@@ -118,24 +118,26 @@ use Silex\Application;
 $app = new Silex\Application();
 $app['debug'] = true;
 
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->get('/login', function() use ($app)
 {
     return $app->redirect('/?cmd=login');
-});
+})->bind('login');
 $app->get('/logout', function() use ($app)
 {
     return $app->redirect('/?cmd=logout');
-});
+})->bind('logout');
 
 $callback = function($pageName) use ($vars)
 {
     global $defaultpage;
     if ($pageName === '') $pageName = $defaultpage;
     $vars['page'] = $pageName;
+    get_page_url($pageName);
     return require LIB_DIR . 'main.php';
 };
-$app->get('/{pageName}', $callback)->assert('pageName', '.*');
+$route = $app->get('/{pageName}', $callback)->assert('pageName', '.*')->bind('showPage');
 $app->post('/{pageName}', $callback)->assert('pageName', '.*');
 
 $app->error(function(\Exception $e, $code)

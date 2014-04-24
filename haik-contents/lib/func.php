@@ -1050,9 +1050,10 @@ function get_page_title($pagename, $lines=10){
 
 function get_page_url($page)
 {
-	global $script, $defaultpage;
+	global $script, $defaultpage, $app;
 
-	return $script . ($defaultpage !== $page ? ('?' . rawurlencode($page)) : '');
+    if ($page === $defaultpage) return $script;
+	return $app['url_generator']->generate('showPage', array('pageName'=>$page));
 }
 
 function create_page_description($page, $length = 120, $source = NULL)
