@@ -119,7 +119,7 @@ function plugin_comment_convert()
 	if (! isset($numbers[$vars['page']])) $numbers[$vars['page']] = 0;
 	$comment_no = $numbers[$vars['page']]++;
 
-	$options = func_num_args() ? func_get_args() : array();
+	$options = (func_num_args() > 1) ? func_get_args() : array();
 	
 	if (isset($vars['comment_error']))
 	{

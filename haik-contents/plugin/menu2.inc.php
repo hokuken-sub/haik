@@ -7,45 +7,47 @@
 
 function plugin_menu2_convert()
 {
-	global $vars, $menubar2;
-	static $menu = NULL;
-	$qm = get_qm();
+    global $vars, $menubar2;
+    static $menu = NULL;
+    $qm = get_qm();
 
-	$num = func_num_args();
-	if ($num > 0) {
-		// Try to change default 'MenuBar' page name (only)
-		if ($num > 1)       return $qm->m['plg_menu']['err_usage'];
-		if ($menu !== NULL) return $qm->replace('plg_menu.err_already_set', h($menu));
-		$args = func_get_args();
-		if (! is_page($args[0])) {
-			return $qm->replace('plg_menu.err_no_page', h($args[0]));
-		} else {
-			$menu = $args[0]; // Set
-			return '';
-		}
+    $num = func_num_args();
+    if ($num > 1) {
+        // Try to change default 'MenuBar' page name (only)
+        if ($menu !== NULL) return $qm->replace('plg_menu.err_already_set', h($menu));
 
-	} else {
-		// Output menubar page data
-		$page = ($menu === NULL) ? $menubar2 : $menu;
+        $args = func_get_args();
+        if (! is_page($args[0]))
+        {
+            return $qm->replace('plg_menu.err_no_page', h($args[0]));
+        }
+        else
+        {
+            $menu = $args[0]; // Set
+            return '';
+        }
 
-		if (! is_page($page)) {
-			return '';
-		}
-		else if (isset($vars['preview']) && $vars['page'] == $page)
-		{
-			// Cut fixed anchors
-			$menutext = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m', '$1$2', $vars['msg']);
+    } else {
+        // Output menubar page data
+        $page = ($menu === NULL) ? $menubar2 : $menu;
 
-			return convert_html($menutext);
-		}
-		else if ($vars['page'] == $page) {
-			return '<!-- '. $qm->replace('plg_menu.ntc_already_view', h($page)).' -->';
-		} else {
-			// Cut fixed anchors
-			$menutext = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m', '$1$2', get_source($page));
+        if (! is_page($page)) {
+            return '';
+        }
+        else if (isset($vars['preview']) && $vars['page'] == $page)
+        {
+            // Cut fixed anchors
+            $menutext = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m', '$1$2', $vars['msg']);
 
-			return convert_html($menutext);
-		}
-	}
+            return convert_html($menutext);
+        }
+        else if ($vars['page'] == $page) {
+            return '<!-- '. $qm->replace('plg_menu.ntc_already_view', h($page)).' -->';
+        } else {
+            // Cut fixed anchors
+            $menutext = preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/m', '$1$2', get_source($page));
+
+            return convert_html($menutext);
+        }
+    }
 }
-?>
