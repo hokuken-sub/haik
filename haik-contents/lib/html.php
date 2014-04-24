@@ -24,21 +24,22 @@ function catbody($title, $page, $body)
     global $noindex, $accesstag_moved; //for skin by hokuken
     global $display_login;	// Site administration menu 20 JUN 2007
     global $adcode;			// AD code (exp. Google Adwords, Analytics ... )  25 JLY 2007 by hokuken.com
-	global $include_skin_file_path; //orignal skin setting
-	global $unload_confirm, $check_login;
-	global $other_plugins, $other_plugin_categories;
-	global $default_script, $init_scripts;
-	global $is_update;
-	global $layout_pages;
-	global $qblog_defaultpage, $qblog_menubar, $qblog_title;
-	global $shiftjis; //Shift-JIS converter
-	global $eucjp; //EUC-JP converter
-	global $non_list, $whatsnew, $change_timestamp;
-	global $page_meta; // page meta info
-	global $template_name, $viewport;
-	global $user_head, $ga_tracking_id, $tracking_script;
-	global $style_color, $style_texture, $style_custom_bg, $use_less, $app_start; // style color
-	global $site_nav, $menubar, $menubar2, $site_footer;
+    global $include_skin_file_path; //orignal skin setting
+    global $unload_confirm, $check_login;
+    global $other_plugins, $other_plugin_categories;
+    global $default_script, $init_scripts;
+    global $is_update;
+    global $layout_pages;
+    global $qblog_defaultpage, $qblog_menubar, $qblog_title;
+    global $shiftjis; //Shift-JIS converter
+    global $eucjp; //EUC-JP converter
+    global $non_list, $whatsnew, $change_timestamp;
+    global $page_meta; // page meta info
+    global $template_name, $viewport;
+    global $user_head, $ga_tracking_id, $tracking_script;
+    global $style_color, $style_texture, $style_custom_bg, $use_less, $app_start; // style color
+    global $site_nav, $menubar, $menubar2, $site_footer;
+    global $is_plugin_page;
 
 
 	// body部分以外は、元々の$script を使う（通常のリンク設定）を使う
@@ -115,6 +116,7 @@ function catbody($title, $page, $body)
 
 	// Init flags
 	$is_page = (is_pagename($_page) && $_page != $whatsnew);
+
 	$is_read = (arg_check('read') && is_page($_page));
 	$has_temp_skin = (isset($_SESSION['temp_skin']) && strlen($_SESSION['temp_skin']) > 0);
 	$is_update =  isset($_COOKIE['APP_VERSION']) && $_COOKIE['APP_VERSION'] > APP_VERSION;
