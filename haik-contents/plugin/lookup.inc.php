@@ -15,9 +15,11 @@ function plugin_lookup_convert()
 	$qm = get_qm();
 
 	$num = func_num_args();
-	if ($num == 0 || $num > 3) return $qm->replace('fmt_err_cvt', 'lookup', $qm->m['plg_lookup']['err_usage']);
+	if ($num === 1 || $num > 4) return $qm->replace('fmt_err_cvt', 'lookup', $qm->m['plg_lookup']['err_usage']);
 
 	$args = func_get_args();
+	array_pop($args);
+
 	$interwiki = h(trim($args[0]));
 	$button    = isset($args[1]) ? trim($args[1]) : '';
 	$button    = ($button != '') ? h($button) : $qm->m['plg_lookup']['btn_submit'];

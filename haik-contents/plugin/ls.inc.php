@@ -22,10 +22,10 @@ function plugin_ls_convert()
      
 	$with_title = FALSE;
 
-	if (func_num_args())
+	if (func_num_args() > 1)
 	{
 		$args = func_get_args();
-		$with_title = in_array('title',$args);
+		$with_title = in_array('title', $args);
 	}
 
 	$prefix = $vars['page'].'/';

@@ -55,7 +55,7 @@ function plugin_include_convert()
 	$qm = get_qm();
 	$qt = get_qt();
 
-	if (func_num_args() == 0) return $qm->m['plg_include']['err_usage']. "\n";;
+	if (func_num_args() == 1) return $qm->m['plg_include']['err_usage']. "\n";;
 
 	// $menubar will already be shown via menu plugin
 	if (! isset($included[$menubar])) $included[$menubar] = TRUE;

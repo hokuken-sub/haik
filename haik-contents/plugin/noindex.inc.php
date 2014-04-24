@@ -28,19 +28,21 @@
 // Output contents with "nofollow,noindex" option
 function plugin_noindex_convert()
 {
-	global $vars, $noindex;
+    global $vars, $noindex;
 
-	$argc = func_num_args();
-	if ($argc > 0)
-	{
-		$noindex = -1;
-	}
-	else
-	{
-		$noindex = 1;
-	}
+    $args = func_get_args()
+    array_pop($args);
+    
+    if (count($args) > 0)
+    {
+        $noindex = -1;
+    }
+    else
+    {
+        $noindex = 1;
+    }
 
-	return '';
+    return '';
 }
 
 /* End of file noindex.inc.php */
