@@ -27,6 +27,8 @@ function plugin_former_init()
 function plugin_former_action()
 {
 	global $script, $vars, $style_name, $admin_style_name;
+	global $is_plugin_page;
+
 
 	if ( ! ss_admin_check())
 	{
@@ -35,6 +37,8 @@ function plugin_former_action()
 		exit;
 	}
 	$qt = get_qt();
+
+	$is_plugin_page = true;
 
 	$style_name = $admin_style_name;
 	$qt->setv('template_name', 'filer');

@@ -391,6 +391,10 @@ function plugin_filer_folder_()
 function plugin_filer_list_()
 {
 	global $vars, $script;
+	global $is_plugin_page;
+
+	$is_plugin_page = true;
+	
 	$qt = get_qt();
 	$helper = new HTML_Helper();
 

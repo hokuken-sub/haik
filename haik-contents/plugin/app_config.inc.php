@@ -23,8 +23,10 @@ function plugin_app_config_init()
 
 	global $style_name, $script, $admin_style_name, $_LINK;
 	global $vars;
+	global $is_plugin_page;
 	
 	$qt = get_qt();
+	$is_plugin_page = true;
 	
 	if ( ! isset($vars['noauth']) OR $vars['noauth'] === FALSE)
 	{

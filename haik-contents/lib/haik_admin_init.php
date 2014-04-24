@@ -188,9 +188,9 @@ EOS;
 	{
 		unset($tools['applyskinlink'], $tools['changeskinlink'], $tools['previewcancellink']);
 	}
-	
-	
-	if ( ! $is_page OR PKWK_READONLY)
+
+//  if (in_array($vars['cmd'], array('filer', 'former', 'app_config')))
+	if ($is_plugin_page OR PKWK_READONLY)
 	{
 		unset($tools['editlink'], $tools['admin_slider_link']);
 
