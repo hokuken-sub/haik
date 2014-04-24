@@ -110,6 +110,7 @@ if ($is_editor OR ss_admin_check())
 	{
 		if (exist_plugin('former'))
 			plugin_former_set_iframe();
+
 		if (exist_plugin('gmap'))
 			plugin_gmap_set_js();
 	}
@@ -189,7 +190,6 @@ EOS;
 		unset($tools['applyskinlink'], $tools['changeskinlink'], $tools['previewcancellink']);
 	}
 
-//  if (in_array($vars['cmd'], array('filer', 'former', 'app_config')))
 	if ($is_plugin_page OR PKWK_READONLY)
 	{
 		unset($tools['editlink'], $tools['admin_slider_link']);
