@@ -345,7 +345,7 @@ EOS;
 	$admin_nav = '
 <div id="admin_nav" class="navbar navbar-default navbar-fixed-top haik-admin-navbar">
 	<div class="container-fluid haik-admin-navbar-inside">
-  	<a class="navbar-brand pull-right' . $hide_slider_class . '" href="#admin_slider" id="admin_slider_link"><img src="'.IMAGE_DIR.'haiklogo.png" width="50" height="50"></a>
+  	<a class="navbar-brand pull-right' . $hide_slider_class . '" href="#admin_slider" id="admin_slider_link"><img src="'.IMAGE_DIR.'haiklogo.png" height="50"></a>
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="navbar-header navbar-right">
 		'.(isset($tools_buttons) ? $tools_buttons : '').'
