@@ -521,16 +521,6 @@ $(document).ready(function(){
 			$(document).off(".adminSlider");
 		}
 	});
-
-    
-/*
-    // ! #admin_nav 以外の .btn-navbar クリックで #admin_nav を開けないようにする
-    $(".btn-navbar:not(.orgm-btn-admin-navbar)").each(function(){
-	    var $btn = $(this).closest(".navbar-inner").find(".btn-navbar[data-toggle=collapse][data-target='.nav-collapse']");
-	    $btn.attr("data-target", ".navbar:not(#admin_nav) " + $btn.attr("data-target"));
-    });
-*/
-
     
     // ! radio-wrapper
     $(".radio-wrapper input:radio").on("click", function(){
