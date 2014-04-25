@@ -36,7 +36,7 @@ $qt->appendv('user_script', '');
 $qt->setv('_page', $_page);
 $qt->setv('_script', $script);
 $common_script = '
-<script type="text/javascript" src="'. JS_DIR .'origami.js"></script>
+<script type="text/javascript" src="'. JS_DIR .'haik.js"></script>
 <script type="text/javascript" src="'. JS_DIR .'lodash.min.js"></script>
 ';
 $qt->setv('common_script', $common_script);
@@ -71,7 +71,7 @@ if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 	extract($_SESSION['preview_skin']);
 	$style_config = style_config_read($style_name);
 	
-	set_notify_msg('デザインのプレビュー中です', 'info', 6);
+	set_notify_msg('デザインのプレビュー中です', 'info', false, true, 6);
 }
 
 // テンプレートの取得
@@ -278,6 +278,7 @@ EOS;
 
 		if (isset($vars['preview']) && $vars['preview'])
 		{
+		  	set_notify_msg('プレビュー中です', 'info', true, 6);
 			$refer = isset($vars['refer']) ? $vars['refer'] : $_page;
 			$digest = md5(get_source($_page, TRUE, TRUE));
 			$template_name = isset($vars['template_name']) && $vars['template_name'] ? $vars['template_name'] : $style_config['default_template'];
@@ -343,7 +344,7 @@ EOS;
 
 	$admin_nav = '
 <div id="admin_nav" class="navbar navbar-default navbar-fixed-top haik-admin-navbar">
-	<div class="container">
+	<div class="container-fluid haik-admin-navbar-inside">
   	<a class="navbar-brand pull-right' . $hide_slider_class . '" href="#admin_slider" id="admin_slider_link"><img src="'.IMAGE_DIR.'haiklogo.png" width="50" height="50"></a>
 			'.$tools_str.'
 		<div id="toolbar_buttons" class="navbar-header navbar-right">

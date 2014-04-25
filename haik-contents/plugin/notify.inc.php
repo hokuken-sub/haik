@@ -59,7 +59,7 @@ function plugin_notify_convert()
 
 }
 
-function plugin_notify_set_notice($message, $type = 'success', $priority = 10)
+function plugin_notify_set_notice($message, $type = 'success', $set_nav = false, $fade = true, $priority = 10)
 {
 	$qt = get_qt();
 	$notices = $qt->getv('notices');
@@ -67,11 +67,12 @@ function plugin_notify_set_notice($message, $type = 'success', $priority = 10)
 	$notices[] = array(
 		'message' => $message,
 		'type' => $type,
-		'priority' => $priority
+		'priority' => $priority,
+		'set_nav'  => $set_nav,
+		'fade'     => $fade,
 	);
 
 	$qt->setv('notices', $notices);
-
 
 }
 
@@ -85,7 +86,8 @@ function plugin_notify_get_body()
 	uasort($notices, 'plugin_notify_compare');
 
 	$html = '<div class="orgm-notification container">';
-	
+	$nav_html = '';
+
 	foreach ($notices as $notice)
 	{
 		switch ($notice['type']) {
@@ -99,11 +101,24 @@ function plugin_notify_get_body()
 		{
 			$auto_click = ' data-auto-click="2000"';
 		}
-		$html .= '<div class="row"><div class="col-sm-6 col-sm-offset-3 orgm-notice alert'.h($type).' alert-box fade">';
-		$html .= '<button type="button" data-dismiss="alert" class="close"'.$auto_click.'>&times;</button>';
-		$html .= $message.'</div></div>';
+
+	  if ($notice['set_nav'])
+	  {
+	      if ($notice['fade'])
+	      {
+	          $auto_click = '';
+	      }
+	      $type = $notice['type'] ? (' text-' . $notice['type']) : '';
+  	    $nav_html .= '<span class="haik-nav-notice navbar-text hide ' . $type . '"'. $auto_click . '>' . $message . '</span>';
+	  }
+	  else
+	  {
+    		$html .= '<div class="row"><div class="col-sm-6 col-sm-offset-3 orgm-notice alert'.h($type).' alert-box fade">';
+    		$html .= '<button type="button" data-dismiss="alert" class="close"'.$auto_click.'>&times;</button>';
+    		$html .= $message.'</div></div>';
+    }
 	}
-	$html .= '</div>';
+	$html .= $nav_html . '</div>';
 	
 	return $html;
 }

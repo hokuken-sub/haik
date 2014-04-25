@@ -1176,12 +1176,14 @@ function redirect($url = '', $msg = '', $refresh_sec = 2)
  * @params string $type message type: success | info | error | warning(empty)
  * @params int $priority message position. it was set as height
  */
-function set_flash_msg($msg = '', $type = 'success', $priority = 20)
+function set_flash_msg($msg = '', $type = 'success', $set_nav = false, $fade = true, $priority = 20)
 {
 	$notice = array(
 		'message'  => $msg,
 		'type'     => $type,
-		'priority' => $priority
+		'priority' => $priority,
+		'set_nav'  => $set_nav,
+		'fade'     => $fade,
 	);
 	
 	if (isset($_SESSION['notices']) && is_array($_SESSION['notices']))
@@ -1197,11 +1199,11 @@ function set_flash_msg($msg = '', $type = 'success', $priority = 20)
 
 }
 
-function set_notify_msg($msg = '', $type = 'success', $priority = 10)
+function set_notify_msg($msg = '', $type = 'success', $set_nav = false , $priority = 10)
 {
 	if (exist_plugin('notify'))
 	{
-		return plugin_notify_set_notice($msg, $type, $priority);
+		return plugin_notify_set_notice($msg, $type, $set_nav, $priority);
 	}
 	return FALSE;
 }
