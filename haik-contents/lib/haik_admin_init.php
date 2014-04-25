@@ -278,7 +278,7 @@ EOS;
 
 		if (isset($vars['preview']) && $vars['preview'])
 		{
-		  	set_notify_msg('プレビュー中です', 'info', true, 6);
+		  	set_notify_msg('プレビュー中です', 'primary', true, false);
 			$refer = isset($vars['refer']) ? $vars['refer'] : $_page;
 			$digest = md5(get_source($_page, TRUE, TRUE));
 			$template_name = isset($vars['template_name']) && $vars['template_name'] ? $vars['template_name'] : $style_config['default_template'];

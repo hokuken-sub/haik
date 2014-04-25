@@ -1199,11 +1199,11 @@ function set_flash_msg($msg = '', $type = 'success', $set_nav = false, $fade = t
 
 }
 
-function set_notify_msg($msg = '', $type = 'success', $set_nav = false , $priority = 10)
+function set_notify_msg($msg = '', $type = 'success', $set_nav = false , $fade = true, $priority = 10)
 {
 	if (exist_plugin('notify'))
 	{
-		return plugin_notify_set_notice($msg, $type, $set_nav, $priority);
+		return plugin_notify_set_notice($msg, $type, $set_nav, $fade, $priority);
 	}
 	return FALSE;
 }

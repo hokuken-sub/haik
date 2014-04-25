@@ -397,7 +397,7 @@ function plugin_edit_write()
 	// Off XSS Protection (Google Chrome)
 	$_SESSION['disable_xss_protection'] = TRUE;
 	
-	set_flash_msg('ページを更新しました。');
+	set_flash_msg('ページを更新しました。', 'success', true);
 	
 	$redirect = $script . '?' . rawurlencode($refer);
 

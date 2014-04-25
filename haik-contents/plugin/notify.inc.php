@@ -65,8 +65,8 @@ function plugin_notify_set_notice($message, $type = 'success', $set_nav = false,
 	$notices = $qt->getv('notices');
 	
 	$notices[] = array(
-		'message' => $message,
-		'type' => $type,
+		'message'  => $message,
+		'type'     => $type,
 		'priority' => $priority,
 		'set_nav'  => $set_nav,
 		'fade'     => $fade,
@@ -101,15 +101,14 @@ function plugin_notify_get_body()
 		{
 			$auto_click = ' data-auto-click="2000"';
 		}
-
 	  if ($notice['set_nav'])
 	  {
-	      if ($notice['fade'])
+	      if ( ! $notice['fade'])
 	      {
 	          $auto_click = '';
 	      }
-	      $type = $notice['type'] ? (' text-' . $notice['type']) : '';
-  	    $nav_html .= '<span class="haik-nav-notice navbar-text hide ' . $type . '"'. $auto_click . '>' . $message . '</span>';
+	      $type = $notice['type'] ? ('text-' . $notice['type']) : '';
+  	    $nav_html .= '<div class="haik-nav-notice navbar-text fade"' . $auto_click . '><span class="' . $type . '">' . $message . '</span></div>';
 	  }
 	  else
 	  {
