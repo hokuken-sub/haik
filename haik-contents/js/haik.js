@@ -37,7 +37,7 @@
 			callback = callback || function(){};
 			type = type || "success";
 			type = (type === "error") ? "danger" : type;
-			
+
 			var $noticeBlock = $(".orgm-notification:first");
 			if ($noticeBlock.length == 0) return;
 			
@@ -101,28 +101,6 @@
 			.parent("li").addClass("dropdown")
 				.children("a").addClass("dropdown-toggle").attr("data-toggle", "dropdown").append('<b class="caret"></b>');
 
-
-				
-		// for admin adjust body
-/*
-		if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
-		{
-			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
-		}
-*/
-/*
-		if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
-		{
-			(function(){
-				var $navbar = $("#haik_nav").closest(".navbar");
-				$("#admin_nav").insertBefore($navbar);
-				$navbar.css({top: $("#admin_nav").height()});
-				
-			})();
-//			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
-		}
-*/
-
 	    var adjustStyleForNavbar = function(){
 	    
 	
@@ -133,7 +111,6 @@
 					$("#admin_nav").insertBefore($navbar);
 					$navbar.css({top: $("#admin_nav").height()});
 				})();
-	//			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
 			}
 
 
@@ -255,6 +232,10 @@
 		$(document).on("click", ".orgm-notification .orgm-notice", function(){
 			$(this).alert("close");
 		});
+		if ($(".orgm-notification .haik-nav-notice").length)
+		{
+		  $("#admin_nav .haik-admin-navbar-inside").prepend($(".haik-nav-notice").removeClass("hide"));
+		}
 
 		if (typeof ORGM.videoAutoload !== "undefined")
 		{
