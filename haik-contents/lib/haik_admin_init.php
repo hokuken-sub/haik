@@ -216,7 +216,7 @@ EOS;
 	{
 		if ( ! in_array($k, $style_config['templates'][$template_name]['layouts']))
 		{
-			unset($slides['edit'][$k.'Link']);
+			unset($slides['edit'][$k.'_link']);
 		}
 	}
 	if (isset($style_config['templates'][$template_name]['elements']))
