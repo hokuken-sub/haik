@@ -1,15 +1,9 @@
-<div id="admin_slider" style="display:none">
+<div id="admin_slider" class="fade">
 <div class="haik-admin-slider">
 
   <div class="list-group">
   	<a class="close pull-left" href="#"><img src="<?php echo $haik_logo_img ?>" height="34"></a>
-    <form action="<?php echo h($data['search']['search_link']['link'])?>">
-      <input type="hidden" name="cmd" value="search">
-      <div class="input-group input-group-sm pull-right">
-        <input type="text" name="word" value="<?php echo h(isset($vars['word']) ? $vars['word']: '')?>" placeholder="検索" class="form-control" id="orgm_nav_search">
-        <span class="input-group-addon"><i class="orgm-icon orgm-icon-search"></i></span>
-      </div>
-    </form>
+  	<a class="btn pull-right" href="<?php echo h($data['search']['search_link']['link'])?>"><i class="orgm-icon orgm-icon-search"></i></a>
   </div>
 	
     

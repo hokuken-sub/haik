@@ -37,6 +37,7 @@ function plugin_app_config_init()
 	}
 
 	$style_name = $admin_style_name;
+	$qt->setv('template_name', 'top');
 	
 	plugin_app_config_set_menu();
 	plugin_app_config_set_navi();
@@ -95,60 +96,33 @@ function plugin_app_config_set_menu()
 	
 	$cur_mode = substr($vars['cmd'], 11);
 	
-	$menu = '';
-	$menu .= '<ul class="nav nav-list app-config-menu">';
-	
+	$menu = '<div id="haik_config_slider" class="fade">
+<div class="haik-admin-slider haik-config-menu">
+';
 	foreach ($items as $name => $item)
 	{
 		$sub_menu = $toggle = '';
 		$icon_name = 'icon-chevron-right';
 		$to = $script . '?cmd=app_config'. ($name ? '_'.$name : '');
-		if (isset($item['sub']))
-		{
-			$icon_name = 'icon-chevron-down';
-			
-			$sub_id = 'orgm_submenu_'.h($name);
-			$collapse = ' collapse';
-			$sub_menu_body = '';
-			foreach ($item['sub'] as $sub_name => $sub_item)
-			{
-				$active = '';
-				if ($sub_name == $cur_mode)
-				{
-					$active = ' class="active"';
-					$collapse = '';
-				}
-				else if ($name == $cur_mode)
-				{
-					$collapse = '';
-				}
-				$icon = 'orgm-icon-'.$sub_item['icon'];
-				$sub_menu_body .= '<li'.$active.'><a href="#"><span class="box"><i class="orgm-icon '.$icon.'"></i></span><span>'.h($sub_item['name']).'</span></a></li>';
-			}
-			$sub_menu = '<ul class="nav nav-list app-config-submenu'.h($collapse).'" id="'.h($sub_id).'">';
-			$sub_menu .= $sub_menu_body;
-			$sub_menu .= '</ul>';
-			
-		}
 
 		$active = '';
 		if ($name == $cur_mode)
 		{
-			$active = ' class="active"';
+			$active = ' active';
 		}
 		else if ($cur_mode == '' && $name == 'general')
 		{
-			$active = ' class="active"';
+			$active = ' active';
 		}
 		
 		$icon = 'orgm-icon-'.$item['icon'];
-		$menu .= '<li'.$active.' data-menu="'.h($name).'"><a href="'.h($to).'"'.$toggle.'><span class="box"><i class="orgm-icon '.$icon.'"></i></span><span> '. h($item['name']) .'</span></a>'.$sub_menu.'</li>';
+		$menu .= '<div class="list-group" data-menu="'.h($name).'"><a class="list-group-item'.$active.'" href="'.h($to).'"><i class="orgm-icon '.$icon.'"></i> '. h($item['name']) .'</a></div>';
 	}
 	
-	$menu .= '<li class="section"></li>';
-	$menu .= '<li><a href="'.h(APP_OFFICIAL_SITE. 'index.php?Help').'">ヘルプ</a></li>';
-	$menu .= '<li><a href="'.h($script. '?cmd=app_update&config').'">アップデート</a></li>';
-	$menu .= '</ul>';
+	$menu .= '<div class="list-group"></div>';
+	$menu .= '<div class="list-group"><a class="list-group-item" href="'.h(APP_OFFICIAL_SITE. 'index.php?Help').'">ヘルプ</a></div>';
+	$menu .= '<div class="list-group"><a class="list-group-item" href="'.h($script. '?cmd=app_update&config').'">アップデート</a></div>';
+	$menu .= '</div>';
 
 	$qt->setv('menu', $menu);
 	
