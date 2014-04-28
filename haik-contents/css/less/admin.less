@@ -1,7 +1,182 @@
+//
+// haik admin
+// --------------------------------------------------
+
+
 html, body {
 	width: 100%;
 	height: 100%;
 }
+
+// Navibar
+// -------------------------
+
+.haik-admin-navbar {
+  background-color: #fff;
+
+  .navbar-brand {
+    margin-bottom: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+// Slide menu
+// -------------------------
+
+.sidr.right {
+  background-color: #333;
+  width: 200px;
+}
+
+.haik-admin-slider {
+  background-color: #333;
+  color: #f7f7f7;
+	padding-top: 10px;
+	font-size: 14px;
+  font-weight: normal;
+  text-shadow: none;
+
+  .list-group {
+    float: left;
+    width: 100%;
+    
+    &:first-child {
+      margin-bottom: 30px;
+    }
+    
+    .list-group-item {
+    	background-color: transparent;
+    	border-style: none;
+    	border-radius: 0;
+    	color: #f7f7f7;
+    	
+    	&.active {
+      	background-color: transparent;
+      	color: #cfcfcf;
+    	}
+    }
+
+    a {
+    	color: #f7f7f7;
+
+    	&:hover {
+        color: #cfcfcf;
+    	}
+
+      .close {
+      	display: block;
+      }
+      
+    }
+
+    .input-group {
+      width: 70%;
+
+      &:after {
+        clear: both;
+      }
+
+      input[type=text] {
+        background-color: transparent;
+        border-style: none;
+        outline: none;
+        border-bottom: 1px solid #3f3f3f;
+        box-shadow: none;
+        border-radius: 0;
+        color: #fff;
+      }
+      
+      .input-group-addon {
+        background-color: transparent;
+        border-style: none;
+        color: #f7f7f7;
+      }
+    }
+
+    .haik-list-group-sub-item {
+      margin-left: 30px;
+    }
+
+    .list-group-item {
+    	padding-top: 6px;
+    	padding-bottom: 6px;
+    }
+  }
+
+  hr {
+    border-style: none;
+  	border-color: #777;
+  }
+
+  .input-group-addon {
+  	color: #555;
+  }
+}
+
+
+
+
+// tool
+// -------------------------
+
+// haik button
+
+.haik-btn-default {
+  background-color: #fff;
+  background-image: none;
+  border-color: #333;
+  color: #333;
+  text-shadow: none;
+  border-radius: 0;
+
+  &:hover,
+  &:focus {
+    background-color: #fff;
+    border-color: #999;
+    color: #999;
+  }
+}
+
+.haik-btn-success {
+  background-color: #5cb85c;
+  background-image: none;
+  border-color: #4cae4c;
+  color: #fff;
+  text-shadow: none;
+  border-radius: 0;
+
+  &:hover,
+  &:focus {
+    background-color: #47a447;
+    border-color: #398439;
+    color: #fff;
+  }
+}
+
+.haik-btn-link {
+  &.haik-btn-link-cancel {
+    color: #999;
+    &:hover {
+      color: #ccc;
+    }
+  }
+  &.haik-btn-link-edit {
+    color: #333;
+    &:hover {
+      color: #999;
+    }
+  }
+  
+  &:hover {
+    text-decoration: none;
+  }
+  
+}
+
+
 
 
 .content-wrapper {
@@ -969,42 +1144,6 @@ ul.orgm-page-list li.nav-header{
 	margin-left: 10px;
 }
 
-
-/* !Admin Navbar Button Links */
-
-#admin_nav.navbar-fixed-top {
-	position: fixed;
-	margin-left: 0;
-	margin-right: 0;
-	z-index: 1031;
-}
-
-#admin_nav .dropdown-menu {
-	z-index: 1035;
-}
-
-#admin_nav.navbar-inverse .navbar-nav>.open>a,
-#admin_nav.navbar-inverse .navbar-nav>.open>a:hover,
-#admin_nav.navbar-inverse .navbar-nav>.open>a:focus {
-	color: #fff;
-	background-color: #080808;
-}
-#admin_nav.navbar-inverse .navbar-nav>.open>a .caret,
-#admin_nav.navbar-inverse .navbar-nav>.open>a:hover .caret,
-#admin_nav.navbar-inverse .navbar-nav>.open>a:focus .caret {
-	border-top-color: #fff;
-	border-bottom-color: #fff;
-	
-}
-
-#admin_nav .navbar-brand {
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-bottom: 0;
-	margin-top: 0;
-	box-sizing: border-box;
-}
-
 @media (max-width: 767px) {
 	
 	.modal .orgm-filer-nav {
@@ -1016,14 +1155,6 @@ ul.orgm-page-list li.nav-header{
 	}
 	#toplink2 {
 		display: block;
-	}
-
-	#admin_nav .navbar-nav .open .dropdown-menu {
-		position: fixed;
-		width: 50%;
-		top: 50px;
-		background-color: #080808;
-		left: auto;
 	}
 
 }
@@ -1124,16 +1255,6 @@ ul.orgm-page-list li.nav-header{
 
 @media (max-width: 767px) {
 	
-	#admin_nav .navbar-nav{
-		margin: 0;
-	}
-	#admin_nav .navbar-nav > li {
-		float: left;
-	}
-	#admin_nav .navbar-nav > li >a {
-		padding-top: 15px;
-		padding-bottom: 15px;
-	}
 }
 
 .orgm-plugin-desgin-wand-link {
@@ -1168,38 +1289,3 @@ ul.orgm-page-list li.nav-header{
 	border-color: #333;
 }
 
-.haik-admin-slider {
-	padding-top: 10px;
-}
-
-.haik-admin-slider .list-group a {
-	background-color: transparent;
-	border-style: none;
-	border-radius: 0;
-	color: #777;
-}
-.haik-admin-slider .list-group a:hover {
-	color: #bbb;
-}
-
-.haik-admin-slider .list-group .list-group-item {
-	padding-top: 6px;
-	padding-bottom: 6px;
-}
-
-.haik-admin-slider hr {
-	border-color: #333;
-}
-
-.haik-admin-slider .input-group-addon {
-	color: #555;
-}
-
-.haik-admin-slider button.close {
-	color: #555;
-	font-size: 30px;
-	float:none;
-	text-shadow: none;
-	opacity: .9;
-	margin-right:15px;
-}
