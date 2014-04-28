@@ -65,7 +65,7 @@ function plugin_diff_view($page)
 		$menu[] = ' <li><a href="'. h($script) .'?cmd=edit&amp;page='. $r_page .'">'. h($layout_pages[$page]) .'を編集する</a></li>';
 	}
 	else if ($is_page) {
-		$menu[] = ' <li>' . str_replace('$1', '<a href="' . $script . '?' . $r_page . '">' .
+		$menu[] = ' <li>' . str_replace('$1', '<a href="' . get_page_url($page) . '">' .
 			$s_page . '</a>', $qm->m['fmt_msg_goto']) . '</li>';
 	} else {
 		$menu[] = ' <li>' . str_replace('$1', $s_page, $qm->m['fmt_msg_deleted']) . '</li>';

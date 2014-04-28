@@ -391,6 +391,10 @@ function plugin_filer_folder_()
 function plugin_filer_list_()
 {
 	global $vars, $script;
+	global $is_plugin_page;
+
+	$is_plugin_page = true;
+	
 	$qt = get_qt();
 	$helper = new HTML_Helper();
 
@@ -404,7 +408,6 @@ function plugin_filer_list_()
 		return plugin_filer_folder_();
 	}
 	$conditions = plugin_filer_filter_condition($word);
-
 	$size = 30;
 	
 	// 画像の読込み
@@ -414,7 +417,6 @@ function plugin_filer_list_()
 	$limit = (($_page-1) * $size) . ',' . $size;
 
 	$files = $filer->findFiles($conditions, $order, $limit);
-
 	$moreurl = $script . '?cmd=filer&_page='. ($_page+1). '&search_word=' . rawurlencode($word);
 	
 	$json = array(
@@ -695,7 +697,7 @@ class ORGM_Filer {
 
 		$script_url = $options['scriptUrl'];
 		$upload_dir = $options['uploadDir'];
-		$upload_url = dirname($script_url . 'dummy') . '/' . $upload_dir;
+		$upload_url = dirname(rtrim($script_url, '/') . '/dummy') . '/' . $upload_dir;
 		$this->uploadUrl = $upload_url;
 
 		//Upload Handler
@@ -1454,10 +1456,8 @@ class ORGM_Filer {
 	{
 		$order = $order ? $order : self::ORDER;
 		$limit = $limit ? $limit : self::LIMIT;
-		
+
 		$files = $this->find($conditions, $order, $limit);
-		
-		
 		$tmp_yearmonth = '';
 		foreach ($files as $i => $file)
 		{

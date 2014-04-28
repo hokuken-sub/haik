@@ -31,8 +31,6 @@ function plugin_error_report_set()
 	
 	$qt = get_qt();
 	
-	$html = '<div class="container">';
-	
 	// ! ディレクトリエラー
 	if (isset($app_err['dirs']) && $app_err['dirs'])
 	{

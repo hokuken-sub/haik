@@ -83,7 +83,7 @@ function plugin_newpage_form($s_newpage, $s_page, $user_style_name)
 	$body = '
 <div class="page-header">'.h($title).'</div>
 
-<div class="container plugin-newpage">
+<div class="container-fluid plugin-newpage">
 	<form action="'.h($script).'" method="post">
 		<input type="hidden" name="plugin" value="newpage" />
 		<input type="hidden" name="refer"  value="'.$s_page.'" />

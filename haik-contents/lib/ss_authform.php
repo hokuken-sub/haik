@@ -469,7 +469,7 @@ $(function(){
  		}
  		
  		if (href != '{$script}') {
- 			$("#orgm_login").after('<div id="scripterror" class="alert alert-danger container"><button type="button" class="close" data-dismiss="alert">&times;</button>{$s_err_msg}</div>');
+ 			$("#orgm_login").after('<div id="scripterror" class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>{$s_err_msg}</div>');
 		}
  	}
  	return false;
@@ -624,9 +624,12 @@ function secure_session_start()
 			{
 				$domain .= ':'.$vals['port'];
 			}
-			$dir = str_replace('\\', '', dirname( $vals['path'] ));
-			$ckpath = ($dir=='/') ? '/' : $dir.'/';
-						
+			$ckpath = '/';
+			if (isset($vals['path']))
+			{
+                $ckpath = str_replace('\\', '', dirname($vals['path'])) . '/';
+			}
+
 			if( function_exists('ini_set') ){
 				ini_set('session.use_trans_sid',0);
 				ini_set('session.name', APP_SESSION_NAME.strlen($ckpath));

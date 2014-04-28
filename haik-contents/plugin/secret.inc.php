@@ -112,18 +112,15 @@ $(function(){
 function plugin_secret_get_url()
 {
     global $vars, $script, $page_meta;
-
+    
     if ( ! isset($page_meta['password']) OR $page_meta['password'] === '')
     {
-	    return FALSE;
+        return FALSE;
     }
 
-    $r_page = rawurlencode($vars['page']);
-	$key = md5($page_meta['password']);
-	
-	$url = $script . '?' . $r_page . '&key=' . rawurlencode($key);
-
-	return $url;
+    $key = md5($page_meta['password']);
+    $url = get_page_url($vars['page']) . '&key=' . rawurlencode($key);
+    return $url;
 }
 
 /* End of file secret.inc.php */

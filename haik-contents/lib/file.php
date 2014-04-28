@@ -36,7 +36,9 @@ function get_source($page = NULL, $lock = TRUE, $join = FALSE)
 
 		if ($join) {
 			// Returns a value
-			$result = str_replace("\r", '', fread($fp, filesize($path)));
+			$buff_length = filesize($path);
+			$buff_length = $buff_length ? $buff_length : 2048;
+			$result = str_replace("\r", '', fread($fp, $buff_length));
 		} else {
 			// Returns an array
 			// Removing line-feeds: Because file() doesn't remove them.
@@ -352,8 +354,8 @@ function add_recent($page, $recentpage, $subject = '', $limit = 0)
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
 	rewind($fp);
-	fputs($fp, '#freeze'    . "\n");
-	fputs($fp, '#nofollow'  . "\n");
+	fputs($fp, ':::freeze:::'    . "\n");
+	fputs($fp, ':::noindex:::'  . "\n");
 	fputs($fp, join('', $lines));
 	flock($fp, LOCK_UN);
 	fclose($fp);
@@ -497,8 +499,8 @@ function lastmodified_add($update = '', $remove = '')
 	foreach ($recent_pages as $_page=>$time)
 		fputs($fp, '-' . h(format_date($time)) .
 			' - ' . '[[' . h($_page) . ']]' . "\n");
-	fputs($fp, '#freeze'    . "\n");
-	fputs($fp, '#nofollow'  . "\n");
+	fputs($fp, ':::freeze:::'    . "\n");
+	fputs($fp, ':::noindex:::'  . "\n");
 
 	flock($fp, LOCK_UN);
 	fclose($fp);
@@ -577,10 +579,10 @@ function put_lastmodified()
 		$s_lastmod = h(format_date($time));
 		$s_page    = h($page);
 		$pagetitle  = get_page_title($page);
-		fputs($fp, '-' . $s_lastmod . ' - [[' .$pagetitle. '>' . $s_page . ']]' . "\n");
+		fputs($fp, '* ' . $s_lastmod . ' - [' .$pagetitle. '](' . $page . ')' . "\n");
 	}
-	fputs($fp, '#freeze'    . "\n");
-	fputs($fp, '#nofollow'  . "\n");
+	fputs($fp, ':::freeze:::'    . "\n");
+	fputs($fp, ':::noindex:::'  . "\n");
 	flock($fp, LOCK_UN);
 	fclose($fp);
 

@@ -23,8 +23,10 @@ function plugin_app_config_init()
 
 	global $style_name, $script, $admin_style_name, $_LINK;
 	global $vars;
+	global $is_plugin_page;
 	
 	$qt = get_qt();
+	$is_plugin_page = true;
 	
 	if ( ! isset($vars['noauth']) OR $vars['noauth'] === FALSE)
 	{
@@ -139,7 +141,7 @@ function plugin_app_config_set_footer()
 	$qt = get_qt();
 	
 	$footer = '
-	<div class="container">
+	<div class="container-fluid">
 		<a href="'.h($script).'">'.__('トップ').'</a>&nbsp;&nbsp;&nbsp;
 		<a href="'.h($script.'?cmd=filelist').'">'.__('ページ一覧').'</a>&nbsp;&nbsp;
 		<a href="'.h($script.'?cmd=filer').'">'.__('ファイル管理').'</a>&nbsp;&nbsp;&nbsp;

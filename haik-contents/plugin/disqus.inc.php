@@ -169,7 +169,7 @@ function plugin_disqus_count($shortname = '', $id = '')
 
 	$qt->appendv_once('plugin_disqus_count', 'body_last', $html);
 	
-	return '<a href="'. h($script.'?'.$r_page) . '#disqus_thread" data-disqus-identifier="'. h($id) .'"></a>';
+	return '<a href="'. h(get_page_url($page)) . '#disqus_thread" data-disqus-identifier="'. h($id) .'"></a>';
 
 }
 

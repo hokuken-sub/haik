@@ -107,7 +107,6 @@ $(function(){
 			return;
 		}
 
-
 		var data = $("input[name^='form['],textarea[name^='form['],select[name^='form[']").serializeArray();
 		
 		var callback = function(){

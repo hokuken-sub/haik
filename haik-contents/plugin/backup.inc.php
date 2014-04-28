@@ -263,7 +263,7 @@ $(function(){
 	//レイアウト部品の場合、編集リンクを表示する
 	$retval = array();
 	$editlink = h($script).'?cmd=edit&amp;page='.$r_page;
-	$pagelink = h($script).'?'.$r_page;
+	$pagelink = get_page_url($page);
 
 	$title = array_key_exists($page, $layout_pages) ? $layout_pages[$page] : $s_page;
 	
@@ -275,7 +275,7 @@ $(function(){
 <div id="deleteCompleteAlert" class="alert alert-success hide">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<h4 class="alert-heading">バックアップを削除しました</h4>
-	<p><a href="'.h($script).'?'.$r_page.'>'.$s_page.'</a>のバックアップを削除しました。</p>
+	<p><a href="'.h($pagelink)'">'.$s_page.'</a>のバックアップを削除しました。</p>
 	<p>
     	<a class="btn" href="'.h($script).'?cmd=edit&amp;page='.$r_page.'">'.$s_page.'の編集画面へ</a>
     </p>
@@ -284,7 +284,7 @@ $(function(){
 <div id="restoreCompleteAlert" class="alert alert-success hide">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<h4 class="alert-heading">バックアップを復元しました</h4>
-	<p><a href="'.h($script).'?'.$r_page.'">'.$s_page.'</a>をバックアップの状態に復元しました。<br />ページをご確認ください。</p>
+	<p><a href="'.h($pagelink).'">'.$s_page.'</a>をバックアップの状態に復元しました。<br />ページをご確認ください。</p>
 	<p>
     	<a class="btn" href="'.h($script).'?cmd=edit&amp;page='.$r_page.'">'.$s_page.'の編集画面へ</a>
     </p>
@@ -356,7 +356,7 @@ $(function(){
 <div id="deleteCompleteAlert" class="alert alert-warning">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<h4 class="alert-heading">バックアップがありません</h4>
-	<p><a href="'.h($script).'?'.$r_page.'">'.$s_page.'</a>のバックアップはありません。</p>
+	<p><a href="'.h($pagelink).'">'.$s_page.'</a>のバックアップはありません。</p>
 	<p><a class="btn" href="'.h($script).'?cmd=edit&amp;page='.$r_page.'"">'.$s_page.'の編集画面へ</a></p>
 </div>
 ';

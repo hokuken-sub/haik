@@ -67,7 +67,7 @@ function plugin_read_action()
 			
 			//redirect
 			header("HTTP/1.1 301 Moved Permanently");
-			header('Location: '.$script.'?'.$enc_page);
+			header('Location: '.get_page_url($u_page));
 			exit;
 		}
 	

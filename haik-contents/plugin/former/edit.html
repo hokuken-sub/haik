@@ -29,69 +29,59 @@
 		<div class="panel-heading">
 			<h3><?php _e('全般')?></h3>
 		</div>
-
-
-		<div class="row">
-			<div class="col-sm-5">
-	
-				<div class="form">
-				
-					<div class="form-group">
-						<label for="orgm_former_id" class="control-label"><?php _e('フォームID')?></label>
-						<div class="controls">
-							<input type="text" id="orgm_former_id" name="form[id]" placeholder="<?php _e('フォームID')?>" value="<?php echo h($form['id'])?>" class="form-control">
-							<span class="help-block"><?php _e('半角英数字で指定してください。')?></span>
-						</div>
-					</div>
-	
-					<div class="form-group">
-						<label for="orgm_former_style" class="control-label"><?php _e('フォームのスタイル')?></label>
-						<div class="controls">
-							<select name="form[class]" id="orgm_former_style" class="form-control">
-								<option value="form-horizontal" selected><?php _e('横並び')?></option>
-								<option value=""><?php _e('縦並び')?></option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="controls">
-							<div class="checkbox">
-								<label>
-									<input type="hidden" name="form[log]" value="0">
-									<input type="checkbox" name="form[log]" value="1" id=""> <?php _e('投稿のログを記録する')?>
-								</label>
-							</div>
-						</div>
-					</div>
-				
-				</div>
-	
-				
-			</div>
-			
-			<div class="col-sm-5 col-sm-offset-1">
-				<div class="form">
-	
-					<div class="form-group">
-						<label for="orgm_former_memo" class="control-label"><?php _e('フォームのメモ')?></label>
-						<div class="controls">
-							<textarea id="orgm_former_memo" name="form[description]" placeholder="<?php _e('メモ')?>" class="form-control" data-exnote="onready"><?php echo h($form['description'])?></textarea>
-							<span class="help-block"><?php _e('設置時には表示されません。')?></span>
-						</div>
-					</div>
-	
-	
-				
-				</div>
-			</div>
-			
+		
+		<div class="panel-body">
+  		<div class="row">
+  			<div class="col-sm-5">
+  	
+  				<div class="form">
+  				
+  					<div class="form-group">
+  						<label for="orgm_former_id" class="control-label"><?php _e('フォームID')?></label>
+  						<div class="controls">
+  							<input type="text" id="orgm_former_id" name="form[id]" placeholder="<?php _e('フォームID')?>" value="<?php echo h($form['id'])?>" class="form-control">
+  							<span class="help-block"><?php _e('半角英数字で指定してください。')?></span>
+  						</div>
+  					</div>
+  	
+  					<div class="form-group">
+  						<label for="orgm_former_style" class="control-label"><?php _e('フォームのスタイル')?></label>
+  						<div class="controls">
+  							<select name="form[class]" id="orgm_former_style" class="form-control">
+  								<option value="form-horizontal" selected><?php _e('横並び')?></option>
+  								<option value=""><?php _e('縦並び')?></option>
+  							</select>
+  						</div>
+  					</div>
+  					<div class="form-group">
+  						<div class="controls">
+  							<div class="checkbox">
+  								<label>
+  									<input type="hidden" name="form[log]" value="0">
+  									<input type="checkbox" name="form[log]" value="1" id=""> <?php _e('投稿のログを記録する')?>
+  								</label>
+  							</div>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+  			
+  			<div class="col-sm-5 col-sm-offset-1">
+  				<div class="form">
+  					<div class="form-group">
+  						<label for="orgm_former_memo" class="control-label"><?php _e('フォームのメモ')?></label>
+  						<div class="controls">
+  							<textarea id="orgm_former_memo" name="form[description]" placeholder="<?php _e('メモ')?>" class="form-control" data-exnote="onready"><?php echo h($form['description'])?></textarea>
+  							<span class="help-block"><?php _e('設置時には表示されません。')?></span>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+  			
+  		</div>
 		</div>
 
-
 	</div>
-
-
-	
 </section>
 
 
@@ -104,21 +94,21 @@
 			<h3><?php _e('フォームパーツ')?></h3>
 		</div>
 
-		<div class="<?php echo $form['class']?>" id="orgm_former_parts_wrapper">
-		
-			<ul class="orgm-form-parts-list"></ul>
-			
-			<div class="form-group form-actions">
-				<div class="col-sm-9 col-sm-offset-3">
-					<button type="button" class="btn btn-primary"><?php _e('確認')?></button>
-				</div>
-			</div>
-		</div>
-		
-		<hr>
-		<a href="#" class="btn btn-default" data-add-parts><?php _e('フォームパーツの追加')?></a>
-	
-
+    <div class="panel-body">
+  		<div class="<?php echo $form['class']?>" id="orgm_former_parts_wrapper">
+  		
+  			<ul class="orgm-form-parts-list"></ul>
+  			
+  			<div class="form-group form-actions">
+  				<div class="col-sm-9 col-sm-offset-3">
+  					<button type="button" class="btn btn-primary"><?php _e('確認')?></button>
+  				</div>
+  			</div>
+  		</div>
+  		
+  		<hr>
+  		<a href="#" class="btn btn-default" data-add-parts><?php _e('フォームパーツの追加')?></a>
+    </div>
 	</div>
 </section>
 
@@ -129,8 +119,9 @@
 		<div class="panel-heading">
 			<h3><?php _e('メール')?></h3>
 		</div>
-
-		<div class="row">
+    
+    <div class="panel-body">
+      <div class="row">
 			<div class="col-sm-5" id="orgm_former_mail_notifier">
 				
 				<h4><?php _e('通知メール')?></h4>
@@ -162,13 +153,11 @@
 					</div>
 	
 				</div>
-	
-				
 			</div>
+
 			<div class="col-sm-5 col-sm-offset-1" id="orgm_former_mail_replyer">
 	
 				<h4><?php _e('自動返信メール')?></h4>
-				
 				<p>
 					<?php _e('フォームへ投稿があった際、自動的に返信を行います。')?>
 				</p>
@@ -213,10 +202,9 @@
 	
 			</div>
 		</div>
+    </div>
 
 	</div>
-
-	
 </section>
 
 <!-- ! Complete Message -->
@@ -226,8 +214,10 @@
 		<div class="panel-heading">
 			<h3><?php _e('完了メッセージ')?></h3>
 		</div>
-		<div class="row">
-			<div class="col-sm-5">
+		
+		<div class="panel-body">
+		  <div class="row">
+			<div class="col-sm-12">
 				<div class="form">
 					<div class="form-group">
 						<div class="controls">
@@ -244,7 +234,10 @@
 				</div>
 			</div>
 		</div>
+		</div>
+
 	</div>
+
 </section>
 
 <!-- ! Postdata -->
@@ -297,23 +290,17 @@
 <!-- !  Add Postdata -->
 <script type="text/x-jquery-tmpl" id="tmpl_former_postdata_add">
 	<div class="form-group postdata-option clearfix">
-		<div class="col-xs-5">
-			<input type="text" name="form[post][data][${idx}][key]" value="${key}" class="form-control col-xs-5 postdata-key" placeholder="key">
-		</div>
-		<div class="col-xs-2 text-center">
-			<span class="postdata-connector"><i class="orgm-icon orgm-icon-arrow-right"></i></span>
-		</div>
-		<div class="col-xs-5">
-			<input type="text" name="form[post][data][${idx}][value]" value="${value}" class="form-control typeahead postdata-value" placeholder="value" autocomplete="off" data-source="">
-		</div>
-		
-<!--
-		<div class="input-group">
-			<input type="text" name="form[post][data][${idx}][key]" value="${key}" class="form-control postdata-key" placeholder="key">
-			<span class="input-group-addon postdata-connector"><i class="orgm-icon orgm-icon-arrow-right"></i></span>
-			<input type="text" name="form[post][data][${idx}][value]" value="${value}" class="form-control typeahead postdata-value" placeholder="value" autocomplete="off" data-source="">
-		</div>
--->
+	  <div class="row">
+  		<div class="col-xs-5">
+  			<input type="text" name="form[post][data][${idx}][key]" value="${key}" class="form-control col-xs-5 postdata-key" placeholder="key">
+  		</div>
+  		<div class="col-xs-2 text-center postdata-arrow">
+  			<span class="postdata-connector"><i class="orgm-icon orgm-icon-arrow-right"></i></span>
+  		</div>
+  		<div class="col-xs-5">
+  			<input type="text" name="form[post][data][${idx}][value]" value="${value}" class="form-control typeahead postdata-value" placeholder="value" autocomplete="off" data-source="">
+  		</div>
+	  </div>
 	</div>
 </script>
 
@@ -535,10 +522,7 @@
 				<div class="form">
 					<div class="form-group">
 						<label class="control-label"><?php _e('ラベル')?></label>
-						<div class="controls">
-							<input type="text" name="button" value="${label}" placeholder="<?php _e('ラベル')?>" id="" class="form-control">
-						</div>
-							
+						<input type="text" name="button" value="${label}" placeholder="<?php _e('ラベル')?>" id="" class="form-control">
 					</div>
 				</div>
 	
@@ -546,7 +530,9 @@
 		</div>
 		
 		<div class="form form-actions">
-			<button class="btn btn-primary" data-update><?php _e('反映する')?></button> <button class="btn" data-cancel><?php _e('キャンセル')?></button>
+		  <div class="form-group">
+			  <button class="btn btn-primary" data-update><?php _e('反映する')?></button> <button class="btn" data-cancel><?php _e('キャンセル')?></button>
+      </div>
 		</div>
 
 	</div>	

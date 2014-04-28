@@ -37,7 +37,7 @@ function plugin_ssl_convert()
 	$qt = get_qt();
 	$qt->setv('plugin_ssl_flag', TRUE);
 
-	$ssl_url = $script_ssl.'?'.rawurlencode($vars['page']);
+	$ssl_url = $script_ssl.'/'.rawurlencode($vars['page']);
 	$h_ssl_url = h($ssl_url);
 		
 	// 移動を促すメッセージ

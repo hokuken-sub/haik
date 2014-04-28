@@ -175,6 +175,15 @@ section .exnote-agwrapper textarea {
 	margin-bottom: 5px;
 }
 
+.postdata-option .postdata-arrow {
+  height: 34px;
+  line-height: 34px;
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+}
+
+
 /* !Typeahead */
 
 .twitter-typeahead {

@@ -148,7 +148,7 @@ function plugin_comment_convert()
 	$r_page = rawurlencode($vars['page']);
 	
 	$body = '
-<form action="'. h($script . '?' . $r_page) .'" method="post">
+<form action="'. h(get_page_url($vars['page'])) .'" method="post">
 <div class="panel panel-default orgm-comment" data-comment-no="'.h($comment_no).'">
 		<div class="comment-body">
 			<textarea type="text" rows="3" name="msg" class="form-control" placeholder="'. __('コメントをどうぞ'). '">'.h($msg).'</textarea>

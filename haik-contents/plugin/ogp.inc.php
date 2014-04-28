@@ -72,7 +72,7 @@ function plugin_ogp_convert()
 	{
 		$editlink = $script. '?cmd=edit&page='. rawurlencode($vars['page']);
 		$conflink = $script. '?cmd=qhmsetting&phase=sns&mode=form';
-		$fb_debugger_link = 'http://developers.facebook.com/tools/debug/og/object?q='. rawurlencode($script. '?'. rawurlencode($vars['page']));
+		$fb_debugger_link = 'http://developers.facebook.com/tools/debug/og/object?q='. rawurlencode(get_page_url($vars['paeg']));
 		$wiki = '
 #box(info,close,block){{{
 \'\'【お知らせ】Open Graph Protocol タグが変更されています。\'\'
