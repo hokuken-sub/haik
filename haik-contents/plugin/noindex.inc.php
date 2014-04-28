@@ -30,7 +30,7 @@ function plugin_noindex_convert()
 {
     global $vars, $noindex;
 
-    $args = func_get_args()
+    $args = func_get_args();
     array_pop($args);
     
     if (count($args) > 0)
