@@ -15,7 +15,6 @@ function plugin_edit_action()
 {
 	global $vars, $layout_pages;
 	global $qblog_defaultpage, $style_name, $admin_style_name, $template_name;
-	
 	$qt = get_qt();
 
 	if (PKWK_READONLY) die_message(__('PKWK_READONLY prohibits editing'));

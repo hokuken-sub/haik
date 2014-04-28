@@ -132,8 +132,18 @@ $app->get('/logout', function() use ($app)
 $app->match('/{pageName}', function($pageName) use (&$vars)
 {
     global $defaultpage;
-    if ($pageName === '') $pageName = $defaultpage;
-    $vars['page'] = $pageName;
+    if ($pageName === '')
+    {
+        if ($vars['cmd'] === 'read')
+        {
+            $pageName = $defaultpage;
+        }
+    }
+    else
+    {
+        $vars['page'] = $pageName;
+    }
+
     get_page_url($pageName);
     return require LIB_DIR . 'main.php';
 })->assert('pageName', '.*')->bind('showPage');
