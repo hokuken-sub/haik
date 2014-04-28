@@ -6,58 +6,6 @@
     "hash": "069b39f04a91407c502f4c8e3f3dc549",
     "packages": [
         {
-            "name": "illuminate/support",
-            "version": "v4.1.28",
-            "target-dir": "Illuminate/Support",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/support.git",
-                "reference": "69b248f240719e8d764ee6ec0384819fa57d60bb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/69b248f240719e8d764ee6ec0384819fa57d60bb",
-                "reference": "69b248f240719e8d764ee6ec0384819fa57d60bb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "jeremeamia/superclosure": "1.0.*",
-                "mockery/mockery": "0.9.*",
-                "patchwork/utf8": "1.1.*",
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Illuminate\\Support": ""
-                },
-                "files": [
-                    "Illuminate/Support/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com",
-                    "homepage": "https://github.com/taylorotwell",
-                    "role": "Developer"
-                }
-            ],
-            "time": "2014-03-22 20:29:54"
-        },
-        {
             "name": "michelf/php-markdown",
             "version": "1.4.0",
             "source": {
@@ -110,17 +58,17 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.4.3",
+            "version": "v2.4.4",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "ef20f1f58d7f693ee888353962bd2db336e3bbcb"
+                "reference": "2e452005b1e1d003d23702d227e23614679eb5ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/ef20f1f58d7f693ee888353962bd2db336e3bbcb",
-                "reference": "ef20f1f58d7f693ee888353962bd2db336e3bbcb",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/2e452005b1e1d003d23702d227e23614679eb5ca",
+                "reference": "2e452005b1e1d003d23702d227e23614679eb5ca",
                 "shasum": ""
             },
             "require": {
@@ -161,21 +109,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-01 17:35:04"
+            "time": "2014-04-27 13:34:57"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.3",
+            "version": "v2.4.4",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd"
+                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
+                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
                 "shasum": ""
             },
             "require": {
@@ -210,7 +158,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-12 18:29:58"
+            "time": "2014-04-18 20:37:09"
         },
         {
             "name": "toiee/haik-markdown",
@@ -218,19 +166,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/toiee/haik-markdown.git",
-                "reference": "1b233dbc792f940f53f094804e657ecf4b5d5183"
+                "reference": "3e52c6a1649402d693823d2f443145e2df6cf4c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/1b233dbc792f940f53f094804e657ecf4b5d5183",
-                "reference": "1b233dbc792f940f53f094804e657ecf4b5d5183",
+                "url": "https://api.github.com/repos/toiee/haik-markdown/zipball/3e52c6a1649402d693823d2f443145e2df6cf4c6",
+                "reference": "3e52c6a1649402d693823d2f443145e2df6cf4c6",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~4.1",
                 "michelf/php-markdown": "1.4.0",
                 "php": ">=5.3.3",
-                "symfony/yaml": "~2.4.3"
+                "symfony/yaml": "~2.4"
             },
             "require-dev": {
                 "mockery/mockery": "dev-master",
@@ -251,7 +198,7 @@
                 "haik",
                 "markdown"
             ],
-            "time": "2014-04-22 03:38:06"
+            "time": "2014-04-25 09:23:30"
         }
     ],
     "packages-dev": [
@@ -261,12 +208,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "1cd0f9516d3c39126b31bf50bcbf873dc65f29bf"
+                "reference": "09cad223615eac9e229837c9d44792f393529328"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/1cd0f9516d3c39126b31bf50bcbf873dc65f29bf",
-                "reference": "1cd0f9516d3c39126b31bf50bcbf873dc65f29bf",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/09cad223615eac9e229837c9d44792f393529328",
+                "reference": "09cad223615eac9e229837c9d44792f393529328",
                 "shasum": ""
             },
             "require": {
@@ -319,7 +266,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-04-21 19:33:11"
+            "time": "2014-04-25 09:53:30"
         },
         {
             "name": "phpunit/php-code-coverage",
