@@ -1,0 +1,112 @@
+//
+// custom
+// --------------------------------------------------
+
+
+// Navibar
+// -------------------------
+
+.haik-admin-navbar {
+    background-color: #fff;
+
+    .navbar-brand {
+      margin-bottom: 0;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+}
+
+
+// Edit Form
+// -------------------------
+
+.edit_form {
+  padding-top: 20px;
+	
+	textarea {
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    box-shadow: 0 0 0;
+
+    &:focus {
+      outline: none;
+    }
+	}
+
+  pre {
+    background-color: rgba(0,0,0,0);
+    color:  rgba(0,0,0,0);
+    border: 0 none rgba(0,0,0,0);
+    box-shadow: 0 0 0;
+  }
+  input[name=title] {
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    box-shadow: 0 0 0;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0 0;
+    
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+// Config Section
+// -------------------------
+
+.setting {
+
+  .setting_list > li{
+    list-style: none;
+    min-height: 30px;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border;
+  }
+
+  .setting_list {
+
+    li div.current {
+      color: #999;
+    }
+
+    .well {
+      background-color: #fbfaf5;
+      border-radius: 0px 0px 4px 4px;
+      border-top-style: none;
+      
+      &.app_config_auth_passwd .progress {
+        margin-bottom: 0;
+      }
+
+      .form-actions {
+      	background-color: #f7f6f1;
+      }
+    }
+  }
+}
+
+.passwdcheck-placeholder .progress {
+	margin-bottom: 0;
+}
+
+
+
+// tools
+// -------------------------
+
+.page-header {
+  color: #333;
+  font-weight: 300;
+  font-size: 27px;
+  line-height: 34px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 50px;
+  border-style: none;
+}
+
