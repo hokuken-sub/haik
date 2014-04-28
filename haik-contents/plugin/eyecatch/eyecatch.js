@@ -17,7 +17,7 @@
 		}
 
 		// !ナビの置換え
-		$("#admin_nav > .container").replaceWith($("#orgm_eyecatch_nav"));
+		$("#admin_nav > div").replaceWith($("#orgm_eyecatch_nav"));
 		
 		
 		// !編集

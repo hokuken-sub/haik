@@ -1176,12 +1176,14 @@ function redirect($url = '', $msg = '', $refresh_sec = 2)
  * @params string $type message type: success | info | error | warning(empty)
  * @params int $priority message position. it was set as height
  */
-function set_flash_msg($msg = '', $type = 'success', $priority = 20)
+function set_flash_msg($msg = '', $type = 'success', $set_nav = false, $fade = true, $priority = 20)
 {
 	$notice = array(
 		'message'  => $msg,
 		'type'     => $type,
-		'priority' => $priority
+		'priority' => $priority,
+		'set_nav'  => $set_nav,
+		'fade'     => $fade,
 	);
 	
 	if (isset($_SESSION['notices']) && is_array($_SESSION['notices']))
@@ -1197,11 +1199,11 @@ function set_flash_msg($msg = '', $type = 'success', $priority = 20)
 
 }
 
-function set_notify_msg($msg = '', $type = 'success', $priority = 10)
+function set_notify_msg($msg = '', $type = 'success', $set_nav = false , $fade = true, $priority = 10)
 {
 	if (exist_plugin('notify'))
 	{
-		return plugin_notify_set_notice($msg, $type, $priority);
+		return plugin_notify_set_notice($msg, $type, $set_nav, $fade, $priority);
 	}
 	return FALSE;
 }
@@ -1751,20 +1753,10 @@ function get_admin_tools($page)
 			'link'   => $_LINK['edit'],
 			'style'  => '',
 			'class'  => '',
-			'button' => 'btn btn-default haik-btn-primary navbar-btn',
+			'button' => 'btn btn-default haik-btn-default navbar-btn',
 			'visible'=> TRUE,
 			'right'  => TRUE,
 			'sub'    => array(),
-		),
-		'admin_slider_link' => array(
-			'name' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
-			'link' => '#admin_slider',
-			'style' => 'margin-left:5px;',
-			'class' => 'admin-slider-link',
-			'button' => 'btn btn-default navbar-btn',
-			'visible' => TRUE,
-			'right' => TRUE,
-			'sub' => array()
 		),
 		'finishlink' => array(
 			'name'   => __('完了'),
@@ -1939,22 +1931,22 @@ function get_admin_slider_data()
 		),
 		'edit' => array(
 			'SiteNavigator_link' => array(
-				'name'   => __('ナビ編集'), 
+				'name'   => __('ナビ'), 
 				'link'   => $_LINK['edit_nav'], 
 				'visible'=> TRUE
 			),
 			'MenuBar_link' => array(
-				'name'   => __('メニュー編集'),
+				'name'   => __('メニュー'),
 				'link'   => $_LINK['edit_menu'],
 				'visible'=> TRUE
 			),
 			'MenuBar2_link' => array(
-				'name'   => __('メニュー2編集'),
+				'name'   => __('メニュー2'),
 				'link'   => $_LINK['edit_menu2'],
 				'visible'=> TRUE
 			),
 			'SiteFooter_link' => array(
-				'name'   => __('フッター編集'),
+				'name'   => __('フッター'),
 				'link'   => $_LINK['edit_footer'],
 				'visible'=> TRUE
 			),
@@ -2003,12 +1995,14 @@ function get_admin_slider_data()
 			),
 		),
 		'haik' => array(
+/*
 			'help_link' => array(
 				'name'   => __('ヘルプ'),
 				'link'   => $_LINK['help_site'],
 				'visible'=> TRUE,
 				'target' => 'help',
 			),
+*/
 			'logout_link'   => array(
 				'name'   => __('ログアウト'),
 				'link'   => $_LINK['logout'],
@@ -2023,6 +2017,8 @@ function get_admin_slider_data()
 
 function get_admin_slider_html($data)
 {
+  $haik_logo_img = IMAGE_DIR.'haiklogo.png';
+
 	ob_start();
 	include(LIB_DIR . 'tmpl/admin_slider.html');
 	$html = ob_get_clean();

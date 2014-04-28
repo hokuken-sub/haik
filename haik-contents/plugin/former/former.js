@@ -210,7 +210,7 @@ $(function(){
 	});
 
 	// !ナビの置換え
-	$("#admin_nav > .container").replaceWith($("#orgm_former_controls > .container"));
+	$("#admin_nav .haik-admin-navbar-inside").replaceWith($("#orgm_former_controls .haik-plugin-former-navbar-inside"));
 
 	// scroll spy
 	$("body").attr({"data-spy":"scroll", "data-target": ".navbar"});

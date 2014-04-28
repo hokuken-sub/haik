@@ -36,7 +36,7 @@ $qt->appendv('user_script', '');
 $qt->setv('_page', $_page);
 $qt->setv('_script', $script);
 $common_script = '
-<script type="text/javascript" src="'. JS_DIR .'origami.js"></script>
+<script type="text/javascript" src="'. JS_DIR .'haik.js"></script>
 <script type="text/javascript" src="'. JS_DIR .'lodash.min.js"></script>
 ';
 $qt->setv('common_script', $common_script);
@@ -71,7 +71,7 @@ if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 	extract($_SESSION['preview_skin']);
 	$style_config = style_config_read($style_name);
 	
-	set_notify_msg('デザインのプレビュー中です', 'info', 6);
+	set_notify_msg('デザインのプレビュー中です', 'info', false, true, 6);
 }
 
 // テンプレートの取得
@@ -85,7 +85,7 @@ if ( ! isset($style_config['templates'][$template_name])
 }
 
 $qt->setv('admin_nav', '');
-
+$hide_slider = false;
 
 if ($is_editor OR ss_admin_check())
 {
@@ -182,7 +182,8 @@ EOS;
 	$prevdiv = '';
 	if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 	{
-		unset($tools['editlink'], $tools['admin_slider_link']);
+	  $hide_slider = true;
+		unset($tools['editlink']);
 	}
 	else
 	{
@@ -192,7 +193,8 @@ EOS;
 	
 	if ( ! $is_page OR PKWK_READONLY)
 	{
-		unset($tools['editlink'], $tools['admin_slider_link']);
+	  $hide_slider = true;
+		unset($tools['editlink']);
 
 		if (isset($vars['refer']) && is_page($vars['refer']))
 		{
@@ -240,12 +242,27 @@ EOS;
 	// ! 編集・プレビューにはボタンを表示
 	if ($vars['cmd'] == 'edit' OR $vars['cmd'] == 'secedit')
 	{
-		unset($tools['editlink'], $tools['admin_slider_link']);
+		unset($tools['editlink']);
+		$hide_slider = true;
 		
-		$tools_buttons = '
-			<div class="btn-toolbar">
-				<div class="btn-group">
-					<input type="button" value="更新" tabindex="5" data-name="publish" class="btn btn-primary navbar-btn" data-edit-type="write">';
+		$tools_buttons = '<div class="btn-toolbar">';
+
+		$tools_buttons .= '
+  <div class="btn-group">
+    <a href="'.h(get_page_url($return_page)).'" class="btn btn-link haik-btn-link haik-btn-link-cancel navbar-btn" tabindex="6" data-edit-type="cancel">キャンセル</a>
+  </div>
+';
+
+		$tools_buttons .= '
+  <div class="btn-group">
+    <input type="button" value="プレビュー" tabindex="4" class="btn btn-link haik-btn-link navbar-btn" data-edit-type="preview">
+  </div>
+';
+		
+		$tools_buttons .= '
+	<div class="btn-group">
+		<input type="button" value="更新" tabindex="5" data-name="publish" class="btn haik-btn-success navbar-btn" data-edit-type="write">
+';
 		if ( ! $change_timestamp)
 		{
 			$tools_buttons .= '
@@ -255,19 +272,13 @@ EOS;
 					</ul>';
 		}
 		$return_page = (isset($vars['refer']) && is_page($vars['refer'])) ? $vars['refer'] : $vars['page'];
-		$tools_buttons .= '
-				</div>
-				<div class="btn-group">
-					<input type="button" value="プレビュー" tabindex="4" class="btn btn-info navbar-btn" data-edit-type="preview">
-				</div>
-				<div class="btn-group">
-					<a href="'.h(get_page_url($return_page)).'" class="btn btn-default navbar-btn" tabindex="6" data-edit-type="cancel">キャンセル</a>
-				</div>
-			</div>
-';
+		$tools_buttons .= '</div>';
+
+    $tools_buttons .= '</div>';
 
 		if (isset($vars['preview']) && $vars['preview'])
 		{
+		  	set_notify_msg('プレビュー中です', 'primary', true, false);
 			$refer = isset($vars['refer']) ? $vars['refer'] : $_page;
 			$digest = md5(get_source($_page, TRUE, TRUE));
 			$template_name = isset($vars['template_name']) && $vars['template_name'] ? $vars['template_name'] : $style_config['default_template'];
@@ -290,11 +301,18 @@ EOS;
 					<input type="hidden" name="msg"  value="'.h($vars['msg']).'">
 					<input type="hidden" name="digest" value="'.h($digest).'">
 					<input type="hidden" name="notimestamp" value="">
+';
+		$tools_buttons .= '
 					<div class="btn-group">
-						<button type="submit" name="" id="re_edit_button" class="btn btn-info navbar-btn">'. __('再編集').'</button>
+						<button type="submit" name="cancel" class="btn btn-link haik-btn-link haik-btn-link-cancel navbar-btn">'. __('キャンセル').'</button>
+					</div>
+';
+		$tools_buttons .= '
+					<div class="btn-group">
+						<button type="submit" name="" id="re_edit_button" class="btn btn-link haik-btn-link haik-btn-link-edit navbar-btn">'. __('再編集').'</button>
 					</div>
 					<div class="btn-group">
-						<input type="submit" name="write" class="btn btn-primary navbar-btn" value="'.__('更新').'">
+						<input type="submit" name="write" class="btn haik-btn-success navbar-btn" value="'.__('更新').'">
 ';
 		if ( ! $change_timestamp)
 		{
@@ -307,9 +325,8 @@ EOS;
 		}
 		$tools_buttons .= '
 					</div>
-					<div class="btn-group">
-						<button type="submit" name="cancel" class="btn btn-default navbar-btn">'. __('キャンセル').'</button>
-					</div>
+';
+		$tools_buttons .= '
 				</div>
 			</form>
 ';
@@ -323,13 +340,14 @@ EOS;
 	$app_name = '<a href="" class="navbar-brand">'.APP_NAME.'</a>';
 	$tools_str = get_admin_tools_html($tools);
 	$slides_str = get_admin_slider_html($slides);
+	$hide_slider_class = $hide_slider ? ' hide' : '';
 
 	$admin_nav = '
-<div id="admin_nav" class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<a class="navbar-brand" href="'.h($script).'"><img src="'.IMAGE_DIR.'haiklogo.jpg" width="50" height="50"></a>
+<div id="admin_nav" class="navbar navbar-default navbar-fixed-top haik-admin-navbar">
+	<div class="container-fluid haik-admin-navbar-inside">
+  	<a class="navbar-brand pull-right' . $hide_slider_class . '" href="#admin_slider" id="admin_slider_link"><img src="'.IMAGE_DIR.'haiklogo.png" height="50"></a>
 			'.$tools_str.'
-		<div id="toolbar_buttons" class="pull-right">
+		<div id="toolbar_buttons" class="navbar-header navbar-right">
 		'.(isset($tools_buttons) ? $tools_buttons : '').'
 		</div>
 	</div>

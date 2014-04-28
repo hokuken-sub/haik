@@ -1,0 +1,34 @@
+name: config
+version: 1.0.0
+thumbnail: img/thumbnail.png
+style_file: css/bootstrap-custom.css
+templates:
+  content:
+    filename: content.skin.php
+    layouts: []
+  
+  filer:
+    filename: filer.skin.php
+    layouts: []
+
+  iframe:
+    filename: iframe.skin.php
+    layouts: []
+
+  editor:
+    filename: editor.skin.php
+    layouts: []
+
+  content_nomenu:
+    filename: content_nomenu.skin.php
+    layouts: []
+
+  narrow:
+    filename: narrow.skin.php
+    layouts: []
+
+  dialogue:
+    filename: narrow.skin.php
+    layouts: []
+
+default_template: content

@@ -23,7 +23,7 @@ haik-contents/upload/thumbnail/*
 !haik-contents/upload/thumbnail/empty
 
 haik-contents/theme/*/
-!haik-contents/theme/setting/
+!haik-contents/theme/haik-admin/
 haik-contents/lib/skel/theme/*/
 !haik-contents/lib/skel/theme/.gitkeep
 
