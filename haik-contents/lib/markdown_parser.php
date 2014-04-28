@@ -1,6 +1,6 @@
 <?php
 
-use Hokuken\HaikMarkdown\HaikMarkdown;
+use Hokuken\Haik\Markdown\HaikMarkdown;
 use Hokuken\HaikMarkdown\Plugin\Basic\PluginRepository as BasicPluginRepository;
 use Hokuken\HaikMarkdown\Plugin\Bootstrap\PluginRepository as BootstrapPluginRepository;
 use Hokuken\Haik\Plugin\Repositories\PukiwikiPluginRepository;
