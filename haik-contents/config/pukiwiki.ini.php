@@ -354,7 +354,7 @@ $site_nav     = 'SiteNavigator';
 $site_footer  = 'SiteFooter';
 
 // Admin Config
-$admin_style_name = 'setting'; // 設定画面で使用するスタイル
+$admin_style_name = 'haik-admin'; // 設定画面で使用するスタイル
 
 
 // TrackBack feature

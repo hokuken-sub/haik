@@ -37,7 +37,7 @@
 			callback = callback || function(){};
 			type = type || "success";
 			type = (type === "error") ? "danger" : type;
-			
+
 			var $noticeBlock = $(".orgm-notification:first");
 			if ($noticeBlock.length == 0) return;
 			
@@ -101,28 +101,6 @@
 			.parent("li").addClass("dropdown")
 				.children("a").addClass("dropdown-toggle").attr("data-toggle", "dropdown").append('<b class="caret"></b>');
 
-
-				
-		// for admin adjust body
-/*
-		if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
-		{
-			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
-		}
-*/
-/*
-		if ($("#haik_nav").closest("div.navbar").hasClass("navbar-fixed-top"))
-		{
-			(function(){
-				var $navbar = $("#haik_nav").closest(".navbar");
-				$("#admin_nav").insertBefore($navbar);
-				$navbar.css({top: $("#admin_nav").height()});
-				
-			})();
-//			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
-		}
-*/
-
 	    var adjustStyleForNavbar = function(){
 	    
 	
@@ -133,7 +111,6 @@
 					$("#admin_nav").insertBefore($navbar);
 					$navbar.css({top: $("#admin_nav").height()});
 				})();
-	//			$("#haik_nav").closest("div.navbar").prepend($("#admin_nav > .navbar-inner").removeClass("navbar-fixed-top"));
 			}
 
 
@@ -237,6 +214,25 @@
 			$(window).on("resize", resizeSection);
 		})();
 		
+		// ! notification
+		$(".orgm-notification .orgm-notice").addClass("in");
+		$(document).on("click", ".orgm-notification .orgm-notice", function(){
+			$(this).alert("close");
+		});
+		// ! notification for nav
+		if ($(".orgm-notification .haik-nav-notice").length)
+		{
+		  var $navNotice = $(".haik-nav-notice").addClass("in");
+		  $("#admin_nav .haik-admin-navbar-inside").prepend($navNotice);
+
+			var msec = parseInt($navNotice.attr("data-auto-click"), 10);
+			if (msec) {
+    			setTimeout(function() {
+    				$navNotice.removeClass("in");
+    			}, msec);
+			}
+		}
+
 		// auto click
 		var autoClick = function(){
 			var $self = $(this);
@@ -248,12 +244,6 @@
 		};
 		$("[data-auto-click]").on("load", autoClick).each(function(){
 			autoClick.call(this);
-		});
-		
-		// ! notification
-		$(".orgm-notification .orgm-notice").addClass("in");
-		$(document).on("click", ".orgm-notification .orgm-notice", function(){
-			$(this).alert("close");
 		});
 
 		if (typeof ORGM.videoAutoload !== "undefined")

@@ -70,10 +70,9 @@ function plugin_edit_preview()
 	$vars['msg'] = preg_replace(PLUGIN_EDIT_FREEZE_REGEX, '', $vars['msg']);
 	$postdata = $vars['msg'];
 
-	
 	if ($layout_name !== '')
 	{
-		$body = convert_html(join('', get_source($refer)));
+		$body = convert_html(get_source($refer, TRUE, TRUE));
 	}
 	else
 	{
@@ -83,13 +82,13 @@ function plugin_edit_preview()
 			$body .= '<strong>' . __('（ページの内容は空です。更新するとこのページは削除されます。）') . '</strong><br>' . "\n";
 		}
 	
-		if ($postdata) {
+		if ($postdata)
+		{
 			if ($page !== $qblog_defaultpage && is_qblog())
 			{
 				$postdata = "#qblog_head\n" . $postdata;
 			}
 			$postdata = make_str_rules($postdata);
-			$postdata = explode("\n", $postdata);
 			$postdata = drop_submit(convert_html($postdata));
 			$body .= $postdata;
 		}
@@ -98,7 +97,6 @@ function plugin_edit_preview()
 
 	// Off XSS Protection (Google Chrome)
 	header('X-XSS-Protection: 0');
-	
 	return array('msg'=>__('$1 のプレビュー'), 'body'=>$body);
 }
 
@@ -398,7 +396,7 @@ function plugin_edit_write()
 	// Off XSS Protection (Google Chrome)
 	$_SESSION['disable_xss_protection'] = TRUE;
 	
-	set_flash_msg('ページを更新しました。');
+	set_flash_msg('ページを更新しました。', 'success', true);
 	
 	$redirect = get_page_url($refer);
 
