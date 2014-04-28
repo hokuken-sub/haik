@@ -1076,7 +1076,7 @@ function create_page_description($page, $length = 120, $source = NULL)
 	{
 		$source = explode("\n", $source);
 	}
-			
+
 	foreach($source as $k => $l)
 	{
 		if (preg_match($ignore_plugin, $l))
@@ -1091,7 +1091,7 @@ function create_page_description($page, $length = 120, $source = NULL)
 			continue;
 		}
 		
-		if (preg_match('/^\*{1,3}/', $l))
+		if (preg_match('/^\#{1,3}/', $l))
 		{
 			unset($source[$k]);
 			continue;
@@ -1101,7 +1101,6 @@ function create_page_description($page, $length = 120, $source = NULL)
 	//html(noskinを避ける)
 	if (count($source) > 0)
 	{
-		$source = str_replace('#html(noskin)', '#html()', $source);
 		$source = preg_replace($strip_plugin_inline, '', $source); // 行内のプラグインを説明から省く
 	}
 	
@@ -1111,7 +1110,16 @@ function create_page_description($page, $length = 120, $source = NULL)
 		$usr = $_SESSION['usr'];
 		unset($_SESSION['usr']);
 	}
-	$contents = mb_strimwidth( preg_replace('/\s+/', ' ', strip_htmltag( convert_html( $source ) )), 0, $length , '...');
+
+	$source = join("\n", $source);
+
+  $source = convert_html($source);
+  $source = preg_replace('!<style.*?>.*?</style.*?>!is', '', $source) ;
+  $source = preg_replace('!<script.*?>.*?</script.*?>!is', '', $source) ;
+  $source = strip_htmltag($source);
+
+	$contents = mb_strimwidth( preg_replace('/\s+/', ' ', $source), 0, $length , '...');
+
 	if ($usr !== FALSE)
 	{
 		$_SESSION['usr'] = $usr;

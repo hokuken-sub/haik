@@ -295,7 +295,8 @@ $nofollow = 0; // 1 = Try hiding from search engines
 $ignore_plugin  = '/^#(autoclose|login)/';
 
 // strip plugin search and rss
-$strip_plugin = '/^(#(menu|category|search_menu_key|notify|ssl|redirect|br)|CLASS|STYLE|\/\/)/';
+//$strip_plugin = '/^(#(menu|category|search_menu_key|notify|ssl|redirect|br)|CLASS|STYLE|\/\/)/';
+$strip_plugin = '/^(:::(menu|category|search_menu_key|notify|ssl|redirect|br)|CLASS|STYLE|\/\/)/';
 
 // strip plugin search and rss
 $strip_plugin_inline = '/&(tag)(\(.*?\))?;/';
