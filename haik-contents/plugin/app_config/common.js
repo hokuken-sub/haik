@@ -2,6 +2,41 @@
 ! (function($){
 	
 	$(function(){
+
+	   if ($('.haik-config-menu').length){
+         $('.haik-admin-navbar-inside').prepend('<a class="navbar-brand pull-right" href="#haik_config_slider" id="config_slider_link"><img src="haik-contents/img/haiklogo.png" height="50"></a>');
+
+      	// ! admin slider
+      	$("#config_slider_link").sidr({
+      		name: "slider-right",
+      		source: "#haik_config_slider",
+      		side: "right",
+      		renaming: false,
+      		onOpen: function(){
+      			$(document).on("click.configSlider keydown.configSlider", "*", function(e){
+      				
+      				e.stopPropagation();
+      				
+      				if ( ! $(e.target).is("[data-toggle=modal]") && $(e.target).closest(".haik-admin-slider").length > 0) return;
+      				
+      				$.sidr('close', 'slider-right');
+      			});
+      
+      			$(".haik-admin-slider .close").on('click', function(){
+      				$.sidr('close', 'slider-right');
+      			});
+      
+      		},
+      		onClose: function(){
+      			$(document).off(".configSlider");
+      		}
+      	});
+
+
+	   }
+	   
+	   
+	   
 	
 		$(".setting_list")
 		.on("show", "> li", function(e){
@@ -228,7 +263,6 @@
 !function ($) {
 
   "use strict"; // jshint ;_;
-
 
  /* ConfigBlock CLASS DEFINITION
   * ====================== */

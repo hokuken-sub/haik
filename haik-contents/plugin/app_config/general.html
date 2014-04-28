@@ -1,41 +1,39 @@
 
 <div class="page-header"><?php echo h($title) ?></div>
 <section class="setting">
-	<div class="container">
-		<ul class="setting_list">
-			<li>
-				<div class="row">
-					<div class="col-sm-3"><?php _e('サイトタイトル') ?></div>
-					<div class="col-sm-7 current"><?php echo h($site_title) ?></div>
-					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_title">編集</a></div>
-				</div>
-			</li>
+	<ul class="setting_list">
+		<li>
+			<div class="row">
+				<div class="col-sm-3"><?php _e('サイトタイトル') ?></div>
+				<div class="col-sm-7 current"><?php echo h($site_title) ?></div>
+				<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_title">編集</a></div>
+			</div>
+		</li>
 
-			<li>
-				<div class="row">
-					<div class="col-sm-3"><?php _e('ロゴタイトル') ?></div>
-					<div class="col-sm-7 current"><?php echo h($logo_title)?></div>
-					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="logo_title">編集</a></div>
-				</div>
-			</li>
-			
-			<li>
-				<div class="row">
-					<div class="col-sm-3"><?php _e('ロゴ画像') ?></div>
-					<div class="col-sm-7 current"><?php echo ($logo_image != '') ? h($logo_image) :__('指定なし：ロゴタイトルが使用されます。') ?></div>
-					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="logo_image">編集</a></div>
-				</div>
-			</li>
+		<li>
+			<div class="row">
+				<div class="col-sm-3"><?php _e('ロゴタイトル') ?></div>
+				<div class="col-sm-7 current"><?php echo h($logo_title)?></div>
+				<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="logo_title">編集</a></div>
+			</div>
+		</li>
+		
+		<li>
+			<div class="row">
+				<div class="col-sm-3"><?php _e('ロゴ画像') ?></div>
+				<div class="col-sm-7 current"><?php echo ($logo_image != '') ? h($logo_image) :__('指定なし：ロゴタイトルが使用されます。') ?></div>
+				<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="logo_image">編集</a></div>
+			</div>
+		</li>
 
-			<li>
-				<div class="row">
-					<div class="col-sm-3"><?php _e('サイトの公開') ?></div>
-					<div class="col-sm-7 current"><?php echo h($site_close) ?></div>
-					<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_close_all">編集</a></div>
-				</div>
-			</li>
-		</ul>
-	</div>
+		<li>
+			<div class="row">
+				<div class="col-sm-3"><?php _e('サイトの公開') ?></div>
+				<div class="col-sm-7 current"><?php echo h($site_close) ?></div>
+				<div class="col-sm-2 pull-right"><a href="#" class="pull-right" data-edit="site_close_all">編集</a></div>
+			</div>
+		</li>
+	</ul>
 </section>
 	
 	

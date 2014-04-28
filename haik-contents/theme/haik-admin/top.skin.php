@@ -24,12 +24,10 @@
 ================================================== -->
 <div class="container-fluid" id="contents">
 	<div class="row">
-		<div class="col-sm-10 col-sm-push-2 content-wrapper" role="main">
+		<div class="col-sm-10 col-sm-offset-1 content-wrapper" role="main">
 			#{$body}
 		</div>
-		<aside class="col-sm-2 col-sm-pull-10">
-			#{$menu}
-		</aside>
+		#{$menu}
 	</div>
 </div>
 
