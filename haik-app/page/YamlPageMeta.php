@@ -12,20 +12,33 @@ class YamlPageMeta implements PageMetaInterface {
     /** @var mixed meta data of the page*/
     protected $data;
 
-    public function __construct($page)
+    /**
+     * Constructor
+     *
+     * @param string $page page name
+     * @param boolean $set_data when true then read and set data of the $page. Default is true
+     */
+    public function __construct($page, $set_data = true)
     {
         $this->page = $page;
         $this->data = array();
+
+        if ($set_data)
+            $this->data = $this->read();
     }
 
     /**
      * Read meta data of the page
      *
      * @return mixed meta data array of the page
+     * @throws FileNotFoundException
      */
     public function read()
     {
         $file_path = $this->getFilePath();
+        if ( ! file_exists($file_path))
+            return array();
+
         try {
             $this->data = Yaml::parse(file_get_contents($file_path));
         } catch (ParseException $e) {
@@ -49,10 +62,21 @@ class YamlPageMeta implements PageMetaInterface {
     public function get($key, $default_value = NULL)
     {
         $data = $this->data;
-        $value = $this->recurseKeys(explode('.', $key), $data);
+        $keys = explode('.', $key, 2);
+        if (count($keys) === 1)
+        {
+            if (isset($this->data[$key]))
+                return $this->data[$key];
+            else
+                return $default_value;
+        }
 
-        if ($value === NULL) return $default_value;
-        return $value;
+        list($group, $key) = $keys;
+        if (isset($this->data[$group][$key]))
+        {
+            return $this->data[$group][$key];
+        }
+        return null;
     }
 
     protected function recurseKeys(array $keys, array $array){
@@ -90,6 +114,9 @@ class YamlPageMeta implements PageMetaInterface {
         }
 
         list($group, $key) = $keys;
+        if ( ! isset($this->data[$group]))
+            $this->data[$group] = array();
+        
         if ( ! is_array($this->data[$group]))
         {
             $this->data[$group] = array();
