@@ -22,7 +22,7 @@
 
 <!-- Body
 ================================================== -->
-<div class="container-fluid" id="contents">
+<div class="container-fluid haik-admin-main" id="contents">
 	<div class="row">
 		<div class="col-sm-10 col-sm-push-2 content-wrapper" role="main">
 			#{$body}
@@ -31,23 +31,23 @@
 			#{$menu}
 		</aside>
 	</div>
+
+  <aside>
+  	#{$summary}
+  </aside>
+
+  <!-- Footer
+  ================================================== -->
+  <footer class="footer2">
+  	<div class="container-fluid">
+  		#{$site_footer}
+  	</div>
+  	<div id="license" class="container">
+  		#{$license_tag}
+  	</div>
+  </footer>
+
 </div>
-
-<aside>
-	#{$summary}
-</aside>
-
-
-<!-- Footer
-================================================== -->
-<footer class="footer">
-	<div class="container">
-		#{$site_footer}
-	</div>
-	<div id="license" class="container">
-		#{$license_tag}
-	</div>
-</footer>
 
 #{$admin_nav}
 #{$body_last}

@@ -81,45 +81,44 @@ function plugin_newpage_form($s_newpage, $s_page, $user_style_name)
 
 	$template_name = $config['default_template'];
 	$body = '
-<div class="page-header">'.h($title).'</div>
+<div class="container-fluid">
+  <div class="page-header">'.h($title).'</div>
 
-<div class="container-fluid plugin-newpage">
-	<form action="'.h($script).'" method="post">
-		<input type="hidden" name="plugin" value="newpage" />
-		<input type="hidden" name="refer"  value="'.$s_page.'" />
-		<input type="hidden" name="phase" value="save" />
-		<div class="form-group">
-			<label class="control-label">'.$qm->m['plg_newpage']['label'].'</label>
-			<div class="row">
-				<div class="col-sm-6">
-					<input type="text" name="page" id="_p_newpage" value="'.$s_newpage.'" size="30" class="form-control" />
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label">レイアウト</label>
-			<div class="row">
-				<ul class="thumbnails">
+  <div class="plugin-newpage">
+  	<form action="'.h($script).'" method="post">
+  		<input type="hidden" name="plugin" value="newpage" />
+  		<input type="hidden" name="refer"  value="'.$s_page.'" />
+  		<input type="hidden" name="phase" value="save" />
+  		<div class="form-group">
+  			<label class="control-label">'.$qm->m['plg_newpage']['label'].'</label>
+  			<div class="row">
+  				<div class="col-sm-6">
+  					<input type="text" name="page" id="_p_newpage" value="'.$s_newpage.'" size="30" class="form-control" />
+  				</div>
+  			</div>
+  		</div>
+  		<div class="form-group">
+  			<label class="control-label">レイアウト</label>
+  			<div class="row">
 ';
 			foreach ($templates as $key => $row)
 			{
-				$body .= '<li class="col-sm-3 orgm-template-item'. (($template_name == $key) ? ' active' : '').'" data-template="'.$key.'">';
+				$body .= '<div class="col-sm-3 haik-thumbnail-item'. (($template_name == $key) ? ' active' : '').'" data-template="'.$key.'">';
 				$body .= '<div class="thumbnail">';
-				if ($row['thumbnail'])
+				$body .= '<div class="thumbnail-name"><span>'.h($key).'</span></div>';
+				$thumbnail = SKIN_DIR . $user_style_name . '/' . $row['thumbnail'];
+				if ($row['thumbnail'] && file_exists($thumbnail))
 				{
-					$thumbnail = SKIN_DIR . $user_style_name . '/' . $row['thumbnail'];
 			 		$body .= '<img src="'.h($thumbnail).'" alt="'. h(sprintf(__('%s のサムネール'), $template_name)) .'">';
 				}
 				else
 				{
 					$body .= '<div class="no-thumbnail"><i class="orgm-icon orgm-icon-image"></i> '. h(__("画像がありません")) .'</div>';
 				}
-				$body .= '<div class="thumbnail_name"><span>'.h($key).'</span></div>';
 				$body .= '</div>';
-				$body .= '</li>';
+				$body .= '</div>';
 			}
 			$body .= '
-				</ul>
 				<input type="hidden" name="template_name" value="'.$template_name.'" />
 			</div>
 		</div>
@@ -127,6 +126,7 @@ function plugin_newpage_form($s_newpage, $s_page, $user_style_name)
 			<input type="submit" class="btn btn-primary" value="'.$qm->m['plg_newpage']['btn_create'].'" />
 		</div>
 	</form>
+</div>
 </div>
 ';
 	
