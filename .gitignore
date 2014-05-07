@@ -36,3 +36,6 @@ haik-contents/backup/*.gz
 haik-contents/cache/*
 !haik-contents/cache/.htaccess
 !haik-contents/cache/entities.dat
+
+tests/data
+
