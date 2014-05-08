@@ -7,6 +7,7 @@ function plugin_newpage_action()
 {
 	global $script, $vars, $style_name, $admin_style_name;
 	global $BracketName;
+	global $is_plugin_page;
 
 	$qm = get_qm();
 	$qt = get_qt();
@@ -25,6 +26,8 @@ function plugin_newpage_action()
 		redirect($script);
 		exit;
 	}
+	
+	$is_plugin_page = true;
 	
 	// スタイルを利用するため、一時退避
 	$user_style_name = $style_name;
