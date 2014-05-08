@@ -32,16 +32,6 @@ class YamlPageMetaTest extends PHPUnit_Framework_TestCase {
         $this->pageMeta->setAll($this->pageMeta->read(), true);
     }
 
-    public function testConstructor()
-    {
-        $mock = Mockery::mock('Hokuken\Haik\Page\YamlPageMeta[getFilePath]', array($this->page, false), function($mock)
-        {
-            $mock->shouldReceive('getFilePath')->andReturn($this->yamlFile);
-            return $mock;
-        });
-        $this->assertEquals($this->testData, $mock->getAll());
-    }
-
     public function testRead()
     {
         $data = $this->pageMeta->read();

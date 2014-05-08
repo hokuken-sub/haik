@@ -38,4 +38,5 @@ haik-contents/cache/*
 !haik-contents/cache/entities.dat
 
 tests/data
+!tests/data/.gitkeep
 
