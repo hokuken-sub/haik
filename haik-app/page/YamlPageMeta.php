@@ -124,7 +124,7 @@ class YamlPageMeta implements PageMetaInterface {
 
     public function toYaml()
     {
-        return Yaml::dump($this->data);
+        return Yaml::dump($this->data, 2);
     }
 
     /**
@@ -171,7 +171,6 @@ class YamlPageMeta implements PageMetaInterface {
      */
     public function setAll($data, $overwrite = false)
     {
-
         if ( ! $overwrite)
         {
             $data = array_merge_deep($this->data, $data);

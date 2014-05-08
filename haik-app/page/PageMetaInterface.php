@@ -59,8 +59,11 @@ interface PageMetaInterface {
 
     /**
      * Set or merge providing array to $data
+     *
+     * @param mixed $data meta data to set
+     * @param boolean $overwrite flag of overwrite or merge data. Default is false(merge).
      */
-    public function setAll($array);
+    public function setAll($array, $overwrite = false);
 
     /**
      * Remove meta data value of specified key
