@@ -12,7 +12,7 @@ html, body {
 // -------------------------
 
 .haik-admin-navbar {
-  background-color: #fff;
+  background-color: rgba(255,255,255,.9);
 
   .navbar-brand {
     margin-bottom: 0;
@@ -839,71 +839,7 @@ ul.orgm-page-list li.nav-header{
 	-webkit-box-shadow: 0 0 10px #91bd09;
 }
 
-
-.setting .nav-tabs > .active > a {
-	background-color: #fcfbf6;
-}
-.setting h4.sub-header {
-	margin-left: 8px;
-	margin-bottom: 5px; 
-	margin-top: 25px; 
-}
-
-.setting  h4.sub-header:first-child {
-	margin-top: 0;
-}
-
-.setting a.app-config-more {
-	position: absolute;
-	display: block;
-	left:55px;
-	bottom:5px;
-	color: #999;
-	font-size: 0.8em;
-}
-
-
-.setting ul.setting_list {
-	margin-left:0;
-	padding-left: 0;
-}
-
-.setting_list .well .config-general-logo-image.thumbnail {
-	position: relative;
-	width:200px;
-	height: 50px;
-	line-height: 50px;
-	text-align: center;
-}
-
-.setting_list .well .config-general-logo-image.thumbnail img {
-	max-height: 100%;
-}
-
-.setting_list .well.config-general-style-name legend {
-	font-size: 1.2em;
-	margin-top: 1em;
-}
-
-.setting_list .well.config-general-style-name .sample-cut a {
-	height: 50px; /*正方形にしたいサイズ*/
-	width: 50px; /*正方形にしたいサイズ*/
-	display: block; /*SPANなのでブロック要素に*/
-	padding: 0;
-	line-height: 50px;
-	text-align: center;
-}
-
-.setting_list .well.config-general-style-name .sample-cut{
-	border-radius: 4px;
-}
-
 @media (max-width: 767px) {
-
-	.setting_list .well.config-general-style-name .sample-cut a {
-		height: 30px; /*正方形にしたいサイズ*/
-		width:  30px; /*正方形にしたいサイズ*/
-	}
 	
 	[class*=sample-style-name].container {
 		padding-left: 0;
@@ -919,101 +855,107 @@ ul.orgm-page-list li.nav-header{
 	width: 120px; /*正方形にしたいサイズ*/
 	display: block; /*SPANなのでブロック要素に*/
 	padding: 0;
+	margin-bottom: 0;
 	text-align: center;
 	border-radius: 4px;
-}
+	box-sizing: border-box;
 
-.cut > span.triangle-btn {
-	display: none;
-	width: 32px;
-	height: 32px;
-	line-height: 16px;
-	text-align: center;
-	font-size: 10px;
-	position: absolute;
- 	box-sizing: border-box;
-	color: white;
-	margin: 0;
-	padding:0;
-}
+  .triangle-btn {
+  	display: none;
+  	width: 32px;
+  	height: 32px;
+  	line-height: 16px;
+  	text-align: center;
+  	font-size: 10px;
+  	position: absolute;
+   	box-sizing: border-box;
+  	color: white;
+  	margin: 0;
+  	padding:0;
+  }
 
-.cut > span.triangle-btn:before {
- 	content: "";
-	position: absolute;
- 	display: inline-block;
+  .triangle-btn:before {
+   	content: "";
+  	position: absolute;
+   	display: inline-block;
     width: 0;
     height: 0;
     margin: 0px;
     padding:0px;
-}
+  }
 
-.cut > span.triangle-btn.active {
-	display: block;
-}
-.cut > span.triangle-right-top:before {
+  .triangle-btn.active {
+  	display: block;
+  }
+  .triangle-right-top:before {
     border-top: 32px solid;
     border-left: 32px solid transparent;
-	top:0;
-	right:0;
-	border-top-color: rgba(0,0,0,0.5);
-}
-.cut > span.triangle-right-top {
-	top:0;
-	right:-1px;
-    border-top-left-radius: 4px;
+  	top:0;
+  	right:0;
+  	border-top-color: rgba(0,0,0,0.5);
+  }
+  .triangle-right-top {
+  	top:0;
+  	right:-1px;
+      border-top-left-radius: 4px;
+  }
+  
+  .triangle-left-top:before {
+      border-top: 32px solid;
+      border-right: 32px solid transparent;
+  	top:0;
+  	left:0;
+  	border-top-color: rgba(0,0,0,0.5);
+  }
+  .triangle-left-top {
+  	top:0;
+  	left:-1px;
+      border-top-right-radius: 4px;
+  }
+  
+  .red:before{
+  	border-top-color: #aa433a;
+  }
+  
+  
+  .triangle-btn > i {
+  	position: absolute;
+  	line-height: 16px;
+  }
+  
+  .triangle-right-top > i {
+  	top: 3px;
+  	right: 4px;
+  	z-index: 1;
+  }
+  
+  .triangle-left-top > i {
+  	top: 3px;
+  	left: 4px;
+  	z-index: 1;
+  }
+  
+  .caption {
+  	width: 100%;
+  	height: 1.7em;
+  	line-height: 1.7em;
+  	position: absolute;
+  	z-index: 300;
+  	bottom:0;
+  	left:0;
+  	padding:0 3px;
+  	overflow: hidden;
+  	box-sizing: border-box;
+  	opacity: .8;
+  	background-color: #333;
+   	color:#fff;
+  	text-align: center;
+  }
+
 }
 
-.cut > span.triangle-left-top:before {
-    border-top: 32px solid;
-    border-right: 32px solid transparent;
-	top:0;
-	left:0;
-	border-top-color: rgba(0,0,0,0.5);
-}
-.cut > span.triangle-left-top {
-	top:0;
-	left:-1px;
-    border-top-right-radius: 4px;
-}
-
-.cut > span.red:before{
-	border-top-color: #aa433a;
-}
 
 
-.cut > span.triangle-btn > i {
-	position: absolute;
-	line-height: 16px;
-}
-
-.cut > span.triangle-right-top > i {
-	top: 3px;
-	right: 4px;
-	z-index: 1;
-}
-
-.cut > span.triangle-left-top > i {
-	top: 3px;
-	left: 4px;
-	z-index: 1;
-}
-
-.cut > span.caption {
-	width: 100%;
-	height: 1.7em;
-	line-height: 1.7em;
-	position: absolute;
-	z-index: 300;
-	bottom:0;
-	left:0;
-	padding:0 3px;
-	overflow: hidden;
-	box-sizing: border-box;
-	opacity: .8;
-	background-color: #333;
- 	color:#fff;
-	text-align: center;
-}
 
 @-webkit-keyframes bluePulse {
   from { background-color: #fff; -webkit-box-shadow: 0 0 5px #fff; }

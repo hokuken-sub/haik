@@ -23,9 +23,9 @@
 
 <!-- Body
 ================================================== -->
-<div class="container container-narrow" id="contents">
+<div class="container-fluid container-narrow" id="contents">
 	<div class="row">
-		<div class="col-sm-12 content-wrapper" role="main">
+		<div class="col-sm-8 col-sm-offset-2 content-wrapper" role="main">
 			#{$body}
 		</div>
 	</div>

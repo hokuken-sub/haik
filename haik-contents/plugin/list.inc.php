@@ -75,9 +75,9 @@ function plugin_list_getlist($withfilename = FALSE)
 	{
 		if (exist_plugin('app_config'))
 		{
-			$qt->setv('template_name', 'content');
 			do_plugin_init('app_config');
-		}
+			$qt->setv('template_name', 'content');
+    }
 		
 		$recent_pages = array();
 		if (file_exists(CACHE_DIR.ORGM_UPDATE_CACHE))
@@ -96,15 +96,16 @@ function plugin_list_getlist($withfilename = FALSE)
 				}
 			}
 		}
-
-		$menu = '<ul class="nav nav-list orgm-page-list">';
-		$menu .= '<li class="nav-header">'.__('最近編集したページ').'</li>';
+    
+    $menu = '<div class="haik-admin-list-menu">';
+		$menu .= '<div class="menu-header">'.__('最近編集したページ').'</div>';
+		$menu .= '<div class="list-group">';
 		foreach($recent_pages as $p)
 		{
-			$menu .= '<li><a href="'.h(get_page_url($p['name'])).'">'.h($p['title']).'</a></li>';
+			$menu .= '<a class="list-group-item" href="'.h(get_page_url($p['name'])).'">'.h($p['title']).'</a></li>';
 		}
-		$menu .= '<li><a href="'.get_page_url($whatsnew).'" class="muted pull-right">&gt;&gt; すべて表示　</a></li>';
-		$menu .= '</ul>';
+		$menu .= '</div>';
+		$menu .= '<div><a href="'.get_page_url($whatsnew).'" class="muted pull-right">&gt;&gt; すべて表示　</a></div>';
 		$qt->setv('menu', $menu);
 
 		return plugin_list_create_html(plugin_list_array($pages),  $withfilename);
@@ -275,8 +276,18 @@ function plugin_list_create_html($pages_data,  $withfilename = FALSE)
 	<table class="table table-condensed">
 	<thead>
 		<tr>
-			<td><div class="col-sm-5">ページ名（タイトル）</div><div class="input-group col-sm-5"><span class="input-group-addon input-sm">検索</span><input type="search" size="20" id="plugin_list_searchbox" placeholder="例：FrontPage" class="form-control input-sm" /></div></td>
-			<td>最終更新日</td>
+			<th>
+			  <form class="form-inline">
+			    <div class="">
+			      <label class="col-sm-5 control-label" style="margin-top:10px;">ページ名（タイトル）</label>
+            <div class="input-group col-sm-7">
+              <span class="input-group-addon input-sm">検索</span>
+              <input type="search" size="20" id="plugin_list_searchbox" placeholder="例：FrontPage" class="form-control input-sm" />
+            </div>
+          </div>
+        </form>
+      </th>
+			<th class="text-center">最終更新日</th>
 		</tr>
 	</thead>
 	<tbody>

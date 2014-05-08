@@ -14,7 +14,7 @@
 	#{$plugin_head}
 </head>
 
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<body data-spy="scroll" data-target=".bs-docs-sidebar" class="app-config-body">
 
 #{$body_first}
 #{$sr_link}
@@ -22,9 +22,9 @@
 
 <!-- Body
 ================================================== -->
-<div class="container-fluid" id="contents">
+<div class="haik-admin-main container-fluid" id="contents">
 	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1 content-wrapper" role="main">
+  		<div class="col-sm-8 col-sm-pull-1 content-wrapper pull-right" role="main">
 			#{$body}
 		</div>
 		#{$menu}

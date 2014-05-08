@@ -98,8 +98,8 @@ function plugin_app_config_set_menu()
 	
 	$cur_mode = substr($vars['cmd'], 11);
 	
-	$menu = '<div id="haik_config_slider" class="fade">
-<div class="haik-admin-slider haik-config-menu">
+	$menu = '<div id="haik_config_menu" class="col-sm-2 col-sm-offset-1 pull-left">
+<div class="app-config-menu">
 ';
 	foreach ($items as $name => $item)
 	{

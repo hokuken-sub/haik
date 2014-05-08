@@ -528,8 +528,8 @@ ORGM.plugins = {
 		}
 	},
 	header: {
-		label: "見出し",
-		format: "* {header}\n",
+		label: "# 見出し",
+		format: "# {header}\n",
 		options: {defval: "テキスト", maxRepeat: 3},
 		onStart: function(){
 			var exnote = $(this.textarea).data("exnote"),
@@ -556,11 +556,11 @@ ORGM.plugins = {
 					if (multiLine) {
 						return "";
 					}
-					value = "* " + self.options.defval;
+					value = "# " + self.options.defval;
 				}
 				else {
-					value = "*" + value.replace(/^(\*+|) */, "$1 ");
-					value = value.replace(/^\*{4,} (.*)$/, "*** $1");
+					value = "#" + value.replace(/^(\*+|) */, "$1 ");
+					value = value.replace(/^\*{4,} (.*)$/, "### $1");
 				}
 				return value;
 			});
@@ -682,10 +682,10 @@ ORGM.plugins = {
 	
 	// !箇条書き
 	ul: {
-		label: "箇条書き",
+		label: "- リスト",
 		format: "- {text}",
 		options: {
-			defval: "箇条書き",
+			defval: "リスト",
 			lineNum: 3
 		},
 		focus: ".modal-complete",
@@ -735,8 +735,8 @@ ORGM.plugins = {
 	},
 	// !文字装飾
 	strong: {
-		label: "強調",
-		format: "''{text}''",
+		label: "**強調**",
+		format: "**{text}**",
 		onStart: function(){
 			var exnote = $(this.textarea).data("exnote"), text = "";
 			if (exnote.selectLength > 0) {
@@ -1521,6 +1521,18 @@ ORGM.plugins = {
 
 		}
 	},
+	
+	// !セクション
+	section: {
+  	label: "セクション",
+		format: "${br}:::section${br}${br}# タイトル${br}${br}セクションの文章などなど${br}${br}&lt;!-- 下の区切りを入れると段組みになります --&gt;${br}====${br}${br}2段目の内容${br}${br}----${br}#セクションのオプションを指定します${br}${br}#文字の位置${br}align: center${br}${br}#文字の縦方向の位置${br}valign: middle${br}:::",
+		onStart: function(){
+		  var data = {br: "\n"};
+
+			var value = $.tmpl(this.format, data).text();
+		  this.value = value;
+		}
+	},
 
 	// !レイアウト
 	// !回り込み解除
@@ -1528,6 +1540,7 @@ ORGM.plugins = {
 		label: "回り込み解除",
 		value: "\n#clear\n"
 	},
+
 	// !水平線
 	hr: {
 		label: "水平線",
@@ -1545,6 +1558,24 @@ ORGM.plugins = {
 			
 			exnote.moveToNextLine();
 			this.insert(this.value);
+		}
+	},
+
+	hr2: {
+		label: "区切り",
+		value: "----\n",
+		onStart: function(){
+			var exnote = $(this.textarea).data("exnote");
+			
+			exnote.moveToNextLine();
+		}
+	},
+	
+	// ! インデント
+	indent: {
+		label: "タブ",
+		value: "    ",
+		onStart: function(){
 		}
 	},
 	
@@ -2438,6 +2469,39 @@ ORGM.plugins = {
 				}
 			}
 			this.insert(link_str);
+		}
+	},
+
+	link2: {
+		label: "リンク",
+		format: '[${alias}](URL)',
+		options: {defval: "表示"},
+		onStart: function(){
+			var exnote = $(this.textarea).data("exnote");
+			var text = exnote.getSelectedText();
+
+			if (text.length === 0) {
+			  text = this.options.defval;
+			}
+			
+			this.value = $.tmpl(this.format, {alias:text}).text();
+		}
+	},
+	
+	// !ボタン
+	button: {
+		label: "ボタン",
+		format: '/[${alias}](button)',
+		options: {defval: "表示"},
+		onStart: function(){
+			var exnote = $(this.textarea).data("exnote");
+			var text = exnote.getSelectedText();
+
+			if (text.length === 0) {
+			  text = this.options.defval;
+			}
+			
+			this.value = $.tmpl(this.format, {alias:text}).text();
 		}
 	},
 

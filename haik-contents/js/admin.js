@@ -100,6 +100,11 @@ $(document).ready(function(){
 					name = btn.name;
 				}
 				
+				if (name === '') {
+				  $box.append('<div class="haik-plugin-toolbutton-space"></div>');
+				  continue;
+				}
+				
 				if (typeof ORGM.plugins[name] != "undefined") {
 					
 					var $btn = $('<a></a>').addClass("btn btn-default btn-sm")

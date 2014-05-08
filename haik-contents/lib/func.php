@@ -2043,12 +2043,17 @@ function get_qhm_toolbuttons()
 		'addnav',
 		'header',
 		'strong',
-		array(
-			'name'=>'show',
-			'children' => array('show2', 'showdummy', 'file')
-		),
-		'link',
+		'ul',
+		'indent',
 		'br',
+		'',
+		'show',
+		'link2',
+		'button',
+		'',
+		'hr2',
+		'section',
+		'',
 		'recentPlugins',
 		'allPlugin',
 	);
