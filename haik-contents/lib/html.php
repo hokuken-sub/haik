@@ -472,6 +472,7 @@ EOD;
 			$class = 'hide';
 		}
 		$page_title = $page_meta->get('title', $page);
+		$page_meta_yaml = $page_meta->toYaml();
 		$manual_link = manual_link('StartGuide', '', '<a href="%s" id="haik_edit_manual_link" class="btn btn-default btn-sm" target="_blank">?</a>');
 		
 		$body = '
@@ -486,6 +487,7 @@ EOD;
 		<input type="hidden" name="template_name" value="'.$s_template_name.'">
 		
 		<input type="text" name="title" value="'.h($page_title).'" placeholder="ページタイトル" class="col-sm-12 '.$class.'" tabindex="1">
+		<textarea name="page_meta" rows="5" cols="'.$cols.'" placeholder="YAML で設定を記述してください" tabindex="3" class="col-sm-12">'.h($page_meta_yaml).'</textarea>
 		
 		<div class="btn-toolbar pull-right">
 			<div class="btn-group">
