@@ -35,19 +35,18 @@
   <aside>
   	#{$summary}
   </aside>
-
-  <!-- Footer
-  ================================================== -->
-  <footer class="footer2">
-  	<div class="container-fluid">
-  		#{$site_footer}
-  	</div>
-  	<div id="license" class="container">
-  		#{$license_tag}
-  	</div>
-  </footer>
-
 </div>
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+	<div class="container-fluid">
+		#{$site_footer}
+	</div>
+	<div id="license" class="container">
+		#{$license_tag}
+	</div>
+</footer>
 
 #{$admin_nav}
 #{$body_last}

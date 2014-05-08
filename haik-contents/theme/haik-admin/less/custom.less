@@ -66,6 +66,12 @@
   }
 }
 
+.haik-plugin-toolbutton-space {
+  width:15px;
+  height:30px;
+  float:left;
+}
+
 
 // Config Section
 // -------------------------
@@ -109,19 +115,41 @@ body.app-config-body {
 .setting {
   color: #777;
 
-  .setting_list > li{
-    list-style: none;
-    height: 70px;
-    line-height: 70px;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-    box-sizing: border;
+  h4.sub-header {
+  	margin-left: 8px;
+  	margin-bottom: 0; 
+  	margin-top: 40px;
+  	color: #444;
+
+  	&:first-child {
+  	  margin-top: 0;
+    }
+  }
+  
+  .app-config-more {
+  	position: absolute;
+  	display: block;
+  	left:35px;
+  	bottom:-20px;
+  	color: #999;
+  	font-size: 0.8em;
   }
 
   .setting_list {
+  	margin-left:0;
+  	padding-left: 0;
 
-    li div.current {
-      color: #999;
+    li {
+      list-style: none;
+      height: 70px;
+      line-height: 70px;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border;
+
+      div.current {
+        color: #999;
+      }
     }
 
     .well {
@@ -136,6 +164,36 @@ body.app-config-body {
       .form-actions {
       	background-color: #f7f6f1;
       }
+
+      &.config-general-logo-image.thumbnail {
+      	position: relative;
+      	width:200px;
+      	height: 50px;
+      	line-height: 50px;
+      	text-align: center;
+      
+        img {
+        	max-height: 100%;
+        }
+      }
+      
+      
+      &.config-general-style-name legend {
+      	font-size: 1.2em;
+      	margin-top: 1em;
+      }
+      
+      &.config-general-style-name .sample-cut{
+      	border-radius: 4px;
+        a {
+        	height: 50px; /*正方形にしたいサイズ*/
+        	width: 50px; /*正方形にしたいサイズ*/
+        	display: block; /*SPANなのでブロック要素に*/
+        	padding: 0;
+        	line-height: 50px;
+        	text-align: center;
+        }
+      }
     }
   }
 }
@@ -144,14 +202,19 @@ body.app-config-body {
 	margin-bottom: 0;
 }
 
+@media (max-width: 767px) {
+	.setting_list .well.config-general-style-name .sample-cut a {
+		height: 30px; /*正方形にしたいサイズ*/
+		width:  30px; /*正方形にしたいサイズ*/
+	}
+}
+
+
 
 // footer
 // -------------------------
-
 .footer {
-  position: absolute;
-  bottom:0;
-  
+  margin-top: 100px;
   color: #777;
   text-align: center;
   
@@ -161,7 +224,9 @@ body.app-config-body {
 }
 
 .footer2 {
-  margin-top: 100px;
+  position: absolute;
+  bottom:0;
+  
   color: #777;
   text-align: center;
   
