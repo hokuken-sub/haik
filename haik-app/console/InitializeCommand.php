@@ -252,7 +252,6 @@ class InitializeCommand extends Command {
 
     protected function setFilePermission()
     {
-        // !TODO: change mode
         $command = $this->getApplication()->find('chmod');
         $arguments = array(
             'command' => 'chmod',
