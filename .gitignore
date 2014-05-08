@@ -27,7 +27,7 @@ haik-contents/theme/*/
 haik-contents/lib/skel/theme/*/
 !haik-contents/lib/skel/theme/.gitkeep
 
-haik-contents/meta/*.php
+haik-contents/meta/*.yml
 
 haik-contents/diff/*.txt
 
