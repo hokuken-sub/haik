@@ -2,7 +2,7 @@
 namespace Hokuken\Haik\Page;
 
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\ParseException;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class YamlPageMeta implements PageMetaInterface {
 

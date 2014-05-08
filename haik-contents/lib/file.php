@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\ParseException;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Hokuken\Haik\Page\YamlPageMeta;
 
 // PukiWiki - Yet another WikiWikiWeb clone.
