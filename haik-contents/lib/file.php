@@ -1418,51 +1418,6 @@ function orgm_ini_write($key, $value = NULL, $merge = TRUE)
 	
 }
 
-
-
-function meta_read($page, $key = NULL)
-{
-	$meta_file = META_DIR . encode($page) . '.php';
-	
-	try
-	{
-		$meta = ini_read($meta_file, $key);
-	}
-	catch (FileNotFoundException $e)
-	{
-		if (is_null($key))
-			$meta = array();
-		else
-			$meta = NULL;
-	}
-	catch (Exception $e)
-	{
-		if (is_null($key))
-			$meta = array();
-		else
-			$meta = NULL;
-	}
-
-	return $meta;
-}
-
-function meta_write($page, $key, $value = NULL, $merge = TRUE)
-{
-	$meta_file = META_DIR . encode($page) . '.php';
-
-	try
-	{
-		$result = ini_write($meta_file, 'meta', $key, $value, $merge);
-	}
-	catch (FileException $e)
-	{
-		var_dump($e);
-		die(sprintf(__('ファイルに書き込み権限がありません。：%s'), $meta_file));
-	}
-	return $result;
-}
-
-
 /**
  * フォーム情報を読み込む
  */
