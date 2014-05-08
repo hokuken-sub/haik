@@ -195,6 +195,7 @@ function plugin_edit_inline()
 // Write, add, or insert new comment
 function plugin_edit_write()
 {
+    global $app;
 	global $vars, $script, $layout_pages, $defaultpage;
 	global $notimeupdate, $do_update_diff_table;
 	global $qblog_defaultpage, $date_format, $qblog_menubar;
@@ -290,19 +291,20 @@ function plugin_edit_write()
 	}
 	
 	//メタ情報を保存する
-	$meta = array(
-		'auto_description' => create_page_description($page, PLUGIN_EDIT_AUTO_DESCRIPTION_LENGTH, $postdata),
-	);
+	$page_meta = $app['page.meta'];
+	$page_meta->set('auto_description', create_page_description($page, PLUGIN_EDIT_AUTO_DESCRIPTION_LENGTH, $postdata));
 	if (isset($vars['title']))
 	{
-		$meta['title'] = trim($vars['title']);
+		$page_meta->set('title', trim($vars['title']));
 	}
 	if (isset($vars['template_name']) && trim($vars['template_name']))
 	{
-		$meta['template_name'] = $template_name;
+	    $page_meta->set('template_name', $template_name);
 	}
-	meta_write($page, $meta);
-	
+    if ($page_meta->isDirty())
+    {
+        $page_meta->save();
+    }
 
 	// NULL POSTING, OR removing existing page
 	if ($postdata == '') {

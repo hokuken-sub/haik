@@ -137,6 +137,10 @@ $app->match('/{pageName}', function($pageName, Silex\Application $app) use (&$va
     global $defaultpage;
     if ($pageName === '')
     {
+        if (isset($vars['page']) && $vars['page'])
+        {
+            $pageName = $vars['page'];
+        }
         if ($vars['cmd'] === 'read')
         {
             $pageName = $defaultpage;
@@ -146,6 +150,7 @@ $app->match('/{pageName}', function($pageName, Silex\Application $app) use (&$va
     {
         $vars['page'] = $pageName;
     }
+
     $app['page.meta'] = $app->share(function() use ($pageName)
     {
         return new YamlPageMeta($pageName);
