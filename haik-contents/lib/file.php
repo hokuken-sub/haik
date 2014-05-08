@@ -700,7 +700,8 @@ function get_readable_pages($user = '')
 	
 	foreach ($pages as $filename => $page)
 	{
-		$close = meta_read($page, 'close');
+        $page_meta = new YamlPageMeta($page);
+		$close = $page_meta->get('close', 'public');
 		if ($close === 'public'
 			OR $close === NULL
 			&& check_readable($page, FALSE, FALSE))

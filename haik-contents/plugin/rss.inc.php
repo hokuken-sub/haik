@@ -1,4 +1,7 @@
 <?php
+
+use Hokuken\Haik\Page\YamlPageMeta;
+
 // PukiWiki - Yet another WikiWikiWeb clone
 // $Id: rss.inc.php,v 1.18 2006/03/05 15:01:31 henoheno Exp $
 //
@@ -99,8 +102,9 @@ function plugin_rss_action()
 		{
 			list($time, $page) = explode("\t", rtrim($line));
 		}
-		
-		$close = meta_read($page, 'close');
+
+        $page_meta = new YamlPageMeta($page);
+		$close = $page_meta->get('close', 'public');
 		if ( ! ($close === 'public'
 			OR $close === NULL
 			&& check_readable($page, FALSE, FALSE)))
