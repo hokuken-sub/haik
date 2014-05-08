@@ -12,6 +12,8 @@ class YamlPageMeta implements PageMetaInterface {
     /** @var mixed meta data of the page*/
     protected $data;
 
+    protected $isDirty;
+
     /**
      * Constructor
      *
@@ -22,6 +24,7 @@ class YamlPageMeta implements PageMetaInterface {
     {
         $this->page = $page;
         $this->data = array();
+        $this->isDirty = false;
 
         if ($set_data)
             $this->data = $this->read();
@@ -44,12 +47,32 @@ class YamlPageMeta implements PageMetaInterface {
         } catch (ParseException $e) {
             $this->data = array();
         }
+        $this->isDirty = false;
         return $this->data;
     }
 
     public function getFilePath()
     {
         return META_DIR . encode($this->page) . '.yml';
+    }
+
+    public function has($key)
+    {
+        $default_value = microtime();
+        return $this->get($key, $default_value) !== $default_value;
+    }
+
+    protected function parseKeys($keys)
+    {
+        $group = false;
+        $keys = explode('.', $keys, 2);
+        $key = array_pop($keys);
+        if (count($keys) > 0)
+        {
+            $group = array_pop($keys);
+        }
+
+        return array($group, $key);
     }
 
     /**
@@ -61,17 +84,14 @@ class YamlPageMeta implements PageMetaInterface {
      */
     public function get($key, $default_value = NULL)
     {
-        $data = $this->data;
-        $keys = explode('.', $key, 2);
-        if (count($keys) === 1)
+        list($group, $key) = $this->parseKeys($key);
+        if ($group === false)
         {
             if (isset($this->data[$key]))
                 return $this->data[$key];
             else
                 return $default_value;
         }
-
-        list($group, $key) = $keys;
         if (isset($this->data[$group][$key]))
         {
             return $this->data[$group][$key];
@@ -106,14 +126,17 @@ class YamlPageMeta implements PageMetaInterface {
      */
     public function set($key, $value)
     {
-        $keys = explode('.', $key, 2);
-        if (count($keys) === 1)
+        list($group, $key) = $this->parseKeys($key);
+        if ($group === false)
         {
-            $this->data[$key] = $value;
+            if ( ! isset($this->data[$key]) OR (isset($this->data[$key]) && $this->data[$key] !== $value))
+            {
+                $this->data[$key] = $value;
+                $this->isDirty = true;
+            }
             return $this;
         }
 
-        list($group, $key) = $keys;
         if ( ! isset($this->data[$group]))
             $this->data[$group] = array();
         
@@ -121,7 +144,11 @@ class YamlPageMeta implements PageMetaInterface {
         {
             $this->data[$group] = array();
         }
-        $this->data[$group][$key] = $value;
+        if ( ! isset($this->data[$group][$key]) OR (isset($this->data[$group][$key]) && $this->data[$group][$key] !== $value))
+        {
+            $this->data[$group][$key] = $value;
+            $this->isDirty = true;
+        }
 
         return $this;
     }
@@ -134,15 +161,39 @@ class YamlPageMeta implements PageMetaInterface {
      */
     public function setAll($data, $overwrite = false)
     {
-        if ($overwrite)
+
+        if ( ! $overwrite)
         {
-            $this->data = $data;
+            $data = array_merge_deep($this->data, $data);
         }
-        else
+        if ($data === $this->data) return $this;
+
+        $this->data = $data;
+        $this->isDirty = true;
+        return $this;
+    }
+
+    public function remove($key)
+    {
+        list($group, $key) = $this->parseKeys($key);
+        if ($group === false)
         {
-            $this->data = array_merge_deep($this->data, $data);
+            unset($this->data[$key]);
+            $this->isDirty = true;
+            return $this;
+        }
+
+        if (isset($this->data[$group][$key]))
+        {
+            unset($this->data[$group][$key]);
+            $this->isDirty = true;
         }
         return $this;
+    }
+
+    public function isDirty()
+    {
+        return $this->isDirty;
     }
 
     /**
