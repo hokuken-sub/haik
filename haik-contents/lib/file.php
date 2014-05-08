@@ -1,4 +1,9 @@
 <?php
+
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\ParseException;
+use Hokuken\Haik\Page\YamlPageMeta;
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: file.php,v 1.72 2006/06/11 14:42:09 henoheno Exp $
 // Copyright (C)
@@ -414,6 +419,7 @@ function orgm_lastmodified_add($update = '', $remove = '')
 // Use without $autolink
 function lastmodified_add($update = '', $remove = '')
 {
+    global $app;
 	global $maxshow, $whatsnew, $autolink;
 	$qm = get_qm();
 
@@ -425,12 +431,11 @@ function lastmodified_add($update = '', $remove = '')
 
 	if (($update == '' || check_non_list($update)) && $remove == '')
 		return; // No need
-	$page_meta = meta_read($update);
-	if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
-		($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
-	{
-		return;
-	}
+    $page_meta = $app['page.meta'];
+    if ($page_meta->get('close') === 'closed' OR ($page_meta->get('close') === 'redirect' && $page_meta->get('redirect', '') !== ''))
+    {
+        return;
+    }
 
 	$file = CACHE_DIR . PKWK_MAXSHOW_CACHE;
 	if (! file_exists($file)) {
@@ -516,6 +521,7 @@ function app_put_lastmodified()
 // Re-create PKWK_MAXSHOW_CACHE (Heavy)
 function put_lastmodified()
 {
+    global $app;
 	global $maxshow, $whatsnew, $autolink;
 	$qm = get_qm();
 
@@ -568,9 +574,8 @@ function put_lastmodified()
 	ftruncate($fp, 0);
 	rewind($fp);
 	foreach (array_keys($recent_pages) as $page) {
-		$page_meta = meta_read($page);
-		if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
-			($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
+		$page_meta = new YamlPageMeta($page);
+		if ($page_meta->get('close') === 'closed' OR ($page_meta->get('close') === 'redirect' && $page_meta->get('redirect', '') !== ''))
 		{
 			continue;
 		}

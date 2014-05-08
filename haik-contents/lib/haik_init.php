@@ -3,11 +3,10 @@
 //
 // ページメタ情報の展開
 //-------------------------------------------------
-//$qt->appendv('user_head', $page_meta['user_head']);
-$qt->prependv('user_head', isset($page_meta['user_head']) ? $page_meta['user_head'] : '');
-$description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : (isset($page_meta['auto_description']) ? $page_meta['auto_description'] : '');
-$qt->setv('description', $description);
-$qt->setv('keywords', isset($page_meta['keywords']) ? $page_meta['keywords'] : '');
+$page_meta = $app['page.meta'];
+$qt->prependv('user_head', $page_meta->get('user_head', ''));
+$qt->setv('description', $page_meta->get('description', $page_meta->get('auto_description', '')));
+$qt->setv('keywords', $page_meta->get('keywords', ''));
 
 //-------------------------------------------------
 //
@@ -382,9 +381,11 @@ $qt->setv('tracking_script', $tracking_script);
 //-------------------------------------------------
 // ページの公開、閉鎖
 //-------------------------------------------------
-if (isset($page_meta['close']))
+$page_meta = $app['page.meta'];
+if ($page_meta->get('close', 'public') !== 'public')
 {
-	if ($page_meta['close'] === 'closed')
+    $close = $page_meta->get('close');
+	if ($close === 'closed')
 	{
 		if (exist_plugin("close"))
 		{
@@ -395,7 +396,7 @@ if (isset($page_meta['close']))
 			}
 		}
 	}
-	else if ($page_meta['close'] === 'password')
+	else if ($close === 'password')
 	{
 		if (exist_plugin("secret"))
 		{
@@ -406,7 +407,7 @@ if (isset($page_meta['close']))
 			}
 		}
 	}
-	else if ($page_meta['close'] === 'redirect')
+	else if ($close === 'redirect')
 	{
 		if (exist_plugin("redirect"))
 		{

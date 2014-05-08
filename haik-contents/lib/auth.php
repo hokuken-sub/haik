@@ -187,12 +187,13 @@ function check_editable($page, $auth_flag = TRUE, $exit_flag = TRUE)
 // @params boolean $contents check the user can get contents
 function check_readable($page, $auth_flag = TRUE, $exit_flag = TRUE, $contents = FALSE)
 {
+    global $app;
 	if (read_auth($page, $auth_flag, $exit_flag))
 	{
 		if ($contents)
 		{
-			$page_meta = meta_read($page);
-			if (isset($page_meta['close']) && $page_meta['close'] !== 'public')
+			$page_meta = $app['page.meta'];
+			if ($page_meta->get('close', 'public') !== 'public')
 			{
 				if ($exit_flag)
 				{

@@ -1,4 +1,7 @@
 <?php
+
+use Hokuken\Haik\Page\YamlPageMeta;
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: pukiwiki.php,v 1.11 2005/09/11 05:58:33 henoheno Exp $
 //
@@ -129,7 +132,7 @@ $app->get('/logout', function() use ($app)
     return $app->redirect('/?cmd=logout');
 })->bind('logout');
 
-$app->match('/{pageName}', function($pageName) use (&$vars)
+$app->match('/{pageName}', function($pageName, Silex\Application $app) use (&$vars)
 {
     global $defaultpage;
     if ($pageName === '')
@@ -143,8 +146,11 @@ $app->match('/{pageName}', function($pageName) use (&$vars)
     {
         $vars['page'] = $pageName;
     }
+    $app['page.meta'] = $app->share(function() use ($pageName)
+    {
+        return new YamlPageMeta($pageName);
+    });
 
-    get_page_url($pageName);
     return require LIB_DIR . 'main.php';
 })->assert('pageName', '.*')->bind('showPage');
 
