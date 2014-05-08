@@ -11,6 +11,14 @@ interface PageMetaInterface {
     public function read();
 
     /**
+     * Determine meta data has the key
+     *
+     * @param string $key
+     * @return boolean does meta data have key?
+     */
+    public function has($key);
+
+    /**
      * Get meta data of specified key e.g group.value
      *
      * @param string $key
@@ -39,6 +47,21 @@ interface PageMetaInterface {
      * Set or merge providing array to $data
      */
     public function setAll($array);
+
+    /**
+     * Remove meta data value of specified key
+     *
+     * @param string $key
+     * @return $this for method chain
+     */
+    public function remove($key);
+
+    /**
+     * Determine this object is modified.
+     *
+     * @return boolean this object is modified?
+     */
+    public function isDirty();
 
     /**
      * Save meta data

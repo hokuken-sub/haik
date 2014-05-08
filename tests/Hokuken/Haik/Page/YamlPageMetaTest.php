@@ -69,6 +69,13 @@ class YamlPageMetaTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->testData, $data);
     }
 
+    public function testHas()
+    {
+        $this->setUpData();
+        $this->assertTrue($this->pageMeta->has('title'));
+        $this->assertFalse($this->pageMeta->has('unknown'));
+    }
+
     public function testSet()
     {
         $expected = 'test title';
@@ -102,6 +109,44 @@ class YamlPageMetaTest extends PHPUnit_Framework_TestCase {
         $this->assertAttributeEquals($this->testData, 'data', $this->pageMeta);
     }
 
+    public function testIsDirtyWhenSetNewKey()
+    {
+        $this->setUpData();
+        $this->pageMeta->set('newkey', 'new value');
+        $this->assertTrue($this->pageMeta->isDirty());
+    }
+
+    public function testIsDirtyWhenSetExistedKey()
+    {
+        $this->setUpData();
+        $this->pageMeta->set('title', 'new title');
+        $this->assertTrue($this->pageMeta->isDirty());
+    }
+
+    public function testIsDirtyWhenSetSameValueToExistedKey()
+    {
+        $this->setUpData();
+        $this->pageMeta->set('title', 'TestTitle');
+        $this->assertFalse($this->pageMeta->isDirty());
+    }
+
+    public function testIsDirtyWhenRemoveExistedKey()
+    {
+        $this->setUpData();
+        $this->pageMeta->remove('title');
+        $this->assertTrue($this->pageMeta->isDirty());
+    }
+
+    public function testIsDirtyWhenReadData()
+    {
+        $this->setUpData();
+        $this->pageMeta->set('title', 'new title');
+        $this->assertTrue($this->pageMeta->isDirty());
+
+        $this->pageMeta->read();
+        $this->assertFalse($this->pageMeta->isDirty());
+    }
+    
     public function testSave()
     {
         $this->setUpData();
