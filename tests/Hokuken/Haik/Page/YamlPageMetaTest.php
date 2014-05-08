@@ -73,6 +73,14 @@ class YamlPageMetaTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->testData, $data);
     }
 
+    public function testToYaml()
+    {
+        $this->setUpData();
+        $yaml = $this->pageMeta->toYaml();
+        $expected = Yaml::dump($this->testData);
+        $this->assertEquals($expected, $yaml);
+    }
+
     public function testHas()
     {
         $this->setUpData();

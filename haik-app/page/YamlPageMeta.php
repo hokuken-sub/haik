@@ -122,6 +122,11 @@ class YamlPageMeta implements PageMetaInterface {
         return $this->data;
     }
 
+    public function toYaml()
+    {
+        return Yaml::dump($this->data);
+    }
+
     /**
      * Set meta data of specified key e.g. group.value
      *
@@ -209,7 +214,7 @@ class YamlPageMeta implements PageMetaInterface {
     public function save()
     {
         $file_path = $this->getFilePath();
-        $yaml = Yaml::dump($this->data);
+        $yaml = $this->toYaml();
         return file_put_contents($file_path, $yaml);
     }
 

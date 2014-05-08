@@ -42,6 +42,13 @@ interface PageMetaInterface {
     public function getAll();
 
     /**
+     * Get all meta data as YAML
+     *
+     * @return string meta data formatted YAML
+     */
+    public function toYaml();
+
+    /**
      * Set meta data of specified key e.g. group.value
      *
      * @param string $key
