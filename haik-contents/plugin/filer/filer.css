@@ -84,9 +84,8 @@ a.cut:hover{
 	border-radius: 7px;
 }
 
-#orgm_filer_list li.checked {
-	box-shadow: 0 0 10px #91bd09;
-	-webkit-box-shadow: 0 0 10px #91bd09;
+#orgm_filer_list li.checked .cut {
+  border: 3px solid #98bddc;
 }
 
 

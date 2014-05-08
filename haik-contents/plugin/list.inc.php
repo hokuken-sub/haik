@@ -276,8 +276,18 @@ function plugin_list_create_html($pages_data,  $withfilename = FALSE)
 	<table class="table table-condensed">
 	<thead>
 		<tr>
-			<td><div class="col-sm-5">ページ名（タイトル）</div><div class="input-group col-sm-5"><span class="input-group-addon input-sm">検索</span><input type="search" size="20" id="plugin_list_searchbox" placeholder="例：FrontPage" class="form-control input-sm" /></div></td>
-			<td>最終更新日</td>
+			<th>
+			  <form class="form-inline">
+			    <div class="">
+			      <label class="col-sm-5 control-label" style="margin-top:10px;">ページ名（タイトル）</label>
+            <div class="input-group col-sm-7">
+              <span class="input-group-addon input-sm">検索</span>
+              <input type="search" size="20" id="plugin_list_searchbox" placeholder="例：FrontPage" class="form-control input-sm" />
+            </div>
+          </div>
+        </form>
+      </th>
+			<th class="text-center">最終更新日</th>
 		</tr>
 	</thead>
 	<tbody>
