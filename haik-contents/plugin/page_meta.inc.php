@@ -148,6 +148,7 @@ function plugin_page_meta_action()
 
 function plugin_page_meta_set_body()
 {
+    global $app;
 	global $script, $vars, $defaultpage, $site_title;
 	global $style_name;
 	
@@ -173,7 +174,7 @@ function plugin_page_meta_set_body()
 		$default_title = $page;
 	}
 	
-	$meta = meta_read($page);
+	$page_meta = $app['page.meta'];
 	$config = style_config_read($style_name);
 	
 	$def = array(
@@ -189,9 +190,10 @@ function plugin_page_meta_set_body()
 		'user_head' => ''
 	);
 	
-	$meta = array_merge($def, $meta);
+	$data = $page_meta->getAll();
+	$page_meta->setAll($def)->setAll($data);
 	
-	$meta['isDefaultPage'] = $is_defaultpage;
+	$page_meta->set('isDefaultPage', $is_defaultpage);
 
 	
 	
@@ -224,22 +226,23 @@ function plugin_page_meta_set_body()
 
 	$tmpls = $config['templates'];
 	
-	$meta['templates'] = $tmpls;
+	$page_meta->set('templates', $tmpls);
 	
-    if (isset($meta['password']) && $meta['password'] !== '' && exist_plugin('secret'))
+	if ($page_meta->get('password', '') !== '' && exist_plugin('secret'))
     {
-	    $meta['limited_url'] = plugin_secret_get_url();
+	    $page_meta->set('limited_url', plugin_secret_get_url());
     }
     
     //短縮URL
-    $shortened_url = $meta['shortened_url'] = FALSE;
+    $shortened_url = FALSE;
     if (PLUGIN_PAGE_META_USE_GOO_GL && exist_plugin('goo_gl'))
     {
-	    $shortened_url = $meta['shortened_url'] = plugin_goo_gl_get_shortened(get_page_url($vars['page']));
+	    $shortened_url = plugin_goo_gl_get_shortened(get_page_url($vars['page']));
     }
+    $shortened_url = $page_meta->set('shortened_url', $shortened_url);
 	
 	$json = array(
-		'pageMeta' => $meta
+		'pageMeta' => $page_meta->getAll()
 	);
 	$qt->setjsv($json);
 		

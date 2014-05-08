@@ -1,4 +1,8 @@
 <?php
+
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: edit.inc.php,v 1.40 2006/03/21 14:26:25 henoheno Exp $
 // Copyright (C) 2001-2006 PukiWiki Developers Team
@@ -195,6 +199,7 @@ function plugin_edit_inline()
 // Write, add, or insert new comment
 function plugin_edit_write()
 {
+    global $app;
 	global $vars, $script, $layout_pages, $defaultpage;
 	global $notimeupdate, $do_update_diff_table;
 	global $qblog_defaultpage, $date_format, $qblog_menubar;
@@ -290,19 +295,33 @@ function plugin_edit_write()
 	}
 	
 	//メタ情報を保存する
-	$meta = array(
-		'auto_description' => create_page_description($page, PLUGIN_EDIT_AUTO_DESCRIPTION_LENGTH, $postdata),
-	);
+	$page_meta = $app['page.meta'];
+	$page_meta->set('auto_description', create_page_description($page, PLUGIN_EDIT_AUTO_DESCRIPTION_LENGTH, $postdata));
+    if (isset($vars['page_meta']))
+    {
+        $yaml = $vars['page_meta'];
+        try {
+            $data = Yaml::parse($yaml);
+            $page_meta->setAll($data);
+        }
+        catch (ParseException $e) {
+            $errmsg = 'ページ情報の書式に誤りがありましたので、ページ情報の更新を中止しました。<br><br>' . "\n";
+            $errmsg .= $e->getMessage();
+            set_flash_msg($errmsg, 'danger');
+        }
+    }
 	if (isset($vars['title']))
 	{
-		$meta['title'] = trim($vars['title']);
+		$page_meta->set('title', trim($vars['title']));
 	}
 	if (isset($vars['template_name']) && trim($vars['template_name']))
 	{
-		$meta['template_name'] = $template_name;
+	    $page_meta->set('template_name', $template_name);
 	}
-	meta_write($page, $meta);
-	
+    if ($page_meta->isDirty())
+    {
+        $page_meta->save();
+    }
 
 	// NULL POSTING, OR removing existing page
 	if ($postdata == '') {

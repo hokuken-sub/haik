@@ -11,6 +11,7 @@
 // Show page-content
 function catbody($title, $page, $body)
 {
+    global $app;
     global $script, $script_ssl, $vars, $arg, $defaultpage, $whatsnew, $hr;
     global $related_link, $cantedit, $function_freeze, $app_err;
     global $search_word_color, $foot_explain, $note_hr, $head_tags;
@@ -34,7 +35,6 @@ function catbody($title, $page, $body)
     global $shiftjis; //Shift-JIS converter
     global $eucjp; //EUC-JP converter
     global $non_list, $whatsnew, $change_timestamp;
-    global $page_meta; // page meta info
     global $template_name, $viewport;
     global $user_head, $ga_tracking_id, $tracking_script;
     global $style_color, $style_texture, $style_custom_bg, $use_less, $app_start; // style color
@@ -111,8 +111,7 @@ function catbody($title, $page, $body)
 	if (is_login()) $qt->setjsv('links', $_LINK);
 
 	// ページ情報の読込み
-	$page_meta = meta_read($_page);
-
+    $page_meta = $app['page.meta'];
 
 	// Init flags
 	$is_page = (is_pagename($_page) && $_page != $whatsnew);
@@ -251,13 +250,14 @@ function catbody($title, $page, $body)
 // Show 'edit' form
 function edit_form($page, $postdata, $digest = FALSE)
 {
+    global $app;
 	global $script, $vars, $defaultpage, $rows, $cols, $hr, $function_freeze;
 	global $whatsnew;
 	global $notimeupdate;
 	global $qblog_defaultpage, $style_name, $date_format, $qblog_default_cat;
 	global $layout_pages, $config;
 
-	$page_meta = meta_read($page); // page meta info
+	$page_meta = $app['page.meta'];
 
 	$qt = get_qt();
 	
@@ -281,7 +281,7 @@ function edit_form($page, $postdata, $digest = FALSE)
 
 	//新規作成の場合、ページ名を大見出しとして挿入する
 	$refer = (isset($vars['refer']) && $vars['refer'] != '') ? $vars['refer'] : $page;
-	$template_name = (isset($vars['template_name']) ? $vars['template_name'] : (isset($page_meta['template_name']) && $page_meta['template_name'] ? $page_meta['template_name'] : ''));
+	$template_name = isset($vars['template_name']) ? $vars['template_name'] : $page_meta->get('template_name', '');
 	$style_config = style_config_read($config['style_name']);
 
 	if ( ! isset($style_config['templates'][$template_name])
@@ -471,7 +471,8 @@ EOD;
 			$page_title = '';
 			$class = 'hide';
 		}
-		$page_title = isset($page_meta['title']) ? $page_meta['title'] : $page;
+		$page_title = $page_meta->get('title', $page);
+		$page_meta_yaml = $page_meta->toYaml();
 		$manual_link = manual_link('StartGuide', '', '<a href="%s" id="haik_edit_manual_link" class="btn btn-default btn-sm" target="_blank">?</a>');
 		
 		$body = '
@@ -486,6 +487,7 @@ EOD;
 		<input type="hidden" name="template_name" value="'.$s_template_name.'">
 		
 		<input type="text" name="title" value="'.h($page_title).'" placeholder="ページタイトル" class="col-sm-12 '.$class.'" tabindex="1">
+		<textarea name="page_meta" rows="5" cols="'.$cols.'" placeholder="YAML で設定を記述してください" tabindex="3" class="col-sm-12">'.h($page_meta_yaml).'</textarea>
 		
 		<div class="btn-toolbar pull-right">
 			<div class="btn-group">
