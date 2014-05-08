@@ -4,6 +4,13 @@ namespace Hokuken\Haik\Page;
 interface PageMetaInterface {
 
     /**
+     * Get page name
+     *
+     * @return string page name
+     */
+    public function getPage();
+
+    /**
      * Read meta data of the page
      *
      * @return mixed meta data array of the page

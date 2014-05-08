@@ -32,6 +32,10 @@ class YamlPageMetaTest extends PHPUnit_Framework_TestCase {
         $this->pageMeta->setAll($this->pageMeta->read(), true);
     }
 
+    public function testGetPage()
+    {
+        $this->assertEquals($this->page, $this->pageMeta->getPage());
+    }
     public function testRead()
     {
         $data = $this->pageMeta->read();

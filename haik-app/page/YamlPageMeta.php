@@ -30,6 +30,11 @@ class YamlPageMeta implements PageMetaInterface {
             $this->data = $this->read();
     }
 
+    public function getPage()
+    {
+        return $this->page;
+    }
+
     /**
      * Read meta data of the page
      *
