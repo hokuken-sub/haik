@@ -1,4 +1,7 @@
 <?php
+
+use Hokuken\Haik\Page\YamlPageMeta;
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: func.php,v 1.73 2006/05/15 16:41:39 teanan Exp $
 // Copyright (C)
@@ -1045,15 +1048,14 @@ function wikiescape($string){
 	return $ret;	
 }
 
-function get_page_title($pagename, $lines=10){
-	if ( ! file_exists(get_filename($pagename))) {
-		return FALSE;
-	}
-	$title = meta_read($pagename, 'title');
-	
-	if ( ! $title) $title = $pagename;
-	
-	return $title;
+function get_page_title($pagename, $lines=10)
+{
+    global $app;
+    if ( ! file_exists(get_filename($pagename))) {
+        return FALSE;
+    }
+    $page_meta = new YamlPageMeta($pagename);
+    return $page_meta->get('title', $pagename);
 }
 
 function get_page_url($page)

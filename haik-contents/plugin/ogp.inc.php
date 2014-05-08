@@ -110,14 +110,14 @@ function plugin_ogp_set($ogp_tag_name, $value)
 
 function plugin_ogp_get_defdata()
 {
+    global $app;
 	global $script, $vars, $defaultpage, $site_title, $description;
 	global $og_description, $fb_admins, $fb_app_id;
 	$qt = get_qt();
 	
 	$url = $script;
 	$page = $vars['page'];
-	
-	
+
 	if ($defaultpage != $page)
 	{
 		$r_page = rawurlencode($vars['page']);
@@ -137,9 +137,8 @@ function plugin_ogp_get_defdata()
 	
 	if ( ! isset($description))
 	{
-		$page_meta = meta_read($page);
-		$description = (isset($page_meta['description']) && $page_meta['description'] !== '') ? $page_meta['description'] : $page_meta['auto_description'];
-		
+        $page_meta = $app['page.meta'];
+        $description = $page_meta->get('description', $page_meta->get('auto_description', ''));
 	}
 
 	$defdata = array(

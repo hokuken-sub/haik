@@ -11,12 +11,13 @@
 
 function plugin_redirect_page()
 {
-
-	global $vars, $script, $page_meta;
+    global $app;
+    global $vars, $script;
 	$qm = get_qm();
 	$qt = get_qt();
-	
+
 	$page = $vars['page'];
+	$page_meta = $app['page.meta'];
 
     if (edit_auth($page, FALSE, FALSE))
     {
@@ -28,8 +29,8 @@ function plugin_redirect_page()
 	//キャッシュしない
 	$qt->enable_cache = false;
     
-    $to = $page_meta['redirect'];
-    $status = $page_meta['redirect_status'];
+    $to = $page_meta->get('redirect', '');
+    $status = $page_meta->get('redirect_status', 302);
     
     if (is_page($to))
     {

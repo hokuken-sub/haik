@@ -17,16 +17,18 @@
  *   
  */
 function plugin_secret_auth(){
-    global $vars, $script, $page_meta;
+    global $app;
+    global $vars, $script;
     $qm = get_qm();
     $qt = get_qt();
 
     $page = isset($vars['page']) ? $vars['page'] : '';
     $r_page = rawurlencode($page);
     $title = get_page_title($page);
-    
 
-    if ( ! isset($page_meta['password']) OR $page_meta['password'] === '')
+    $page_meta = $app['page.meta'];
+
+    if ($page_meta->get('password', '') === '')
     {
 	    return FALSE;
     }
@@ -53,7 +55,7 @@ function plugin_secret_auth(){
 		$password = isset($vars['password']) ? $vars['password'] : '';
 
         //passwd check
-        if($password == $page_meta['password']){
+        if($password == $page_meta->get('password')){
         	$_SESSION['readable_'.$r_page] = $r_page;
             return FALSE;
         }
@@ -61,7 +63,7 @@ function plugin_secret_auth(){
     else if (isset($vars['key']))
     {
 	    $pass_hash = $vars['key'];
-	    $master_hash = md5($page_meta['password']);
+	    $master_hash = md5($page_meta->get('password'));
 	    
 	    if ($pass_hash === $master_hash)
 	    {
@@ -111,14 +113,17 @@ $(function(){
 
 function plugin_secret_get_url()
 {
-    global $vars, $script, $page_meta;
+    global $app;
+    global $vars, $script;
+
+    $page_meta = $app['page.meta'];
     
-    if ( ! isset($page_meta['password']) OR $page_meta['password'] === '')
+    if ($page_meta->get('password', '') === '')
     {
         return FALSE;
     }
 
-    $key = md5($page_meta['password']);
+    $key = md5($page_meta->get('password'));
     $url = get_page_url($vars['page']) . '&key=' . rawurlencode($key);
     return $url;
 }

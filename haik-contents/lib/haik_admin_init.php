@@ -75,7 +75,8 @@ if (isset($_SESSION['preview_skin']) && $vars['cmd'] === 'read')
 }
 
 // テンプレートの取得
-$template_name = (isset($page_meta['template_name']) && $page_meta['template_name']) ? $page_meta['template_name'] : $style_config['default_template'];
+$page_meta = $app['page.meta'];
+$template_name = $page_meta->get('template_name', $style_config['default_template']);
 $template_name = $qt->getv('template_name') ? $qt->getv('template_name') : $template_name;
 
 if ( ! isset($style_config['templates'][$template_name])
@@ -362,15 +363,15 @@ EOS;
 
 //set page title (title tag of HTML)
 if($is_read){
-	$page_title = isset($page_meta['title']) ? h($page_meta['title']) : $title;
-	$qt->setv_once('page_title', $page_title. $site_title_delim . $site_title);
+	$page_title = $page_meta->get('title', $title);
+	$qt->setv_once('page_title', $page_title . $site_title_delim . $site_title);
 }
 else{ //編集時は、必ずシステム情報でタイトルを作る
 	$qt->setv('page_title', $title. $site_title_delim . $site_title);
 }
 
 if ($title == $defaultpage){ //トップ用
-	$qt->setv('page_title', isset($page_meta['title']) && $page_meta['title'] ? $page_meta['title'] : $site_title);
+	$qt->setv('page_title', $page_meta->get('title', $site_title));
 }
 
 

@@ -1,4 +1,9 @@
 <?php
+
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Hokuken\Haik\Page\YamlPageMeta;
+
 // PukiWiki - Yet another WikiWikiWeb clone.
 // $Id: file.php,v 1.72 2006/06/11 14:42:09 henoheno Exp $
 // Copyright (C)
@@ -414,6 +419,7 @@ function orgm_lastmodified_add($update = '', $remove = '')
 // Use without $autolink
 function lastmodified_add($update = '', $remove = '')
 {
+    global $app;
 	global $maxshow, $whatsnew, $autolink;
 	$qm = get_qm();
 
@@ -425,12 +431,11 @@ function lastmodified_add($update = '', $remove = '')
 
 	if (($update == '' || check_non_list($update)) && $remove == '')
 		return; // No need
-	$page_meta = meta_read($update);
-	if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
-		($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
-	{
-		return;
-	}
+    $page_meta = $app['page.meta'];
+    if ($page_meta->get('close') === 'closed' OR ($page_meta->get('close') === 'redirect' && $page_meta->get('redirect', '') !== ''))
+    {
+        return;
+    }
 
 	$file = CACHE_DIR . PKWK_MAXSHOW_CACHE;
 	if (! file_exists($file)) {
@@ -516,6 +521,7 @@ function app_put_lastmodified()
 // Re-create PKWK_MAXSHOW_CACHE (Heavy)
 function put_lastmodified()
 {
+    global $app;
 	global $maxshow, $whatsnew, $autolink;
 	$qm = get_qm();
 
@@ -568,9 +574,8 @@ function put_lastmodified()
 	ftruncate($fp, 0);
 	rewind($fp);
 	foreach (array_keys($recent_pages) as $page) {
-		$page_meta = meta_read($page);
-		if (isset($page_meta['close']) && ($page_meta['close'] === 'closed' OR
-			($page_meta['close'] === 'redirect' && $page_meta['redirect'] !== '')))
+		$page_meta = new YamlPageMeta($page);
+		if ($page_meta->get('close') === 'closed' OR ($page_meta->get('close') === 'redirect' && $page_meta->get('redirect', '') !== ''))
 		{
 			continue;
 		}
@@ -695,7 +700,8 @@ function get_readable_pages($user = '')
 	
 	foreach ($pages as $filename => $page)
 	{
-		$close = meta_read($page, 'close');
+        $page_meta = new YamlPageMeta($page);
+		$close = $page_meta->get('close', 'public');
 		if ($close === 'public'
 			OR $close === NULL
 			&& check_readable($page, FALSE, FALSE))
@@ -1411,51 +1417,6 @@ function orgm_ini_write($key, $value = NULL, $merge = TRUE)
 	return $result;
 	
 }
-
-
-
-function meta_read($page, $key = NULL)
-{
-	$meta_file = META_DIR . encode($page) . '.php';
-	
-	try
-	{
-		$meta = ini_read($meta_file, $key);
-	}
-	catch (FileNotFoundException $e)
-	{
-		if (is_null($key))
-			$meta = array();
-		else
-			$meta = NULL;
-	}
-	catch (Exception $e)
-	{
-		if (is_null($key))
-			$meta = array();
-		else
-			$meta = NULL;
-	}
-
-	return $meta;
-}
-
-function meta_write($page, $key, $value = NULL, $merge = TRUE)
-{
-	$meta_file = META_DIR . encode($page) . '.php';
-
-	try
-	{
-		$result = ini_write($meta_file, 'meta', $key, $value, $merge);
-	}
-	catch (FileException $e)
-	{
-		var_dump($e);
-		die(sprintf(__('ファイルに書き込み権限がありません。：%s'), $meta_file));
-	}
-	return $result;
-}
-
 
 /**
  * フォーム情報を読み込む

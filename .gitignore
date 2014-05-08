@@ -27,7 +27,7 @@ haik-contents/theme/*/
 haik-contents/lib/skel/theme/*/
 !haik-contents/lib/skel/theme/.gitkeep
 
-haik-contents/meta/*.php
+haik-contents/meta/*.yml
 
 haik-contents/diff/*.txt
 
@@ -36,3 +36,7 @@ haik-contents/backup/*.gz
 haik-contents/cache/*
 !haik-contents/cache/.htaccess
 !haik-contents/cache/entities.dat
+
+tests/data
+!tests/data/.gitkeep
+
